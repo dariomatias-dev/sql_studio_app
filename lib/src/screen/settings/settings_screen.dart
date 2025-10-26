@@ -7,14 +7,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Settings'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
-        elevation: 0.0,
-      ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(
           children: const <Widget>[
             SectionTitle(title: 'General'),
