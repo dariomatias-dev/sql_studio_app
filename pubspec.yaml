@@ -7,10 +7,12 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  code_text_field: ^1.1.0
   flutter:
     sdk: flutter
+  flutter_highlight: ^0.7.0
   google_nav_bar: ^5.0.7
-  salomon_bottom_bar: ^3.3.2
+  highlight: ^0.7.0
 
 dev_dependencies:
   flutter_test:
