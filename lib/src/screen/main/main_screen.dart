@@ -53,46 +53,66 @@ class _MainScreenState extends State<MainScreen> {
     setState(() => _selectedIndex = index);
   }
 
+  void _onHorizontalSwipe(DragEndDetails details) {
+    if (details.primaryVelocity == null) return;
+
+    if (details.primaryVelocity! < 0) {
+      if (_selectedIndex < _screens.length - 1) {
+        _onTabChange(_selectedIndex + 1);
+      }
+    } else if (details.primaryVelocity! > 0) {
+      if (_selectedIndex > 0) {
+        _onTabChange(_selectedIndex - 1);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        physics: const BouncingScrollPhysics(),
-        onPageChanged: _onPageChanged,
-        children: _screens,
+      body: GestureDetector(
+        onHorizontalDragEnd: _onHorizontalSwipe,
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: _onPageChanged,
+          children: _screens,
+        ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: GNav(
-            gap: 8,
-            selectedIndex: _selectedIndex,
-            onTabChange: _onTabChange,
-            color: Colors.grey.shade600,
-            activeColor: Colors.black,
-            tabBackgroundColor: Colors.transparent,
-            tabBorderRadius: 50,
-            tabBorder: Border.all(color: Colors.transparent),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            haptic: false,
-            tabs: [
-              _buildGButton(
-                icon: Icons.circle_outlined,
-                text: 'Home',
-                isSelected: _selectedIndex == 0,
-              ),
-              _buildGButton(
-                icon: Icons.folder_open_outlined,
-                text: 'Databases',
-                isSelected: _selectedIndex == 1,
-              ),
-              _buildGButton(
-                icon: Icons.settings_outlined,
-                text: 'Settings',
-                isSelected: _selectedIndex == 2,
-              ),
-            ],
+      bottomNavigationBar: GestureDetector(
+        onHorizontalDragEnd: _onHorizontalSwipe,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GNav(
+              gap: 8,
+              selectedIndex: _selectedIndex,
+              onTabChange: _onTabChange,
+              color: Colors.grey.shade600,
+              activeColor: Colors.black,
+              tabBackgroundColor: Colors.transparent,
+              tabBorderRadius: 50,
+              tabBorder: Border.all(color: Colors.transparent),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              haptic: false,
+              tabs: [
+                _buildGButton(
+                  icon: Icons.circle_outlined,
+                  text: 'Home',
+                  isSelected: _selectedIndex == 0,
+                ),
+                _buildGButton(
+                  icon: Icons.folder_open_outlined,
+                  text: 'Databases',
+                  isSelected: _selectedIndex == 1,
+                ),
+                _buildGButton(
+                  icon: Icons.settings_outlined,
+                  text: 'Settings',
+                  isSelected: _selectedIndex == 2,
+                ),
+              ],
+            ),
           ),
         ),
       ),
