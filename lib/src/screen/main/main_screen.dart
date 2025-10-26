@@ -85,6 +85,7 @@ class _MainScreenState extends State<MainScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: GNav(
+              backgroundColor: Colors.white,
               gap: 8,
               selectedIndex: _selectedIndex,
               onTabChange: _onTabChange,
