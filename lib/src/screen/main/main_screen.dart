@@ -3,6 +3,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:sql_studio/src/screen/databases/databases_screen.dart';
 import 'package:sql_studio/src/screen/home/home_screen.dart';
+import 'package:sql_studio/src/screen/main/widgets/app_bar_widget.dart';
+import 'package:sql_studio/src/screen/main/widgets/drawer_widget.dart';
 import 'package:sql_studio/src/screen/settings/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -65,6 +67,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBarWidget(),
+      drawer: DrawerWidget(),
       body: GestureDetector(
         onHorizontalDragEnd: _onHorizontalSwipe,
         child: PageView(
