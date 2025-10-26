@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/sql_studio_app.dart';
+
 void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'SQL Studio',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
-    );
-  }
+  runApp(const SqlStudioApp());
 }
