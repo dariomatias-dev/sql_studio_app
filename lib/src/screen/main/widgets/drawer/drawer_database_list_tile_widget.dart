@@ -1,10 +1,49 @@
 import 'package:flutter/material.dart';
 
-class DrawerDatabaseListTileWidget extends StatelessWidget {
-  const DrawerDatabaseListTileWidget({super.key, required this.name, this.onTap});
+import 'package:sql_studio/src/shared/widgets/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
+
+class DrawerDatabaseListTileWidget extends StatefulWidget {
+  const DrawerDatabaseListTileWidget({super.key, required this.name});
 
   final String name;
-  final VoidCallback? onTap;
+
+  @override
+  State<DrawerDatabaseListTileWidget> createState() =>
+      _DrawerDatabaseListTileWidgetState();
+}
+
+class _DrawerDatabaseListTileWidgetState
+    extends State<DrawerDatabaseListTileWidget> {
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogWidget(
+          title: 'Attention',
+          content: const Text(
+            'Are you sure you want to permanently delete this item? This action cannot be undone.',
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            ButtonWidget(
+              onPressed: () => Navigator.pop(context),
+              text: 'Cancel',
+            ),
+            ButtonWidget(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              text: 'Delete',
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              borderColor: Colors.red,
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +58,17 @@ class DrawerDatabaseListTileWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.0),
         ),
         leading: const Icon(Icons.storage_outlined, color: Colors.black),
-        title: Text(name, style: const TextStyle(color: Colors.black)),
-        trailing: PopupMenuButton<int>(
+        title: Text(widget.name, style: const TextStyle(color: Colors.black)),
+        trailing: PopupMenuButton(
           color: Colors.white,
           icon: const Icon(Icons.more_vert, color: Colors.black),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          itemBuilder: (context) => <PopupMenuEntry<int>>[
-            const PopupMenuItem<int>(value: 2, child: Text('Delete')),
+          itemBuilder: (context) => <PopupMenuEntry>[
+            PopupMenuItem(onTap: _showDialog, child: Text('Delete')),
           ],
         ),
-        onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16.0,
           vertical: 6.0,
