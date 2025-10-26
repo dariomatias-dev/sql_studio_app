@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
@@ -26,10 +27,7 @@ class _DrawerDatabaseListTileWidgetState
             textAlign: TextAlign.center,
           ),
           actions: <Widget>[
-            ButtonWidget(
-              onPressed: () => Navigator.pop(context),
-              text: 'Cancel',
-            ),
+            CancelButtonWidget(),
             ButtonWidget(
               onPressed: () {
                 Navigator.pop(context);
