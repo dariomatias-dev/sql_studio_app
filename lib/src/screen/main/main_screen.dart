@@ -13,14 +13,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
-  final PageController _pageController = PageController();
+  final _pageController = PageController();
 
-  final List<Widget> _screens = [
-    HomeScreen(),
-    DatabasesScreen(),
-    SettingsScreen(),
-  ];
+  int _selectedIndex = 0;
+
+  final _screens = <Widget>[HomeScreen(), DatabasesScreen(), SettingsScreen()];
 
   GButton _buildGButton({
     required IconData icon,
@@ -30,13 +27,13 @@ class _MainScreenState extends State<MainScreen> {
     return GButton(
       icon: icon,
       text: text,
-      iconColor: isSelected ? Colors.black : Colors.grey[600],
-      textColor: isSelected ? Colors.black : Colors.grey[600],
+      iconColor: isSelected ? Colors.black : Colors.grey.shade600,
+      textColor: isSelected ? Colors.black : Colors.grey.shade600,
       border: isSelected ? Border.all(color: Colors.black) : null,
       backgroundColor: Colors.transparent,
       rippleColor: Colors.transparent,
       hoverColor: Colors.transparent,
-      margin: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10.0),
     );
   }
 
@@ -45,11 +42,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onTabChange(int index) {
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    _pageController.jumpToPage(index);
+
     setState(() => _selectedIndex = index);
   }
 
@@ -70,11 +64,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onHorizontalDragEnd: _onHorizontalSwipe,
         child: PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           onPageChanged: _onPageChanged,
           children: _screens,
         ),
@@ -82,38 +77,38 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: GestureDetector(
         onHorizontalDragEnd: _onHorizontalSwipe,
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: GNav(
-              backgroundColor: Colors.white,
-              gap: 8,
-              selectedIndex: _selectedIndex,
-              onTabChange: _onTabChange,
-              color: Colors.grey.shade600,
-              activeColor: Colors.black,
-              tabBackgroundColor: Colors.transparent,
-              tabBorderRadius: 50,
-              tabBorder: Border.all(color: Colors.transparent),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              haptic: false,
-              tabs: [
-                _buildGButton(
-                  icon: Icons.circle_outlined,
-                  text: 'Home',
-                  isSelected: _selectedIndex == 0,
-                ),
-                _buildGButton(
-                  icon: Icons.folder_open_outlined,
-                  text: 'Databases',
-                  isSelected: _selectedIndex == 1,
-                ),
-                _buildGButton(
-                  icon: Icons.settings_outlined,
-                  text: 'Settings',
-                  isSelected: _selectedIndex == 2,
-                ),
-              ],
+          child: GNav(
+            backgroundColor: Colors.white,
+            gap: 8.0,
+            selectedIndex: _selectedIndex,
+            onTabChange: _onTabChange,
+            color: Colors.grey.shade600,
+            activeColor: Colors.black,
+            tabBackgroundColor: Colors.transparent,
+            tabBorderRadius: 50.0,
+            tabBorder: Border.all(color: Colors.transparent),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 12.0,
             ),
+            haptic: false,
+            tabs: <GButton>[
+              _buildGButton(
+                icon: Icons.circle_outlined,
+                text: 'Home',
+                isSelected: _selectedIndex == 0,
+              ),
+              _buildGButton(
+                icon: Icons.folder_open_outlined,
+                text: 'Databases',
+                isSelected: _selectedIndex == 1,
+              ),
+              _buildGButton(
+                icon: Icons.settings_outlined,
+                text: 'Settings',
+                isSelected: _selectedIndex == 2,
+              ),
+            ],
           ),
         ),
       ),
