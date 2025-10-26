@@ -14,6 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  final PageController _pageController = PageController();
 
   final List<Widget> _screens = [
     HomeScreen(),
@@ -39,19 +40,35 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _onPageChanged(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+  void _onTabChange(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    setState(() => _selectedIndex = index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: PageView(
+        controller: _pageController,
+        physics: const BouncingScrollPhysics(),
+        onPageChanged: _onPageChanged,
+        children: _screens,
+      ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GNav(
             gap: 8,
             selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() => _selectedIndex = index);
-            },
+            onTabChange: _onTabChange,
             color: Colors.grey.shade600,
             activeColor: Colors.black,
             tabBackgroundColor: Colors.transparent,
@@ -59,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
             tabBorder: Border.all(color: Colors.transparent),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             haptic: false,
-            tabs: <GButton>[
+            tabs: [
               _buildGButton(
                 icon: Icons.circle_outlined,
                 text: 'Home',
