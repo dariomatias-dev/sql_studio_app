@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
 class CreateDatabaseDialogWidget extends StatefulWidget {
   const CreateDatabaseDialogWidget({super.key});
@@ -20,13 +21,7 @@ class _CreateDatabaseDialogWidgetState
   Widget build(BuildContext context) {
     return DialogWidget(
       title: 'Create Database',
-      content: TextField(
-        controller: controller,
-        decoration: const InputDecoration(
-          labelText: 'Database Name',
-          border: OutlineInputBorder(),
-        ),
-      ),
+      content: InputWidget(controller: controller, labelText: 'Database Name'),
       actions: [
         CancelButtonWidget(),
         ButtonWidget(

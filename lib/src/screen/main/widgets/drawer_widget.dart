@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/screen/main/widgets/drawer/drawer_database_list_tile_widget.dart';
 
+import 'package:sql_studio/src/shared/widgets/input_widget.dart';
+
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
 
@@ -19,26 +21,7 @@ class DrawerWidget extends StatelessWidget {
                 horizontal: 16.0,
                 vertical: 8.0,
               ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Search databases',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300,
-                      width: 0.1,
-                    ),
-                  ),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 12.0,
-                  ),
-                ),
-                onTapOutside: (event) {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-              ),
+              child: InputWidget(hintText: 'Search databases'),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
