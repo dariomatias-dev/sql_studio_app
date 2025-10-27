@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screen/main/widgets/create_database_dialog_widget.dart';
-import 'package:sql_studio/src/screen/main/widgets/drawer/drawer_database_list_tile_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_list_tile_widget.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';

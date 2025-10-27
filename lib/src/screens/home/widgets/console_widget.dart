@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screen/home/widgets/panel_widget.dart';
+import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
 
 class ConsoleWidget extends StatelessWidget {
   const ConsoleWidget({

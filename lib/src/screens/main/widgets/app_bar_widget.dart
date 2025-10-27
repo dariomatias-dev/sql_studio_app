@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screen/main/widgets/theme_switcher_button_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/theme_switcher_button_widget.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key});

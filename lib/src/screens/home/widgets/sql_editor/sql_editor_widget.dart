@@ -4,7 +4,7 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:highlight/languages/sql.dart';
 import 'sql_command_bar_widget.dart';
 
-import 'package:sql_studio/src/screen/home/widgets/panel_widget.dart';
+import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
