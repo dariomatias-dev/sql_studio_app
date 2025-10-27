@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
   const DrawerDatabaseListTileWidget({super.key, required this.database});
@@ -29,24 +28,19 @@ class _DrawerDatabaseListTileWidgetState
     showDialog(
       context: context,
       builder: (context) {
-        return DialogWidget(
+        return ConfirmationDialogWidget(
           title: 'Attention',
-          content: const Text(
-            'Are you sure you want to permanently delete this item? This action cannot be undone.',
-            textAlign: TextAlign.center,
+          description:
+              'Are you sure you want to permanently delete this item? This action cannot be undone.',
+          confirmButton: ButtonWidget(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            text: 'Delete',
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            borderColor: Colors.red,
           ),
-          actions: <Widget>[
-            CancelButtonWidget(),
-            ButtonWidget(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              text: 'Delete',
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              borderColor: Colors.red,
-            ),
-          ],
         );
       },
     );

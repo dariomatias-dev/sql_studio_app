@@ -4,8 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class SqlCommandSettingsScreen extends StatefulWidget {
   const SqlCommandSettingsScreen({super.key});
@@ -22,15 +21,10 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return DialogWidget(
+        return ConfirmationDialogWidget(
           title: 'Remove Command',
-          content: const Text(
-            'Are you sure you want to remove this command?',
-            textAlign: TextAlign.center,
-          ),
-          actions: <Widget>[
-            CancelButtonWidget(),
-            ButtonWidget(
+          description: 'Are you sure you want to remove this command?',
+          confirmButton: ButtonWidget(
               text: 'Remove',
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
@@ -41,7 +35,6 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
                 Navigator.pop(context);
               },
             ),
-          ],
         );
       },
     );
