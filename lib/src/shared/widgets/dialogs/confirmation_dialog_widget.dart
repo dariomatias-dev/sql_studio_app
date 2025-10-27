@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 class ConfirmationDialogWidget extends StatelessWidget {
   const ConfirmationDialogWidget({
