@@ -1,36 +1,54 @@
 import 'package:flutter/material.dart';
 
+enum ButtonStyleType { black, red, custom }
+
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
     super.key,
     required this.onPressed,
     required this.text,
-    this.backgroundColor = Colors.white,
-    this.foregroundColor = Colors.black,
-    this.borderColor = Colors.grey,
+    this.style = ButtonStyleType.custom,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderColor,
   });
 
   final VoidCallback onPressed;
   final String text;
-  final Color backgroundColor;
-  final Color foregroundColor;
-  final Color borderColor;
+  final ButtonStyleType style;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
+    late final Color bg;
+    late final Color fg;
+    late final Color bd;
+
+    switch (style) {
+      case ButtonStyleType.black:
+        bg = Colors.black;
+        fg = Colors.white;
+        bd = Colors.black;
+        break;
+      case ButtonStyleType.red:
+        bg = Colors.red;
+        fg = Colors.white;
+        bd = Colors.red;
+        break;
+      default:
+        bg = backgroundColor ?? Colors.white;
+        fg = foregroundColor ?? Colors.black;
+        bd = borderColor ?? Colors.grey;
+    }
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 2.0,
-        shadowColor: Colors.black.withAlpha(26),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24.0),
-          side: BorderSide(color: borderColor, width: 1.0),
-        ),
-        textStyle: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+        backgroundColor: bg,
+        foregroundColor: fg,
+        side: BorderSide(color: bd),
       ),
       child: Text(text),
     );
