@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/screen/settings/widgets/settings_card_widget.dart';
 import 'package:sql_studio/src/screen/settings/widgets/settings_section_title_widget.dart';
@@ -21,7 +24,9 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.arrow_forward_ios,
             ),
             SettingsCardWidget(
-              onTap: () {},
+              onTap: () {
+                context.push(RouteNames.sqlCommandSettings);
+              },
               title: 'SQL Commands',
               icon: Icons.arrow_forward_ios,
             ),

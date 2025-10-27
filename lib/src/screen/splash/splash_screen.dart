@@ -21,12 +21,12 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    _loadResources();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadResources();
+    });
   }
 
   Future<void> _loadResources() async {
-    await Future.delayed(const Duration(seconds: 3));
-
     if (mounted) {
       context.go(RouteNames.main);
     }
