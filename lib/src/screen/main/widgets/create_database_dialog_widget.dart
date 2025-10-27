@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
-import 'package:sql_studio/src/shared/widgets/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
-import 'package:sql_studio/src/shared/widgets/input_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 class CreateDatabaseDialogWidget extends StatefulWidget {
   const CreateDatabaseDialogWidget({super.key});
@@ -17,7 +14,6 @@ class CreateDatabaseDialogWidget extends StatefulWidget {
 class _CreateDatabaseDialogWidgetState
     extends State<CreateDatabaseDialogWidget> {
   final controller = TextEditingController();
-  final formKey = GlobalKey<FormState>();
 
   String _toSnakeCase(String input) {
     return input
@@ -27,54 +23,36 @@ class _CreateDatabaseDialogWidgetState
         .toLowerCase();
   }
 
-  void _createDatabase() {
-    if (!formKey.currentState!.validate()) return;
-
-    final snakeName = _toSnakeCase(controller.text);
-    final database = DatabaseModel(label: controller.text, name: snakeName);
+  void _createDatabase(String value) {
+    final snakeName = _toSnakeCase(value);
+    final database = DatabaseModel(label: value, name: snakeName);
 
     debugPrint(database.toString());
-
-    Navigator.pop(context);
   }
 
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DialogWidget(
+    return InputDialogWidget(
       title: 'Create Database',
-      content: Form(
-        key: formKey,
-        child: InputWidget(
-          controller: controller,
-          labelText: 'Database Name',
-          onChanged: (_) => setState(() {}),
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return 'Please enter a database name';
-            }
-            if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
-              return 'Invalid characters detected';
-            }
+      controller: controller,
+      label: 'Database Name',
+      submitText: 'Create',
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Please enter a database name';
+        } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
+          return 'Invalid characters detected';
+        }
 
-            return null;
-          },
-        ),
-      ),
-      actions: <Widget>[
-        const CancelButtonWidget(),
-        ButtonWidget(
-          onPressed: _createDatabase,
-          text: 'Create',
-          style: ButtonStyleType.black,
-        ),
-      ],
+        return null;
+      },
+      onSubmit: _createDatabase,
     );
   }
 }

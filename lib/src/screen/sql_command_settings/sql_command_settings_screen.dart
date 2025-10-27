@@ -5,6 +5,7 @@ import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 class SqlCommandSettingsScreen extends StatefulWidget {
   const SqlCommandSettingsScreen({super.key});
@@ -15,7 +16,39 @@ class SqlCommandSettingsScreen extends StatefulWidget {
 }
 
 class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
+  final controller = TextEditingController();
+
   late List<String> _commands;
+
+  void _showCreateCommandDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return InputDialogWidget(
+          title: 'Create Command',
+          controller: controller,
+          label: 'Command Name',
+          submitText: 'Create',
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Please enter a command name';
+            } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
+              return 'Invalid characters detected';
+            }
+
+            return null;
+          },
+          onSubmit: (value) {
+            setState(() {
+              _commands.add(value);
+            });
+
+            controller.text = '';
+          },
+        );
+      },
+    );
+  }
 
   void _removeCommand(int index) {
     showDialog(
@@ -28,7 +61,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
             onPressed: () {
               setState(() => _commands.removeAt(index));
 
-              Navigator.pop(context);
+              context.pop(context);
             },
             text: 'Remove',
             style: ButtonStyleType.red,
@@ -43,6 +76,13 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     super.initState();
 
     _commands = List<String>.from(sqlCommands);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -73,12 +113,12 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
+        onPressed: _showCreateCommandDialog,
         backgroundColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(100.0),
+          borderRadius: BorderRadius.circular(100.0),
         ),
         child: const Icon(Icons.add, color: Colors.black),
-        onPressed: () {},
       ),
       body: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.white),
