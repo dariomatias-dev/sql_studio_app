@@ -1,24 +1,6 @@
 import 'package:flutter/material.dart';
 
-const _sqlCommands = <String>[
-  'SELECT * FROM ',
-  'INSERT INTO ',
-  'UPDATE ',
-  'DELETE FROM ',
-  'CREATE TABLE ',
-  'DROP TABLE ',
-  'ALTER TABLE ',
-  'WHERE ',
-  'GROUP BY ',
-  'ORDER BY ',
-  'JOIN ',
-  'LEFT JOIN ',
-  'RIGHT JOIN ',
-  'INNER JOIN ',
-  'UNION ',
-  'LIMIT ',
-  'OFFSET ',
-];
+import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 class SqlCommandBarWidget extends StatelessWidget {
   const SqlCommandBarWidget({super.key, required this.onInsertCommand});
@@ -38,9 +20,9 @@ class SqlCommandBarWidget extends StatelessWidget {
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 6.0),
         scrollDirection: Axis.horizontal,
-        itemCount: _sqlCommands.length,
+        itemCount: sqlCommands.length,
         itemBuilder: (context, index) {
-          final cmd = _sqlCommands[index];
+          final cmd = sqlCommands[index];
 
           return Padding(
             padding: const EdgeInsets.symmetric(
