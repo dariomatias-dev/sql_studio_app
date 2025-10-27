@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/screen/home/widgets/console_widget.dart';
 import 'package:sql_studio/src/screen/home/widgets/divider_bar_widget.dart';
-import 'package:sql_studio/src/screen/home/widgets/sql_editor_widget.dart';
+import 'package:sql_studio/src/screen/home/widgets/sql_editor/sql_editor_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,14 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
           DividerBarWidget(
             onDragUpdate: (details) {
               setState(() {
-                double delta = details.delta.dy / screenHeight;
+                final delta = details.delta.dy / screenHeight;
                 _editorHeightFraction = (_editorHeightFraction + delta).clamp(
-                  0.1,
+                  2 / 5,
                   0.9,
                 );
               });
             },
           ),
+
           Flexible(
             flex: ((1 - _editorHeightFraction) * 100).toInt(),
             child: ConsoleWidget(

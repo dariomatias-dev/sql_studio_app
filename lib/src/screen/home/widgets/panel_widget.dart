@@ -41,9 +41,7 @@ class PanelWidget extends StatelessWidget {
               ...actions,
             ],
           ),
-          Expanded(
-            child: Container(color: Colors.white, child: child),
-          ),
+          Expanded(child: ClipRect(child: child)),
         ],
       ),
     );
