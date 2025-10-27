@@ -70,10 +70,9 @@ class _CreateDatabaseDialogWidgetState
       actions: <Widget>[
         const CancelButtonWidget(),
         ButtonWidget(
-          text: 'Create',
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
           onPressed: _createDatabase,
+          text: 'Create',
+          style: ButtonStyleType.black,
         ),
       ],
     );

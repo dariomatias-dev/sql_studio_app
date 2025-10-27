@@ -37,9 +37,7 @@ class _DrawerDatabaseListTileWidgetState
               Navigator.pop(context);
             },
             text: 'Delete',
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            borderColor: Colors.red,
+            style: ButtonStyleType.red,
           ),
         );
       },

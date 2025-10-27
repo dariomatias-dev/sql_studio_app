@@ -25,16 +25,14 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
           title: 'Remove Command',
           description: 'Are you sure you want to remove this command?',
           confirmButton: ButtonWidget(
-              text: 'Remove',
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              borderColor: Colors.red,
-              onPressed: () {
-                setState(() => _commands.removeAt(index));
+            onPressed: () {
+              setState(() => _commands.removeAt(index));
 
-                Navigator.pop(context);
-              },
-            ),
+              Navigator.pop(context);
+            },
+            text: 'Remove',
+            style: ButtonStyleType.red,
+          ),
         );
       },
     );
