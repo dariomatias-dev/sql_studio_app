@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/screen/main/widgets/drawer/drawer_database_list_tile_widget.dart';
+import 'package:sql_studio/src/shared/models/database_model.dart';
 
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
@@ -33,7 +34,13 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const DrawerDatabaseListTileWidget(name: 'Favorite Database 1'),
+            DrawerDatabaseListTileWidget(
+              database: DatabaseModel(
+                label: 'Favorite Database 1',
+                name: 'favorite_database_1',
+                isFavorite: true,
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
@@ -44,8 +51,12 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const DrawerDatabaseListTileWidget(name: 'Database 1'),
-            const DrawerDatabaseListTileWidget(name: 'Database 2'),
+            DrawerDatabaseListTileWidget(
+              database: DatabaseModel(label: 'Database 1', name: 'database_1'),
+            ),
+            DrawerDatabaseListTileWidget(
+              database: DatabaseModel(label: 'Database 2', name: 'database_1'),
+            ),
           ],
         ),
       ),

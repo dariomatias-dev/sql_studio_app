@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialog_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
-  const DrawerDatabaseListTileWidget({super.key, required this.name});
+  const DrawerDatabaseListTileWidget({super.key, required this.database});
 
-  final String name;
+  final DatabaseModel database;
 
   @override
   State<DrawerDatabaseListTileWidget> createState() =>
@@ -52,13 +53,20 @@ class _DrawerDatabaseListTileWidgetState
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _isFavorite = widget.database.isFavorite;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.grey.withAlpha(25),
             blurRadius: 8,
@@ -72,7 +80,7 @@ class _DrawerDatabaseListTileWidgetState
         ),
         leading: const Icon(Icons.storage_outlined, color: Colors.black87),
         title: Text(
-          widget.name,
+          widget.database.label,
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w500,
