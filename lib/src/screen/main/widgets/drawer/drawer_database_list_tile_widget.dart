@@ -16,6 +16,14 @@ class DrawerDatabaseListTileWidget extends StatefulWidget {
 
 class _DrawerDatabaseListTileWidgetState
     extends State<DrawerDatabaseListTileWidget> {
+  bool _isFavorite = false;
+
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+  }
+
   void _showDialog() {
     showDialog(
       context: context,
@@ -48,24 +56,47 @@ class _DrawerDatabaseListTileWidgetState
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300, width: 1.0),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(25),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: ListTile(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
-        leading: const Icon(Icons.storage_outlined, color: Colors.black),
-        title: Text(widget.name, style: const TextStyle(color: Colors.black)),
+        leading: const Icon(Icons.storage_outlined, color: Colors.black87),
+        title: Text(
+          widget.name,
+          style: const TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         trailing: PopupMenuButton(
-          tooltip: 'Show Menu',
+          tooltip: 'Options',
           color: Colors.white,
-          icon: const Icon(Icons.more_vert, color: Colors.black),
+          icon: const Icon(Icons.more_vert, color: Colors.black87),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           itemBuilder: (context) => <PopupMenuEntry>[
-            PopupMenuItem(onTap: _showDialog, child: Text('Delete'),),
+            PopupMenuItem(
+              onTap: _toggleFavorite,
+              child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
+            ),
+            PopupMenuItem(
+              onTap: _showDialog,
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.redAccent),
+              ),
+            ),
           ],
         ),
         contentPadding: const EdgeInsets.symmetric(
