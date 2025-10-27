@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screen/main/main_screen.dart';
+import 'package:sql_studio/src/core/routes/router_config.dart';
+
+void main() {
+  runApp(const SqlStudioApp());
+}
 
 class SqlStudioApp extends StatelessWidget {
   const SqlStudioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
       title: 'SQL Studio',
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      routerConfig: router,
     );
   }
 }
