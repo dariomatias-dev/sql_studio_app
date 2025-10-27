@@ -7,12 +7,14 @@ class InputWidget extends StatelessWidget {
     this.controller,
     this.hintText = '',
     this.labelText,
+    this.validator,
   });
 
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final String hintText;
   final String? labelText;
+  final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class InputWidget extends StatelessWidget {
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
+      validator: validator,
     );
   }
 }
