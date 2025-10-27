@@ -58,13 +58,14 @@ class _DrawerDatabaseListTileWidgetState
         leading: const Icon(Icons.storage_outlined, color: Colors.black),
         title: Text(widget.name, style: const TextStyle(color: Colors.black)),
         trailing: PopupMenuButton(
+          tooltip: 'Show Menu',
           color: Colors.white,
           icon: const Icon(Icons.more_vert, color: Colors.black),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           itemBuilder: (context) => <PopupMenuEntry>[
-            PopupMenuItem(onTap: _showDialog, child: Text('Delete')),
+            PopupMenuItem(onTap: _showDialog, child: Text('Delete'),),
           ],
         ),
         contentPadding: const EdgeInsets.symmetric(

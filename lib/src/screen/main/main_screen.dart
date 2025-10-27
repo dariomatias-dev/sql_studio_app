@@ -5,7 +5,7 @@ import 'package:sql_studio/src/screen/databases/databases_screen.dart';
 import 'package:sql_studio/src/screen/home/home_screen.dart';
 import 'package:sql_studio/src/screen/main/widgets/app_bar_widget.dart';
 import 'package:sql_studio/src/screen/main/widgets/create_database_dialog_widget.dart';
-import 'package:sql_studio/src/screen/main/widgets/drawer_widget.dart';
+import 'package:sql_studio/src/screen/main/widgets/drawer/drawer_widget.dart';
 import 'package:sql_studio/src/screen/settings/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -91,6 +91,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _showCreateDatabaseDialog,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        tooltip: 'Create Database',
         backgroundColor: Colors.grey.shade300,
         child: Icon(Icons.add, color: Colors.black),
       ),

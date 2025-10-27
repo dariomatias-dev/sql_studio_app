@@ -21,7 +21,7 @@ class ConsoleWidget extends StatelessWidget {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.clear_rounded),
-          tooltip: 'Clear console',
+          tooltip: 'Clear Console',
           onPressed: () {},
         ),
       ],

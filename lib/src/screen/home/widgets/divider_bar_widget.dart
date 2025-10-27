@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DividerBar extends StatelessWidget {
-  const DividerBar({super.key, required this.onDragUpdate});
+class DividerBarWidget extends StatelessWidget {
+  const DividerBarWidget({super.key, required this.onDragUpdate});
 
   final GestureDragUpdateCallback onDragUpdate;
 

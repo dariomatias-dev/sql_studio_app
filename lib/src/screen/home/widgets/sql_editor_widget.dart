@@ -5,17 +5,21 @@ import 'package:highlight/languages/sql.dart';
 
 import 'package:sql_studio/src/screen/home/widgets/panel_widget.dart';
 
-class SqlEditor extends StatefulWidget {
-  const SqlEditor({super.key, required this.isFullScreen, required this.onFullScreen});
+class SqlEditorWidget extends StatefulWidget {
+  const SqlEditorWidget({
+    super.key,
+    required this.isFullScreen,
+    required this.onFullScreen,
+  });
 
   final bool isFullScreen;
   final VoidCallback onFullScreen;
 
   @override
-  State<SqlEditor> createState() => _SqlEditorState();
+  State<SqlEditorWidget> createState() => _SqlEditorStateSqlEditorWidget();
 }
 
-class _SqlEditorState extends State<SqlEditor> {
+class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   final _controller = CodeController(language: sql);
 
   void _runQuery() {
@@ -38,17 +42,17 @@ class _SqlEditorState extends State<SqlEditor> {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.play_arrow_rounded),
-          tooltip: 'Run query',
+          tooltip: 'Run Query',
           onPressed: _runQuery,
         ),
         IconButton(
           icon: const Icon(Icons.clear_rounded),
-          tooltip: 'Clear editor',
+          tooltip: 'Clear Editor',
           onPressed: _clearEditor,
         ),
       ],
       child: Column(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Container(
               decoration: BoxDecoration(

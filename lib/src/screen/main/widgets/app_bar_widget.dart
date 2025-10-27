@@ -15,16 +15,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       leading: Builder(
-        builder: (context) => IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        builder: (context) {
+          return IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: 'Show Menu',
+            icon: const Icon(Icons.menu, color: Colors.black),
+          );
+        },
       ),
-      actions: <Widget>[
-        ThemeSwitcherButtonWidget(isDarkTheme: false, onToggle: () {}),
-      ],
+      actions: const <Widget>[ThemeSwitcherButtonWidget()],
     );
   }
 }

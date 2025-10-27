@@ -29,6 +29,7 @@ class PanelWidget extends StatelessWidget {
                   isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
                 ),
                 onPressed: onFullScreen,
+                tooltip: isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
               ),
               Expanded(
                 child: Text(

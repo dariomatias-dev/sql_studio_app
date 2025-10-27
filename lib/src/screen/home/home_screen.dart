@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _editorMaximized = false;
   bool _consoleMaximized = false;
 
+  double get screenHeight => MediaQuery.of(context).size.height;
+
   void _toggleEditorMaximize() {
     setState(() {
       _editorMaximized = !_editorMaximized;
@@ -32,10 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
     if (_editorMaximized) {
-      return SqlEditor(
+      return SqlEditorWidget(
         isFullScreen: _editorMaximized,
         onFullScreen: _toggleEditorMaximize,
       );
@@ -54,12 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           Flexible(
             flex: (_editorHeightFraction * 100).toInt(),
-            child: SqlEditor(
+            child: SqlEditorWidget(
               isFullScreen: _editorMaximized,
               onFullScreen: _toggleEditorMaximize,
             ),
           ),
-          DividerBar(
+          DividerBarWidget(
             onDragUpdate: (details) {
               setState(() {
                 double delta = details.delta.dy / screenHeight;
