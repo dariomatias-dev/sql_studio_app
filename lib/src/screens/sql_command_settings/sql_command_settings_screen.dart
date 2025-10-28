@@ -5,8 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+
 import 'package:sql_studio/src/screens/sql_command_settings/widgets/create_command_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_command_settings/widgets/remove_command_dialog_widget.dart';
+
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class SqlCommandSettingsScreen extends StatefulWidget {
   const SqlCommandSettingsScreen({super.key});
@@ -20,6 +25,8 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
   final controller = TextEditingController();
 
   late final notifier = Provider.of<SqlCommandsNotifier>(context);
+
+  BuildContext _getContext() => context;
 
   void _showCreateCommandDialog() {
     showDialog(
@@ -35,6 +42,27 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
       context: context,
       builder: (context) {
         return RemoveCommandDialogWidget(command: command);
+      },
+    );
+  }
+
+  void _showResetConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ConfirmationDialogWidget(
+          title: 'Reset Commands',
+          description: 'Are you sure you want to reset the command list?',
+          confirmButton: LoadingButtonWidget(
+            onPressed: () async {
+              await notifier.updateCommands(List<String>.from(sqlCommands));
+
+              _getContext().pop();
+            },
+            text: 'Reset',
+            style: ButtonStyleType.black,
+          ),
+        );
       },
     );
   }
@@ -75,6 +103,12 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
           ),
         ),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            onPressed: _showResetConfirmationDialog,
+            icon: const Icon(Icons.refresh, color: Colors.black87),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showCreateCommandDialog(),
