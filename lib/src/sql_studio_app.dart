@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/routes/router_config.dart';
 
-void main() {
-  runApp(const SqlStudioApp());
-}
-
 class SqlStudioApp extends StatelessWidget {
   const SqlStudioApp({super.key});
 

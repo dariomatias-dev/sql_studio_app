@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
@@ -19,8 +20,8 @@ class InputDialogWidget extends StatefulWidget {
   final String title;
   final TextEditingController controller;
   final String label;
-  final String? Function(String?)? validator;
-  final void Function(String value) onSubmit;
+  final String? Function(String? value)? validator;
+  final Future<void> Function(String value) onSubmit;
   final String submitText;
 
   @override
@@ -30,7 +31,7 @@ class InputDialogWidget extends StatefulWidget {
 class _InputDialogWidgetState extends State<InputDialogWidget> {
   final formKey = GlobalKey<FormState>();
 
-  void _handleSubmit() {
+  Future<void> _handleSubmit() async {
     if (!formKey.currentState!.validate()) return;
 
     widget.onSubmit(widget.controller.text);
@@ -60,7 +61,7 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
       ),
       actions: <Widget>[
         const CancelButtonWidget(),
-        ButtonWidget(
+        LoadingButtonWidget(
           onPressed: _handleSubmit,
           text: widget.submitText,
           style: ButtonStyleType.black,

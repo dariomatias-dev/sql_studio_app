@@ -23,7 +23,7 @@ class _CreateDatabaseDialogWidgetState
         .toLowerCase();
   }
 
-  void _createDatabase(String value) {
+  Future<void> _createDatabase(String value) async {
     final snakeName = _toSnakeCase(value);
     final database = DatabaseModel(label: value, name: snakeName);
 

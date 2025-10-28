@@ -38,7 +38,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
 
             return null;
           },
-          onSubmit: (value) {
+          onSubmit: (value) async {
             setState(() {
               _commands.add(value);
             });
