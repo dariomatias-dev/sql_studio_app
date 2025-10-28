@@ -20,10 +20,7 @@ class SharedPreferencesService {
   /// [defaultValue] The default value to return if the key does not exist. Defaults to an empty string.
   ///
   /// Returns the stored String or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
-  static String getString(
-    String key, {
-    String defaultValue = '',
-  }) {
+  static String getString(String key, {String defaultValue = ''}) {
     return _prefs?.getString(key) ?? defaultValue;
   }
 
@@ -42,10 +39,7 @@ class SharedPreferencesService {
   /// [value] The String value to store.
   ///
   /// Returns the [value] that was stored.
-  static Future<String> setString(
-    String key,
-    String value,
-  ) async {
+  static Future<String> setString(String key, String value) async {
     await _prefs?.setString(key, value);
 
     return value;
@@ -59,10 +53,7 @@ class SharedPreferencesService {
   /// [defaultValue] The default value to return if the key does not exist. Defaults to false.
   ///
   /// Returns the stored Boolean or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
-  static bool getBool(
-    String key, {
-    bool defaultValue = false,
-  }) {
+  static bool getBool(String key, {bool defaultValue = false}) {
     return _prefs?.getBool(key) ?? defaultValue;
   }
 
@@ -81,10 +72,7 @@ class SharedPreferencesService {
   /// [value] The Boolean value to store.
   ///
   /// Returns the [value] that was stored.
-  static Future<bool> setBool(
-    String key,
-    bool value,
-  ) async {
+  static Future<bool> setBool(String key, bool value) async {
     await _prefs?.setBool(key, value);
 
     return value;
@@ -92,33 +80,30 @@ class SharedPreferencesService {
 
   // ============== String List Operations ==============
 
-  /// Retrieves a List<String> value from SharedPreferences.
+  /// Retrieves a List&lt;String&gt; value from SharedPreferences.
   ///
   /// [key] The key to retrieve the list of Strings.
   /// [defaultValue] The default value to return if the key does not exist. Defaults to an empty list.
   ///
-  /// Returns the stored List<String> or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
-  static List<String> getStringList(
-    String key, {
-    List<String>? defaultValue,
-  }) {
+  /// Returns the stored List&lt;String&gt; or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
+  static List<String> getStringList(String key, {List<String>? defaultValue}) {
     defaultValue ??= <String>[];
     return _prefs?.getStringList(key) ?? defaultValue;
   }
 
-  /// Retrieves a List<String> value from SharedPreferences.
+  /// Retrieves a List&lt;String&gt; value from SharedPreferences.
   ///
   /// [key] The key to retrieve the list of Strings.
   ///
-  /// Returns the stored List<String> or `null` if the key doesn't exist, or if the SharedPreferences instance is not initialized.
+  /// Returns the stored List&lt;String&gt; or `null` if the key doesn't exist, or if the SharedPreferences instance is not initialized.
   static List<String>? getStringListOrNull(String key) {
     return _prefs?.getStringList(key);
   }
 
-  /// Saves a List<String> value in SharedPreferences.
+  /// Saves a List&lt;String&gt; value in SharedPreferences.
   ///
   /// [key] The key to store the list of Strings.
-  /// [value] The List<String> value to store.
+  /// [value] The List&lt;String&gt; value to store.
   ///
   /// Returns the [value] that was stored.
   static Future<List<String>> setStringList(
@@ -126,7 +111,6 @@ class SharedPreferencesService {
     List<String> value,
   ) async {
     await _prefs?.setStringList(key, value);
-
     return value;
   }
 
