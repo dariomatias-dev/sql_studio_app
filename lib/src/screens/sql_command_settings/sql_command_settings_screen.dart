@@ -5,10 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_command_settings/widgets/create_command_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_command_settings/widgets/remove_command_dialog_widget.dart';
 
 class SqlCommandSettingsScreen extends StatefulWidget {
   const SqlCommandSettingsScreen({super.key});
@@ -23,32 +21,11 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
 
   late final notifier = Provider.of<SqlCommandsNotifier>(context);
 
-  BuildContext _getContext() => context;
-
   void _showCreateCommandDialog() {
     showDialog(
       context: context,
       builder: (context) {
-        return InputDialogWidget(
-          title: 'Create Command',
-          controller: controller,
-          label: 'Command Name',
-          submitText: 'Create',
-          validator: (value) {
-            if (value == null || value.trim().isEmpty) {
-              return 'Enter a command name';
-            } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
-              return 'Invalid characters';
-            }
-
-            return null;
-          },
-          onSubmit: (value) async {
-            await notifier.addCommand(value);
-
-            controller.text = '';
-          },
-        );
+        return CreateCommandDialogWidget();
       },
     );
   }
@@ -57,21 +34,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return ConfirmationDialogWidget(
-          title: 'Remove Command',
-          description: 'Are you sure you want to remove this command?',
-          confirmButton: LoadingButtonWidget(
-            onPressed: () async {
-              await notifier.removeCommand(command);
-
-              if (mounted) {
-                _getContext().pop();
-              }
-            },
-            text: 'Remove',
-            style: ButtonStyleType.red,
-          ),
-        );
+        return RemoveCommandDialogWidget(command: command);
       },
     );
   }
