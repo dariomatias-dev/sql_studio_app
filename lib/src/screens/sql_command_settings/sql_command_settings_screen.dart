@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
@@ -18,7 +21,9 @@ class SqlCommandSettingsScreen extends StatefulWidget {
 class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
   final controller = TextEditingController();
 
-  late List<String> _commands;
+  late final notifier = Provider.of<SqlCommandsNotifier>(context);
+
+  BuildContext _getContext() => context;
 
   void _showCreateCommandDialog() {
     showDialog(
@@ -31,17 +36,15 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
           submitText: 'Create',
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return 'Please enter a command name';
+              return 'Enter a command name';
             } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
-              return 'Invalid characters detected';
+              return 'Invalid characters';
             }
 
             return null;
           },
           onSubmit: (value) async {
-            setState(() {
-              _commands.add(value);
-            });
+            await notifier.addCommand(value);
 
             controller.text = '';
           },
@@ -50,18 +53,20 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     );
   }
 
-  void _removeCommand(int index) {
+  void _showRemoveCommandDialog(String command) {
     showDialog(
       context: context,
       builder: (context) {
         return ConfirmationDialogWidget(
           title: 'Remove Command',
           description: 'Are you sure you want to remove this command?',
-          confirmButton: ButtonWidget(
-            onPressed: () {
-              setState(() => _commands.removeAt(index));
+          confirmButton: LoadingButtonWidget(
+            onPressed: () async {
+              await notifier.removeCommand(command);
 
-              context.pop(context);
+              if (mounted) {
+                _getContext().pop();
+              }
             },
             text: 'Remove',
             style: ButtonStyleType.red,
@@ -72,21 +77,17 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    _commands = List<String>.from(sqlCommands);
-  }
-
-  @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final commands = List<String>.from(
+      notifier.commands.isEmpty ? sqlCommands : notifier.commands,
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -103,7 +104,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
           ),
         ),
         title: const Text(
-          'Configurar Comandos SQL',
+          'SQL Command Settings',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 20.0,
@@ -113,7 +114,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showCreateCommandDialog,
+        onPressed: () => _showCreateCommandDialog(),
         backgroundColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
@@ -129,17 +130,15 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
             bottom: 100.0,
             left: 12.0,
           ),
-          itemCount: _commands.length,
+          itemCount: commands.length,
           onReorder: (oldIndex, newIndex) {
-            setState(() {
-              if (newIndex > oldIndex) newIndex--;
-              final item = _commands.removeAt(oldIndex);
-              _commands.insert(newIndex, item);
-            });
+            if (newIndex > oldIndex) newIndex--;
+            final item = commands.removeAt(oldIndex);
+            commands.insert(newIndex, item);
+            notifier.updateCommands(commands);
           },
           itemBuilder: (context, index) {
-            final cmd = _commands[index];
-
+            final cmd = commands[index];
             return Container(
               key: ValueKey(cmd),
               margin: const EdgeInsets.symmetric(vertical: 6.0),
@@ -172,7 +171,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () => _removeCommand(index),
+                  onPressed: () => _showRemoveCommandDialog(cmd),
                   icon: const Icon(
                     Icons.delete_outline,
                     color: Colors.redAccent,

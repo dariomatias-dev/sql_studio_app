@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
+
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 class SqlCommandBarWidget extends StatelessWidget {
   const SqlCommandBarWidget({super.key, required this.onInsertCommand});
@@ -9,6 +12,9 @@ class SqlCommandBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentCommands = context.read<SqlCommandsNotifier>().commands;
+    final commands = currentCommands.isEmpty ? sqlCommands : currentCommands;
+
     return Container(
       height: 52.0,
       decoration: BoxDecoration(
@@ -20,9 +26,9 @@ class SqlCommandBarWidget extends StatelessWidget {
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 6.0),
         scrollDirection: Axis.horizontal,
-        itemCount: sqlCommands.length,
+        itemCount: commands.length,
         itemBuilder: (context, index) {
-          final cmd = sqlCommands[index];
+          final cmd = commands[index];
 
           return Padding(
             padding: const EdgeInsets.symmetric(
