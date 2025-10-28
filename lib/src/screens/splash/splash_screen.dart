@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
+
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
@@ -32,6 +35,8 @@ class _SplashScreenState extends State<SplashScreen>
     await SharedPreferencesService.init();
 
     if (mounted) {
+      context.read<SqlCommandsNotifier>().loadCommands();
+
       context.go(RouteNames.main);
     }
   }
