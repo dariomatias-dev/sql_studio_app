@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/shared/utils/button_style_util.dart';
+
 enum ButtonStyleType { black, red, custom }
 
 class ButtonWidget extends StatelessWidget {
@@ -22,35 +24,21 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late final Color bg;
-    late final Color fg;
-    late final Color bd;
-
-    switch (style) {
-      case ButtonStyleType.black:
-        bg = Colors.black;
-        fg = Colors.white;
-        bd = Colors.black;
-        break;
-      case ButtonStyleType.red:
-        bg = Colors.red;
-        fg = Colors.white;
-        bd = Colors.red;
-        break;
-      default:
-        bg = backgroundColor ?? Colors.white;
-        fg = foregroundColor ?? Colors.black;
-        bd = borderColor ?? Colors.grey;
-    }
+    final buttonStyle = resolveButtonStyle(
+      style: style,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      borderColor: borderColor,
+    );
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: bg,
-        foregroundColor: fg,
-        side: BorderSide(color: bd),
+        backgroundColor: buttonStyle.background,
+        foregroundColor: buttonStyle.foreground,
+        side: BorderSide(color: buttonStyle.border),
       ),
-      child: Text(text),
+      child: Text(text, style: TextStyle(color: buttonStyle.text)),
     );
   }
 }

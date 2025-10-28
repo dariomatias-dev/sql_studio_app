@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
-import 'package:sql_studio/src/shared/widgets/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_list_
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
-import 'package:sql_studio/src/shared/widgets/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 final _databases = <DatabaseModel>[
   DatabaseModel(

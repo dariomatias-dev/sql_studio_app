@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/shared/widgets/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 class CancelButtonWidget extends StatelessWidget {
   const CancelButtonWidget({super.key});
