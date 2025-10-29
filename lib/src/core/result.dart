@@ -6,6 +6,10 @@ abstract class Failure {
   const Failure(this.message);
 }
 
+class DatabaseFailure extends Failure {
+  const DatabaseFailure(super.message);
+}
+
 sealed class Result<T> {
   const Result();
 

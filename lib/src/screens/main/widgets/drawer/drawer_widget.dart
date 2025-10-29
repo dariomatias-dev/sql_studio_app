@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/result.dart';
+
 import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_list_tile_widget.dart';
 
@@ -88,7 +90,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
     setState(() {
       _databases.clear();
-      _databases.addAll(databases);
+      _databases.addAll((databases as SuccessResult).value);
       _isLoading = false;
     });
   }
