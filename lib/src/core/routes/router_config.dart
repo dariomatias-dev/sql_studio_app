@@ -2,8 +2,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/screens/main/main_screen.dart';
-import 'package:sql_studio/src/screens/splash/splash_screen.dart';
 import 'package:sql_studio/src/screens/sql_command_settings/sql_command_settings_screen.dart';
+import 'package:sql_studio/src/screens/splash/splash_screen.dart';
 
 final router = GoRouter(
   initialLocation: RouteNames.splash,

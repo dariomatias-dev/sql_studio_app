@@ -1,5 +1,5 @@
 class RouteNames {
-  static const splash = '/';
-  static const main = '/main';
+  static const splash = '/splash';
+  static const main = '/';
   static const sqlCommandSettings = '/settings/sql-commands';
 }
