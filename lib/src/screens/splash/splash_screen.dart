@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
+import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -34,9 +35,13 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _loadResources() async {
     await SharedPreferencesService.init();
 
-    if (mounted) {
-      context.read<SqlCommandsNotifier>().loadCommands();
+    if (!mounted) return;
 
+    context.read<SqlCommandsNotifier>().loadCommands();
+
+    await context.read<DatabaseNotifier>().loadDatabases();
+
+    if (mounted) {
       context.go(RouteNames.main);
     }
   }
