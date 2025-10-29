@@ -11,7 +11,6 @@ import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
-
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
 
@@ -34,9 +33,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
     final databases = await _databaseService.getAll();
 
+    if (databases is SuccessResult<List<DatabaseModel>>) {
+      setState(() {
+        _databases
+          ..clear()
+          ..addAll(databases.value);
+      });
+    }
+
     setState(() {
-      _databases.clear();
-      _databases.addAll((databases as SuccessResult).value);
       _isLoading = false;
     });
   }
@@ -58,10 +63,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Future<void> _toggleFavorite(DatabaseModel database) async {
     await _databaseService.toggleFavorite(database);
+
+    await _loadDatabases();
   }
 
   Future<void> _deleteDatabase(DatabaseModel database) async {
     await _databaseService.delete(database);
+
     await _loadDatabases();
   }
 
@@ -74,14 +82,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredDatabases = _databases
-        .where((db) => db.name.toLowerCase().contains(_filter.toLowerCase()))
-        .toList();
+    final lowerFilter = _filter.toLowerCase();
 
-    final favorites = filteredDatabases.where((db) => db.isFavorite).toList();
-    final allDatabases = filteredDatabases
-        .where((db) => !db.isFavorite)
-        .toList();
+    final favorites = <DatabaseModel>[];
+    final allDatabases = <DatabaseModel>[];
+
+    for (final db in _databases) {
+      if (db.name.toLowerCase().contains(lowerFilter)) {
+        (db.isFavorite ? favorites : allDatabases).add(db);
+      }
+    }
 
     return SafeArea(
       child: Drawer(
