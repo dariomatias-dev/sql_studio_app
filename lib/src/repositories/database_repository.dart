@@ -1,0 +1,125 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
+class DatabaseManager {
+  static const _databaseName = 'sql_studio_app.db';
+  static const _databaseVersion = 1;
+
+  static Database? _instance;
+
+  static final _singleton = DatabaseManager._internal();
+
+  DatabaseManager._internal();
+  factory DatabaseManager() => _singleton;
+
+  Future<Database> get database async {
+    if (_instance != null) return _instance!;
+
+    _instance = await _initDatabase();
+
+    return _instance!;
+  }
+
+  Future<Database> _initDatabase() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, _databaseName);
+
+    return openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: (db, version) async {},
+    );
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, _databaseName);
+
+    await deleteDatabase(path);
+
+    _instance = null;
+  }
+}
+
+class DatabaseRepository<T> {
+  final String tableName;
+  final _manager = DatabaseManager();
+
+  DatabaseRepository({required this.tableName});
+
+  Future<Database> get _db async => await _manager.database;
+
+  Future<int> insert(Map<String, dynamic> modelMap) async {
+    final db = await _db;
+
+    return db.insert(
+      tableName,
+      modelMap,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> getAll({
+    String? orderBy,
+    String? where,
+    List<dynamic>? whereArgs,
+  }) async {
+    final db = await _db;
+    final maps = await db.query(
+      tableName,
+      orderBy: orderBy,
+      where: where,
+      whereArgs: whereArgs,
+    );
+
+    return maps;
+  }
+
+  Future<Map<String, dynamic>?> getById(String id) async {
+    final db = await _db;
+    final maps = await db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) return maps.first;
+
+    return null;
+  }
+
+  Future<int> update(Map<String, dynamic> modelMap) async {
+    final db = await _db;
+
+    return db.update(
+      tableName,
+      modelMap,
+      where: 'id = ?',
+      whereArgs: [modelMap['id']],
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int> deleteById(String id) async {
+    final db = await _db;
+
+    return db.delete(tableName, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> delete(Map<String, dynamic> modelMap) async {
+    return deleteById(modelMap['id']);
+  }
+
+  Future<void> clear() async {
+    final db = await _db;
+
+    await db.delete(tableName);
+  }
+
+  Future<void> dropTable() async {
+    final db = await _db;
+
+    await db.execute('DROP TABLE IF EXISTS $tableName');
+  }
+}
