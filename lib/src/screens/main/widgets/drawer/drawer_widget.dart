@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
-import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_list_tile_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_group_widget.dart';
 
 import 'package:sql_studio/src/services/database_service.dart';
 
@@ -11,60 +11,6 @@ import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
-class DatabaseGroupWidget extends StatelessWidget {
-  const DatabaseGroupWidget({
-    super.key,
-    required this.title,
-    required this.databases,
-    required this.toggleFavorite,
-    required this.onDelete,
-  });
-
-  final String title;
-  final List<DatabaseModel> databases;
-  final Future<void> Function(DatabaseModel database) toggleFavorite;
-  final Future<void> Function(DatabaseModel database) onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    if (databases.isEmpty) return const SizedBox.shrink();
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: databases.length,
-          itemBuilder: (context, index) {
-            final database = databases[index];
-
-            return DrawerDatabaseListTileWidget(
-              database: database,
-              toggleFavorite: () async {
-                await toggleFavorite(database);
-              },
-              onDelete: () async {
-                await onDelete(database);
-              },
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
