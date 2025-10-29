@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
-  const DrawerDatabaseListTileWidget({super.key, required this.database});
+  const DrawerDatabaseListTileWidget({
+    super.key,
+    required this.database,
+    required this.toggleFavorite,
+    required this.onDelete,
+  });
 
   final DatabaseModel database;
+  final Future<void> Function() toggleFavorite;
+  final Future<void> Function() onDelete;
 
   @override
   State<DrawerDatabaseListTileWidget> createState() =>
@@ -16,25 +24,29 @@ class DrawerDatabaseListTileWidget extends StatefulWidget {
 
 class _DrawerDatabaseListTileWidgetState
     extends State<DrawerDatabaseListTileWidget> {
-  bool _isFavorite = false;
+  late bool _isFavorite = widget.database.isFavorite;
 
-  void _toggleFavorite() {
+  void _toggleFavorite() async {
     setState(() {
       _isFavorite = !_isFavorite;
     });
+
+    await widget.toggleFavorite();
   }
 
-  void _showDialog() {
+  void _showDeleteDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return ConfirmationDialogWidget(
           title: 'Attention',
           description:
-              'Are you sure you want to permanently delete this item? This action cannot be undone.',
+              'Are you sure you want to permanently delete this database? This action cannot be undone.',
           confirmButton: ButtonWidget(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              context.pop(context);
+
+              await widget.onDelete();
             },
             text: 'Delete',
             style: ButtonStyleType.red,
@@ -42,13 +54,6 @@ class _DrawerDatabaseListTileWidgetState
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _isFavorite = widget.database.isFavorite;
   }
 
   @override
@@ -61,8 +66,8 @@ class _DrawerDatabaseListTileWidgetState
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.grey.withAlpha(25),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            blurRadius: 8.0,
+            offset: const Offset(0.0, 2.0),
           ),
         ],
       ),
@@ -91,7 +96,7 @@ class _DrawerDatabaseListTileWidgetState
               child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
             ),
             PopupMenuItem(
-              onTap: _showDialog,
+              onTap: _showDeleteDialog,
               child: const Text(
                 'Delete',
                 style: TextStyle(color: Colors.redAccent),

@@ -4,7 +4,9 @@ import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 class CreateDatabaseDialogWidget extends StatefulWidget {
-  const CreateDatabaseDialogWidget({super.key});
+  const CreateDatabaseDialogWidget({super.key, required this.onCreated});
+
+  final ValueChanged<DatabaseModel> onCreated;
 
   @override
   State<CreateDatabaseDialogWidget> createState() =>
@@ -27,12 +29,15 @@ class _CreateDatabaseDialogWidgetState
     final snakeName = _toSnakeCase(value);
     final database = DatabaseModel(label: value, name: snakeName);
 
-    debugPrint(database.toString());
+    widget.onCreated(database);
+
+    Navigator.pop(context);
   }
 
   @override
   void dispose() {
     controller.dispose();
+
     super.dispose();
   }
 
