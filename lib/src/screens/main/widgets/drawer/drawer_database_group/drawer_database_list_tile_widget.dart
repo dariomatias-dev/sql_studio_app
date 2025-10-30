@@ -6,8 +6,6 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
-
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
@@ -68,8 +66,6 @@ class _DrawerDatabaseListTileWidgetState
     notifier.clearResult();
 
     Scaffold.of(context).closeDrawer();
-
-    SnackBarUtils.show(context, 'Selected database: ${widget.database.label}');
   }
 
   @override
