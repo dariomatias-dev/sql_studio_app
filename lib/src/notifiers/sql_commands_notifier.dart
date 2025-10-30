@@ -11,6 +11,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
   dynamic result;
   bool isLoading = false;
   String? error;
+  String? lastQuery;
 
   Future<void> runQuery(String sql) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
@@ -19,6 +20,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
       return;
     }
 
+    lastQuery = sql;
     isLoading = true;
     error = null;
     notifyListeners();
@@ -41,6 +43,26 @@ class SqlCommandsNotifier extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<List<String>> getTableColumns(String tableName) async {
+    if (activeDatabase == null || activeDatabase!.isEmpty) {
+      error = 'No active database.';
+      notifyListeners();
+      return [];
+    }
+
+    try {
+      final columns = await _sqlService.getTableColumns(
+        databaseName: activeDatabase!,
+        tableName: tableName,
+      );
+      return columns;
+    } catch (e) {
+      error = 'Failed to fetch table columns: $e';
+      notifyListeners();
+      return [];
+    }
   }
 
   void clearResult() {
