@@ -81,40 +81,33 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           onPressed: _clearEditor,
         ),
       ],
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: borderRadius,
-          border: Border.all(color: Colors.grey.shade300),
-        ),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: borderRadius.topLeft,
-                  topRight: borderRadius.topRight,
-                ),
-                child: CodeTheme(
-                  data: const CodeThemeData(styles: githubTheme),
-                  child: CodeField(
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    expands: true,
-                    minLines: null,
-                    maxLines: null,
-                    textStyle: const TextStyle(
-                      fontFamily: 'monospace',
-                      fontSize: 14.0,
-                    ),
-                    background: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: borderRadius.topLeft,
+                topRight: borderRadius.topRight,
+              ),
+              child: CodeTheme(
+                data: const CodeThemeData(styles: githubTheme),
+                child: CodeField(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  expands: true,
+                  minLines: null,
+                  maxLines: null,
+                  textStyle: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 14.0,
                   ),
+                  background: Colors.white,
                 ),
               ),
             ),
-            SqlCommandBarWidget(onInsertCommand: _insertCommand),
-          ],
-        ),
+          ),
+          SqlCommandBarWidget(onInsertCommand: _insertCommand),
+        ],
       ),
     );
   }
