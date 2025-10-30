@@ -8,9 +8,11 @@ class PanelWidget extends StatelessWidget {
     required this.onFullScreen,
     required this.actions,
     required this.child,
+    this.databaseName,
   });
 
   final String title;
+  final String? databaseName;
   final VoidCallback onFullScreen;
   final bool isFullScreen;
   final List<Widget> actions;
@@ -32,10 +34,24 @@ class PanelWidget extends StatelessWidget {
                 tooltip: isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
               ),
               Expanded(
-                child: Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      title,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (databaseName != null)
+                      Text(
+                        'Database: $databaseName',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                  ],
                 ),
               ),
               ...actions,

@@ -44,10 +44,13 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   void _insertCommand(String command) {
     final text = _controller.text;
     var selection = _controller.selection;
+
     if (selection.start < 0 || selection.end < 0) {
       selection = TextSelection.collapsed(offset: text.length);
     }
+
     final newText = text.replaceRange(selection.start, selection.end, command);
+
     setState(() {
       _controller.text = newText;
       _controller.selection = TextSelection.collapsed(
@@ -59,9 +62,11 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(10.0);
+    final databaseName = context.watch<SqlCommandsNotifier>().activeDatabase;
 
     return PanelWidget(
       title: 'SQL Editor',
+      databaseName: databaseName,
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
