@@ -57,7 +57,21 @@ class PanelWidget extends StatelessWidget {
               ...actions,
             ],
           ),
-          Expanded(child: ClipRect(child: child)),
+          Expanded(
+            child: ClipRect(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  border: Border.symmetric(
+                    vertical: BorderSide(color: Colors.grey.shade100),
+                  ),
+                ),
+                width: double.infinity,
+                height: double.infinity,
+                child: child,
+              ),
+            ),
+          ),
         ],
       ),
     );
