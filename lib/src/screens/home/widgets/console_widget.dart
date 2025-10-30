@@ -20,9 +20,7 @@ class ConsoleWidget extends StatelessWidget {
   String _extractTableName(SqlCommandsNotifier notifier) {
     if (notifier.result is List && (notifier.result as List).isEmpty) {
       final sql = notifier.lastQuery;
-      if (sql == null) {
-        return '';
-      }
+      if (sql == null) return '';
 
       final match = RegExp(
         r'\bfrom\s+([a-zA-Z_][\w]*)\b',
@@ -43,15 +41,18 @@ class ConsoleWidget extends StatelessWidget {
 
         if (notifier.isLoading) {
           content = const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
             child: LinearProgressIndicator(),
           );
         } else if (notifier.error != null) {
           content = Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
               notifier.error!,
-              style: const TextStyle(color: Colors.red),
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           );
         } else if (notifier.result == null) {
@@ -63,18 +64,19 @@ class ConsoleWidget extends StatelessWidget {
             content = FutureBuilder<List<String>>(
               future: notifier.getTableColumns(_extractTableName(notifier)),
               builder: (context, snapshot) {
-                final columns = snapshot.data ?? [];
+                final columns = snapshot.data ?? <String>[];
                 if (columns.isEmpty) return const SizedBox.shrink();
 
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: DataTable(
-                      columns: columns.builder(
-                        (col, index) => DataColumn(label: Text(col)),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: StyledDataTable(
+                        columns: columns,
+                        rows: const <Map<String, dynamic>>[],
                       ),
-                      rows: const [],
                     ),
                   ),
                 );
@@ -85,27 +87,22 @@ class ConsoleWidget extends StatelessWidget {
 
             content = SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DataTable(
-                  columns: columns.builder(
-                    (col, index) => DataColumn(label: Text(col)),
-                  ),
-                  rows: rows.builder(
-                    (row, index) => DataRow(
-                      cells: columns.builder(
-                        (col, index) => DataCell(Text('${row[col]}')),
-                      ),
-                    ),
-                  ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: StyledDataTable(columns: columns, rows: rows),
                 ),
               ),
             );
           }
         } else {
           content = Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text('Command executed (${notifier.result}) rows affected.'),
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Command executed (${notifier.result}) rows affected.',
+              style: const TextStyle(fontWeight: FontWeight.w500),
+            ),
           );
         }
 
@@ -123,6 +120,42 @@ class ConsoleWidget extends StatelessWidget {
           child: content,
         );
       },
+    );
+  }
+}
+
+class StyledDataTable extends StatelessWidget {
+  const StyledDataTable({super.key, required this.columns, required this.rows});
+
+  final List<String> columns;
+  final List<Map<String, dynamic>> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      headingRowColor: WidgetStateProperty.all(Colors.blueGrey.shade50),
+      headingTextStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      ),
+      dataRowColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.selected)
+            ? Colors.blue.withAlpha(25)
+            : Colors.white;
+      }),
+      columns: columns.builder((col, index) => DataColumn(label: Text(col))),
+      rows: rows.builder(
+        (row, rowIndex) => DataRow(
+          cells: columns.builder(
+            (col, colIndex) => DataCell(
+              Text('${row[col]}', style: const TextStyle(fontSize: 14)),
+            ),
+          ),
+        ),
+      ),
+      dividerThickness: 1,
+      horizontalMargin: 12,
+      columnSpacing: 24,
     );
   }
 }
