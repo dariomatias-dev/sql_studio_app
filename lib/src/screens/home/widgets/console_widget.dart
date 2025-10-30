@@ -17,6 +17,24 @@ class ConsoleWidget extends StatelessWidget {
   final bool isFullScreen;
   final VoidCallback onFullScreen;
 
+  String _extractTableName(SqlCommandsNotifier notifier) {
+    if (notifier.result is List && (notifier.result as List).isEmpty) {
+      final sql = notifier.lastQuery;
+      if (sql == null) {
+        return '';
+      }
+
+      final match = RegExp(
+        r'\bfrom\s+([a-zA-Z_][\w]*)\b',
+        caseSensitive: false,
+      ).firstMatch(sql);
+
+      return match?.group(1) ?? '';
+    }
+
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<SqlCommandsNotifier>(
@@ -42,7 +60,26 @@ class ConsoleWidget extends StatelessWidget {
           final rows = notifier.result as List<Map<String, dynamic>>;
 
           if (rows.isEmpty) {
-            content = const SizedBox.shrink();
+            content = FutureBuilder<List<String>>(
+              future: notifier.getTableColumns(_extractTableName(notifier)),
+              builder: (context, snapshot) {
+                final columns = snapshot.data ?? [];
+                if (columns.isEmpty) return const SizedBox.shrink();
+
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: DataTable(
+                      columns: columns.builder(
+                        (col, index) => DataColumn(label: Text(col)),
+                      ),
+                      rows: const [],
+                    ),
+                  ),
+                );
+              },
+            );
           } else {
             final columns = rows.first.keys.toList();
 
