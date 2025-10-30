@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_command_settings/widgets/create_command_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_command_settings/widgets/remove_command_dialog_widget.dart';
@@ -24,7 +24,7 @@ class SqlCommandSettingsScreen extends StatefulWidget {
 class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
   final controller = TextEditingController();
 
-  late final notifier = Provider.of<SqlCommandsNotifier>(context);
+  late final notifier = Provider.of<SqlSuggestionsNotifier>(context);
 
   BuildContext _getContext() => context;
 

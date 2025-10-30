@@ -4,7 +4,7 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
-class SqlCommandsNotifier extends ChangeNotifier {
+class SqlSuggestionsNotifier extends ChangeNotifier {
   List<String> _commands = [];
 
   List<String> get commands => _commands;

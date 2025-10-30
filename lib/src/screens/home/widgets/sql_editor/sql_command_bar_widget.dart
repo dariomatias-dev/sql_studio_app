@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 class SqlCommandBarWidget extends StatelessWidget {
   const SqlCommandBarWidget({super.key, required this.onInsertCommand});
@@ -12,7 +12,7 @@ class SqlCommandBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentCommands = context.read<SqlCommandsNotifier>().commands;
+    final currentCommands = context.read<SqlSuggestionsNotifier>().commands;
     final commands = currentCommands.isEmpty ? sqlCommands : currentCommands;
 
     return Container(

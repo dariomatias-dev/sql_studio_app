@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
@@ -28,7 +28,7 @@ class _RemoveCommandDialogWidgetState extends State<RemoveCommandDialogWidget> {
       description: 'Are you sure you want to remove this command?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlCommandsNotifier>().removeCommand(
+          await context.read<SqlSuggestionsNotifier>().removeCommand(
             widget.command,
           );
 
