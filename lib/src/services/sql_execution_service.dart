@@ -2,6 +2,8 @@ import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:sql_studio/src/core/extensions/list_extension.dart';
+
 import 'package:sql_studio/src/core/result.dart';
 
 class SqlExecutionService {
@@ -53,6 +55,6 @@ class SqlExecutionService {
     final db = await openDatabase(path);
     final result = await db.rawQuery('PRAGMA table_info($tableName);');
 
-    return result.map((col) => col['name'] as String).toList();
+    return result.builder((col, index) => col['name'] as String);
   }
 }

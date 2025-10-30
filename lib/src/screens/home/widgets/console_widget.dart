@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/extensions/list_extension.dart';
+
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
@@ -49,18 +51,16 @@ class ConsoleWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: DataTable(
-                  columns: columns
-                      .map((col) => DataColumn(label: Text(col)))
-                      .toList(),
-                  rows: rows
-                      .map(
-                        (r) => DataRow(
-                          cells: columns
-                              .map((c) => DataCell(Text('${r[c]}')))
-                              .toList(),
-                        ),
-                      )
-                      .toList(),
+                  columns: columns.builder(
+                    (col, index) => DataColumn(label: Text(col)),
+                  ),
+                  rows: rows.builder(
+                    (row, index) => DataRow(
+                      cells: columns.builder(
+                        (col, index) => DataCell(Text('${row[col]}')),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             );

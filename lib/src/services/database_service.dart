@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 
+import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/repositories/database_repository.dart';
@@ -37,7 +38,9 @@ class DatabaseService {
   Future<Result<List<DatabaseModel>>> getAll() async {
     try {
       final results = await _repository.getAll(orderBy: 'name ASC');
-      final models = results.map((map) => DatabaseModel.fromMap(map)).toList();
+      final models = results.builder(
+        (map, index) => DatabaseModel.fromMap(map),
+      );
 
       _logger.i('Fetched ${models.length} databases');
 
