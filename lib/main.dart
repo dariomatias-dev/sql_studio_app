@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/sql_studio_app.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,8 +13,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SqlSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => DatabaseNotifier()),
+        ChangeNotifierProvider(create: (_) => SqlCommandsNotifier()),
+        ChangeNotifierProvider(create: (_) => SqlSuggestionsNotifier()),
       ],
       child: const SqlStudioApp(),
     ),
