@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -45,7 +48,6 @@ class _DrawerDatabaseListTileWidgetState
           confirmButton: ButtonWidget(
             onPressed: () async {
               context.pop(context);
-
               await widget.onDelete();
             },
             text: 'Delete',
@@ -56,12 +58,31 @@ class _DrawerDatabaseListTileWidgetState
     );
   }
 
+  void _selectDatabase() {
+    final notifier = context.read<SqlCommandsNotifier>();
+
+    notifier.activeDatabase = widget.database.label;
+    notifier.clearResult();
+
+    Scaffold.of(context).closeDrawer();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Selected database: ${widget.database.label}'),
+        action: SnackBarAction(onPressed: () {}, label: 'Ok'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final notifier = context.watch<SqlCommandsNotifier>();
+    final isActive = notifier.activeDatabase == widget.database.label;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isActive ? Colors.blue.shade50 : Colors.white,
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -72,14 +93,15 @@ class _DrawerDatabaseListTileWidgetState
         ],
       ),
       child: ListTile(
+        onTap: _selectDatabase,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
         leading: const Icon(Icons.storage_outlined, color: Colors.black87),
         title: Text(
           widget.database.label,
-          style: const TextStyle(
-            color: Colors.black87,
+          style: TextStyle(
+            color: isActive ? Colors.blue.shade800 : Colors.black87,
             fontWeight: FontWeight.w500,
           ),
         ),
