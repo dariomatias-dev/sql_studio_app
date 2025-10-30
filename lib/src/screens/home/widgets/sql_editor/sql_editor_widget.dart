@@ -2,9 +2,12 @@ import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:highlight/languages/sql.dart';
-import 'sql_command_bar_widget.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
+import 'package:sql_studio/src/screens/home/widgets/sql_editor/sql_command_bar_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
@@ -27,6 +30,9 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   void _runQuery() {
     final sql = _controller.text.trim();
     if (sql.isEmpty) return;
+
+    final notifier = context.read<SqlCommandsNotifier>();
+    notifier.runQuery(sql);
   }
 
   void _clearEditor() {
@@ -44,8 +50,9 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     final newText = text.replaceRange(selection.start, selection.end, command);
     setState(() {
       _controller.text = newText;
-      _controller.selection =
-          TextSelection.collapsed(offset: selection.start + command.length);
+      _controller.selection = TextSelection.collapsed(
+        offset: selection.start + command.length,
+      );
     });
   }
 
