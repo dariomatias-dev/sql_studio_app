@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screens/home/widgets/console_widget.dart';
+import 'package:sql_studio/src/screens/home/widgets/console/console_widget.dart';
 import 'package:sql_studio/src/screens/home/widgets/divider_bar_widget.dart';
 import 'package:sql_studio/src/screens/home/widgets/sql_editor/sql_editor_widget.dart';
 
