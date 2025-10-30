@@ -111,9 +111,9 @@ class ConsoleWidget extends StatelessWidget {
           onFullScreen: onFullScreen,
           actions: <Widget>[
             IconButton(
+              onPressed: notifier.clearResult,
               icon: const Icon(Icons.clear_rounded),
               tooltip: 'Clear Console',
-              onPressed: () => notifier.clearResult(),
             ),
           ],
           child: content,

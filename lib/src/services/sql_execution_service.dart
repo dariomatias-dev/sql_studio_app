@@ -20,18 +20,39 @@ class SqlExecutionService {
     try {
       final dbPath = await getDatabasesPath();
       final path = join(dbPath, '$databaseName.db');
-
       final db = await openDatabase(path);
 
-      final trimmed = sql.trim().toUpperCase();
-      final isSelect = trimmed.startsWith('SELECT');
+      final trimmed = sql.trim();
+      final upper = trimmed.toUpperCase();
 
-      if (isSelect) {
+      if (upper.startsWith('SELECT')) {
         final result = await db.rawQuery(sql);
 
         _logger.i('Executed SELECT on $databaseName: $sql');
 
         return SuccessResult(result);
+      } else if (upper.startsWith('DELETE')) {
+        final count = await db.rawDelete(sql);
+
+        _logger.i(
+          'Executed DELETE on $databaseName: $sql ($count rows affected)',
+        );
+
+        return SuccessResult(count);
+      } else if (upper.startsWith('UPDATE')) {
+        final count = await db.rawUpdate(sql);
+
+        _logger.i(
+          'Executed UPDATE on $databaseName: $sql ($count rows affected)',
+        );
+
+        return SuccessResult(count);
+      } else if (upper.startsWith('INSERT')) {
+        final id = await db.rawInsert(sql);
+
+        _logger.i('Executed INSERT on $databaseName: $sql (insertId: $id)');
+
+        return SuccessResult(id);
       }
 
       await db.execute(sql);
