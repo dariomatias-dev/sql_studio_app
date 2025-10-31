@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS "cars" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    brand TEXT NOT NULL,
+    model TEXT NOT NULL,
+    year INTEGER,
+    daily_rate REAL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "customers" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    driver_license TEXT,
+    phone TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "rentals" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    car_id INTEGER NOT NULL,
+    start_date TEXT,
+    end_date TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES "customers"(id),
+    FOREIGN KEY (car_id) REFERENCES "cars"(id)
+);
+
+CREATE TABLE IF NOT EXISTS "payments" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rental_id INTEGER NOT NULL,
+    amount REAL,
+    payment_date TEXT DEFAULT CURRENT_TIMESTAMP,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (rental_id) REFERENCES "rentals"(id)
+);

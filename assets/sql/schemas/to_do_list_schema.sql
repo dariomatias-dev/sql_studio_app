@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS "tasks" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    status TEXT CHECK (
+        status IN ('PENDING', 'COMPLETED')
+    ) DEFAULT 'PENDING',
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
