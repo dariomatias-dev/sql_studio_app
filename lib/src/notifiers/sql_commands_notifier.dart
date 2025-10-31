@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/result.dart';
@@ -77,6 +78,60 @@ class SqlCommandsNotifier extends ChangeNotifier {
     }
   }
 
+  Future<void> resetDatabase() async {
+    if (!isDefaultDatabase || _activeDatabase == null) return;
+
+    isLoading = true;
+    error = null;
+    notifyListeners();
+
+    try {
+      final tables = await _sqlService.getTables(
+        databaseName: _activeDatabase!,
+      );
+      for (final table in tables) {
+        await _sqlService.execute(
+          sql: 'DROP TABLE IF EXISTS "$table";',
+          databaseName: _activeDatabase,
+        );
+      }
+
+      final schemaPath = 'assets/sql/schemas/${_activeDatabase!}_schema.sql';
+      final seedPath = 'assets/sql/seeds/${_activeDatabase!}_seed.sql';
+
+      final schemaSql = await rootBundle.loadString(schemaPath);
+      final seedSql = await rootBundle.loadString(seedPath);
+
+      final allSqlCommands = <String>[
+        ...schemaSql.split(';'),
+        ...seedSql.split(';'),
+      ];
+
+      for (final sql in allSqlCommands) {
+        final trimmedSql = sql.trim();
+        if (trimmedSql.isEmpty) continue;
+
+        final response = await _sqlService.execute(
+          sql: trimmedSql,
+          databaseName: _activeDatabase!,
+        );
+
+        if (response is FailureResult) {
+          error = response.error.message;
+          break;
+        }
+      }
+
+      if (error == null) result = 'Database reset successfully';
+    } catch (e) {
+      error = 'Failed to reset database: $e';
+      result = null;
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
   void clearResult() {
     result = null;
     error = null;
@@ -85,7 +140,6 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
   Future<void> _checkActiveDatabase() async {
     final dbName = activeDatabase;
-
     if (dbName != null) {
       isDefaultDatabase = defaultDatabases.any((db) => db.name == dbName);
     } else {
