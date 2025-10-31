@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -23,15 +25,6 @@ class _SplashScreenState extends State<SplashScreen>
     duration: const Duration(seconds: 2),
   )..repeat();
 
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _loadResources();
-    });
-  }
-
   Future<void> _loadResources() async {
     await SharedPreferencesService.init();
 
@@ -42,8 +35,23 @@ class _SplashScreenState extends State<SplashScreen>
     await context.read<DatabaseNotifier>().loadDatabases();
 
     if (mounted) {
+      context
+          .read<SqlCommandsNotifier>()
+          .activeDatabase = SharedPreferencesService.getStringOrNull(
+        SharedPreferencesKeys.selectedDatabaseKey,
+      );
+
       context.go(RouteNames.main);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadResources();
+    });
   }
 
   @override

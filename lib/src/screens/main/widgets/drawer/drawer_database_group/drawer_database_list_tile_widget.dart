@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+
+import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -57,8 +61,15 @@ class _DrawerDatabaseListTileWidgetState
 
   void _selectDatabase() {
     final notifier = context.read<SqlCommandsNotifier>();
-    notifier.activeDatabase = widget.database.label;
+    final databaseName = widget.database.label;
+    notifier.activeDatabase = databaseName;
     notifier.clearResult();
+
+    SharedPreferencesService.setString(
+      SharedPreferencesKeys.selectedDatabaseKey,
+      databaseName,
+    );
+
     Scaffold.of(context).closeDrawer();
   }
 
