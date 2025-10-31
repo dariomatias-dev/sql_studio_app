@@ -39,9 +39,18 @@ class ConsoleWidget extends StatelessWidget {
         Widget content;
 
         if (notifier.isLoading) {
-          content = const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: LinearProgressIndicator(),
+          content = Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: 4.0,
+                child: LinearProgressIndicator(
+                  backgroundColor: Colors.grey.shade300,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
+                ),
+              ),
+            ),
           );
         } else if (notifier.error != null) {
           content = Padding(
@@ -122,4 +131,3 @@ class ConsoleWidget extends StatelessWidget {
     );
   }
 }
-
