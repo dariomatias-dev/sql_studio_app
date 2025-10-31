@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import 'package:sql_studio/src/repositories/migrations.dart';
+
 class DatabaseManager {
   static const _databaseName = 'sql_studio_app.db';
   static const _databaseVersion = 1;
@@ -27,7 +29,11 @@ class DatabaseManager {
     return openDatabase(
       path,
       version: _databaseVersion,
-      onCreate: (db, version) async {},
+      onCreate: (db, version) async {
+        for (var tableSql in DatabaseMigrations.allTables) {
+          await db.execute(tableSql);
+        }
+      },
     );
   }
 
