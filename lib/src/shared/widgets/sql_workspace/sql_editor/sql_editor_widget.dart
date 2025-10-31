@@ -62,7 +62,8 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(10.0);
-    final databaseName = context.watch<SqlCommandsNotifier>().activeDatabase;
+    final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
+    final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
       title: 'SQL Editor',
@@ -76,14 +77,13 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
               return IconButton(
                 icon: const Icon(Icons.refresh_outlined),
                 tooltip: 'Reset Database',
-                onPressed: () {},
+                onPressed: sqlCommandsNotifier.resetDatabase,
               );
             }
 
             return const SizedBox.shrink();
           },
         ),
-
         IconButton(
           icon: const Icon(Icons.play_arrow_rounded),
           tooltip: 'Run Query',

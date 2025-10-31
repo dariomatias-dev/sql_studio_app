@@ -2,7 +2,7 @@ import 'package:sql_studio/src/shared/models/default_database_model.dart';
 
 const defaultDatabases = <DefaultDatabaseModel>[
   DefaultDatabaseModel(
-    name: 'todo_list',
+    name: 'to_do_list',
     label: 'TodoList',
     description: 'Simple task management database',
     tables: <String>['tasks'],
