@@ -1,0 +1,63 @@
+INSERT INTO "customers" (name, phone) VALUES
+('Alice Santos', '+1-202-555-0123'),
+('Bruno Ferreira', '+1-202-555-0456'),
+('Carla Oliveira', '+1-202-555-0789'),
+('Daniel Costa', '+1-202-555-0110'),
+('Elisa Rodrigues', '+1-202-555-0220'),
+('Felipe Lima', '+1-202-555-0330'),
+('Gabriela Martins', '+1-202-555-0440'),
+('Henrique Alves', '+1-202-555-0550'),
+('Isabel Nascimento', '+1-202-555-0660'),
+('João Carvalho', '+1-202-555-0770');
+
+INSERT INTO "menu_items" (name, price, category) VALUES
+('Margherita Pizza', 35.50, 'Pizza'),
+('Pepperoni Pizza', 42.00, 'Pizza'),
+('Caesar Salad', 28.00, 'Salad'),
+('Spaghetti Bolognese', 38.50, 'Pasta'),
+('Fettuccine Alfredo', 40.00, 'Pasta'),
+('Tiramisu', 22.50, 'Dessert'),
+('Cheeseburger', 30.00, 'Burger'),
+('French Fries', 12.50, 'Sides'),
+('Grilled Chicken', 33.00, 'Main'),
+('Lemonade', 8.50, 'Drink');
+
+INSERT INTO "orders" (customer_id, order_date, total) VALUES
+(1, '2025-10-01 12:30:00', 91.50),
+(2, '2025-10-01 13:15:00', 42.00),
+(3, '2025-10-02 18:00:00', 71.50),
+(4, '2025-10-02 19:20:00', 55.00),
+(5, '2025-10-03 12:45:00', 62.50),
+(6, '2025-10-03 13:30:00', 79.50),
+(7, '2025-10-04 14:00:00', 126.00),
+(8, '2025-10-04 19:10:00', 54.00),
+(9, '2025-10-05 20:00:00', 82.50),
+(10, '2025-10-05 20:30:00', 66.50),
+(1, '2025-10-06 12:00:00', 54.50),
+(5, '2025-10-06 19:45:00', 92.50);
+
+INSERT INTO "order_items" (order_id, menu_item_id, quantity) VALUES
+(1, 1, 1),
+(1, 3, 2),
+(2, 2, 1),
+(3, 4, 1),
+(3, 9, 1),
+(4, 7, 1),
+(4, 8, 2),
+(5, 5, 1),
+(5, 6, 1),
+(6, 1, 2),
+(6, 10, 1),
+(7, 2, 3),
+(8, 9, 1),
+(8, 8, 1),
+(8, 10, 1),
+(9, 7, 2),
+(9, 6, 1),
+(10, 4, 1),
+(10, 3, 1),
+(11, 2, 1),
+(11, 8, 1),
+(12, 1, 1),
+(12, 5, 1),
+(12, 10, 2);
