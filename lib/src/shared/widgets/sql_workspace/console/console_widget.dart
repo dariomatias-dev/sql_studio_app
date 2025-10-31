@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
-import 'package:sql_studio/src/screens/home/widgets/console/styled_data_table_widget.dart';
-import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 
 class ConsoleWidget extends StatelessWidget {
   const ConsoleWidget({

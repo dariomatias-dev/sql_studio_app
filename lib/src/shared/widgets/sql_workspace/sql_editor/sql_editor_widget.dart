@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
-import 'package:sql_studio/src/screens/home/widgets/panel_widget.dart';
-import 'package:sql_studio/src/screens/home/widgets/sql_editor/sql_command_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_command_bar_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
