@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/result.dart';
 
+import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/services/sql_execution_service.dart';
 
 class SqlCommandsNotifier extends ChangeNotifier {
@@ -20,6 +22,13 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
   set activeDatabase(String? value) {
     _activeDatabase = value;
+
+    if (value != null) {
+      SharedPreferencesService.setString(
+        SharedPreferencesKeys.selectedDatabaseKey,
+        value,
+      );
+    }
 
     _checkActiveDatabase();
 
