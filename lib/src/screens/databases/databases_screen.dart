@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:sql_studio/src/core/routes/route_names.dart';
 
 class DatabaseModel {
   final String name;
@@ -60,13 +63,15 @@ class DatabasesScreen extends StatelessWidget {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12.0),
-                onTap: () {},
+                onTap: () {
+                  context.push(RouteNames.defaultDatabasePath);
+                },
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           Text(
                             db.name,
                             style: TextStyle(
