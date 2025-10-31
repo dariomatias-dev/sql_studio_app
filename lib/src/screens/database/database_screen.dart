@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
-class DefaultDatabaseScreen extends StatelessWidget {
-  const DefaultDatabaseScreen({super.key});
+class DatabaseScreen extends StatelessWidget {
+  const DatabaseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

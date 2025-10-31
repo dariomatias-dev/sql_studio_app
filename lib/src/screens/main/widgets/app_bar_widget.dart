@@ -28,10 +28,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       actions: <Widget>[
         IconButton(
           onPressed: () {
-            context.push(RouteNames.defaultDatabasePath);
+            context.push(RouteNames.databasePath);
           },
           icon: const Icon(Icons.open_in_full, color: Colors.black),
-          tooltip: 'Open Default Database',
+          tooltip: 'Open Fullscreen',
         ),
         const ThemeSwitcherButtonWidget(),
       ],

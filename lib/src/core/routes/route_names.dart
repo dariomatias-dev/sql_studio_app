@@ -3,8 +3,8 @@ class RouteNames {
 
   static const main = '/';
 
-  static const defaultDatabase = 'default_database';
-  static const defaultDatabasePath = '$main$defaultDatabase';
+  static const database = 'database';
+  static const databasePath = '$main$database';
 
   static const sqlCommandSettings = '/settings/sql-commands';
 }
