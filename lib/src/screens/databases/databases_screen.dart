@@ -1,38 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/constants/default_databases.dart';
+
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-
-class DatabaseModel {
-  final String name;
-  final String description;
-  final List<String> tables;
-
-  const DatabaseModel({
-    required this.name,
-    required this.description,
-    required this.tables,
-  });
-}
-
-const defaultDatabases = <DatabaseModel>[
-  DatabaseModel(
-    name: 'Northwind',
-    description: 'Sales and products example',
-    tables: <String>['Customers', 'Orders', 'Products'],
-  ),
-  DatabaseModel(
-    name: 'Bookstore',
-    description: 'Books and authors database',
-    tables: <String>['Books', 'Authors', 'Publishers'],
-  ),
-  DatabaseModel(
-    name: 'School',
-    description: 'School management practice',
-    tables: <String>['Students', 'Teachers', 'Subjects'],
-  ),
-];
 
 class DatabasesScreen extends StatelessWidget {
   const DatabasesScreen({super.key});
@@ -47,7 +19,6 @@ class DatabasesScreen extends StatelessWidget {
           itemCount: defaultDatabases.length,
           itemBuilder: (context, index) {
             final db = defaultDatabases[index];
-
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               padding: const EdgeInsets.all(16.0),
@@ -75,8 +46,8 @@ class DatabasesScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            db.name,
-                            style: TextStyle(
+                            db.label,
+                            style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -85,7 +56,7 @@ class DatabasesScreen extends StatelessWidget {
                           const SizedBox(height: 4.0),
                           Text(
                             db.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black54,
                               fontSize: 14.0,
                             ),
@@ -93,7 +64,7 @@ class DatabasesScreen extends StatelessWidget {
                           const SizedBox(height: 6.0),
                           Text(
                             '${db.tables.length} tables: ${db.tables.join(', ')}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black45,
                               fontSize: 12.0,
                             ),
@@ -101,7 +72,7 @@ class DatabasesScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.black38,
                       size: 16.0,
