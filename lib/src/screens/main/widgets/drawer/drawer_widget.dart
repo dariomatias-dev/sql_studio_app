@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/notifiers/database_notifier.dart';
+
 import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_group_widget.dart';
-import 'package:sql_studio/src/shared/widgets/input_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
-import 'package:sql_studio/src/notifiers/database_notifier.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
@@ -34,7 +35,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   void dispose() {
     _searchController.dispose();
-
     super.dispose();
   }
 
@@ -44,11 +44,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       builder: (context, notifier, child) {
         return SafeArea(
           child: Drawer(
-            backgroundColor: Colors.white,
+            backgroundColor: const Color(0xFFF8F9FB),
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  margin: EdgeInsets.only(top: 32.0, bottom: 12.0),
                   child: InputWidget(
                     hintText: 'Search databases',
                     controller: _searchController,
@@ -60,6 +61,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ? const Center(child: CircularProgressIndicator())
                       : SingleChildScrollView(
                           child: Column(
+                            spacing: 24.0,
                             children: <Widget>[
                               DatabaseGroupWidget(
                                 title: 'Favorites',
@@ -67,7 +69,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                 toggleFavorite: notifier.toggleFavorite,
                                 onDelete: notifier.delete,
                               ),
-                              const SizedBox(height: 20.0),
                               DatabaseGroupWidget(
                                 title: 'All Databases',
                                 databases: notifier.others,
@@ -79,10 +80,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 32.0, bottom: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: ButtonWidget(
                     onPressed: () => _showCreateDatabaseDialog(context),
-                    text: 'Create New Database',
+                    text: 'New Database',
                     backgroundColor: Colors.grey.shade100,
                     borderColor: Colors.grey.shade200,
                   ),

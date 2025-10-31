@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
-
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
@@ -31,10 +30,7 @@ class _DrawerDatabaseListTileWidgetState
   late bool _isFavorite = widget.database.isFavorite;
 
   void _toggleFavorite() async {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-
+    setState(() => _isFavorite = !_isFavorite);
     await widget.toggleFavorite();
   }
 
@@ -61,10 +57,8 @@ class _DrawerDatabaseListTileWidgetState
 
   void _selectDatabase() {
     final notifier = context.read<SqlCommandsNotifier>();
-
     notifier.activeDatabase = widget.database.label;
     notifier.clearResult();
-
     Scaffold.of(context).closeDrawer();
   }
 
@@ -73,15 +67,19 @@ class _DrawerDatabaseListTileWidgetState
     final notifier = context.watch<SqlCommandsNotifier>();
     final isActive = notifier.activeDatabase == widget.database.label;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: isActive ? Colors.blue.shade50 : Colors.white,
-        borderRadius: BorderRadius.circular(16.0),
+        color: isActive ? Colors.grey.shade300.withAlpha(30) : Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: isActive ? Colors.black.withAlpha(40) : Colors.grey.shade200,
+        ),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.grey.withAlpha(25),
-            blurRadius: 8.0,
+            color: Colors.black.withAlpha(10),
+            blurRadius: 6.0,
             offset: const Offset(0.0, 2.0),
           ),
         ],
@@ -89,14 +87,17 @@ class _DrawerDatabaseListTileWidgetState
       child: ListTile(
         onTap: _selectDatabase,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        leading: const Icon(Icons.storage_outlined, color: Colors.black87),
+        leading: Icon(
+          Icons.storage_rounded,
+          color: isActive ? Colors.black : Colors.grey.shade600,
+        ),
         title: Text(
           widget.database.label,
           style: TextStyle(
-            color: isActive ? Colors.blue.shade800 : Colors.black87,
             fontWeight: FontWeight.w500,
+            color: isActive ? Colors.black : Colors.grey.shade800,
           ),
         ),
         trailing: PopupMenuButton(
@@ -104,9 +105,9 @@ class _DrawerDatabaseListTileWidgetState
           color: Colors.white,
           icon: const Icon(Icons.more_vert, color: Colors.black87),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
-          itemBuilder: (context) => <PopupMenuEntry>[
+          itemBuilder: (context) => <PopupMenuItem>[
             PopupMenuItem(
               onTap: _toggleFavorite,
               child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),

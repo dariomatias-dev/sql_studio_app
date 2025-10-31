@@ -23,15 +23,17 @@ class DatabaseGroupWidget extends StatelessWidget {
     if (databases.isEmpty) return const SizedBox.shrink();
 
     return Column(
+      spacing: 8.0,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+            style: TextStyle(
+              fontSize: 13.0,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
             ),
           ),
         ),
@@ -45,12 +47,8 @@ class DatabaseGroupWidget extends StatelessWidget {
 
             return DrawerDatabaseListTileWidget(
               database: database,
-              toggleFavorite: () async {
-                await toggleFavorite(database);
-              },
-              onDelete: () async {
-                await onDelete(database);
-              },
+              toggleFavorite: () async => await toggleFavorite(database),
+              onDelete: () async => await onDelete(database),
             );
           },
         ),
