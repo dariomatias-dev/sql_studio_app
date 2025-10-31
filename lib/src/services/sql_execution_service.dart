@@ -67,6 +67,17 @@ class SqlExecutionService {
     }
   }
 
+  Future<List<String>> getTables({required String databaseName}) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, '$databaseName.db');
+    final db = await openDatabase(path);
+    final result = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';",
+    );
+
+    return result.builder((row, index) => row['name'] as String);
+  }
+
   Future<List<String>> getTableColumns({
     required String databaseName,
     required String tableName,
