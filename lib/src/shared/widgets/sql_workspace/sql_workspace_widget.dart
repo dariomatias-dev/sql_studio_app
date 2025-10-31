@@ -16,7 +16,7 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget> {
   bool _editorMaximized = false;
   bool _consoleMaximized = false;
 
-  double get screenHeight => MediaQuery.of(context).size.height;
+  double get _screenHeight => MediaQuery.sizeOf(context).height;
 
   void _toggleEditorMaximize() {
     setState(() {
@@ -60,7 +60,7 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget> {
         DividerBarWidget(
           onDragUpdate: (details) {
             setState(() {
-              final delta = details.delta.dy / screenHeight;
+              final delta = details.delta.dy / _screenHeight;
               _editorHeightFraction = (_editorHeightFraction + delta).clamp(
                 2 / 5,
                 0.9,

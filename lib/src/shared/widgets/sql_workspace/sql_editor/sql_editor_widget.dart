@@ -70,6 +70,20 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
+        Consumer<SqlCommandsNotifier>(
+          builder: (context, notifier, child) {
+            if (notifier.isDefaultDatabase) {
+              return IconButton(
+                icon: const Icon(Icons.refresh_outlined),
+                tooltip: 'Reset Database',
+                onPressed: () {},
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
+
         IconButton(
           icon: const Icon(Icons.play_arrow_rounded),
           tooltip: 'Run Query',
