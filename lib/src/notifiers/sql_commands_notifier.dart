@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/sql_execution_service.dart';
@@ -7,11 +8,22 @@ import 'package:sql_studio/src/services/sql_execution_service.dart';
 class SqlCommandsNotifier extends ChangeNotifier {
   final _sqlService = SqlExecutionService();
 
-  String? activeDatabase;
+  String? _activeDatabase;
   dynamic result;
   bool isLoading = false;
   String? error;
   String? lastQuery;
+  bool isDefaultDatabase = false;
+
+  String? get activeDatabase => _activeDatabase;
+
+  set activeDatabase(String? value) {
+    _activeDatabase = value;
+
+    _checkActiveDatabase();
+
+    notifyListeners();
+  }
 
   Future<void> runQuery(String sql) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
@@ -69,5 +81,15 @@ class SqlCommandsNotifier extends ChangeNotifier {
     result = null;
     error = null;
     notifyListeners();
+  }
+
+  Future<void> _checkActiveDatabase() async {
+    final dbName = activeDatabase;
+
+    if (dbName != null) {
+      isDefaultDatabase = defaultDatabases.any((db) => db.name == dbName);
+    } else {
+      isDefaultDatabase = false;
+    }
   }
 }
