@@ -22,8 +22,15 @@ class SettingsCardWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Ink(
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: Colors.white,
           borderRadius: _borderRadius,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black.withAlpha(13),
+              blurRadius: 4.0,
+              offset: const Offset(0.0, 2.0),
+            ),
+          ],
         ),
         child: InkWell(
           onTap: onTap,
@@ -47,7 +54,7 @@ class SettingsCardWidget extends StatelessWidget {
                   )
                 : null,
             trailing: icon != null
-                ? Icon(icon, size: 18.0, color: Colors.black54)
+                ? Icon(icon, size: 18.0, color: Colors.black38)
                 : null,
           ),
         ),

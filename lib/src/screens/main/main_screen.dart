@@ -66,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBarWidget(),
       drawer: DrawerWidget(),
       body: GestureDetector(
