@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 class DatabaseModel {
   final String name;
@@ -64,6 +66,7 @@ class DatabasesScreen extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(12.0),
                 onTap: () {
+                  context.read<SqlCommandsNotifier>().activeDatabase = db.name;
                   context.push(RouteNames.defaultDatabasePath);
                 },
                 child: Row(

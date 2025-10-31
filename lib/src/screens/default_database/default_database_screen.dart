@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
+
 class DefaultDatabaseScreen extends StatelessWidget {
   const DefaultDatabaseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1.0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -19,8 +19,8 @@ class DefaultDatabaseScreen extends StatelessWidget {
           ),
           onPressed: context.pop,
         ),
-        title: const Text('Database', style: TextStyle(fontSize: 20.0)),
       ),
+      body: const SqlWorkspaceWidget(),
     );
   }
 }

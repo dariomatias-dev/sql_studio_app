@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/screens/main/widgets/theme_switcher_button_widget.dart';
 
@@ -13,19 +16,25 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      automaticallyImplyLeading: false,
       leading: Builder(
         builder: (context) {
           return IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+            onPressed: Scaffold.of(context).openDrawer,
             tooltip: 'Show Menu',
             icon: const Icon(Icons.menu, color: Colors.black),
           );
         },
       ),
-      actions: const <Widget>[ThemeSwitcherButtonWidget()],
+      actions: <Widget>[
+        IconButton(
+          onPressed: () {
+            context.push(RouteNames.defaultDatabasePath);
+          },
+          icon: const Icon(Icons.open_in_full, color: Colors.black),
+          tooltip: 'Open Default Database',
+        ),
+        const ThemeSwitcherButtonWidget(),
+      ],
     );
   }
 }
