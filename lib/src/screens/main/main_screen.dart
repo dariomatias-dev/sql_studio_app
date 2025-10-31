@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/screens/databases/databases_screen.dart';
 import 'package:sql_studio/src/screens/home/home_screen.dart';
 import 'package:sql_studio/src/screens/main/widgets/app_bar_widget.dart';
@@ -16,8 +18,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final _pageController = PageController();
-
-  int _selectedIndex = 0;
 
   final _screens = <Widget>[HomeScreen(), DatabasesScreen(), SettingsScreen()];
 
@@ -39,53 +39,62 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void _onPageChanged(int index) {
-    setState(() => _selectedIndex = index);
+  void _onPageChanged(BuildContext context, int index) {
+    context.read<MainScreenNotifier>().changeScreen(index);
   }
 
-  void _onTabChange(int index) {
+  void _onTabChange(BuildContext context, int index) {
+    context.read<MainScreenNotifier>().changeScreen(index);
     _pageController.jumpToPage(index);
-
-    setState(() => _selectedIndex = index);
   }
 
-  void _onHorizontalSwipe(DragEndDetails details) {
+  void _onHorizontalSwipe(BuildContext context, DragEndDetails details) {
+    final notifier = context.read<MainScreenNotifier>();
     if (details.primaryVelocity == null) return;
 
     if (details.primaryVelocity! < 0) {
-      if (_selectedIndex < _screens.length - 1) {
-        _onTabChange(_selectedIndex + 1);
+      if (notifier.currentIndex < _screens.length - 1) {
+        _onTabChange(context, notifier.currentIndex + 1);
       }
     } else if (details.primaryVelocity! > 0) {
-      if (_selectedIndex > 0) {
-        _onTabChange(_selectedIndex - 1);
+      if (notifier.currentIndex > 0) {
+        _onTabChange(context, notifier.currentIndex - 1);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.watch<MainScreenNotifier>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.hasClients &&
+          _pageController.page?.round() != notifier.currentIndex) {
+        _pageController.jumpToPage(notifier.currentIndex);
+      }
+    });
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBarWidget(),
       drawer: DrawerWidget(),
       body: GestureDetector(
-        onHorizontalDragEnd: _onHorizontalSwipe,
+        onHorizontalDragEnd: (details) => _onHorizontalSwipe(context, details),
         child: PageView(
           controller: _pageController,
           physics: const BouncingScrollPhysics(),
-          onPageChanged: _onPageChanged,
+          onPageChanged: (index) => _onPageChanged(context, index),
           children: _screens,
         ),
       ),
       bottomNavigationBar: GestureDetector(
-        onHorizontalDragEnd: _onHorizontalSwipe,
+        onHorizontalDragEnd: (details) => _onHorizontalSwipe(context, details),
         child: SafeArea(
           child: GNav(
             backgroundColor: Colors.white,
             gap: 8.0,
-            selectedIndex: _selectedIndex,
-            onTabChange: _onTabChange,
+            selectedIndex: notifier.currentIndex,
+            onTabChange: (index) => _onTabChange(context, index),
             color: Colors.grey.shade600,
             activeColor: Colors.black,
             tabBackgroundColor: Colors.transparent,
@@ -100,17 +109,17 @@ class _MainScreenState extends State<MainScreen> {
               _buildGButton(
                 icon: Icons.circle_outlined,
                 text: 'Home',
-                isSelected: _selectedIndex == 0,
+                isSelected: notifier.currentIndex == 0,
               ),
               _buildGButton(
                 icon: Icons.folder_open_outlined,
                 text: 'Databases',
-                isSelected: _selectedIndex == 1,
+                isSelected: notifier.currentIndex == 1,
               ),
               _buildGButton(
                 icon: Icons.settings_outlined,
                 text: 'Settings',
-                isSelected: _selectedIndex == 2,
+                isSelected: notifier.currentIndex == 2,
               ),
             ],
           ),
