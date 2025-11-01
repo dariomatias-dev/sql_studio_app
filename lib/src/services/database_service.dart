@@ -56,6 +56,37 @@ class DatabaseService {
     }
   }
 
+  Future<Result<DatabaseModel?>> getByName(String name) async {
+    try {
+      final results = await _repository.getWhere(
+        conditions: {'name': name},
+        limit: 1,
+      );
+
+      if (results.isNotEmpty) {
+        final model = DatabaseModel.fromMap(results.first);
+
+        _logger.i('Fetched database by name: $name');
+
+        return SuccessResult(model);
+      }
+
+      _logger.w('No database found with name: $name');
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to retrieve database by name',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(
+        DatabaseFailure('Unable to retrieve database by name: $err'),
+      );
+    }
+  }
+
   Future<Result<DatabaseModel?>> getById(String id) async {
     try {
       final result = await _repository.getById(id);
