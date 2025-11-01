@@ -1,16 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
-class DatabasesScreen extends StatelessWidget {
+class DatabasesScreen extends StatefulWidget {
   const DatabasesScreen({super.key});
+
+  @override
+  State<DatabasesScreen> createState() => _DatabasesScreenState();
+}
+
+class _DatabasesScreenState extends State<DatabasesScreen> {
+  Future<void> _copySchema(String dbName) async {
+    final schema = await rootBundle.loadString(
+      'assets/sql/schemas/${dbName.toLowerCase()}_schema.sql',
+    );
+
+    await Clipboard.setData(ClipboardData(text: schema));
+
+    if (mounted) {
+      SnackBarUtils.show(context, 'Schema copied!');
+    }
+  }
+
+  Future<void> _copySeed(String dbName) async {
+    final seed = await rootBundle.loadString(
+      'assets/sql/seeds/${dbName.toLowerCase()}_seed.sql',
+    );
+
+    await Clipboard.setData(ClipboardData(text: seed));
+
+    if (mounted) {
+      SnackBarUtils.show(context, 'Seed copied!');
+    }
+  }
+
+  Future<void> _copyAll(String dbName) async {
+    final schema = await rootBundle.loadString(
+      'assets/sql/schemas/${dbName.toLowerCase()}_schema.sql',
+    );
+    final seed = await rootBundle.loadString(
+      'assets/sql/seeds/${dbName.toLowerCase()}_seed.sql',
+    );
+
+    await Clipboard.setData(ClipboardData(text: '$schema\n$seed'));
+
+    if (mounted) {
+      SnackBarUtils.show(context, 'Schema and Seed copied!');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +69,11 @@ class DatabasesScreen extends StatelessWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 8.0),
           itemBuilder: (context, index) {
             final db = defaultDatabases[index];
+            final dbName = db.name;
 
             return CardWidget(
               onTap: () {
-                context.read<SqlCommandsNotifier>().activeDatabase = db.name;
+                context.read<SqlCommandsNotifier>().activeDatabase = dbName;
                 context.read<MainScreenNotifier>().changeScreen(0);
               },
               child: Padding(
@@ -69,15 +116,15 @@ class DatabasesScreen extends StatelessWidget {
                     PopupMenuButtonWidget(
                       items: <PopupMenuItem>[
                         PopupMenuItem(
-                          onTap: () {},
+                          onTap: () => _copySchema(dbName),
                           child: const Text('Copy Schemas'),
                         ),
                         PopupMenuItem(
-                          onTap: () {},
+                          onTap: () => _copySeed(dbName),
                           child: const Text('Copy Seeds'),
                         ),
                         PopupMenuItem(
-                          onTap: () {},
+                          onTap: () => _copyAll(dbName),
                           child: const Text('Copy All'),
                         ),
                       ],
