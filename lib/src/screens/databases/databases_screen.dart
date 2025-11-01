@@ -6,6 +6,8 @@ import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
+import 'package:sql_studio/src/shared/widgets/card_widget.dart';
+
 class DatabasesScreen extends StatelessWidget {
   const DatabasesScreen({super.key});
 
@@ -15,30 +17,21 @@ class DatabasesScreen extends StatelessWidget {
       backgroundColor: Colors.grey.shade100,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
+        child: ListView.separated(
           itemCount: defaultDatabases.length,
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 8.0);
+          },
           itemBuilder: (context, index) {
             final db = defaultDatabases[index];
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 8.0),
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.black.withAlpha(13),
-                    blurRadius: 4.0,
-                    offset: const Offset(0.0, 2.0),
-                  ),
-                ],
-              ),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(12.0),
-                onTap: () {
-                  context.read<SqlCommandsNotifier>().activeDatabase = db.name;
-                  context.read<MainScreenNotifier>().changeScreen(0);
-                },
+
+            return CardWidget(
+              onTap: () {
+                context.read<SqlCommandsNotifier>().activeDatabase = db.name;
+                context.read<MainScreenNotifier>().changeScreen(0);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -49,18 +42,20 @@ class DatabasesScreen extends StatelessWidget {
                             db.label,
                             style: const TextStyle(
                               color: Colors.black87,
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 4.0),
-                          Text(
-                            db.description,
-                            style: const TextStyle(
-                              color: Colors.black54,
-                              fontSize: 14.0,
+                          if (db.description.isNotEmpty) ...<Widget>[
+                            const SizedBox(height: 4.0),
+                            Text(
+                              db.description,
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontSize: 12.0,
+                              ),
                             ),
-                          ),
+                          ],
                           const SizedBox(height: 6.0),
                           Text(
                             '${db.tables.length} tables: ${db.tables.join(', ')}',
@@ -75,7 +70,7 @@ class DatabasesScreen extends StatelessWidget {
                     const Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.black38,
-                      size: 16.0,
+                      size: 18.0,
                     ),
                   ],
                 ),
