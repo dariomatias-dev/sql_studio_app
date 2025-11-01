@@ -53,8 +53,8 @@ class ConsoleWidget extends StatelessWidget {
             ),
           );
         } else if (notifier.error != null) {
-          content = Padding(
-            padding: const EdgeInsets.all(16.0),
+          content = SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
             child: Text(
               notifier.error!,
               style: const TextStyle(
@@ -93,13 +93,20 @@ class ConsoleWidget extends StatelessWidget {
           } else {
             final columns = rows.first.keys.toList();
 
-            content = SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+            content = Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: StyledDataTableWidget(columns: columns, rows: rows),
+                scrollDirection: Axis.horizontal,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16.0,
+                      right: 16.0,
+                      left: 16.0,
+                    ),
+                    child: StyledDataTableWidget(columns: columns, rows: rows),
+                  ),
                 ),
               ),
             );
