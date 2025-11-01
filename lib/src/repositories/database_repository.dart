@@ -81,6 +81,32 @@ class DatabaseRepository<T> {
     return maps;
   }
 
+  Future<List<Map<String, dynamic>>> getWhere({
+    required Map<String, dynamic> conditions,
+    String? orderBy,
+    int? limit,
+  }) async {
+    final db = await _db;
+
+    final whereClauses = <String>[];
+    final whereArgs = <dynamic>[];
+
+    conditions.forEach((key, value) {
+      whereClauses.add('$key = ?');
+      whereArgs.add(value);
+    });
+
+    final maps = await db.query(
+      tableName,
+      where: whereClauses.join(' AND '),
+      whereArgs: whereArgs,
+      orderBy: orderBy,
+      limit: limit,
+    );
+
+    return maps;
+  }
+
   Future<Map<String, dynamic>?> getById(String id) async {
     final db = await _db;
     final maps = await db.query(
