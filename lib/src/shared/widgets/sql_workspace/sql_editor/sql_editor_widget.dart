@@ -75,9 +75,9 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           builder: (context, notifier, child) {
             if (notifier.isDefaultDatabase) {
               return IconButton(
-                icon: const Icon(Icons.refresh_outlined),
-                tooltip: 'Reset Database',
                 onPressed: sqlCommandsNotifier.resetDatabase,
+                tooltip: 'Reset Database',
+                icon: const Icon(Icons.refresh_outlined),
               );
             }
 
@@ -85,14 +85,14 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           },
         ),
         IconButton(
-          icon: const Icon(Icons.play_arrow_rounded),
-          tooltip: 'Run Query',
           onPressed: _runQuery,
+          tooltip: 'Run Query',
+          icon: const Icon(Icons.play_arrow_rounded),
         ),
         IconButton(
-          icon: const Icon(Icons.clear_rounded),
-          tooltip: 'Clear Editor',
           onPressed: _clearEditor,
+          tooltip: 'Clear Editor',
+          icon: const Icon(Icons.clear_rounded),
         ),
       ],
       child: Column(

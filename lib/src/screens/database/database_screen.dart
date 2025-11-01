@@ -12,12 +12,13 @@ class DatabaseScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
+          onPressed: context.pop,
+          tooltip: 'Exit Screen',
           icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Colors.black54,
             size: 20.0,
           ),
-          onPressed: context.pop,
         ),
       ),
       body: const SqlWorkspaceWidget(),

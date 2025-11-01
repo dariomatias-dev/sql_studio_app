@@ -27,11 +27,11 @@ class PanelWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               IconButton(
+                onPressed: onFullScreen,
+                tooltip: isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
                 icon: Icon(
                   isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
                 ),
-                onPressed: onFullScreen,
-                tooltip: isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
               ),
               Expanded(
                 child: Column(

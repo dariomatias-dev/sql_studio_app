@@ -20,13 +20,13 @@ class _ThemeSwitcherButtonWidgetState extends State<ThemeSwitcherButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      onPressed: _toggleTheme,
+      tooltip: 'Toggle Theme',
       icon: Icon(
         _isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
         color: Colors.black,
       ),
-      onPressed: _toggleTheme,
       splashRadius: 24.0,
-      tooltip: 'Toggle Theme',
     );
   }
 }

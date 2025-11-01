@@ -30,8 +30,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.push(RouteNames.databasePath);
           },
-          icon: const Icon(Icons.open_in_full, color: Colors.black),
           tooltip: 'Open Fullscreen',
+          icon: const Icon(Icons.open_in_full, color: Colors.black),
         ),
         const ThemeSwitcherButtonWidget(),
       ],

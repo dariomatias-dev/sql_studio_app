@@ -128,8 +128,8 @@ class ConsoleWidget extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               onPressed: notifier.clearResult,
-              icon: const Icon(Icons.clear_rounded),
               tooltip: 'Clear Console',
+              icon: const Icon(Icons.clear_rounded),
             ),
           ],
           child: content,
