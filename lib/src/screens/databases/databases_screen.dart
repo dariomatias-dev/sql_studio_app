@@ -6,8 +6,8 @@ import 'package:sql_studio/src/core/constants/default_databases.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
@@ -19,43 +19,35 @@ class DatabasesScreen extends StatefulWidget {
 }
 
 class _DatabasesScreenState extends State<DatabasesScreen> {
-  Future<void> _copySchema(String dbName) async {
-    final schema = await rootBundle.loadString(
-      'assets/sql/schemas/${dbName.toLowerCase()}_schema.sql',
+  Future<void> _copyFile(List<String> paths, String message) async {
+    final contents = await Future.wait(
+      paths.map((path) => rootBundle.loadString(path)),
     );
 
-    await Clipboard.setData(ClipboardData(text: schema));
+    await Clipboard.setData(ClipboardData(text: contents.join('\n')));
 
     if (mounted) {
-      SnackBarUtils.show(context, 'Schema copied!');
+      SnackBarUtils.show(context, message);
     }
+  }
+
+  Future<void> _copySchema(String dbName) async {
+    await _copyFile(<String>[
+      'assets/sql/schemas/${dbName.toLowerCase()}_schema.sql',
+    ], 'Schema copied!');
   }
 
   Future<void> _copySeed(String dbName) async {
-    final seed = await rootBundle.loadString(
+    await _copyFile(<String>[
       'assets/sql/seeds/${dbName.toLowerCase()}_seed.sql',
-    );
-
-    await Clipboard.setData(ClipboardData(text: seed));
-
-    if (mounted) {
-      SnackBarUtils.show(context, 'Seed copied!');
-    }
+    ], 'Seed copied!');
   }
 
   Future<void> _copyAll(String dbName) async {
-    final schema = await rootBundle.loadString(
+    await _copyFile(<String>[
       'assets/sql/schemas/${dbName.toLowerCase()}_schema.sql',
-    );
-    final seed = await rootBundle.loadString(
       'assets/sql/seeds/${dbName.toLowerCase()}_seed.sql',
-    );
-
-    await Clipboard.setData(ClipboardData(text: '$schema\n$seed'));
-
-    if (mounted) {
-      SnackBarUtils.show(context, 'Schema and Seed copied!');
-    }
+    ], 'Schema and Seed copied!');
   }
 
   @override
