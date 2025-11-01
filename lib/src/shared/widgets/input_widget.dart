@@ -5,15 +5,17 @@ class InputWidget extends StatelessWidget {
     super.key,
     this.onChanged,
     this.controller,
-    this.hintText = '',
     this.labelText,
+    this.hintText = '',
+    this.suffixIcon,
     this.validator,
   });
 
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
-  final String hintText;
   final String? labelText;
+  final String hintText;
+  final Widget? suffixIcon;
   final String? Function(String? value)? validator;
 
   @override
@@ -21,8 +23,9 @@ class InputWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        hintText: hintText,
         labelText: labelText,
+        hintText: hintText,
+        suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
           borderSide: BorderSide(color: Colors.grey.shade300, width: 0.1),
