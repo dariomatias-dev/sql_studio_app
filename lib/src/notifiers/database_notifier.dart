@@ -51,6 +51,16 @@ class DatabaseNotifier extends ChangeNotifier {
     }
   }
 
+  Future<DatabaseModel?> getByName(String name) async {
+    final result = await _service.getByName(name);
+
+    if (result is SuccessResult<DatabaseModel?>) {
+      return result.value;
+    }
+
+    return null;
+  }
+
   Future<void> delete(DatabaseModel model) async {
     final result = await _service.delete(model);
     if (result is SuccessResult) {
