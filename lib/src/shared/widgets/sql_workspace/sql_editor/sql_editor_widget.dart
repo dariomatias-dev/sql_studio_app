@@ -66,7 +66,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
-      title: 'SQL Editor',
+      title: 'Editor',
       databaseName: databaseName,
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,

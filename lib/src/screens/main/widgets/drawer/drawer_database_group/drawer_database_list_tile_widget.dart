@@ -60,6 +60,7 @@ class _DrawerDatabaseListTileWidgetState
   void _selectDatabase() {
     final notifier = context.read<SqlCommandsNotifier>();
     final databaseName = widget.database.label;
+
     notifier.activeDatabase = databaseName;
     notifier.clearResult();
 
@@ -71,70 +72,81 @@ class _DrawerDatabaseListTileWidgetState
     final notifier = context.watch<SqlCommandsNotifier>();
     final isActive = notifier.activeDatabase == widget.database.label;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-      decoration: BoxDecoration(
+    final borderRadius = BorderRadius.circular(10.0);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+      child: Material(
         color: isActive ? Colors.grey.shade300.withAlpha(30) : Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(
-          color: isActive ? Colors.black.withAlpha(40) : Colors.grey.shade200,
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black.withAlpha(10),
-            blurRadius: 6.0,
-            offset: const Offset(0.0, 2.0),
-          ),
-        ],
-      ),
-      child: ListTile(
-        onTap: _selectDatabase,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        leading: Icon(
-          Icons.storage_rounded,
-          color: isActive ? Colors.black : Colors.grey.shade600,
-        ),
-        title: Text(
-          widget.database.label,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: isActive ? Colors.black : Colors.grey.shade800,
-          ),
-        ),
-        subtitle: Text(
-          widget.database.name,
-          style: TextStyle(
-            fontSize: 12,
-            color: isActive ? Colors.black87 : Colors.grey.shade600,
-          ),
-        ),
-        trailing: PopupMenuButton(
-          tooltip: 'Options',
-          color: Colors.white,
-          icon: const Icon(Icons.more_vert, color: Colors.black87),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          itemBuilder: (context) => <PopupMenuItem>[
-            PopupMenuItem(
-              onTap: _toggleFavorite,
-              child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
+        borderRadius: borderRadius,
+        elevation: 0.0,
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: _selectDatabase,
+          splashColor: Colors.black12,
+          highlightColor: Colors.black12,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              border: Border.all(
+                color: isActive
+                    ? Colors.black.withAlpha(40)
+                    : Colors.grey.shade200,
+              ),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.black.withAlpha(10),
+                  blurRadius: 6.0,
+                  offset: const Offset(0.0, 2.0),
+                ),
+              ],
             ),
-            PopupMenuItem(
-              onTap: _showDeleteDialog,
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Colors.redAccent),
+            child: ListTile(
+              leading: Icon(
+                Icons.storage_rounded,
+                color: isActive ? Colors.black : Colors.grey.shade600,
+              ),
+              title: Text(
+                widget.database.label,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: isActive ? Colors.black : Colors.grey.shade800,
+                ),
+              ),
+              subtitle: Text(
+                widget.database.name,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: isActive ? Colors.black87 : Colors.grey.shade600,
+                ),
+              ),
+              trailing: PopupMenuButton(
+                tooltip: 'Options',
+                color: Colors.white,
+                icon: const Icon(Icons.more_vert, color: Colors.black87),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                itemBuilder: (context) => <PopupMenuItem>[
+                  PopupMenuItem(
+                    onTap: _toggleFavorite,
+                    child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
+                  ),
+                  PopupMenuItem(
+                    onTap: _showDeleteDialog,
+                    child: const Text(
+                      'Delete',
+                      style: TextStyle(color: Colors.redAccent),
+                    ),
+                  ),
+                ],
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 2.0,
               ),
             ),
-          ],
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 2.0,
+          ),
         ),
       ),
     );

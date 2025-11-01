@@ -44,7 +44,7 @@ class PanelWidget extends StatelessWidget {
                     ),
                     if (databaseName != null)
                       Text(
-                        'Database: $databaseName',
+                        databaseName ?? '',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
