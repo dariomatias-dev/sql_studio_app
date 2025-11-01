@@ -21,7 +21,7 @@ class InputDialogWidget extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final String? Function(String? value)? validator;
-  final Future<void> Function(String value) onSubmit;
+  final Future<bool> Function(String value) onSubmit;
   final String submitText;
 
   @override
@@ -34,8 +34,11 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
   Future<void> _handleSubmit() async {
     if (!formKey.currentState!.validate()) return;
 
-    widget.onSubmit(widget.controller.text);
-    Navigator.pop(context);
+    final success = await widget.onSubmit(widget.controller.text);
+
+    if (success && mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override

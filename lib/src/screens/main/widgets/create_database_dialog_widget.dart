@@ -25,13 +25,15 @@ class _CreateDatabaseDialogWidgetState
         .toLowerCase();
   }
 
-  Future<void> _createDatabase(String value) async {
+  Future<bool> _createDatabase(String value) async {
     final snakeName = _toSnakeCase(value);
     final database = DatabaseModel(label: value, name: snakeName);
 
     widget.onCreated(database);
 
     Navigator.pop(context);
+
+    return true;
   }
 
   @override

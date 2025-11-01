@@ -43,6 +43,8 @@ class _CreateCommandDialogWidgetState extends State<CreateCommandDialogWidget> {
         await context.read<SqlSuggestionsNotifier>().addCommand(value);
 
         _controller.text = '';
+
+        return true;
       },
     );
   }
