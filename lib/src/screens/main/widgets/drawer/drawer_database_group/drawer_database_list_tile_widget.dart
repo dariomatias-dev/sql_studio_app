@@ -31,6 +31,7 @@ class _DrawerDatabaseListTileWidgetState
 
   void _toggleFavorite() async {
     setState(() => _isFavorite = !_isFavorite);
+
     await widget.toggleFavorite();
   }
 
@@ -45,6 +46,7 @@ class _DrawerDatabaseListTileWidgetState
           confirmButton: ButtonWidget(
             onPressed: () async {
               context.pop(context);
+
               await widget.onDelete();
             },
             text: 'Delete',
@@ -102,6 +104,13 @@ class _DrawerDatabaseListTileWidgetState
             color: isActive ? Colors.black : Colors.grey.shade800,
           ),
         ),
+        subtitle: Text(
+          widget.database.name,
+          style: TextStyle(
+            fontSize: 12,
+            color: isActive ? Colors.black87 : Colors.grey.shade600,
+          ),
+        ),
         trailing: PopupMenuButton(
           tooltip: 'Options',
           color: Colors.white,
@@ -125,7 +134,7 @@ class _DrawerDatabaseListTileWidgetState
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16.0,
-          vertical: 6.0,
+          vertical: 2.0,
         ),
       ),
     );

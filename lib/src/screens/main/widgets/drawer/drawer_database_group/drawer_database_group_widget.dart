@@ -23,7 +23,7 @@ class DatabaseGroupWidget extends StatelessWidget {
     if (databases.isEmpty) return const SizedBox.shrink();
 
     return Column(
-      spacing: 8.0,
+      spacing: 4.0,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(

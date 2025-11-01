@@ -19,7 +19,7 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   final _searchController = TextEditingController();
 
-  void _showCreateDatabaseDialog(BuildContext context) {
+  void _showCreateDatabaseDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -35,6 +35,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   void dispose() {
     _searchController.dispose();
+
     super.dispose();
   }
 
@@ -56,6 +57,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     onChanged: notifier.setFilter,
                   ),
                 ),
+                const SizedBox(height: 8.0),
                 Expanded(
                   child: notifier.isLoading
                       ? const Center(child: CircularProgressIndicator())
@@ -82,7 +84,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: ButtonWidget(
-                    onPressed: () => _showCreateDatabaseDialog(context),
+                    onPressed: _showCreateDatabaseDialog,
                     text: 'New Database',
                     backgroundColor: Colors.grey.shade100,
                     borderColor: Colors.grey.shade200,
