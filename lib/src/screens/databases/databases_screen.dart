@@ -7,6 +7,7 @@ import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
+import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 class DatabasesScreen extends StatelessWidget {
   const DatabasesScreen({super.key});
@@ -19,9 +20,7 @@ class DatabasesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView.separated(
           itemCount: defaultDatabases.length,
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 8.0);
-          },
+          separatorBuilder: (context, index) => const SizedBox(height: 8.0),
           itemBuilder: (context, index) {
             final db = defaultDatabases[index];
 
@@ -67,10 +66,21 @@ class DatabasesScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black38,
-                      size: 18.0,
+                    PopupMenuButtonWidget(
+                      items: <PopupMenuItem>[
+                        PopupMenuItem(
+                          onTap: () {},
+                          child: const Text('Copy Schemas'),
+                        ),
+                        PopupMenuItem(
+                          onTap: () {},
+                          child: const Text('Copy Seeds'),
+                        ),
+                        PopupMenuItem(
+                          onTap: () {},
+                          child: const Text('Copy All'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
