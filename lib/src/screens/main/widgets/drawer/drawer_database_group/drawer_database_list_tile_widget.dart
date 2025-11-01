@@ -7,6 +7,7 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
   const DrawerDatabaseListTileWidget({
@@ -120,14 +121,8 @@ class _DrawerDatabaseListTileWidgetState
                   color: isActive ? Colors.black87 : Colors.grey.shade600,
                 ),
               ),
-              trailing: PopupMenuButton(
-                tooltip: 'Options',
-                color: Colors.white,
-                icon: const Icon(Icons.more_vert, color: Colors.black87),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                itemBuilder: (context) => <PopupMenuItem>[
+              trailing: PopupMenuButtonWidget(
+                items: <PopupMenuItem>[
                   PopupMenuItem(
                     onTap: _toggleFavorite,
                     child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
