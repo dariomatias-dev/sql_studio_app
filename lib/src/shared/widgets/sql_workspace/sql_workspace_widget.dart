@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
+
+import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/divider_bar_widget.dart';
@@ -11,7 +16,10 @@ class SqlWorkspaceWidget extends StatefulWidget {
   State<SqlWorkspaceWidget> createState() => _SqlWorkspaceWidgetState();
 }
 
-class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget> {
+class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
+    with TickerProviderStateMixin {
+  late final _tabController = TabController(length: 2, vsync: this);
+
   double _editorHeightFraction = 0.66;
   bool _editorMaximized = false;
   bool _consoleMaximized = false;
@@ -33,7 +41,55 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget> {
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final layoutType = context.watch<WorkspaceLayoutNotifier>().selectedLayout;
+
+    if (layoutType == WorkspaceLayoutType.tabs) {
+      return Column(
+        children: <Widget>[
+          Container(
+            color: Colors.white,
+            child: TabBar(
+              controller: _tabController,
+              indicatorColor: Colors.black,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey.shade600,
+              labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+              unselectedLabelStyle: const TextStyle(
+                fontWeight: FontWeight.normal,
+              ),
+              tabs: const <Tab>[
+                Tab(text: 'Editor'),
+                Tab(text: 'Console'),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                SqlEditorWidget(
+                  isFullScreen: _editorMaximized,
+                  onFullScreen: _toggleEditorMaximize,
+                ),
+                ConsoleWidget(
+                  isFullScreen: _consoleMaximized,
+                  onFullScreen: _toggleConsoleMaximize,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
     if (_editorMaximized) {
       return SqlEditorWidget(
         isFullScreen: _editorMaximized,
