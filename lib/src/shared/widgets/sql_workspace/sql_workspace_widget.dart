@@ -76,12 +76,8 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
               controller: _tabController,
               children: <Widget>[
                 SqlEditorWidget(
-                  isFullScreen: _editorMaximized,
-                  onFullScreen: _toggleEditorMaximize,
                 ),
                 ConsoleWidget(
-                  isFullScreen: _consoleMaximized,
-                  onFullScreen: _toggleConsoleMaximize,
                 ),
               ],
             ),

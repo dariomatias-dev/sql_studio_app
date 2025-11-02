@@ -9,12 +9,12 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 class ConsoleWidget extends StatelessWidget {
   const ConsoleWidget({
     super.key,
-    required this.isFullScreen,
-    required this.onFullScreen,
+    this.isFullScreen,
+    this.onFullScreen,
   });
 
-  final bool isFullScreen;
-  final VoidCallback onFullScreen;
+  final bool? isFullScreen;
+  final VoidCallback? onFullScreen;
 
   String _extractTableName(SqlCommandsNotifier notifier) {
     if (notifier.result is List && (notifier.result as List).isEmpty) {

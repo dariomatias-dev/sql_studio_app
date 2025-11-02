@@ -4,54 +4,66 @@ class PanelWidget extends StatelessWidget {
   const PanelWidget({
     super.key,
     required this.title,
-    required this.isFullScreen,
-    required this.onFullScreen,
-    required this.actions,
-    required this.child,
     this.databaseName,
+    this.isFullScreen,
+    this.onFullScreen,
+    this.actions = const <Widget>[],
+    required this.child,
   });
 
   final String title;
   final String? databaseName;
-  final VoidCallback onFullScreen;
-  final bool isFullScreen;
+  final bool? isFullScreen;
+  final VoidCallback? onFullScreen;
   final List<Widget> actions;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final hasFullScreenButton = onFullScreen != null;
+
     return Container(
       color: Colors.grey.shade100,
       child: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
-              IconButton(
-                onPressed: onFullScreen,
-                tooltip: isFullScreen ? 'Exit Fullscreen' : 'Enter Fullscreen',
-                icon: Icon(
-                  isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
+              if (hasFullScreenButton)
+                IconButton(
+                  onPressed: onFullScreen,
+                  tooltip: isFullScreen ?? false
+                      ? 'Exit Fullscreen'
+                      : 'Enter Fullscreen',
+                  icon: Icon(
+                    isFullScreen ?? false
+                        ? Icons.fullscreen_exit
+                        : Icons.fullscreen,
+                  ),
                 ),
-              ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (databaseName != null)
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: hasFullScreenButton ? 0 : 26.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
                       Text(
-                        databaseName ?? '',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
                       ),
-                  ],
+                      if (databaseName != null)
+                        Text(
+                          databaseName!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
                 ),
               ),
               ...actions,
