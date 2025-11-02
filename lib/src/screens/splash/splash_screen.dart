@@ -9,6 +9,7 @@ import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
@@ -45,6 +46,8 @@ class _SplashScreenState extends State<SplashScreen>
           .activeDatabase = SharedPreferencesService.getStringOrNull(
         SharedPreferencesKeys.selectedDatabaseKey,
       );
+
+      context.read<WorkspaceLayoutNotifier>().load();
 
       context.go(RouteNames.main);
     }
