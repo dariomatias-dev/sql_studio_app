@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
+import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
@@ -46,11 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             SettingsSectionWidget(
               title: 'Information',
               children: <Widget>[
-                SettingsCardWidget(
-                  onTap: () {},
-                  title: 'App Version',
-                  subtitle: '1.0.0',
-                ),
+                AppVersionWidget(),
                 SettingsCardWidget(
                   onTap: () {},
                   title: 'Official Website',
