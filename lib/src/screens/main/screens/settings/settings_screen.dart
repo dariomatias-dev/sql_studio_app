@@ -42,6 +42,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                   title: 'SQL Commands',
                   icon: Icons.arrow_forward_ios,
                 ),
+                SettingsCardWidget(
+                  onTap: () => context.push(RouteNames.workspaceLayout),
+                  title: 'Workspace Layout',
+                  icon: Icons.arrow_forward_ios,
+                ),
               ],
             ),
             SettingsSectionWidget(
