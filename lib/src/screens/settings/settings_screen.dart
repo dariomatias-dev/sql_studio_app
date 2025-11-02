@@ -6,11 +6,22 @@ import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Padding(

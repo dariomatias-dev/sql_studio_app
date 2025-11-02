@@ -11,9 +11,15 @@ class DatabasesScreen extends StatefulWidget {
   State<DatabasesScreen> createState() => _DatabasesScreenState();
 }
 
-class _DatabasesScreenState extends State<DatabasesScreen> {
+class _DatabasesScreenState extends State<DatabasesScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: Padding(
