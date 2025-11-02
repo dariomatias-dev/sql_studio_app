@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PanelWidget extends StatelessWidget {
   const PanelWidget({
     super.key,
-    required this.title,
+    this.title,
     this.databaseName,
     this.isFullScreen,
     this.onFullScreen,
@@ -11,7 +11,7 @@ class PanelWidget extends StatelessWidget {
     required this.child,
   });
 
-  final String title;
+  final String? title;
   final String? databaseName;
   final bool? isFullScreen;
   final VoidCallback? onFullScreen;
@@ -48,11 +48,12 @@ class PanelWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      if (title != null)
+                        Text(
+                          title!,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       if (databaseName != null)
                         Text(
                           databaseName!,

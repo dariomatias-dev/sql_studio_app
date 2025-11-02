@@ -75,10 +75,8 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                SqlEditorWidget(
-                ),
-                ConsoleWidget(
-                ),
+                SqlEditorWidget(showTitle: false),
+                ConsoleWidget(showTitle: false),
               ],
             ),
           ),

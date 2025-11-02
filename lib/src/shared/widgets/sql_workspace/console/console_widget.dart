@@ -9,10 +9,12 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 class ConsoleWidget extends StatelessWidget {
   const ConsoleWidget({
     super.key,
+    this.showTitle = true,
     this.isFullScreen,
     this.onFullScreen,
   });
 
+  final bool showTitle;
   final bool? isFullScreen;
   final VoidCallback? onFullScreen;
 
@@ -122,7 +124,7 @@ class ConsoleWidget extends StatelessWidget {
         }
 
         return PanelWidget(
-          title: 'Console',
+          title: showTitle ? 'Console' : null,
           isFullScreen: isFullScreen,
           onFullScreen: onFullScreen,
           actions: <Widget>[

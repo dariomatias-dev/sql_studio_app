@@ -10,8 +10,14 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_command_bar_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
-  const SqlEditorWidget({super.key, this.isFullScreen, this.onFullScreen});
+  const SqlEditorWidget({
+    super.key,
+    this.showTitle = true,
+    this.isFullScreen,
+    this.onFullScreen,
+  });
 
+  final bool showTitle;
   final bool? isFullScreen;
   final VoidCallback? onFullScreen;
 
@@ -62,7 +68,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
-      title: 'Editor',
+      title: widget.showTitle ? 'Editor' : null,
       databaseName: databaseName,
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,
@@ -116,7 +122,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
               ),
             ),
           ),
-          SafeArea(child: SqlCommandBarWidget(onInsertCommand: _insertCommand)),
+          SqlCommandBarWidget(onInsertCommand: _insertCommand),
         ],
       ),
     );
