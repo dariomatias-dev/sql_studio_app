@@ -1,0 +1,1 @@
+enum WorkspaceLayoutType { split, tabs }
