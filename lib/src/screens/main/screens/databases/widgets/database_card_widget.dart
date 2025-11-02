@@ -21,6 +21,8 @@ class DatabaseCardWidget extends StatefulWidget {
 
 class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
   Future<void> _copyFile(List<String> paths, String message) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     final contents = await Future.wait(
       paths.map((path) => rootBundle.loadString(path)),
     );

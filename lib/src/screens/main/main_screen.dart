@@ -50,7 +50,10 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onTabChange(BuildContext context, int index) {
+    FocusManager.instance.primaryFocus?.unfocus();
+
     context.read<MainScreenNotifier>().changeScreen(index);
+
     _pageController.jumpToPage(index);
   }
 
@@ -80,65 +83,72 @@ class _MainScreenState extends State<MainScreen> {
       }
     });
 
-    return ScaffoldWidget(
-      showExitButton: false,
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              context.push(RouteNames.databasePath);
-            },
-            tooltip: 'Open Fullscreen',
-            icon: const Icon(Icons.open_in_full, color: Colors.black),
-          ),
-          const ThemeSwitcherButtonWidget(),
-        ],
-      ),
-      drawer: DrawerWidget(),
-      body: GestureDetector(
-        onHorizontalDragEnd: (details) => _onHorizontalSwipe(context, details),
-        child: PageView(
-          controller: _pageController,
-          physics: const BouncingScrollPhysics(),
-          onPageChanged: (index) => _onPageChanged(context, index),
-          children: _screens,
-        ),
-      ),
-      bottomNavigationBar: GestureDetector(
-        onHorizontalDragEnd: (details) => _onHorizontalSwipe(context, details),
-        child: SafeArea(
-          child: GNav(
-            backgroundColor: Colors.white,
-            gap: 8.0,
-            selectedIndex: notifier.currentIndex,
-            onTabChange: (index) => _onTabChange(context, index),
-            color: Colors.grey.shade600,
-            activeColor: Colors.black,
-            tabBackgroundColor: Colors.transparent,
-            tabBorderRadius: 50.0,
-            tabBorder: Border.all(color: Colors.transparent),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 12.0,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: ScaffoldWidget(
+        showExitButton: false,
+        appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                context.push(RouteNames.databasePath);
+              },
+              tooltip: 'Open Fullscreen',
+              icon: const Icon(Icons.open_in_full, color: Colors.black),
             ),
-            haptic: false,
-            tabs: <GButton>[
-              _buildGButton(
-                icon: Icons.circle_outlined,
-                text: 'Home',
-                isSelected: notifier.currentIndex == 0,
+            const ThemeSwitcherButtonWidget(),
+          ],
+        ),
+        drawer: DrawerWidget(),
+        body: GestureDetector(
+          onHorizontalDragEnd: (details) =>
+              _onHorizontalSwipe(context, details),
+          child: PageView(
+            controller: _pageController,
+            physics: const BouncingScrollPhysics(),
+            onPageChanged: (index) => _onPageChanged(context, index),
+            children: _screens,
+          ),
+        ),
+        bottomNavigationBar: GestureDetector(
+          onHorizontalDragEnd: (details) =>
+              _onHorizontalSwipe(context, details),
+          child: SafeArea(
+            child: GNav(
+              backgroundColor: Colors.white,
+              gap: 8.0,
+              selectedIndex: notifier.currentIndex,
+              onTabChange: (index) => _onTabChange(context, index),
+              color: Colors.grey.shade600,
+              activeColor: Colors.black,
+              tabBackgroundColor: Colors.transparent,
+              tabBorderRadius: 50.0,
+              tabBorder: Border.all(color: Colors.transparent),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 12.0,
               ),
-              _buildGButton(
-                icon: Icons.folder_open_outlined,
-                text: 'Databases',
-                isSelected: notifier.currentIndex == 1,
-              ),
-              _buildGButton(
-                icon: Icons.settings_outlined,
-                text: 'Settings',
-                isSelected: notifier.currentIndex == 2,
-              ),
-            ],
+              haptic: false,
+              tabs: <GButton>[
+                _buildGButton(
+                  icon: Icons.circle_outlined,
+                  text: 'Home',
+                  isSelected: notifier.currentIndex == 0,
+                ),
+                _buildGButton(
+                  icon: Icons.folder_open_outlined,
+                  text: 'Databases',
+                  isSelected: notifier.currentIndex == 1,
+                ),
+                _buildGButton(
+                  icon: Icons.settings_outlined,
+                  text: 'Settings',
+                  isSelected: notifier.currentIndex == 2,
+                ),
+              ],
+            ),
           ),
         ),
       ),

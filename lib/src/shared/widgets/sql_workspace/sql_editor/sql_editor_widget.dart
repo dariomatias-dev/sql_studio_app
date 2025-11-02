@@ -1,5 +1,5 @@
-import 'package:code_text_field/code_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:highlight/languages/sql.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,6 @@ class SqlEditorWidget extends StatefulWidget {
 
 class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   final _controller = CodeController(language: sql);
-  final _focusNode = FocusNode();
 
   void _runQuery() {
     final sql = _controller.text.trim();
@@ -70,7 +69,6 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(10.0);
     final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
@@ -89,7 +87,6 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
                 icon: const Icon(Icons.refresh_outlined),
               );
             }
-
             return const SizedBox.shrink();
           },
         ),
@@ -107,25 +104,16 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: borderRadius.topLeft,
-                topRight: borderRadius.topRight,
-              ),
-              child: CodeTheme(
-                data: const CodeThemeData(styles: githubTheme),
-                child: CodeField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  expands: true,
-                  minLines: null,
-                  maxLines: null,
-                  textStyle: const TextStyle(
-                    fontFamily: 'monospace',
-                    fontSize: 14.0,
-                  ),
-                  background: Colors.white,
+            child: CodeTheme(
+              data: CodeThemeData(styles: githubTheme),
+              child: CodeField(
+                controller: _controller,
+                textStyle: const TextStyle(
+                  fontFamily: 'monospace',
+                  fontSize: 14.0,
                 ),
+                gutterStyle: GutterStyle(width: 60.0, margin: 0.0),
+                expands: true,
               ),
             ),
           ),
