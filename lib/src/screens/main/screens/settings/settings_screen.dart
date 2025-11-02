@@ -7,6 +7,8 @@ import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -23,8 +25,8 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+    return ScaffoldWidget(
+      showExitButton: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(

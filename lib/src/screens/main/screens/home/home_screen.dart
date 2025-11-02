@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return const Scaffold(
-      backgroundColor: Colors.white,
+    return const ScaffoldWidget(
+      showExitButton: false,
       body: SqlWorkspaceWidget(),
     );
   }

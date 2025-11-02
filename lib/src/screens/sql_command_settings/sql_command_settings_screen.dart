@@ -12,6 +12,7 @@ import 'package:sql_studio/src/screens/sql_command_settings/widgets/remove_comma
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SqlCommandSettingsScreen extends StatefulWidget {
   const SqlCommandSettingsScreen({super.key});
@@ -79,30 +80,9 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
       notifier.commands.isEmpty ? sqlCommands : notifier.commands,
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return ScaffoldWidget(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black87,
-            size: 24.0,
-          ),
-        ),
-        title: const Text(
-          'SQL Command Settings',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        centerTitle: true,
+        title: Text('SQL Command Settings'),
         actions: <Widget>[
           IconButton(
             onPressed: _showResetConfirmationDialog,

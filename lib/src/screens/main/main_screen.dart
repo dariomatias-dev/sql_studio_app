@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/routes/route_names.dart';
+
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+
 import 'package:sql_studio/src/screens/main/screens/databases/databases_screen.dart';
 import 'package:sql_studio/src/screens/main/screens/home/home_screen.dart';
-import 'package:sql_studio/src/screens/main/widgets/app_bar_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/settings_screen.dart';
+import 'package:sql_studio/src/screens/main/widgets/theme_switcher_button_widget.dart';
+
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -74,9 +80,20 @@ class _MainScreenState extends State<MainScreen> {
       }
     });
 
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: AppBarWidget(),
+    return ScaffoldWidget(
+      showExitButton: false,
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              context.push(RouteNames.databasePath);
+            },
+            tooltip: 'Open Fullscreen',
+            icon: const Icon(Icons.open_in_full, color: Colors.black),
+          ),
+          const ThemeSwitcherButtonWidget(),
+        ],
+      ),
       drawer: DrawerWidget(),
       body: GestureDetector(
         onHorizontalDragEnd: (details) => _onHorizontalSwipe(context, details),

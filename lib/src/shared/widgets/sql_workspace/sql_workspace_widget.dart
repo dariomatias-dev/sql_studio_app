@@ -41,13 +41,6 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final layoutType = context.watch<WorkspaceLayoutNotifier>().selectedLayout;
 

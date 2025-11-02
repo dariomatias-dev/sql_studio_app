@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 import 'package:sql_studio/src/screens/workspace_layout/widgets/workspace_layout_option_card_widget.dart';
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
 class WorkspaceLayoutScreen extends StatelessWidget {
@@ -15,24 +15,9 @@ class WorkspaceLayoutScreen extends StatelessWidget {
     return Consumer<WorkspaceLayoutNotifier>(
       builder: (context, notifier, _) {
         final selectedLayout = notifier.selectedLayout;
-        return Scaffold(
-          backgroundColor: Colors.grey.shade100,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            leading: IconButton(
-              onPressed: context.pop,
-              tooltip: 'Exit Screen',
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black54,
-                size: 20.0,
-              ),
-            ),
-            title: const Text(
-              'Workspace Layout',
-              style: TextStyle(color: Colors.black87, fontSize: 20.0),
-            ),
-          ),
+
+        return ScaffoldWidget(
+          appBar: AppBar(title: Text('Workspace Layout')),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
