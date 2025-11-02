@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
-import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_card_widget.dart';
-import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_section_widget.dart';
+import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
+import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

@@ -3,11 +3,11 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
-import 'package:sql_studio/src/screens/databases/databases_screen.dart';
-import 'package:sql_studio/src/screens/home/home_screen.dart';
+import 'package:sql_studio/src/screens/main/screens/databases/databases_screen.dart';
+import 'package:sql_studio/src/screens/main/screens/home/home_screen.dart';
 import 'package:sql_studio/src/screens/main/widgets/app_bar_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_widget.dart';
-import 'package:sql_studio/src/screens/settings/settings_screen.dart';
+import 'package:sql_studio/src/screens/main/screens/settings/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
