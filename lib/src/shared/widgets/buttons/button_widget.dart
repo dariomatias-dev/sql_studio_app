@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 
 enum ButtonStyleType { black, red, custom }
@@ -13,6 +12,7 @@ class ButtonWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.borderColor,
+    this.padding,
   });
 
   final VoidCallback onPressed;
@@ -21,6 +21,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Color? borderColor;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class ButtonWidget extends StatelessWidget {
         backgroundColor: buttonStyle.background,
         foregroundColor: buttonStyle.foreground,
         side: BorderSide(color: buttonStyle.border),
+        padding: padding,
       ),
       child: Text(text, style: TextStyle(color: buttonStyle.text)),
     );
