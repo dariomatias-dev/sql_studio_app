@@ -15,11 +15,13 @@ class SqlEditorWidget extends StatefulWidget {
     this.showTitle = true,
     this.isFullScreen,
     this.onFullScreen,
+    this.onQueryRun,
   });
 
   final bool showTitle;
   final bool? isFullScreen;
   final VoidCallback? onFullScreen;
+  final VoidCallback? onQueryRun;
 
   @override
   State<SqlEditorWidget> createState() => _SqlEditorStateSqlEditorWidget();
@@ -34,7 +36,12 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     if (sql.isEmpty) return;
 
     final notifier = context.read<SqlCommandsNotifier>();
+
     notifier.runQuery(sql);
+
+    if (widget.onQueryRun != null) {
+      widget.onQueryRun!();
+    }
   }
 
   void _clearEditor() {
