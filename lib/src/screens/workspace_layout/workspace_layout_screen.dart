@@ -3,10 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
-
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
-
 import 'package:sql_studio/src/screens/workspace_layout/widgets/workspace_layout_option_card_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
 class WorkspaceLayoutScreen extends StatelessWidget {
   const WorkspaceLayoutScreen({super.key});
@@ -53,12 +52,27 @@ class WorkspaceLayoutScreen extends StatelessWidget {
                   selected: selectedLayout == WorkspaceLayoutType.tabs,
                   onTap: () => notifier.setLayout(WorkspaceLayoutType.tabs),
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 28.0),
+                Align(
+                  alignment: AlignmentGeometry.centerLeft,
+                  child: const Text(
+                    'Preview:',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
                 Expanded(
-                  child: const Center(
-                    child: Text(
-                      'Preview',
-                      style: TextStyle(color: Colors.black87),
+                  child: SafeArea(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: const SqlWorkspaceWidget(),
                     ),
                   ),
                 ),

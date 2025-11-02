@@ -21,7 +21,7 @@ class DatabaseScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const SqlWorkspaceWidget(),
+      body: SafeArea(child: const SqlWorkspaceWidget()),
     );
   }
 }
