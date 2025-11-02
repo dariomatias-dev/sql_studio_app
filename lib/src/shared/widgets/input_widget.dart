@@ -18,24 +18,37 @@ class InputWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final String? Function(String? value)? validator;
 
+  OutlineInputBorder _border(Color color, {double width = 1}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16.0),
+      borderSide: BorderSide(color: color, width: width),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      cursorColor: Colors.black,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
+        hintStyle: TextStyle(color: Colors.grey.shade600),
+        labelStyle: const TextStyle(color: Colors.black),
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 0.1),
-        ),
+        enabledBorder: _border(Colors.grey.shade400),
+        focusedBorder: _border(Colors.black, width: 1.5),
+        errorBorder: _border(Colors.red, width: 1.5),
+        focusedErrorBorder: _border(Colors.red, width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 12.0,
         ),
+        fillColor: Colors.white,
+        filled: true,
       ),
+      style: const TextStyle(color: Colors.black),
       onChanged: onChanged,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
