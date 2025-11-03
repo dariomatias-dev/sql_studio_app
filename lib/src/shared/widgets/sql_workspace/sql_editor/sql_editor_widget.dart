@@ -98,6 +98,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   @override
   Widget build(BuildContext context) {
     final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
+    final suggestionsNotifier = context.watch<SqlSuggestionsNotifier>();
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
@@ -142,13 +143,16 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
                 ),
                 gutterStyle: GutterStyle(width: 60.0, margin: 0.0),
                 expands: true,
-                decoration: BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: Colors.white),
               ),
             ),
           ),
-          SqlCommandBarWidget(onInsertCommand: _insertCommand),
-          SqlQuickSuggestionsBarWidget(onInsertCommand: _insertCommand),
-          CharacterSuggestionsWidget(onInsertCommand: _insertCommand),
+          if (suggestionsNotifier.useBasicSuggestions)
+            SqlCommandBarWidget(onInsertCommand: _insertCommand),
+          if (suggestionsNotifier.useAdvancedSuggestions)
+            SqlQuickSuggestionsBarWidget(onInsertCommand: _insertCommand),
+          if (suggestionsNotifier.useCharacterSuggestions)
+            CharacterSuggestionsWidget(onInsertCommand: _insertCommand),
         ],
       ),
     );
