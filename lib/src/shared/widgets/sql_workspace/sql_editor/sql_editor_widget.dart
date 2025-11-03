@@ -8,6 +8,7 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/character_suggestions_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_command_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_quick_suggestions_bar_widget.dart';
 
@@ -147,6 +148,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           ),
           SqlCommandBarWidget(onInsertCommand: _insertCommand),
           SqlQuickSuggestionsBarWidget(onInsertCommand: _insertCommand),
+          CharacterSuggestionsWidget(onInsertCommand: _insertCommand),
         ],
       ),
     );
