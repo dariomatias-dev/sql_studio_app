@@ -5,6 +5,7 @@ import 'package:highlight/languages/sql.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_command_bar_widget.dart';
@@ -67,6 +68,18 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     });
   }
 
+  void _onTextChanged(String value) {
+    final word = value.split(RegExp(r'\s+')).last.toUpperCase();
+
+    context.read<SqlSuggestionsNotifier>().updateSuggestions(word);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() => _onTextChanged(_controller.text));
+  }
+
   @override
   Widget build(BuildContext context) {
     final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
@@ -114,6 +127,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
                 ),
                 gutterStyle: GutterStyle(width: 60.0, margin: 0.0),
                 expands: true,
+                decoration: BoxDecoration(color: Colors.white),
               ),
             ),
           ),

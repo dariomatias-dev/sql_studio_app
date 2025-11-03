@@ -12,8 +12,8 @@ class SqlCommandBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentCommands = context.read<SqlSuggestionsNotifier>().commands;
-    final commands = currentCommands.isEmpty ? sqlCommands : currentCommands;
+    final suggestions = context.watch<SqlSuggestionsNotifier>().commands;
+    final commands = suggestions.isEmpty ? sqlCommands : suggestions;
 
     return Container(
       height: 52.0,
