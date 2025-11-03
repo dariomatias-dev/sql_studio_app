@@ -5,8 +5,8 @@ import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
-class SqlCommandBarWidget extends StatelessWidget {
-  const SqlCommandBarWidget({super.key, required this.onInsertCommand});
+class SqlBasicSuggestionsBarWidget extends StatelessWidget {
+  const SqlBasicSuggestionsBarWidget({super.key, required this.onInsertCommand});
 
   final ValueChanged<String> onInsertCommand;
 

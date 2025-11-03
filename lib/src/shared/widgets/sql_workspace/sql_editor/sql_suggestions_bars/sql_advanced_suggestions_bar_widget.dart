@@ -65,8 +65,8 @@ final quickSuggestions = <SqlQuickSuggestion>[
   ),
 ];
 
-class SqlQuickSuggestionsBarWidget extends StatelessWidget {
-  const SqlQuickSuggestionsBarWidget({
+class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
+  const SqlAdvancedSuggestionsBarWidget({
     super.key,
     required this.onInsertCommand,
   });

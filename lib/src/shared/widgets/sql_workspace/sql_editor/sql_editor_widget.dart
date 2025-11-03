@@ -8,9 +8,9 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
-import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/character_suggestions_widget.dart';
-import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_command_bar_widget.dart';
-import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_quick_suggestions_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
@@ -148,11 +148,11 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
             ),
           ),
           if (suggestionsNotifier.useBasicSuggestions)
-            SqlCommandBarWidget(onInsertCommand: _insertCommand),
+            SqlBasicSuggestionsBarWidget(onInsertCommand: _insertCommand),
           if (suggestionsNotifier.useAdvancedSuggestions)
-            SqlQuickSuggestionsBarWidget(onInsertCommand: _insertCommand),
+            SqlAdvancedSuggestionsBarWidget(onInsertCommand: _insertCommand),
           if (suggestionsNotifier.useCharacterSuggestions)
-            CharacterSuggestionsWidget(onInsertCommand: _insertCommand),
+            SqlCharacterBarWidget(onInsertCommand: _insertCommand),
         ],
       ),
     );

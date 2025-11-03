@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 const characters = <String>['(', ')', ';', '!', '=', '*', '%', '\'', '"'];
 
-class CharacterSuggestionsWidget extends StatelessWidget {
-  const CharacterSuggestionsWidget({super.key, required this.onInsertCommand});
+class SqlCharacterBarWidget extends StatelessWidget {
+  const SqlCharacterBarWidget({super.key, required this.onInsertCommand});
 
   final void Function(String command, {String? selectText}) onInsertCommand;
 
