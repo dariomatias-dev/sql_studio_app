@@ -33,7 +33,7 @@ class SqlEditorWidget extends StatefulWidget {
 class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   final _controller = CodeController(language: sql);
 
-  void _runQuery() {
+  void _onRunQuery() {
     final sql = _controller.text.trim();
     if (sql.isEmpty) return;
 
@@ -46,13 +46,7 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     }
   }
 
-  void _clearEditor() {
-    setState(() {
-      _controller.text = '';
-    });
-  }
-
-  void _insertCommand(String command, {String? selectText}) {
+  void _onInsertCommand(String command, {String? selectText}) {
     final text = _controller.text;
     var selection = _controller.selection;
 
@@ -88,6 +82,12 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     context.read<SqlSuggestionsNotifier>().updateSuggestions(word);
   }
 
+  void _onClearEditor() {
+    setState(() {
+      _controller.text = '';
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -120,12 +120,12 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           },
         ),
         IconButton(
-          onPressed: _runQuery,
+          onPressed: _onRunQuery,
           tooltip: 'Run Query',
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         IconButton(
-          onPressed: _clearEditor,
+          onPressed: _onClearEditor,
           tooltip: 'Clear Editor',
           icon: const Icon(Icons.clear_rounded),
         ),
@@ -148,11 +148,11 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
             ),
           ),
           if (suggestionsNotifier.useBasicSuggestions)
-            SqlBasicSuggestionsBarWidget(onInsertCommand: _insertCommand),
+            SqlBasicSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
           if (suggestionsNotifier.useAdvancedSuggestions)
-            SqlAdvancedSuggestionsBarWidget(onInsertCommand: _insertCommand),
+            SqlAdvancedSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
           if (suggestionsNotifier.useCharacterSuggestions)
-            SqlCharacterBarWidget(onInsertCommand: _insertCommand),
+            SqlCharacterBarWidget(onInsertCommand: _onInsertCommand),
         ],
       ),
     );
