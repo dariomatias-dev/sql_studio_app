@@ -31,8 +31,11 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
 
   Future<void> _handlePress() async {
     if (_loading) return;
+
     setState(() => _loading = true);
+
     await widget.onPressed();
+
     if (mounted) setState(() => _loading = false);
   }
 
@@ -57,10 +60,10 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
       ),
       child: _loading
           ? SizedBox(
-              height: 18,
-              width: 18,
+              height: 18.0,
+              width: 18.0,
               child: CircularProgressIndicator(
-                strokeWidth: 2,
+                strokeWidth: 2.0,
                 color: buttonStyle.text,
               ),
             )
