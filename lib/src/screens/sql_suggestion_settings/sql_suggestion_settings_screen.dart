@@ -6,11 +6,11 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_title_option_widget.dart';
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 
-import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SqlSuggestionSettingsScreen extends StatefulWidget {
   const SqlSuggestionSettingsScreen({super.key});
@@ -22,12 +22,22 @@ class SqlSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlSuggestionSettingsScreenState
     extends State<SqlSuggestionSettingsScreen> {
+  bool _useBasicSuggestions = true;
+  bool _useAdvancedSuggestions = false;
+  bool _useCharacterSuggestions = true;
+
   void _openBasicConfig(BuildContext context) => context.push('/');
 
   void _openAdvancedConfig(BuildContext context) => context.push('/');
 
   Future<void> _onSave() async {
-    await context.read<SqlSuggestionsNotifier>().saveSettings();
+    final notifier = context.read<SqlSuggestionsNotifier>();
+
+    notifier.setBasicSuggestions(_useBasicSuggestions);
+    notifier.setAdvancedSuggestions(_useAdvancedSuggestions);
+    notifier.setCharacterSuggestions(_useCharacterSuggestions);
+
+    await notifier.saveSettings();
 
     if (!mounted) return;
 
@@ -35,11 +45,22 @@ class _SqlSuggestionSettingsScreenState
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    final notifier = context.read<SqlSuggestionsNotifier>();
+
+    _useBasicSuggestions = notifier.useBasicSuggestions;
+    _useAdvancedSuggestions = notifier.useAdvancedSuggestions;
+    _useCharacterSuggestions = notifier.useCharacterSuggestions;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ScaffoldWidget(
       appBar: AppBar(title: const Text('Suggestion Settings')),
       body: Consumer<SqlSuggestionsNotifier>(
-        builder: (context, notifier, _) {
+        builder: (context, notifier, child) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -53,10 +74,15 @@ class _SqlSuggestionSettingsScreenState
                   title: 'Basic Suggestions',
                   subtitle:
                       'Displays full SQL examples like "SELECT * FROM". Ideal for quick queries.',
-                  active: notifier.useBasicSuggestions,
-                  onChanged: notifier.setBasicSuggestions,
+                  active: _useBasicSuggestions,
+                  onChanged: (value) {
+                    setState(() {
+                      _useBasicSuggestions = value;
+                      if (value) _useAdvancedSuggestions = false;
+                    });
+                  },
                 ),
-                if (notifier.useBasicSuggestions)
+                if (_useBasicSuggestions)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                     child: Align(
@@ -74,10 +100,15 @@ class _SqlSuggestionSettingsScreenState
                   title: 'Advanced Suggestions',
                   subtitle:
                       'Shows short hints like "ALL" or "COUNT" that expand into full SQL statements when clicked.',
-                  active: notifier.useAdvancedSuggestions,
-                  onChanged: notifier.setAdvancedSuggestions,
+                  active: _useAdvancedSuggestions,
+                  onChanged: (value) {
+                    setState(() {
+                      _useAdvancedSuggestions = value;
+                      if (value) _useBasicSuggestions = false;
+                    });
+                  },
                 ),
-                if (notifier.useAdvancedSuggestions)
+                if (_useAdvancedSuggestions)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
                     child: Align(
@@ -99,8 +130,12 @@ class _SqlSuggestionSettingsScreenState
                 SqlSuggestionSettingsCardWidget(
                   title: 'Character Suggestions',
                   subtitle: 'Adds quick buttons to >, =, !, %, ; and more.',
-                  active: notifier.useCharacterSuggestions,
-                  onChanged: notifier.setCharacterSuggestions,
+                  active: _useCharacterSuggestions,
+                  onChanged: (value) {
+                    setState(() {
+                      _useCharacterSuggestions = value;
+                    });
+                  },
                 ),
                 const Spacer(),
                 SizedBox(
