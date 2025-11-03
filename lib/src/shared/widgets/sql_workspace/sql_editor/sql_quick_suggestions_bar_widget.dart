@@ -76,11 +76,13 @@ class SqlQuickSuggestionsBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 38.0,
-      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      height: 48.0,
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
         border: Border(top: BorderSide(color: Colors.grey.shade300)),
+        borderRadius: const BorderRadius.vertical(
+          bottom: Radius.circular(10.0),
+        ),
       ),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
@@ -91,7 +93,10 @@ class SqlQuickSuggestionsBarWidget extends StatelessWidget {
 
           return InkWell(
             borderRadius: BorderRadius.circular(6.0),
-            onTap: () => onInsertCommand(quickSuggestion.code, selectText: quickSuggestion.selectText),
+            onTap: () => onInsertCommand(
+              quickSuggestion.code,
+              selectText: quickSuggestion.selectText,
+            ),
             child: Container(
               width: 56.0,
               alignment: Alignment.center,

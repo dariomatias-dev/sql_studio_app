@@ -12,11 +12,9 @@ class CharacterSuggestionsWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       width: double.infinity,
-      color: Colors.grey.shade100,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             for (int i = 0; i < characters.length; i++) ...<Widget>[
               GestureDetector(
