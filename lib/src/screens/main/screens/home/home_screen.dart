@@ -19,9 +19,6 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return const ScaffoldWidget(
-      showExitButton: false,
-      body: SqlWorkspaceWidget(),
-    );
+    return ScaffoldWidget(showExitButton: false, body: SqlWorkspaceWidget());
   }
 }

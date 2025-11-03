@@ -8,5 +8,7 @@ class RouteNames {
 
   static const sqlCommandSettings = '/settings/sql-commands';
 
+  static const sqlSuggestionSettingsPath = '/settings/sql-suggestion-settings';
+
   static const workspaceLayout = '/settings/workspace-layout';
 }

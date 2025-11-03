@@ -7,6 +7,7 @@ import 'package:sql_studio/src/screens/main/main_screen.dart';
 import 'package:sql_studio/src/screens/not_found/not_found_screen.dart';
 import 'package:sql_studio/src/screens/sql_command_settings/sql_command_settings_screen.dart';
 import 'package:sql_studio/src/screens/splash/splash_screen.dart';
+import 'package:sql_studio/src/screens/sql_suggestion_settings/sql_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/screens/workspace_layout/workspace_layout_screen.dart';
 
 final router = GoRouter(
@@ -34,6 +35,10 @@ final router = GoRouter(
     GoRoute(
       path: RouteNames.workspaceLayout,
       builder: (context, state) => const WorkspaceLayoutScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.sqlSuggestionSettingsPath,
+      builder: (context, state) => const SqlSuggestionSettingsScreen(),
     ),
   ],
 );
