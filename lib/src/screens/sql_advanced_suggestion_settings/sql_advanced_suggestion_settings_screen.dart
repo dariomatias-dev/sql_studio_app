@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/types/sql_advanced_suggestion_model.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/create_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/delete_sql_advanced_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/update_sql_advanced_suggestion_dialog_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -31,7 +34,19 @@ class _SqlAdvancedSuggestionSettingsScreenState
     );
   }
 
-  void _showEditDialog(String label) {}
+  void _showEditDialog(SqlAdvancedSuggestionModel suggestion) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return UpdateSqlAdvancedSuggestionDialogWidget(
+          initialValue: suggestion,
+          onSubmit: (value) async {
+            return true;
+          },
+        );
+      },
+    );
+  }
 
   void _showRemoveDialog(String label) {
     showDialog(
@@ -135,10 +150,10 @@ class _SqlAdvancedSuggestionSettingsScreenState
                     children: <Widget>[
                       IconButton(
                         tooltip: 'Edit "${suggestion.label}"',
-                        onPressed: () => _showEditDialog(suggestion.label),
-                        icon: const Icon(
+                        onPressed: () => _showEditDialog(suggestion),
+                        icon: Icon(
                           Icons.edit_outlined,
-                          color: Colors.grey,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                       IconButton(
