@@ -5,11 +5,13 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.itemCount,
+    this.itemPadding,
     required this.itemBuilder,
   });
 
   final void Function(int index) onTap;
   final int itemCount;
+  final EdgeInsets? itemPadding;
   final String Function(int index) itemBuilder;
 
   @override
@@ -36,10 +38,9 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
             onTap: () => onTap(index),
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(
-                vertical: 6.0,
-                horizontal: 4.0,
-              ),
+              padding:
+                  itemPadding ??
+                  const EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey.shade300),

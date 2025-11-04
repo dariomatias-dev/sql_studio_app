@@ -87,6 +87,7 @@ class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
         );
       },
       itemCount: quickSuggestions.length,
+      itemPadding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
       itemBuilder: (index) => quickSuggestions[index].label,
     );
   }
