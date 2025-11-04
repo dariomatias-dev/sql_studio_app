@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
+
 class SqlQuickSuggestion {
   final String label;
   final String code;
@@ -75,62 +77,17 @@ class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      height: 48.0,
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
-        borderRadius: const BorderRadius.vertical(
-          bottom: Radius.circular(10.0),
-        ),
-      ),
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: quickSuggestions.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 4.0),
-        itemBuilder: (context, index) {
-          final quickSuggestion = quickSuggestions[index];
+    return SqlSuggestionsBarBaseWidget(
+      onTap: (index) {
+        final quickSuggestion = quickSuggestions[index];
 
-          return InkWell(
-            borderRadius: BorderRadius.circular(6.0),
-            onTap: () => onInsertCommand(
-              quickSuggestion.code,
-              selectText: quickSuggestion.selectText,
-            ),
-            child: Container(
-              width: 56.0,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(
-                vertical: 6.0,
-                horizontal: 4.0,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 2.0,
-                    offset: const Offset(0.0, 1.0),
-                  ),
-                ],
-              ),
-              child: Text(
-                quickSuggestion.label,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 11.0,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'monospace',
-                  height: 1.1,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+        onInsertCommand(
+          quickSuggestion.code,
+          selectText: quickSuggestion.selectText,
+        );
+      },
+      itemCount: quickSuggestions.length,
+      itemBuilder: (index) => quickSuggestions[index].label,
     );
   }
 }
