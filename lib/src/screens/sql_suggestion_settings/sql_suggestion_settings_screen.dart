@@ -31,7 +31,8 @@ class _SqlSuggestionSettingsScreenState
   void _openBasicConfig(BuildContext context) =>
       context.push(RouteNames.sqlBasicSuggestionSettings);
 
-  void _openAdvancedConfig(BuildContext context) => context.push('/');
+  void _openAdvancedConfig(BuildContext context) =>
+      context.push(RouteNames.sqlAdvancedSuggestionSettings);
 
   Future<void> _onSave() async {
     final notifier = context.read<SqlSuggestionsNotifier>();

@@ -5,6 +5,7 @@ import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/screens/database/database_screen.dart';
 import 'package:sql_studio/src/screens/main/main_screen.dart';
 import 'package:sql_studio/src/screens/not_found/not_found_screen.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/sql_advanced_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/screens/splash/splash_screen.dart';
 import 'package:sql_studio/src/screens/sql_suggestion_settings/sql_suggestion_settings_screen.dart';
@@ -31,6 +32,10 @@ final router = GoRouter(
     GoRoute(
       path: RouteNames.sqlBasicSuggestionSettings,
       builder: (context, state) => const SqlBasicSuggestionsSettingsScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.sqlAdvancedSuggestionSettings,
+      builder: (context, state) => const SqlAdvancedSuggestionSettingsScreen(),
     ),
     GoRoute(
       path: RouteNames.workspaceLayout,

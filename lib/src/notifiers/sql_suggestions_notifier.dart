@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:sql_studio/src/core/constants/sql_advanced_suggestions_default.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
+import 'package:sql_studio/src/core/types/sql_advanced_suggestion_model.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
@@ -10,6 +12,7 @@ enum SuggestionType { basic, advanced }
 class SqlSuggestionsNotifier extends ChangeNotifier {
   final _commands = <String>[];
   final _suggestions = <String>[];
+  final _advancedSuggestions = <SqlAdvancedSuggestionModel>[];
 
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
@@ -20,6 +23,7 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
   bool get useCharacterSuggestions => _useCharacterSuggestions;
 
   List<String> get commands => _suggestions.isEmpty ? _commands : _suggestions;
+  List<SqlAdvancedSuggestionModel> get advancedSuggestions => _advancedSuggestions.isEmpty ? sqlAdvancedSuggestionsDefault : _advancedSuggestions;
 
   Future<void> loadCommands() async {
     _commands
@@ -33,6 +37,22 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
     if (_commands.isEmpty) {
       _commands.addAll(List.from(sqlCommands));
     }
+
+    final savedAdvanced = SharedPreferencesService.getStringList(
+      'advancedSuggestions',
+    );
+
+    _advancedSuggestions
+      ..clear()
+      ..addAll(
+        savedAdvanced.map((item) {
+          final parts = item.split('|');
+          return SqlAdvancedSuggestionModel(
+            label: parts[0],
+            code: parts.length > 1 ? parts[1] : '',
+          );
+        }),
+      );
 
     _useBasicSuggestions = SharedPreferencesService.getBool(
       'useBasicSuggestions',
@@ -122,6 +142,38 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addAdvancedSuggestion(String label, String code) async {
+    final exists = _advancedSuggestions.any((s) => s.label == label);
+    if (exists) return;
+
+    _advancedSuggestions.add(SqlAdvancedSuggestionModel(label: label, code: code));
+    await _saveAdvancedSuggestions();
+  }
+
+  Future<void> removeAdvancedSuggestion(String label) async {
+    _advancedSuggestions.removeWhere((s) => s.label == label);
+    await _saveAdvancedSuggestions();
+  }
+
+  Future<void> updateAdvancedSuggestions(
+    List<SqlAdvancedSuggestionModel> suggestions,
+  ) async {
+    _advancedSuggestions
+      ..clear()
+      ..addAll(suggestions);
+    await _saveAdvancedSuggestions();
+  }
+
+  Future<void> _saveAdvancedSuggestions() async {
+    final data = _advancedSuggestions
+        .map((e) => '${e.label}|${e.code.replaceAll('|', '¦')}')
+        .toList();
+
+    await SharedPreferencesService.setStringList('advancedSuggestions', data);
+
+    notifyListeners();
+  }
+
   void updateSuggestions(String input) {
     final query = input.trim().toUpperCase();
 
@@ -138,7 +190,6 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
 
   void clearSuggestions() {
     _suggestions.clear();
-
     notifyListeners();
   }
 }
