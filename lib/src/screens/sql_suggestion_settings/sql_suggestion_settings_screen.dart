@@ -85,21 +85,11 @@ class _SqlSuggestionSettingsScreenState
                       if (value) _useAdvancedSuggestions = false;
                     });
                   },
+                  onConfigure: _useBasicSuggestions
+                      ? () => _openBasicConfig(context)
+                      : null,
                 ),
-                if (_useBasicSuggestions)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: ButtonWidget(
-                        onPressed: () => _openBasicConfig(context),
-                        text: 'Configure',
-                        style: ButtonStyleType.black,
-                      ),
-                    ),
-                  )
-                else
-                  const SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 SqlSuggestionSettingsCardWidget(
                   title: 'Advanced Suggestions',
                   subtitle:
@@ -111,21 +101,11 @@ class _SqlSuggestionSettingsScreenState
                       if (value) _useBasicSuggestions = false;
                     });
                   },
+                  onConfigure: _useAdvancedSuggestions
+                      ? () => _openAdvancedConfig(context)
+                      : null,
                 ),
-                if (_useAdvancedSuggestions)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: ButtonWidget(
-                        onPressed: () => _openAdvancedConfig(context),
-                        text: 'Configure',
-                        style: ButtonStyleType.black,
-                      ),
-                    ),
-                  )
-                else
-                  const SizedBox(height: 20.0),
+
                 const SizedBox(height: 12.0),
                 const SqlSuggestionSettingsTitleOptionWidget(
                   title: 'Other Suggestions',
