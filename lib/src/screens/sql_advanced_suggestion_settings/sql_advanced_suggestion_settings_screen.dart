@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/create_sql_advanced_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/delete_sql_advanced_suggestion_dialog_widget.dart';
+
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
@@ -14,9 +18,33 @@ class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlAdvancedSuggestionSettingsScreenState
     extends State<SqlAdvancedSuggestionSettingsScreen> {
-  void _showCreateDialog() {}
+  void _showCreateDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CreateSqlAdvancedSuggestionDialogWidget(
+          onSubmit: (value) async {
+            return true;
+          },
+        );
+      },
+    );
+  }
+
   void _showEditDialog(String label) {}
-  void _showRemoveDialog(String label) {}
+
+  void _showRemoveDialog(String label) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DeleteSqlAdvancedSuggestionDialogWidget(
+          label: label,
+          onConfirm: () async {},
+        );
+      },
+    );
+  }
+
   void _showResetDialog() {}
 
   @override
@@ -59,7 +87,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
               notifier.updateAdvancedSuggestions(advancedSuggestions);
             });
           },
-          children: [
+          children: <Widget>[
             for (final suggestion in advancedSuggestions)
               Container(
                 key: ValueKey(suggestion.label),
@@ -70,8 +98,8 @@ class _SqlAdvancedSuggestionSettingsScreenState
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                       color: Colors.grey.withAlpha(25),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      blurRadius: 8.0,
+                      offset: const Offset(0.0, 2.0),
                     ),
                   ],
                 ),
@@ -83,8 +111,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
                     horizontal: 16.0,
                     vertical: 6.0,
                   ),
-                  leading:
-                      const Icon(Icons.drag_handle, color: Colors.black54),
+                  leading: const Icon(Icons.drag_handle, color: Colors.black54),
                   title: Text(
                     suggestion.label,
                     style: const TextStyle(
@@ -105,8 +132,9 @@ class _SqlAdvancedSuggestionSettingsScreenState
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       IconButton(
+                        tooltip: 'Edit "${suggestion.label}"',
                         onPressed: () => _showEditDialog(suggestion.label),
                         icon: const Icon(
                           Icons.edit_outlined,
@@ -114,6 +142,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
                         ),
                       ),
                       IconButton(
+                        tooltip: 'Delete "${suggestion.label}"',
                         onPressed: () => _showRemoveDialog(suggestion.label),
                         icon: const Icon(
                           Icons.delete_outline,
