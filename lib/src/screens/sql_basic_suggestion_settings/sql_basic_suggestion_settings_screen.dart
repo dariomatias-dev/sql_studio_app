@@ -6,23 +6,23 @@ import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/screens/sql_command_settings/widgets/create_command_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_command_settings/widgets/remove_command_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/create_basic_command_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/remove_basic_command_suggestion_dialog_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
-class SqlCommandSettingsScreen extends StatefulWidget {
-  const SqlCommandSettingsScreen({super.key});
+class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
+  const SqlBasicSuggestionsSettingsScreen({super.key});
 
   @override
-  State<SqlCommandSettingsScreen> createState() =>
-      _SqlCommandSettingsScreenState();
+  State<SqlBasicSuggestionsSettingsScreen> createState() =>
+      _SqlBasicSuggestionsSettingsScreenState();
 }
 
-class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
+class _SqlBasicSuggestionsSettingsScreenState extends State<SqlBasicSuggestionsSettingsScreen> {
   final controller = TextEditingController();
 
   late final notifier = Provider.of<SqlSuggestionsNotifier>(context);
@@ -33,7 +33,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return CreateCommandDialogWidget();
+        return CreateBasicCommandSuggestionDialogWidget();
       },
     );
   }
@@ -42,7 +42,7 @@ class _SqlCommandSettingsScreenState extends State<SqlCommandSettingsScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return RemoveCommandDialogWidget(command: command);
+        return RemoveBasicCommandSuggestionDialogWidget(command: command);
       },
     );
   }

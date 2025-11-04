@@ -5,15 +5,15 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
-class CreateCommandDialogWidget extends StatefulWidget {
-  const CreateCommandDialogWidget({super.key});
+class CreateBasicCommandSuggestionDialogWidget extends StatefulWidget {
+  const CreateBasicCommandSuggestionDialogWidget({super.key});
 
   @override
-  State<CreateCommandDialogWidget> createState() =>
-      _CreateCommandDialogWidgetState();
+  State<CreateBasicCommandSuggestionDialogWidget> createState() =>
+      _CreateBasicCommandSuggestionDialogWidgetState();
 }
 
-class _CreateCommandDialogWidgetState extends State<CreateCommandDialogWidget> {
+class _CreateBasicCommandSuggestionDialogWidgetState extends State<CreateBasicCommandSuggestionDialogWidget> {
   final _controller = TextEditingController();
 
   @override

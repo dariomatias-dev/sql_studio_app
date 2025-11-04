@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/routes/route_names.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
@@ -26,7 +28,8 @@ class _SqlSuggestionSettingsScreenState
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
 
-  void _openBasicConfig(BuildContext context) => context.push('/');
+  void _openBasicConfig(BuildContext context) =>
+      context.push(RouteNames.sqlBasicSuggestionSettings);
 
   void _openAdvancedConfig(BuildContext context) => context.push('/');
 

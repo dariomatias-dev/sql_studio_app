@@ -8,17 +8,17 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
-class RemoveCommandDialogWidget extends StatefulWidget {
-  const RemoveCommandDialogWidget({super.key, required this.command});
+class RemoveBasicCommandSuggestionDialogWidget extends StatefulWidget {
+  const RemoveBasicCommandSuggestionDialogWidget({super.key, required this.command});
 
   final String command;
 
   @override
-  State<RemoveCommandDialogWidget> createState() =>
-      _RemoveCommandDialogWidgetState();
+  State<RemoveBasicCommandSuggestionDialogWidget> createState() =>
+      _RemoveBasicCommandSuggestionDialogWidgetState();
 }
 
-class _RemoveCommandDialogWidgetState extends State<RemoveCommandDialogWidget> {
+class _RemoveBasicCommandSuggestionDialogWidgetState extends State<RemoveBasicCommandSuggestionDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
