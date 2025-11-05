@@ -45,6 +45,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
     if (!_formKey.currentState!.validate()) return;
 
     final value = SqlAdvancedSuggestionModel(
+      id: widget.initialValue?.id,
       label: _labelController.text.trim(),
       code: _codeController.text.trim(),
       selectText: _selectTextController.text.trim().isEmpty
