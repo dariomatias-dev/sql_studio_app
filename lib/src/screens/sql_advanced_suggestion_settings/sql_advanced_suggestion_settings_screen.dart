@@ -28,24 +28,8 @@ class _SqlAdvancedSuggestionSettingsScreenState
   void _showCreateDialog() {
     showDialog(
       context: context,
-      builder: (_) {
-        return CreateSqlAdvancedSuggestionDialogWidget(
-          onSubmit: (value) async {
-            final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-            final success = await notifier.addSuggestion(value);
-
-            if (!mounted) return false;
-
-            SnackBarUtils.show(
-              context,
-              success
-                  ? 'Suggestion added successfully.'
-                  : 'Failed to add suggestion.',
-            );
-
-            return success;
-          },
-        );
+      builder: (context) {
+        return CreateSqlAdvancedSuggestionDialogWidget();
       },
     );
   }
@@ -53,24 +37,9 @@ class _SqlAdvancedSuggestionSettingsScreenState
   void _showEditDialog(SqlAdvancedSuggestionModel suggestion) {
     showDialog(
       context: context,
-      builder: (_) {
+      builder: (context) {
         return UpdateSqlAdvancedSuggestionDialogWidget(
           initialValue: suggestion,
-          onSubmit: (updatedValue) async {
-            final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-            final success = await notifier.updateSuggestion(updatedValue);
-
-            if (!mounted) return false;
-
-            SnackBarUtils.show(
-              context,
-              success
-                  ? 'Suggestion updated successfully.'
-                  : 'Failed to update suggestion.',
-            );
-
-            return success;
-          },
         );
       },
     );
@@ -79,22 +48,10 @@ class _SqlAdvancedSuggestionSettingsScreenState
   void _showRemoveDialog(SqlAdvancedSuggestionModel suggestion) {
     showDialog(
       context: context,
-      builder: (_) {
+      builder: (context) {
         return DeleteSqlAdvancedSuggestionDialogWidget(
+          suggestionId: suggestion.id,
           label: suggestion.label,
-          onConfirm: () async {
-            final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-            final success = await notifier.removeSuggestion(suggestion.id);
-
-            if (!mounted) return;
-
-            SnackBarUtils.show(
-              context,
-              success
-                  ? 'Suggestion deleted successfully.'
-                  : 'Failed to delete suggestion.',
-            );
-          },
         );
       },
     );
