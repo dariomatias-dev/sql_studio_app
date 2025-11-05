@@ -1,5 +1,5 @@
 class DatabaseMigrations {
-  static const createDatabasesTable = '''
+  static const databasesTable = '''
     CREATE TABLE IF NOT EXISTS databases (
       id TEXT PRIMARY KEY,
       label TEXT NOT NULL,
@@ -10,7 +10,17 @@ class DatabaseMigrations {
     )
   ''';
 
+  static const sqlAdvancedSuggestionsTable = '''
+    CREATE TABLE IF NOT EXISTS sql_advanced_suggestions (
+      id TEXT PRIMARY KEY,
+      label TEXT NOT NULL,
+      code TEXT NOT NULL,
+      select_text TEXT
+    )
+  ''';
+
   static const allTables = <String>[
-    createDatabasesTable,
+    databasesTable,
+    sqlAdvancedSuggestionsTable,
   ];
 }
