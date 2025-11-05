@@ -65,6 +65,23 @@ class DatabaseRepository<T> {
     );
   }
 
+  Future<List<Object?>> insertAll(List<Map<String, dynamic>> models) async {
+    if (models.isEmpty) return <List<Object?>>[];
+
+    final db = await _db;
+    final batch = db.batch();
+
+    for (final model in models) {
+      batch.insert(
+        tableName,
+        model,
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return await batch.commit(noResult: false);
+  }
+
   Future<List<Map<String, dynamic>>> getAll({
     String? orderBy,
     String? where,
