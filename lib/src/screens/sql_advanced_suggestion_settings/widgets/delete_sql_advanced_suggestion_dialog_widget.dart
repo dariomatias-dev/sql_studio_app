@@ -11,11 +11,11 @@ import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget
 class DeleteSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
   const DeleteSqlAdvancedSuggestionDialogWidget({
     super.key,
-    required this.suggestionId,
+    required this.id,
     required this.label,
   });
 
-  final String suggestionId;
+  final String id;
   final String label;
 
   @override
@@ -36,7 +36,7 @@ class _DeleteSqlAdvancedSuggestionDialogWidgetState
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-          final success = await notifier.removeSuggestion(widget.suggestionId);
+          final success = await notifier.removeSuggestion(widget.id);
 
           if (!mounted) return;
 

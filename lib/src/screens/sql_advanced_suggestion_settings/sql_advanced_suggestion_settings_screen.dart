@@ -7,12 +7,9 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/create_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/delete_sql_advanced_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/reset_sql_advanced_suggestions_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/update_sql_advanced_suggestion_dialog_widget.dart';
 
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
@@ -50,7 +47,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
       context: context,
       builder: (context) {
         return DeleteSqlAdvancedSuggestionDialogWidget(
-          suggestionId: suggestion.id,
+          id: suggestion.id,
           label: suggestion.label,
         );
       },
@@ -60,29 +57,8 @@ class _SqlAdvancedSuggestionSettingsScreenState
   void _showResetDialog() {
     showDialog(
       context: context,
-      builder: (_) {
-        return ConfirmationDialogWidget(
-          title: 'Reset Suggestions',
-          description:
-              'Are you sure you want to reset all advanced suggestions?',
-          confirmButton: LoadingButtonWidget(
-            onPressed: () async {
-              if (!mounted) return;
-
-              Navigator.pop(context);
-
-              final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-
-              await notifier.resetSuggestions();
-
-              if (!mounted) return;
-
-              SnackBarUtils.show(context, 'All suggestions have been reset.');
-            },
-            text: 'Ok',
-            style: ButtonStyleType.black,
-          ),
-        );
+      builder: (context) {
+        return ResetSqlAdvancedSuggestionsDialogWidget();
       },
     );
   }
