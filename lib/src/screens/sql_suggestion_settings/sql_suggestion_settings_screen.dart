@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_title_option_widget.dart';
@@ -36,6 +37,15 @@ class _SqlSuggestionSettingsScreenState
 
   Future<void> _onSave() async {
     final notifier = context.read<SqlSuggestionsNotifier>();
+    final advancedNotifier = context.read<SqlAdvancedSuggestionsNotifier>();
+
+    final previousAdvancedEnabled = notifier.useAdvancedSuggestions;
+
+    if (!previousAdvancedEnabled && _useAdvancedSuggestions) {
+      if (advancedNotifier.advancedSuggestions.isEmpty) {
+        await advancedNotifier.resetSuggestions();
+      }
+    }
 
     notifier.setBasicSuggestions(_useBasicSuggestions);
     notifier.setAdvancedSuggestions(_useAdvancedSuggestions);
