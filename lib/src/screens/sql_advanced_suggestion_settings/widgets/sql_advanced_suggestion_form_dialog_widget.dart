@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/types/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';

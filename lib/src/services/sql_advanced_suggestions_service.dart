@@ -1,4 +1,4 @@
-import 'package:sql_studio/src/core/types/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 import 'package:sql_studio/src/repositories/database_repository.dart';
 

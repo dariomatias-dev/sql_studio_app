@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/core/types/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
