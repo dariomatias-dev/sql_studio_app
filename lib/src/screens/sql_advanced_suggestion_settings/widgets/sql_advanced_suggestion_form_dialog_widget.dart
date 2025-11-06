@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
@@ -51,6 +53,12 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
       selectText: _selectTextController.text.trim().isEmpty
           ? null
           : _selectTextController.text.trim(),
+      orderIndex:
+          widget.initialValue?.orderIndex ??
+          context
+              .read<SqlAdvancedSuggestionsNotifier>()
+              .advancedSuggestions
+              .length,
     );
 
     final success = await widget.onSubmit(value);

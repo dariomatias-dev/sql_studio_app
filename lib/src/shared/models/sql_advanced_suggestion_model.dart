@@ -5,12 +5,14 @@ class SqlAdvancedSuggestionModel {
   final String label;
   final String code;
   final String? selectText;
+  final int orderIndex;
 
   SqlAdvancedSuggestionModel({
     String? id,
     required this.label,
     required this.code,
     this.selectText,
+    required this.orderIndex,
   }) : id = id ?? const Uuid().v4();
 
   SqlAdvancedSuggestionModel copyWith({
@@ -18,12 +20,14 @@ class SqlAdvancedSuggestionModel {
     String? label,
     String? code,
     String? selectText,
+    int? orderIndex,
   }) {
     return SqlAdvancedSuggestionModel(
       id: id ?? this.id,
       label: label ?? this.label,
       code: code ?? this.code,
       selectText: selectText ?? this.selectText,
+      orderIndex: orderIndex ?? this.orderIndex,
     );
   }
 
@@ -33,10 +37,17 @@ class SqlAdvancedSuggestionModel {
       label: map['label'] as String,
       code: map['code'] as String,
       selectText: map['select_text'] as String?,
+      orderIndex: map['order_index'] as int,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'label': label, 'code': code, 'select_text': selectText};
+    return {
+      'id': id,
+      'label': label,
+      'code': code,
+      'select_text': selectText,
+      'order_index': orderIndex,
+    };
   }
 }

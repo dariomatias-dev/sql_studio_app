@@ -11,13 +11,14 @@ class DatabaseMigrations {
   ''';
 
   static const sqlAdvancedSuggestionsTable = '''
-    CREATE TABLE IF NOT EXISTS sql_advanced_suggestions (
-      id TEXT PRIMARY KEY,
-      label TEXT NOT NULL,
-      code TEXT NOT NULL,
-      select_text TEXT
-    )
-  ''';
+  CREATE TABLE IF NOT EXISTS sql_advanced_suggestions (
+    id TEXT PRIMARY KEY,
+    label TEXT NOT NULL,
+    code TEXT NOT NULL,
+    select_text TEXT,
+    order_index INTEGER NOT NULL
+  )
+''';
 
   static const allTables = <String>[
     databasesTable,
