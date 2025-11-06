@@ -10,7 +10,7 @@ class SqlAdvancedSuggestionsService {
   );
 
   Future<List<SqlAdvancedSuggestionModel>> getAll() async {
-    final maps = await _repository.getAll(orderBy: 'label ASC');
+    final maps = await _repository.getAll(orderBy: 'order_index ASC');
 
     return maps.map(SqlAdvancedSuggestionModel.fromMap).toList();
   }

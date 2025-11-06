@@ -3,7 +3,6 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/sql_advanced_suggestions_default.dart';
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
-
 import 'package:sql_studio/src/services/sql_advanced_suggestions_service.dart';
 
 class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
@@ -71,6 +70,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
   Future<bool> updateSuggestion(SqlAdvancedSuggestionModel suggestion) async {
     isLoading = true;
     error = null;
+
     notifyListeners();
 
     try {
@@ -100,6 +100,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
   Future<bool> removeSuggestion(String id) async {
     isLoading = true;
     error = null;
+
     notifyListeners();
 
     try {
@@ -125,10 +126,23 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
-  void reorderSuggestions(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) newIndex--;
-    final item = _suggestions.removeAt(oldIndex);
-    _suggestions.insert(newIndex, item);
+  Future<void> reorderSuggestions(
+    List<SqlAdvancedSuggestionModel> suggestions,
+  ) async {
+    final updatedSuggestions = <SqlAdvancedSuggestionModel>[];
+
+    for (int i = 0; i < suggestions.length; i++) {
+      final suggestion = suggestions[i].copyWith(orderIndex: i);
+
+      await _service.update(suggestion);
+
+      updatedSuggestions.add(suggestion);
+    }
+
+    _suggestions
+      ..clear()
+      ..addAll(updatedSuggestions);
+
     notifyListeners();
   }
 
