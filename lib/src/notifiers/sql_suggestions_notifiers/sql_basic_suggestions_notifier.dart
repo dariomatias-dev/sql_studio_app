@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-import 'package:sql_studio/src/core/constants/default_sql_basic_suggestions.dart';
+import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
