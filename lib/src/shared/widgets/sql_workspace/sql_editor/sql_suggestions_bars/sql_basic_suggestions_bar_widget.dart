@@ -11,21 +11,35 @@ class SqlBasicSuggestionsBarWidget extends StatelessWidget {
   const SqlBasicSuggestionsBarWidget({
     super.key,
     required this.onInsertCommand,
+    required this.filterText,
   });
 
-  final ValueChanged<String> onInsertCommand;
+  final void Function(String, {String? selectText}) onInsertCommand;
+  final String filterText;
 
   @override
   Widget build(BuildContext context) {
-    final suggestions = context.watch<SqlBasicSuggestionsNotifier>().suggestions;
-    final commands = suggestions.isEmpty ? sqlCommands : suggestions;
+    final notifier = context.watch<SqlBasicSuggestionsNotifier>();
+
+    final suggestions = notifier.suggestions.isEmpty
+        ? sqlCommands
+        : notifier.suggestions;
+
+    final filtered = filterText.isEmpty
+        ? suggestions
+        : suggestions
+              .where(
+                (suggestion) =>
+                    suggestion.toLowerCase().contains(filterText.toLowerCase()),
+              )
+              .toList();
 
     return SqlSuggestionsBarBaseWidget(
       onTap: (index) {
-        onInsertCommand(commands[index]);
+        onInsertCommand(filtered[index]);
       },
-      itemCount: commands.length,
-      itemBuilder: (index) => commands[index],
+      itemCount: filtered.length,
+      itemBuilder: (index) => filtered[index],
     );
   }
 }

@@ -33,8 +33,11 @@ class SqlEditorWidget extends StatefulWidget {
 class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   final _controller = CodeController(language: sql);
 
+  String _lastWord = '';
+
   void _onRunQuery() {
     final sql = _controller.text.trim();
+
     if (sql.isEmpty) return;
 
     final notifier = context.read<SqlCommandsNotifier>();
@@ -48,30 +51,18 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
 
   void _onInsertCommand(String command, {String? selectText}) {
     final text = _controller.text;
-    var selection = _controller.selection;
-
-    if (selection.start < 0 || selection.end < 0) {
-      selection = TextSelection.collapsed(offset: text.length);
-    }
-
-    final newText = text.replaceRange(selection.start, selection.end, command);
+    final selection = _controller.selection;
+    final before = text.substring(0, selection.start);
+    final after = text.substring(selection.end);
+    final regex = RegExp(r'(\b\w+)$');
+    final match = regex.firstMatch(before);
+    final start = match != null ? match.start : selection.start;
+    final newText = before.replaceRange(start, before.length, command) + after;
 
     setState(() {
       _controller.text = newText;
-
-      if (selectText != null) {
-        final start = newText.indexOf(selectText, selection.start);
-        if (start != -1) {
-          _controller.selection = TextSelection(
-            baseOffset: start,
-            extentOffset: start + selectText.length,
-          );
-          return;
-        }
-      }
-
       _controller.selection = TextSelection.collapsed(
-        offset: selection.start + command.length,
+        offset: start + command.length,
       );
     });
   }
@@ -79,7 +70,34 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   void _onClearEditor() {
     setState(() {
       _controller.text = '';
+      _lastWord = '';
     });
+  }
+
+  void _onTextChanged() {
+    final text = _controller.text;
+    final lastWord = text.split(RegExp(r'\s+')).last.trim();
+    if (_lastWord != lastWord) {
+      setState(() {
+        _lastWord = lastWord;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+
+    _controller.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -135,7 +153,10 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
             ),
           ),
           if (suggestionsNotifier.useBasicSuggestions)
-            SqlBasicSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
+            SqlBasicSuggestionsBarWidget(
+              onInsertCommand: _onInsertCommand,
+              filterText: _lastWord,
+            ),
           if (suggestionsNotifier.useAdvancedSuggestions)
             SqlAdvancedSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
           if (suggestionsNotifier.useCharacterSuggestions)
