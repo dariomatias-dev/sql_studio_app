@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -36,6 +38,20 @@ class _DrawerDatabaseListTileWidgetState
     await widget.toggleFavorite();
   }
 
+  void _selectDatabase() {
+    final notifier = context.read<SqlCommandsNotifier>();
+    final databaseName = widget.database.label;
+
+    notifier.activeDatabase = databaseName;
+    notifier.clearResult();
+
+    context.read<MainScreenNotifier>().changeScreen(0);
+
+    context.read<SqlEditorNotifier>().focusNode.requestFocus();
+
+    Scaffold.of(context).closeDrawer();
+  }
+
   void _showDeleteDialog() {
     showDialog(
       context: context,
@@ -56,16 +72,6 @@ class _DrawerDatabaseListTileWidgetState
         );
       },
     );
-  }
-
-  void _selectDatabase() {
-    final notifier = context.read<SqlCommandsNotifier>();
-    final databaseName = widget.database.label;
-
-    notifier.activeDatabase = databaseName;
-    notifier.clearResult();
-
-    Scaffold.of(context).closeDrawer();
   }
 
   @override
