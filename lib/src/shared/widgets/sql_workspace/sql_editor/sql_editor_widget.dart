@@ -52,11 +52,22 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
   void _onInsertCommand(String command, {String? selectText}) {
     final text = _controller.text;
     final selection = _controller.selection;
+
+    if (text.isEmpty) {
+      setState(() {
+        _controller.text = command;
+        _controller.selection = TextSelection.collapsed(offset: command.length);
+      });
+      return;
+    }
+
     final before = text.substring(0, selection.start);
     final after = text.substring(selection.end);
+
     final regex = RegExp(r'(\b\w+)$');
     final match = regex.firstMatch(before);
     final start = match != null ? match.start : selection.start;
+
     final newText = before.replaceRange(start, before.length, command) + after;
 
     setState(() {

@@ -3,7 +3,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
-
 import 'package:sql_studio/src/core/result.dart';
 
 class SqlExecutionService {
@@ -38,7 +37,9 @@ class SqlExecutionService {
           'Executed DELETE on $databaseName: $sql ($count rows affected)',
         );
 
-        return SuccessResult(count);
+        return SuccessResult(
+          'Delete executed successfully. $count rows affected.',
+        );
       } else if (upper.startsWith('UPDATE')) {
         final count = await db.rawUpdate(sql);
 
@@ -46,20 +47,24 @@ class SqlExecutionService {
           'Executed UPDATE on $databaseName: $sql ($count rows affected)',
         );
 
-        return SuccessResult(count);
+        return SuccessResult(
+          'Update executed successfully. $count rows affected.',
+        );
       } else if (upper.startsWith('INSERT')) {
         final id = await db.rawInsert(sql);
 
         _logger.i('Executed INSERT on $databaseName: $sql (insertId: $id)');
 
-        return SuccessResult(id);
+        return SuccessResult(
+          'Insert executed successfully. Inserted row ID: $id.',
+        );
       }
 
       await db.execute(sql);
 
       _logger.i('Executed SQL on $databaseName: $sql');
 
-      return const SuccessResult('Success');
+      return SuccessResult('Statement executed successfully.');
     } catch (err, stackTrace) {
       _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
 

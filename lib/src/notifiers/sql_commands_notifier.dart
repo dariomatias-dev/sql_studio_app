@@ -12,7 +12,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
   final _sqlService = SqlExecutionService();
 
   String? _activeDatabase;
-  dynamic result;
+  Result? result;
   bool isLoading = false;
   String? error;
   String? lastQuery;
@@ -56,7 +56,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
     switch (response) {
       case SuccessResult():
-        result = response.value;
+        result = response;
         break;
       case FailureResult():
         error = response.error.message;
@@ -131,7 +131,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
         }
       }
 
-      if (error == null) result = 'Database reset successfully';
+      if (error == null) result = SuccessResult('Database reset successfully');
     } catch (e) {
       error = 'Failed to reset database: $e';
       result = null;

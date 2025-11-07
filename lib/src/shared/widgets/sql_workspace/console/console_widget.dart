@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/result.dart';
+
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
@@ -67,8 +69,10 @@ class ConsoleWidget extends StatelessWidget {
           );
         } else if (notifier.result == null) {
           content = const SizedBox.shrink();
-        } else if (notifier.result is List) {
-          final rows = notifier.result as List<Map<String, dynamic>>;
+        } else if ((notifier.result as SuccessResult).value is List) {
+          final rows =
+              (notifier.result as SuccessResult).value
+                  as List<Map<String, dynamic>>;
 
           if (rows.isEmpty) {
             content = FutureBuilder<List<String>>(
@@ -117,7 +121,7 @@ class ConsoleWidget extends StatelessWidget {
           content = Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Command executed (${notifier.result}) rows affected.',
+              (notifier.result as SuccessResult).value,
               style: const TextStyle(fontWeight: FontWeight.w500),
             ),
           );
