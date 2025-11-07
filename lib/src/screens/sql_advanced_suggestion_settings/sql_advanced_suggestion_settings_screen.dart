@@ -10,6 +10,7 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card_widget.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -72,55 +73,84 @@ class _SqlAdvancedSuggestionSettingsScreenState
             onPressed: _showResetDialog,
             icon: const Icon(Icons.refresh, color: Colors.black87),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: LoadingButtonWidget(text: 'Save', onPressed: _saveOrder),
-          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showCreateDialog,
-        backgroundColor: Colors.grey.shade100,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100.0),
-        ),
-        child: const Icon(Icons.add, color: Colors.black),
       ),
       body: notifier.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ValueListenableBuilder<List<SqlAdvancedSuggestionModel>>(
-              valueListenable: suggestionsOrderNotifier,
-              builder: (context, suggestions, _) {
-                return Theme(
-                  data: Theme.of(context).copyWith(canvasColor: Colors.white),
-                  child: ReorderableListView(
-                    padding: const EdgeInsets.only(
-                      top: 8.0,
-                      right: 12.0,
-                      bottom: 100.0,
-                      left: 12.0,
+          : Stack(
+              children: <Widget>[
+                ValueListenableBuilder<List<SqlAdvancedSuggestionModel>>(
+                  valueListenable: suggestionsOrderNotifier,
+                  builder: (context, suggestions, _) {
+                    return Theme(
+                      data: Theme.of(
+                        context,
+                      ).copyWith(canvasColor: Colors.white),
+                      child: ReorderableListView(
+                        padding: const EdgeInsets.only(
+                          top: 8.0,
+                          right: 12.0,
+                          bottom: 80.0,
+                          left: 12.0,
+                        ),
+                        onReorder: (oldIndex, newIndex) {
+                          final updated = <SqlAdvancedSuggestionModel>[
+                            ...suggestions,
+                          ];
+                          if (newIndex > oldIndex) newIndex--;
+
+                          final item = updated.removeAt(oldIndex);
+
+                          updated.insert(newIndex, item);
+
+                          suggestionsOrderNotifier.value = updated;
+                        },
+                        children: suggestions.builder((suggestion, index) {
+                          return SqlAdvancedSuggestionCardWidget(
+                            key: ValueKey(suggestion.id),
+                            suggestion: suggestion,
+                          );
+                        }),
+                      ),
+                    );
+                  },
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    color: Colors.transparent,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12.0,
                     ),
-                    onReorder: (oldIndex, newIndex) {
-                      final updated = <SqlAdvancedSuggestionModel>[
-                        ...suggestions,
-                      ];
-                      if (newIndex > oldIndex) newIndex--;
-
-                      final item = updated.removeAt(oldIndex);
-
-                      updated.insert(newIndex, item);
-
-                      suggestionsOrderNotifier.value = updated;
-                    },
-                    children: suggestions.builder((suggestion, index) {
-                      return SqlAdvancedSuggestionCardWidget(
-                        key: ValueKey(suggestion.id),
-                        suggestion: suggestion,
-                      );
-                    }),
+                    child: Row(
+                      spacing: 12.0,
+                      children: <Widget>[
+                        Expanded(
+                          child: SizedBox(
+                            height: 48.0,
+                            child: LoadingButtonWidget(
+                              text: 'Save',
+                              onPressed: _saveOrder,
+                              style: ButtonStyleType.black,
+                            ),
+                          ),
+                        ),
+                        FloatingActionButton(
+                          onPressed: _showCreateDialog,
+                          backgroundColor: Colors.grey.shade100,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          child: const Icon(Icons.add, color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
+                ),
+              ],
             ),
     );
   }
