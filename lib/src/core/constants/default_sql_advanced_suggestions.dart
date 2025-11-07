@@ -1,6 +1,6 @@
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
-final sqlAdvancedSuggestionsDefault = <SqlAdvancedSuggestionModel>[
+final defaultSqlAdvancedSuggestions = <SqlAdvancedSuggestionModel>[
   SqlAdvancedSuggestionModel(
     label: 'ALL',
     code: 'SELECT * FROM table_name;',
