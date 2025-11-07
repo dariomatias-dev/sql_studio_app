@@ -12,7 +12,7 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_sugge
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
 
-class SqlEditorWidget extends StatelessWidget {
+class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
     super.key,
     this.showTitle = true,
@@ -26,6 +26,11 @@ class SqlEditorWidget extends StatelessWidget {
   final VoidCallback? onFullScreen;
   final VoidCallback? onQueryRun;
 
+  @override
+  State<SqlEditorWidget> createState() => _SqlEditorWidgetState();
+}
+
+class _SqlEditorWidgetState extends State<SqlEditorWidget> {
   void _onRunQuery(BuildContext context) {
     final notifier = context.read<SqlCommandsNotifier>();
     final editorNotifier = context.read<SqlEditorNotifier>();
@@ -35,7 +40,19 @@ class SqlEditorWidget extends StatelessWidget {
 
     notifier.runQuery(sql);
 
-    if (onQueryRun != null) onQueryRun!();
+    if (widget.onQueryRun != null) widget.onQueryRun!();
+  }
+
+  void _onInsertCommand(String value, {String? selectText}) {
+    final focusNode = context.read<SqlEditorNotifier>().focusNode;
+    if (!focusNode.hasFocus) {
+      focusNode.requestFocus();
+    }
+
+    context.read<SqlEditorNotifier>().insertCommand(
+      value,
+      selectText: selectText,
+    );
   }
 
   @override
@@ -46,10 +63,10 @@ class SqlEditorWidget extends StatelessWidget {
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
-      title: showTitle ? 'Editor' : null,
+      title: widget.showTitle ? 'Editor' : null,
       databaseName: databaseName,
-      onFullScreen: onFullScreen,
-      isFullScreen: isFullScreen,
+      onFullScreen: widget.onFullScreen,
+      isFullScreen: widget.isFullScreen,
       actions: <Widget>[
         Consumer<SqlCommandsNotifier>(
           builder: (context, notifier, child) {
@@ -94,17 +111,13 @@ class SqlEditorWidget extends StatelessWidget {
           ),
           if (suggestionsNotifier.useBasicSuggestions)
             SqlBasicSuggestionsBarWidget(
-              onInsertCommand: editorNotifier.insertCommand,
+              onInsertCommand: _onInsertCommand,
               filterText: editorNotifier.lastWord,
             ),
           if (suggestionsNotifier.useAdvancedSuggestions)
-            SqlAdvancedSuggestionsBarWidget(
-              onInsertCommand: editorNotifier.insertCommand,
-            ),
+            SqlAdvancedSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
           if (suggestionsNotifier.useCharacterSuggestions)
-            SqlCharacterBarWidget(
-              onInsertCommand: editorNotifier.insertCommand,
-            ),
+            SqlCharacterBarWidget(onInsertCommand: _onInsertCommand),
         ],
       ),
     );
