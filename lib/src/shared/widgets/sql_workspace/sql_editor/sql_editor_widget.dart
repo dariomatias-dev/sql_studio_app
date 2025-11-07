@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:highlight/languages/sql.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
 
-class SqlEditorWidget extends StatefulWidget {
+class SqlEditorWidget extends StatelessWidget {
   const SqlEditorWidget({
     super.key,
     this.showTitle = true,
@@ -26,102 +26,30 @@ class SqlEditorWidget extends StatefulWidget {
   final VoidCallback? onFullScreen;
   final VoidCallback? onQueryRun;
 
-  @override
-  State<SqlEditorWidget> createState() => _SqlEditorStateSqlEditorWidget();
-}
-
-class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
-  final _controller = CodeController(language: sql);
-
-  String _lastWord = '';
-
-  void _onRunQuery() {
-    final sql = _controller.text.trim();
+  void _onRunQuery(BuildContext context) {
+    final notifier = context.read<SqlCommandsNotifier>();
+    final editorNotifier = context.read<SqlEditorNotifier>();
+    final sql = editorNotifier.controller.text.trim();
 
     if (sql.isEmpty) return;
 
-    final notifier = context.read<SqlCommandsNotifier>();
-
     notifier.runQuery(sql);
 
-    if (widget.onQueryRun != null) {
-      widget.onQueryRun!();
-    }
-  }
-
-  void _onInsertCommand(String command, {String? selectText}) {
-    final text = _controller.text;
-    final selection = _controller.selection;
-
-    if (text.isEmpty) {
-      setState(() {
-        _controller.text = command;
-        _controller.selection = TextSelection.collapsed(offset: command.length);
-      });
-      return;
-    }
-
-    final before = text.substring(0, selection.start);
-    final after = text.substring(selection.end);
-
-    final regex = RegExp(r'(\b\w+)$');
-    final match = regex.firstMatch(before);
-    final start = match != null ? match.start : selection.start;
-
-    final newText = before.replaceRange(start, before.length, command) + after;
-
-    setState(() {
-      _controller.text = newText;
-      _controller.selection = TextSelection.collapsed(
-        offset: start + command.length,
-      );
-    });
-  }
-
-  void _onClearEditor() {
-    setState(() {
-      _controller.text = '';
-      _lastWord = '';
-    });
-  }
-
-  void _onTextChanged() {
-    final text = _controller.text;
-    final lastWord = text.split(RegExp(r'\s+')).last.trim();
-    if (_lastWord != lastWord) {
-      setState(() {
-        _lastWord = lastWord;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller.addListener(_onTextChanged);
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_onTextChanged);
-
-    _controller.dispose();
-
-    super.dispose();
+    if (onQueryRun != null) onQueryRun!();
   }
 
   @override
   Widget build(BuildContext context) {
     final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
     final suggestionsNotifier = context.watch<SqlSuggestionsNotifier>();
+    final editorNotifier = context.watch<SqlEditorNotifier>();
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
-      title: widget.showTitle ? 'Editor' : null,
+      title: showTitle ? 'Editor' : null,
       databaseName: databaseName,
-      onFullScreen: widget.onFullScreen,
-      isFullScreen: widget.isFullScreen,
+      onFullScreen: onFullScreen,
+      isFullScreen: isFullScreen,
       actions: <Widget>[
         Consumer<SqlCommandsNotifier>(
           builder: (context, notifier, child) {
@@ -136,12 +64,12 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           },
         ),
         IconButton(
-          onPressed: _onRunQuery,
+          onPressed: () => _onRunQuery(context),
           tooltip: 'Run Query',
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         IconButton(
-          onPressed: _onClearEditor,
+          onPressed: editorNotifier.clear,
           tooltip: 'Clear Editor',
           icon: const Icon(Icons.clear_rounded),
         ),
@@ -152,7 +80,8 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
             child: CodeTheme(
               data: CodeThemeData(styles: githubTheme),
               child: CodeField(
-                controller: _controller,
+                controller: editorNotifier.controller,
+                focusNode: editorNotifier.focusNode,
                 textStyle: const TextStyle(
                   fontFamily: 'monospace',
                   fontSize: 14.0,
@@ -165,13 +94,17 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
           ),
           if (suggestionsNotifier.useBasicSuggestions)
             SqlBasicSuggestionsBarWidget(
-              onInsertCommand: _onInsertCommand,
-              filterText: _lastWord,
+              onInsertCommand: editorNotifier.insertCommand,
+              filterText: editorNotifier.lastWord,
             ),
           if (suggestionsNotifier.useAdvancedSuggestions)
-            SqlAdvancedSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
+            SqlAdvancedSuggestionsBarWidget(
+              onInsertCommand: editorNotifier.insertCommand,
+            ),
           if (suggestionsNotifier.useCharacterSuggestions)
-            SqlCharacterBarWidget(onInsertCommand: _onInsertCommand),
+            SqlCharacterBarWidget(
+              onInsertCommand: editorNotifier.insertCommand,
+            ),
         ],
       ),
     );
