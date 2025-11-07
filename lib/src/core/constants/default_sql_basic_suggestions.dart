@@ -1,4 +1,4 @@
-const sqlCommands = <String>[
+const defaultSqlBasicSuggestions = <String>[
   'SELECT * FROM ',
   'INSERT INTO ',
   'UPDATE ',

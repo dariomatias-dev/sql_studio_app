@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-import 'package:sql_studio/src/core/constants/sql_commands.dart';
+import 'package:sql_studio/src/core/constants/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -29,7 +29,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
 
       _suggestions = storedSuggestions.isNotEmpty
           ? storedSuggestions
-          : List.from(sqlCommands);
+          : List.from(defaultSqlBasicSuggestions);
     } catch (err, stackTrace) {
       error = 'Failed to load basic SQL suggestions';
 
@@ -151,10 +151,10 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     try {
       await SharedPreferencesService.setStringList(
         SharedPreferencesKeys.sqlCommandsKey,
-        List.from(sqlCommands),
+        List.from(defaultSqlBasicSuggestions),
       );
 
-      _suggestions = List.from(sqlCommands);
+      _suggestions = List.from(defaultSqlBasicSuggestions);
     } catch (err, stackTrace) {
       error = 'Failed to reset basic SQL suggestions';
 

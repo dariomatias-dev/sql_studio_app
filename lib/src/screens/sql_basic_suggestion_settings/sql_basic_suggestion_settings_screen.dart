@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/core/constants/sql_commands.dart';
+import 'package:sql_studio/src/core/constants/default_sql_basic_suggestions.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
@@ -57,7 +57,9 @@ class _SqlBasicSuggestionsSettingsScreenState
           description: 'Are you sure you want to reset the command list?',
           confirmButton: LoadingButtonWidget(
             onPressed: () async {
-              await notifier.updateSuggestions(List<String>.from(sqlCommands));
+              await notifier.updateSuggestions(
+                List<String>.from(defaultSqlBasicSuggestions),
+              );
 
               _getContext().pop();
             },
@@ -78,7 +80,9 @@ class _SqlBasicSuggestionsSettingsScreenState
   @override
   Widget build(BuildContext context) {
     final commands = List<String>.from(
-      notifier.suggestions.isEmpty ? sqlCommands : notifier.suggestions,
+      notifier.suggestions.isEmpty
+          ? defaultSqlBasicSuggestions
+          : notifier.suggestions,
     );
 
     return ScaffoldWidget(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/core/constants/sql_commands.dart';
+import 'package:sql_studio/src/core/constants/default_sql_basic_suggestions.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
@@ -22,7 +22,7 @@ class SqlBasicSuggestionsBarWidget extends StatelessWidget {
     final notifier = context.watch<SqlBasicSuggestionsNotifier>();
 
     final suggestions = notifier.suggestions.isEmpty
-        ? sqlCommands
+        ? defaultSqlBasicSuggestions
         : notifier.suggestions;
 
     final filtered = filterText.isEmpty
