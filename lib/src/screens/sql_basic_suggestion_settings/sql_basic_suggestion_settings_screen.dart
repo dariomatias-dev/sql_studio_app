@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/sql_commands.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/create_basic_command_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/remove_basic_command_suggestion_dialog_widget.dart';
@@ -22,10 +22,11 @@ class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
       _SqlBasicSuggestionsSettingsScreenState();
 }
 
-class _SqlBasicSuggestionsSettingsScreenState extends State<SqlBasicSuggestionsSettingsScreen> {
+class _SqlBasicSuggestionsSettingsScreenState
+    extends State<SqlBasicSuggestionsSettingsScreen> {
   final controller = TextEditingController();
 
-  late final notifier = Provider.of<SqlSuggestionsNotifier>(context);
+  late final notifier = Provider.of<SqlBasicSuggestionsNotifier>(context);
 
   BuildContext _getContext() => context;
 
@@ -56,7 +57,7 @@ class _SqlBasicSuggestionsSettingsScreenState extends State<SqlBasicSuggestionsS
           description: 'Are you sure you want to reset the command list?',
           confirmButton: LoadingButtonWidget(
             onPressed: () async {
-              await notifier.updateCommands(List<String>.from(sqlCommands));
+              await notifier.updateSuggestions(List<String>.from(sqlCommands));
 
               _getContext().pop();
             },
@@ -77,7 +78,7 @@ class _SqlBasicSuggestionsSettingsScreenState extends State<SqlBasicSuggestionsS
   @override
   Widget build(BuildContext context) {
     final commands = List<String>.from(
-      notifier.commands.isEmpty ? sqlCommands : notifier.commands,
+      notifier.suggestions.isEmpty ? sqlCommands : notifier.suggestions,
     );
 
     return ScaffoldWidget(
@@ -111,8 +112,10 @@ class _SqlBasicSuggestionsSettingsScreenState extends State<SqlBasicSuggestionsS
           onReorder: (oldIndex, newIndex) {
             if (newIndex > oldIndex) newIndex--;
             final item = commands.removeAt(oldIndex);
+
             commands.insert(newIndex, item);
-            notifier.updateCommands(commands);
+
+            notifier.updateSuggestions(commands);
           },
           itemBuilder: (context, index) {
             final cmd = commands[index];

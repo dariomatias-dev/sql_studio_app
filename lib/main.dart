@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/sql_studio_app.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
@@ -18,6 +19,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SqlAdvancedSuggestionsNotifier()),
+        ChangeNotifierProvider(create: (_) => SqlBasicSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => AppVersionNotifier()),
         ChangeNotifierProvider(create: (_) => DatabaseNotifier()),
         ChangeNotifierProvider(create: (_) => MainScreenNotifier()),

@@ -76,23 +76,10 @@ class _SqlEditorStateSqlEditorWidget extends State<SqlEditorWidget> {
     });
   }
 
-  void _onTextChanged(String value) {
-    final word = value.split(RegExp(r'\s+')).last.toUpperCase();
-
-    context.read<SqlSuggestionsNotifier>().updateSuggestions(word);
-  }
-
   void _onClearEditor() {
     setState(() {
       _controller.text = '';
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller.addListener(() => _onTextChanged(_controller.text));
   }
 
   @override

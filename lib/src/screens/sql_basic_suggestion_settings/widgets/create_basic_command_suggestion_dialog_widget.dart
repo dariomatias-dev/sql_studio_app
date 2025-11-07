@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
@@ -40,7 +40,7 @@ class _CreateBasicCommandSuggestionDialogWidgetState extends State<CreateBasicCo
         return null;
       },
       onSubmit: (value) async {
-        await context.read<SqlSuggestionsNotifier>().addCommand(value);
+        await context.read<SqlBasicSuggestionsNotifier>().addSuggestion(value);
 
         _controller.text = '';
 

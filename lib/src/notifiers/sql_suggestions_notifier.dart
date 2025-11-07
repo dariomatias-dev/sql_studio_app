@@ -1,16 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/core/constants/sql_commands.dart';
-
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 enum SuggestionType { basic, advanced }
 
 class SqlSuggestionsNotifier extends ChangeNotifier {
-  final _commands = <String>[];
-  final _suggestions = <String>[];
-
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
@@ -19,21 +13,7 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
   bool get useAdvancedSuggestions => _useAdvancedSuggestions;
   bool get useCharacterSuggestions => _useCharacterSuggestions;
 
-  List<String> get commands => _suggestions.isEmpty ? _commands : _suggestions;
-
-  Future<void> loadCommands() async {
-    _commands
-      ..clear()
-      ..addAll(
-        SharedPreferencesService.getStringList(
-          SharedPreferencesKeys.sqlCommandsKey,
-        ),
-      );
-
-    if (_commands.isEmpty) {
-      _commands.addAll(List.from(sqlCommands));
-    }
-
+  Future<void> load() async {
     _useBasicSuggestions = SharedPreferencesService.getBool(
       'useBasicSuggestions',
       defaultValue: true,
@@ -70,74 +50,23 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
 
   void setBasicSuggestions(bool value) {
     _useBasicSuggestions = value;
+
     if (value) _useAdvancedSuggestions = false;
+
     notifyListeners();
   }
 
   void setAdvancedSuggestions(bool value) {
     _useAdvancedSuggestions = value;
+
     if (value) _useBasicSuggestions = false;
+
     notifyListeners();
   }
 
   void setCharacterSuggestions(bool value) {
     _useCharacterSuggestions = value;
-    notifyListeners();
-  }
 
-  Future<void> addCommand(String command) async {
-    if (!_commands.contains(command)) {
-      _commands.add(command);
-
-      await SharedPreferencesService.setStringList(
-        SharedPreferencesKeys.sqlCommandsKey,
-        _commands,
-      );
-
-      notifyListeners();
-    }
-  }
-
-  Future<void> updateCommands(List<String> commands) async {
-    _commands
-      ..clear()
-      ..addAll(commands);
-
-    await SharedPreferencesService.setStringList(
-      SharedPreferencesKeys.sqlCommandsKey,
-      _commands,
-    );
-
-    notifyListeners();
-  }
-
-  Future<void> removeCommand(String command) async {
-    _commands.remove(command);
-
-    await SharedPreferencesService.setStringList(
-      SharedPreferencesKeys.sqlCommandsKey,
-      _commands,
-    );
-
-    notifyListeners();
-  }
-
-  void updateSuggestions(String input) {
-    final query = input.trim().toUpperCase();
-
-    if (query.isEmpty) {
-      _suggestions.clear();
-    } else {
-      _suggestions
-        ..clear()
-        ..addAll(_commands.where((cmd) => cmd.toUpperCase().startsWith(query)));
-    }
-
-    notifyListeners();
-  }
-
-  void clearSuggestions() {
-    _suggestions.clear();
     notifyListeners();
   }
 }
