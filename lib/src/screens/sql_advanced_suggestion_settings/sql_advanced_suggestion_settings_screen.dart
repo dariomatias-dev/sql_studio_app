@@ -24,16 +24,18 @@ class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlAdvancedSuggestionSettingsScreenState
     extends State<SqlAdvancedSuggestionSettingsScreen> {
-  late final suggestionsOrderNotifier = ValueNotifier(
-    List<SqlAdvancedSuggestionModel>.from(
-      context.read<SqlAdvancedSuggestionsNotifier>().advancedSuggestions,
-    ),
-  );
+  late final SqlAdvancedSuggestionsNotifier _notifier;
+  late final ValueNotifier<List<SqlAdvancedSuggestionModel>>
+  suggestionsOrderNotifier;
+
+  void _updateSuggestionsOrder() {
+    suggestionsOrderNotifier.value = List<SqlAdvancedSuggestionModel>.from(
+      _notifier.advancedSuggestions,
+    );
+  }
 
   Future<void> _saveOrder() async {
-    await context.read<SqlAdvancedSuggestionsNotifier>().reorderSuggestions(
-      suggestionsOrderNotifier.value,
-    );
+    await _notifier.reorderSuggestions(suggestionsOrderNotifier.value);
   }
 
   void _showCreateDialog() {
@@ -55,7 +57,22 @@ class _SqlAdvancedSuggestionSettingsScreenState
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _notifier = context.read<SqlAdvancedSuggestionsNotifier>();
+
+    suggestionsOrderNotifier = ValueNotifier(
+      List<SqlAdvancedSuggestionModel>.from(_notifier.advancedSuggestions),
+    );
+
+    _notifier.addListener(_updateSuggestionsOrder);
+  }
+
+  @override
   void dispose() {
+    _notifier.removeListener(_updateSuggestionsOrder);
+
     suggestionsOrderNotifier.dispose();
 
     super.dispose();
@@ -97,6 +114,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
                           final updated = <SqlAdvancedSuggestionModel>[
                             ...suggestions,
                           ];
+
                           if (newIndex > oldIndex) newIndex--;
 
                           final item = updated.removeAt(oldIndex);
