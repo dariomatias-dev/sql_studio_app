@@ -5,8 +5,7 @@ import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/create_sql_advanced_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/reset_sql_advanced_suggestions_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/sql_advanced_suggestion_settings_controller.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card_widget.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
@@ -24,80 +23,35 @@ class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlAdvancedSuggestionSettingsScreenState
     extends State<SqlAdvancedSuggestionSettingsScreen> {
-  late final SqlAdvancedSuggestionsNotifier _notifier;
-  late final ValueNotifier<List<SqlAdvancedSuggestionModel>>
-  suggestionsOrderNotifier;
-
-  void _updateSuggestionsOrder() {
-    suggestionsOrderNotifier.value = List<SqlAdvancedSuggestionModel>.from(
-      _notifier.advancedSuggestions,
-    );
-  }
-
-  Future<void> _saveOrder() async {
-    await _notifier.reorderSuggestions(suggestionsOrderNotifier.value);
-  }
-
-  void _showCreateDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const CreateSqlAdvancedSuggestionDialogWidget();
-      },
-    );
-  }
-
-  void _showResetDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const ResetSqlAdvancedSuggestionsDialogWidget();
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-
-    suggestionsOrderNotifier = ValueNotifier(
-      List<SqlAdvancedSuggestionModel>.from(_notifier.advancedSuggestions),
-    );
-
-    _notifier.addListener(_updateSuggestionsOrder);
-  }
+  late final _controller = SqlAdvancedSuggestionsController(context);
 
   @override
   void dispose() {
-    _notifier.removeListener(_updateSuggestionsOrder);
-
-    suggestionsOrderNotifier.dispose();
+    _controller.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SqlAdvancedSuggestionsNotifier>();
+    final watchNotifier = context.watch<SqlAdvancedSuggestionsNotifier>();
 
     return ScaffoldWidget(
       appBar: AppBar(
         title: const Text('Advanced Suggestions'),
         actions: <Widget>[
           IconButton(
-            onPressed: _showResetDialog,
+            onPressed: _controller.showResetDialog,
             icon: const Icon(Icons.refresh, color: Colors.black87),
           ),
         ],
       ),
-      body: notifier.isLoading
+      body: watchNotifier.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: <Widget>[
                 ValueListenableBuilder<List<SqlAdvancedSuggestionModel>>(
-                  valueListenable: suggestionsOrderNotifier,
+                  valueListenable: _controller.suggestionsOrderNotifier,
                   builder: (context, suggestions, _) {
                     return Theme(
                       data: Theme.of(
@@ -111,17 +65,11 @@ class _SqlAdvancedSuggestionSettingsScreenState
                           left: 12.0,
                         ),
                         onReorder: (oldIndex, newIndex) {
-                          final updated = <SqlAdvancedSuggestionModel>[
-                            ...suggestions,
-                          ];
-
-                          if (newIndex > oldIndex) newIndex--;
-
-                          final item = updated.removeAt(oldIndex);
-
-                          updated.insert(newIndex, item);
-
-                          suggestionsOrderNotifier.value = updated;
+                          _controller.reorderSuggestions(
+                            suggestions,
+                            oldIndex,
+                            newIndex,
+                          );
                         },
                         children: suggestions.builder((suggestion, index) {
                           return SqlAdvancedSuggestionCardWidget(
@@ -151,13 +99,14 @@ class _SqlAdvancedSuggestionSettingsScreenState
                             height: 48.0,
                             child: LoadingButtonWidget(
                               text: 'Save',
-                              onPressed: _saveOrder,
+                              onPressed: () => _controller.saveOrder(
+                              ),
                               style: ButtonStyleType.black,
                             ),
                           ),
                         ),
                         FloatingActionButton(
-                          onPressed: _showCreateDialog,
+                          onPressed: _controller.showCreateDialog,
                           backgroundColor: Colors.grey.shade100,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100.0),
