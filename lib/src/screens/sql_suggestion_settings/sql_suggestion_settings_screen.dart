@@ -25,6 +25,8 @@ class SqlSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlSuggestionSettingsScreenState
     extends State<SqlSuggestionSettingsScreen> {
+  final _hasChangesNotifier = ValueNotifier(false);
+
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
@@ -34,6 +36,14 @@ class _SqlSuggestionSettingsScreenState
 
   void _openAdvancedConfig(BuildContext context) =>
       context.push(RouteNames.sqlAdvancedSuggestionSettings);
+
+  bool get _hasChanges {
+    final notifier = context.read<SqlSuggestionsNotifier>();
+
+    return _useBasicSuggestions != notifier.useBasicSuggestions ||
+        _useAdvancedSuggestions != notifier.useAdvancedSuggestions ||
+        _useCharacterSuggestions != notifier.useCharacterSuggestions;
+  }
 
   Future<void> _onSave() async {
     final notifier = context.read<SqlSuggestionsNotifier>();
@@ -54,6 +64,8 @@ class _SqlSuggestionSettingsScreenState
     await notifier.saveSettings();
 
     if (!mounted) return;
+
+    _hasChangesNotifier.value = _hasChanges;
 
     SnackBarUtils.show(context, 'Settings saved successfully!');
   }
@@ -115,7 +127,6 @@ class _SqlSuggestionSettingsScreenState
                       ? () => _openAdvancedConfig(context)
                       : null,
                 ),
-
                 const SizedBox(height: 12.0),
                 const SqlSuggestionSettingsTitleOptionWidget(
                   title: 'Other Suggestions',
@@ -135,10 +146,15 @@ class _SqlSuggestionSettingsScreenState
                 SizedBox(
                   width: double.infinity,
                   height: 48.0,
-                  child: LoadingButtonWidget(
-                    onPressed: _onSave,
-                    text: 'Save Settings',
-                    style: ButtonStyleType.black,
+                  child: ValueListenableBuilder(
+                    valueListenable: _hasChangesNotifier,
+                    builder: (context, value, child) {
+                      return LoadingButtonWidget(
+                        onPressed: _hasChanges ? _onSave : null,
+                        text: 'Save Settings',
+                        style: ButtonStyleType.black,
+                      );
+                    },
                   ),
                 ),
               ],
