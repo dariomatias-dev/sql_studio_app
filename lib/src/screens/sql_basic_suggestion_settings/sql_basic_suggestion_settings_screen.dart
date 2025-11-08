@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_controller.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql_basic_suggestion_card_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -48,7 +49,7 @@ class _SqlBasicSuggestionsSettingsScreenState
           padding: const EdgeInsets.only(
             top: 8.0,
             right: 12.0,
-            bottom: 100.0,
+            bottom: 80.0,
             left: 12.0,
           ),
           itemCount: commands.length,
@@ -63,46 +64,10 @@ class _SqlBasicSuggestionsSettingsScreenState
           itemBuilder: (context, index) {
             final cmd = commands[index];
 
-            return Container(
+            return SqlBasicSuggestionCardWidget(
               key: ValueKey(cmd),
-              margin: const EdgeInsets.symmetric(vertical: 6.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.grey.withAlpha(25),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 6.0,
-                ),
-                leading: const Icon(Icons.drag_handle, color: Colors.black54),
-                title: Text(
-                  cmd.trim(),
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () =>
-                      controller.showRemoveCommandDialog(command: cmd),
-                  icon: const Icon(
-                    Icons.delete_outline,
-                    color: Colors.redAccent,
-                  ),
-                ),
-              ),
+              command: cmd,
+              onDelete: () => controller.showRemoveCommandDialog(command: cmd),
             );
           },
         ),
