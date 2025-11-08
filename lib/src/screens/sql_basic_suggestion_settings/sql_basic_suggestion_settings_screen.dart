@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
@@ -8,10 +7,8 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_sug
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/create_basic_command_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/remove_basic_command_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/reset_confirmation_dialog_widget.dart';
 
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
@@ -27,8 +24,6 @@ class _SqlBasicSuggestionsSettingsScreenState
   final controller = TextEditingController();
 
   late final notifier = Provider.of<SqlBasicSuggestionsNotifier>(context);
-
-  BuildContext _getContext() => context;
 
   void _showCreateCommandDialog() {
     showDialog(
@@ -52,21 +47,7 @@ class _SqlBasicSuggestionsSettingsScreenState
     showDialog(
       context: context,
       builder: (context) {
-        return ConfirmationDialogWidget(
-          title: 'Reset Commands',
-          description: 'Are you sure you want to reset the command list?',
-          confirmButton: LoadingButtonWidget(
-            onPressed: () async {
-              await notifier.updateSuggestions(
-                List<String>.from(defaultSqlBasicSuggestions),
-              );
-
-              _getContext().pop();
-            },
-            text: 'Reset',
-            style: ButtonStyleType.black,
-          ),
-        );
+        return ResetConfirmationDialogWidget();
       },
     );
   }
@@ -96,7 +77,7 @@ class _SqlBasicSuggestionsSettingsScreenState
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showCreateCommandDialog(),
+        onPressed: _showCreateCommandDialog,
         backgroundColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
@@ -123,6 +104,7 @@ class _SqlBasicSuggestionsSettingsScreenState
           },
           itemBuilder: (context, index) {
             final cmd = commands[index];
+
             return Container(
               key: ValueKey(cmd),
               margin: const EdgeInsets.symmetric(vertical: 6.0),
