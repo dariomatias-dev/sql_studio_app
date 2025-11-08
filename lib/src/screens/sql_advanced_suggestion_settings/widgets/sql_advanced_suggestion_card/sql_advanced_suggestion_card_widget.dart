@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card/sql_advanced_suggestion_card_controller.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
@@ -17,28 +16,10 @@ class SqlAdvancedSuggestionCardWidget extends StatefulWidget {
 
 class _SqlAdvancedSuggestionCardWidgetState
     extends State<SqlAdvancedSuggestionCardWidget> {
-  void _showEditDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return UpdateSqlAdvancedSuggestionDialogWidget(
-          initialValue: widget.suggestion,
-        );
-      },
-    );
-  }
-
-  void _showDeleteDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DeleteSqlAdvancedSuggestionDialogWidget(
-          id: widget.suggestion.id,
-          label: widget.suggestion.label,
-        );
-      },
-    );
-  }
+  late final _controller = SqlAdvancedSuggestionCardController(
+    context: context,
+    suggestion: widget.suggestion,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +68,12 @@ class _SqlAdvancedSuggestionCardWidgetState
           children: <Widget>[
             IconButton(
               tooltip: 'Edit "${widget.suggestion.label}"',
-              onPressed: _showEditDialog,
+              onPressed: _controller.showEditDialog,
               icon: Icon(Icons.edit_outlined, color: Colors.grey.shade600),
             ),
             IconButton(
               tooltip: 'Delete "${widget.suggestion.label}"',
-              onPressed: _showDeleteDialog,
+              onPressed: _controller.showDeleteDialog,
               icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
             ),
           ],
