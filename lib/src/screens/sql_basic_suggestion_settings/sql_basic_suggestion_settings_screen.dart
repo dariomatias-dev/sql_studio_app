@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
-
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_basic_command_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/remove_basic_command_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/reset_confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_controller.dart';
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -21,63 +17,25 @@ class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
 
 class _SqlBasicSuggestionsSettingsScreenState
     extends State<SqlBasicSuggestionsSettingsScreen> {
-  final controller = TextEditingController();
-
-  late final notifier = Provider.of<SqlBasicSuggestionsNotifier>(context);
-
-  void _showCreateCommandDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CreateBasicCommandSuggestionDialogWidget();
-      },
-    );
-  }
-
-  void _showRemoveCommandDialog(String command) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return RemoveBasicCommandSuggestionDialogWidget(command: command);
-      },
-    );
-  }
-
-  void _showResetConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return ResetConfirmationDialogWidget();
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  late final controller = SqlBasicSuggestionsController(context);
 
   @override
   Widget build(BuildContext context) {
-    final commands = List<String>.from(
-      notifier.suggestions.isEmpty
-          ? defaultSqlBasicSuggestions
-          : notifier.suggestions,
-    );
+    final notifier = context.watch<SqlBasicSuggestionsNotifier>();
+    final commands = controller.getSuggestions(notifier);
 
     return ScaffoldWidget(
       appBar: AppBar(
-        title: Text('SQL Command Settings'),
+        title: const Text('SQL Command Settings'),
         actions: <Widget>[
           IconButton(
-            onPressed: _showResetConfirmationDialog,
+            onPressed: controller.showResetConfirmationDialog,
             icon: const Icon(Icons.refresh, color: Colors.black87),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showCreateCommandDialog,
+        onPressed: controller.showCreateCommandDialog,
         backgroundColor: Colors.grey.shade100,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0),
@@ -95,12 +53,12 @@ class _SqlBasicSuggestionsSettingsScreenState
           ),
           itemCount: commands.length,
           onReorder: (oldIndex, newIndex) {
-            if (newIndex > oldIndex) newIndex--;
-            final item = commands.removeAt(oldIndex);
-
-            commands.insert(newIndex, item);
-
-            notifier.updateSuggestions(commands);
+            controller.reorderSuggestions(
+              notifier,
+              commands,
+              oldIndex,
+              newIndex,
+            );
           },
           itemBuilder: (context, index) {
             final cmd = commands[index];
@@ -137,7 +95,8 @@ class _SqlBasicSuggestionsSettingsScreenState
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () => _showRemoveCommandDialog(cmd),
+                  onPressed: () =>
+                      controller.showRemoveCommandDialog(command: cmd),
                   icon: const Icon(
                     Icons.delete_outline,
                     color: Colors.redAccent,
