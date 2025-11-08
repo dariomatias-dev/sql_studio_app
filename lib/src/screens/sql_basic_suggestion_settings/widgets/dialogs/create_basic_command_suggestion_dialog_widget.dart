@@ -13,7 +13,8 @@ class CreateBasicCommandSuggestionDialogWidget extends StatefulWidget {
       _CreateBasicCommandSuggestionDialogWidgetState();
 }
 
-class _CreateBasicCommandSuggestionDialogWidgetState extends State<CreateBasicCommandSuggestionDialogWidget> {
+class _CreateBasicCommandSuggestionDialogWidgetState
+    extends State<CreateBasicCommandSuggestionDialogWidget> {
   final _controller = TextEditingController();
 
   @override
