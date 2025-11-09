@@ -36,11 +36,10 @@ class SqlAdvancedSuggestionsController {
   }
 
   void reorderSuggestions(
-    List<SqlAdvancedSuggestionModel> suggestions,
     int oldIndex,
     int newIndex,
   ) {
-    final updated = <SqlAdvancedSuggestionModel>[...suggestions];
+    final updated = <SqlAdvancedSuggestionModel>[...suggestionsOrderNotifier.value];
 
     if (newIndex > oldIndex) newIndex--;
 
