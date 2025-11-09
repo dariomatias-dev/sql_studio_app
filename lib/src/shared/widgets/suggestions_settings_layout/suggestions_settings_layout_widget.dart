@@ -39,6 +39,13 @@ class _SuggestionsSettingsLayoutWidgetState<T>
   );
 
   @override
+  void didUpdateWidget(covariant SuggestionsSettingsLayoutWidget<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _controller.updateItemsNotifier(widget.initialItems);
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
 
@@ -61,7 +68,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
           ? const Center(child: CircularProgressIndicator())
           : ValueListenableBuilder<List<T>>(
               valueListenable: _controller.itemsNotifier,
-              builder: (_, items, __) => Stack(
+              builder: (context, items, child) => Stack(
                 children: <Widget>[
                   Theme(
                     data: Theme.of(context).copyWith(canvasColor: Colors.white),
@@ -94,10 +101,17 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                           Expanded(
                             child: SizedBox(
                               height: 48.0,
-                              child: LoadingButtonWidget(
-                                onPressed: _controller.saveItems,
-                                style: ButtonStyleType.black,
-                                text: 'Save',
+                              child: ValueListenableBuilder<bool>(
+                                valueListenable: _controller.hasChangesNotifier,
+                                builder: (context, value, child) {
+                                  return LoadingButtonWidget(
+                                    onPressed: value
+                                        ? _controller.saveItems
+                                        : null,
+                                    style: ButtonStyleType.black,
+                                    text: 'Save',
+                                  );
+                                },
                               ),
                             ),
                           ),
