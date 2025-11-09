@@ -13,41 +13,12 @@ class SqlAdvancedSuggestionsController {
 
   SqlAdvancedSuggestionsController(this.context) {
     notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-
-    _updateSuggestionsOrder();
-
-    notifier.addListener(_updateSuggestionsOrder);
   }
 
   late final SqlAdvancedSuggestionsNotifier notifier;
 
-  final suggestionsOrderNotifier = ValueNotifier(
-    <SqlAdvancedSuggestionModel>[],
-  );
-
-  void _updateSuggestionsOrder() {
-    suggestionsOrderNotifier.value = List<SqlAdvancedSuggestionModel>.from(
-      notifier.advancedSuggestions,
-    );
-  }
-
-  Future<void> saveOrder() async {
-    await notifier.reorderSuggestions(suggestionsOrderNotifier.value);
-  }
-
-  void reorderSuggestions(
-    int oldIndex,
-    int newIndex,
-  ) {
-    final updated = <SqlAdvancedSuggestionModel>[...suggestionsOrderNotifier.value];
-
-    if (newIndex > oldIndex) newIndex--;
-
-    final item = updated.removeAt(oldIndex);
-
-    updated.insert(newIndex, item);
-
-    suggestionsOrderNotifier.value = updated;
+  Future<void> saveOrder(List<SqlAdvancedSuggestionModel> suggestions) async {
+    await notifier.reorderSuggestions(suggestions);
   }
 
   void showCreateDialog() {
@@ -62,11 +33,5 @@ class SqlAdvancedSuggestionsController {
       context: context,
       builder: (context) => const ResetSqlAdvancedSuggestionsDialogWidget(),
     );
-  }
-
-  void dispose() {
-    notifier.removeListener(_updateSuggestionsOrder);
-
-    suggestionsOrderNotifier.dispose();
   }
 }

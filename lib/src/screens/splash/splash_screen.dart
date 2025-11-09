@@ -10,6 +10,7 @@ import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -44,6 +45,10 @@ class _SplashScreenState extends State<SplashScreen>
     if (!mounted) return;
 
     await context.read<SqlAdvancedSuggestionsNotifier>().loadSuggestions();
+
+    if (!mounted) return;
+
+    await context.read<SqlBasicSuggestionsNotifier>().load();
 
     if (mounted) {
       context

@@ -7,7 +7,7 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/sql_adva
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card/sql_advanced_suggestion_card_widget.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
-import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout_widget.dart';
+import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_widget.dart';
 
 class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
   const SqlAdvancedSuggestionSettingsScreen({super.key});
@@ -22,35 +22,22 @@ class _SqlAdvancedSuggestionSettingsScreenState
   late final _controller = SqlAdvancedSuggestionsController(context);
 
   @override
-  void dispose() {
-    _controller.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final watchNotifier = context.watch<SqlAdvancedSuggestionsNotifier>();
+    final notifier = context.watch<SqlAdvancedSuggestionsNotifier>();
 
-    return ValueListenableBuilder<List<SqlAdvancedSuggestionModel>>(
-      valueListenable: _controller.suggestionsOrderNotifier,
-      builder: (context, suggestions, child) {
-        return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionModel>(
-          title: 'Advanced Suggestions',
-          isLoading: watchNotifier.isLoading,
-          items: suggestions,
-          onReorder: _controller.reorderSuggestions,
-          itemBuilder: (suggestion, index) {
-            return SqlAdvancedSuggestionCardWidget(
-              key: ValueKey(suggestion.id),
-              suggestion: suggestion,
-            );
-          },
-          onReset: _controller.showResetDialog,
-          onAdd: _controller.showCreateDialog,
-          onSave: _controller.saveOrder,
+    return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionModel>(
+      title: 'Advanced Suggestions',
+      isLoading: notifier.isLoading,
+      initialItems: notifier.advancedSuggestions,
+      itemBuilder: (suggestion, index) {
+        return SqlAdvancedSuggestionCardWidget(
+          key: ValueKey(suggestion.id),
+          suggestion: suggestion,
         );
       },
+      onReset: _controller.showResetDialog,
+      onAdd: _controller.showCreateDialog,
+      onSave: _controller.saveOrder,
     );
   }
 }
