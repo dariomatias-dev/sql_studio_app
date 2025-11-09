@@ -18,34 +18,39 @@ class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
 
 class _SqlBasicSuggestionsSettingsScreenState
     extends State<SqlBasicSuggestionsSettingsScreen> {
-  late final controller = SqlBasicSuggestionsController(context);
+  late final _controller = SqlBasicSuggestionsController(context);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SqlBasicSuggestionsNotifier>();
+    final watchNotifier = context.watch<SqlBasicSuggestionsNotifier>();
 
-    return SuggestionsSettingsLayoutWidget<String>(
-      title: 'SQL Command Settings',
-      isLoading: false,
-      items: controller.getSuggestions(notifier),
-      onReorder: (oldIndex, newIndex) {
-        controller.reorderSuggestions(
-          notifier,
-          controller.getSuggestions(notifier),
-          oldIndex,
-          newIndex,
+    return ValueListenableBuilder<List<String>>(
+      valueListenable: _controller.suggestionsOrderNotifier,
+      builder: (context, suggestions, child) {
+        return SuggestionsSettingsLayoutWidget<String>(
+          title: 'SQL Command Settings',
+          isLoading: watchNotifier.isLoading,
+          items: suggestions,
+          onReorder: _controller.reorderSuggestions,
+          itemBuilder: (cmd, index) {
+            return SqlBasicSuggestionCardWidget(
+              key: ValueKey(cmd),
+              command: cmd,
+              onDelete: () => _controller.showRemoveCommandDialog(command: cmd),
+            );
+          },
+          onReset: _controller.showResetConfirmationDialog,
+          onAdd: _controller.showCreateCommandDialog,
+          onSave: _controller.saveOrder,
         );
       },
-      itemBuilder: (cmd, index) {
-        return SqlBasicSuggestionCardWidget(
-          key: ValueKey(cmd),
-          command: cmd,
-          onDelete: () => controller.showRemoveCommandDialog(command: cmd),
-        );
-      },
-      onReset: controller.showResetConfirmationDialog,
-      onAdd: controller.showCreateCommandDialog,
-      onSave: () async {},
     );
   }
 }

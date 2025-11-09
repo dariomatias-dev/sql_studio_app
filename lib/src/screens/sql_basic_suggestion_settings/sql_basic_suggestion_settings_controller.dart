@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 
@@ -11,10 +12,20 @@ import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dia
 class SqlBasicSuggestionsController {
   final BuildContext context;
 
-  SqlBasicSuggestionsController(this.context);
+  SqlBasicSuggestionsController(this.context) {
+    notifier = context.read<SqlBasicSuggestionsNotifier>();
 
-  List<String> getSuggestions(SqlBasicSuggestionsNotifier notifier) {
-    return List<String>.from(
+    _updateSuggestionsOrder();
+
+    notifier.addListener(_updateSuggestionsOrder);
+  }
+
+  late final SqlBasicSuggestionsNotifier notifier;
+
+  final suggestionsOrderNotifier = ValueNotifier<List<String>>([]);
+
+  void _updateSuggestionsOrder() {
+    suggestionsOrderNotifier.value = List<String>.from(
       notifier.suggestions.isEmpty
           ? defaultSqlBasicSuggestions
           : notifier.suggestions,
@@ -22,23 +33,28 @@ class SqlBasicSuggestionsController {
   }
 
   void reorderSuggestions(
-    SqlBasicSuggestionsNotifier notifier,
-    List<String> commands,
     int oldIndex,
     int newIndex,
   ) {
+    final updated = <String>[...suggestionsOrderNotifier.value];
+
     if (newIndex > oldIndex) newIndex--;
-    final item = commands.removeAt(oldIndex);
-    commands.insert(newIndex, item);
-    notifier.updateSuggestions(commands);
+
+    final item = updated.removeAt(oldIndex);
+
+    updated.insert(newIndex, item);
+
+    suggestionsOrderNotifier.value = updated;
+  }
+
+  Future<void> saveOrder() async {
+    notifier.updateSuggestions(suggestionsOrderNotifier.value);
   }
 
   void showCreateCommandDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return const CreateBasicCommandSuggestionDialogWidget();
-      },
+      builder: (context) => const CreateBasicCommandSuggestionDialogWidget(),
     );
   }
 
@@ -54,9 +70,13 @@ class SqlBasicSuggestionsController {
   void showResetConfirmationDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return const ResetConfirmationDialogWidget();
-      },
+      builder: (context) => const ResetConfirmationDialogWidget(),
     );
+  }
+
+  void dispose() {
+    notifier.removeListener(_updateSuggestionsOrder);
+
+    suggestionsOrderNotifier.dispose();
   }
 }
