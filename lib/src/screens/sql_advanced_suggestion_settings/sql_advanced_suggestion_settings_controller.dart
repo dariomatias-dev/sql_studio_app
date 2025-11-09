@@ -7,30 +7,33 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/reset_sql_advanced_suggestions_dialog_widget.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
 class SqlAdvancedSuggestionsController {
-  final BuildContext context;
+  final BuildContext Function() getContext;
 
-  SqlAdvancedSuggestionsController(this.context) {
-    notifier = context.read<SqlAdvancedSuggestionsNotifier>();
+  SqlAdvancedSuggestionsController({required this.getContext}) {
+    notifier = getContext().read<SqlAdvancedSuggestionsNotifier>();
   }
 
   late final SqlAdvancedSuggestionsNotifier notifier;
 
   Future<void> saveOrder(List<SqlAdvancedSuggestionModel> suggestions) async {
     await notifier.reorderSuggestions(suggestions);
+
+    SnackBarUtils.show(getContext(), 'Suggestions saved successfully.');
   }
 
   void showCreateDialog() {
     showDialog(
-      context: context,
+      context: getContext(),
       builder: (context) => const CreateSqlAdvancedSuggestionDialogWidget(),
     );
   }
 
   void showResetDialog() {
     showDialog(
-      context: context,
+      context: getContext(),
       builder: (context) => const ResetSqlAdvancedSuggestionsDialogWidget(),
     );
   }

@@ -6,29 +6,35 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_sug
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_basic_command_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/reset_confirmation_dialog_widget.dart';
 
-class SqlBasicSuggestionsController {
-  final BuildContext context;
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
-  SqlBasicSuggestionsController(this.context) {
-    notifier = context.read<SqlBasicSuggestionsNotifier>();
+class SqlBasicSuggestionsController {
+  final BuildContext Function() getContext;
+
+  SqlBasicSuggestionsController({
+    required this.getContext,
+  }) {
+    notifier = getContext().read<SqlBasicSuggestionsNotifier>();
   }
 
   late final SqlBasicSuggestionsNotifier notifier;
 
   Future<void> saveOrder(List<String> suggestions) async {
-    notifier.updateSuggestions(suggestions);
+    await notifier.updateSuggestions(suggestions);
+
+    SnackBarUtils.show(getContext(), 'Suggestions saved successfully.');
   }
 
   void showCreateCommandDialog() {
     showDialog(
-      context: context,
+      context: getContext(),
       builder: (context) => const CreateBasicCommandSuggestionDialogWidget(),
     );
   }
 
   void showResetConfirmationDialog() {
     showDialog(
-      context: context,
+      context: getContext(),
       builder: (context) => const ResetConfirmationDialogWidget(),
     );
   }

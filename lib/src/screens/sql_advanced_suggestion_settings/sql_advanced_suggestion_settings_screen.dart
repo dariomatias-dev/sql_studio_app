@@ -19,7 +19,11 @@ class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
 
 class _SqlAdvancedSuggestionSettingsScreenState
     extends State<SqlAdvancedSuggestionSettingsScreen> {
-  late final _controller = SqlAdvancedSuggestionsController(context);
+  late final _controller = SqlAdvancedSuggestionsController(
+    getContext: _getContext,
+  );
+
+  BuildContext _getContext() => context;
 
   @override
   Widget build(BuildContext context) {
