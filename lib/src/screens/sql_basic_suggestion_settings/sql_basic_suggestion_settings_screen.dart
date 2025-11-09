@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_controller.dart';
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql_basic_suggestion_card_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql_basic_suggestion_card/sql_basic_suggestion_card_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout_widget.dart';
 
@@ -39,11 +39,10 @@ class _SqlBasicSuggestionsSettingsScreenState
           isLoading: watchNotifier.isLoading,
           items: suggestions,
           onReorder: _controller.reorderSuggestions,
-          itemBuilder: (cmd, index) {
+          itemBuilder: (suggestion, index) {
             return SqlBasicSuggestionCardWidget(
-              key: ValueKey(cmd),
-              command: cmd,
-              onDelete: () => _controller.showRemoveCommandDialog(command: cmd),
+              key: ValueKey(suggestion),
+              suggestion: suggestion,
             );
           },
           onReset: _controller.showResetConfirmationDialog,

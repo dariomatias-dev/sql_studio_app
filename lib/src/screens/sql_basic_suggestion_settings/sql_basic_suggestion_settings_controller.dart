@@ -6,7 +6,6 @@ import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sq
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_basic_command_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/remove_basic_command_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/reset_confirmation_dialog_widget.dart';
 
 class SqlBasicSuggestionsController {
@@ -55,15 +54,6 @@ class SqlBasicSuggestionsController {
     showDialog(
       context: context,
       builder: (context) => const CreateBasicCommandSuggestionDialogWidget(),
-    );
-  }
-
-  void showRemoveCommandDialog({required String command}) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return RemoveBasicCommandSuggestionDialogWidget(command: command);
-      },
     );
   }
 

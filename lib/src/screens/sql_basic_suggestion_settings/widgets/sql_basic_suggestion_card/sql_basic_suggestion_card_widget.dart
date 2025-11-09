@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
-class SqlBasicSuggestionCardWidget extends StatelessWidget {
-  const SqlBasicSuggestionCardWidget({
-    super.key,
-    required this.command,
-    required this.onDelete,
-  });
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql_basic_suggestion_card/sql_basic_suggestion_card_controller.dart';
 
-  final String command;
-  final VoidCallback onDelete;
+class SqlBasicSuggestionCardWidget extends StatefulWidget {
+  const SqlBasicSuggestionCardWidget({super.key, required this.suggestion});
+
+  final String suggestion;
+
+  @override
+  State<SqlBasicSuggestionCardWidget> createState() =>
+      _SqlBasicSuggestionCardWidgetState();
+}
+
+class _SqlBasicSuggestionCardWidgetState
+    extends State<SqlBasicSuggestionCardWidget> {
+  late final _controller = SqlBasicSuggestionCardController(
+    context: context,
+    suggestion: widget.suggestion,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
         ),
         leading: const Icon(Icons.drag_handle, color: Colors.black54),
         title: Text(
-          command.trim(),
+          widget.suggestion.trim(),
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w500,
@@ -43,7 +52,7 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
-          onPressed: onDelete,
+          onPressed: _controller.showRemoveCommandDialog,
           icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
         ),
       ),

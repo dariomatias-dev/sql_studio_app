@@ -9,16 +9,20 @@ import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 class RemoveBasicCommandSuggestionDialogWidget extends StatefulWidget {
-  const RemoveBasicCommandSuggestionDialogWidget({super.key, required this.command});
+  const RemoveBasicCommandSuggestionDialogWidget({
+    super.key,
+    required this.suggestion,
+  });
 
-  final String command;
+  final String suggestion;
 
   @override
   State<RemoveBasicCommandSuggestionDialogWidget> createState() =>
       _RemoveBasicCommandSuggestionDialogWidgetState();
 }
 
-class _RemoveBasicCommandSuggestionDialogWidgetState extends State<RemoveBasicCommandSuggestionDialogWidget> {
+class _RemoveBasicCommandSuggestionDialogWidgetState
+    extends State<RemoveBasicCommandSuggestionDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
@@ -29,7 +33,7 @@ class _RemoveBasicCommandSuggestionDialogWidgetState extends State<RemoveBasicCo
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           await context.read<SqlBasicSuggestionsNotifier>().removeSuggestion(
-            widget.command,
+            widget.suggestion,
           );
 
           _getContext().pop();
