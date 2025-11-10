@@ -15,6 +15,8 @@ import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -40,7 +42,11 @@ class _SplashScreenState extends State<SplashScreen>
 
     context.read<SqlSuggestionsNotifier>().load();
 
-    await context.read<DatabaseNotifier>().loadDatabases();
+    final dbResult = await context.read<DatabaseNotifier>().loadDatabases();
+
+    if (!mounted) return;
+
+    await handleError(context, dbResult);
 
     if (!mounted) return;
 
