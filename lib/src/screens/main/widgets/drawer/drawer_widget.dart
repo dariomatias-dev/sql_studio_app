@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 
-import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_group_widget.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
