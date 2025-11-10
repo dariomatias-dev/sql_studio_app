@@ -9,14 +9,10 @@ class DatabaseGroupWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.databases,
-    required this.toggleFavorite,
-    required this.onDelete,
   });
 
   final String title;
   final List<DatabaseModel> databases;
-  final Future<void> Function(DatabaseModel database) toggleFavorite;
-  final Future<void> Function(DatabaseModel database) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +43,6 @@ class DatabaseGroupWidget extends StatelessWidget {
 
             return DrawerDatabaseListTileWidget(
               database: database,
-              toggleFavorite: () async => await toggleFavorite(database),
-              onDelete: () async => await onDelete(database),
             );
           },
         ),

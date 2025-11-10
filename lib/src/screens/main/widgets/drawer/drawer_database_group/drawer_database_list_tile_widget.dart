@@ -2,26 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
-  const DrawerDatabaseListTileWidget({
-    super.key,
-    required this.database,
-    required this.toggleFavorite,
-    required this.onDelete,
-  });
+  const DrawerDatabaseListTileWidget({super.key, required this.database});
 
   final DatabaseModel database;
-  final Future<void> Function() toggleFavorite;
-  final Future<void> Function() onDelete;
 
   @override
   State<DrawerDatabaseListTileWidget> createState() =>
@@ -31,12 +26,6 @@ class DrawerDatabaseListTileWidget extends StatefulWidget {
 class _DrawerDatabaseListTileWidgetState
     extends State<DrawerDatabaseListTileWidget> {
   late bool _isFavorite = widget.database.isFavorite;
-
-  void _toggleFavorite() async {
-    setState(() => _isFavorite = !_isFavorite);
-
-    await widget.toggleFavorite();
-  }
 
   void _selectDatabase() {
     final notifier = context.read<SqlCommandsNotifier>();
@@ -52,6 +41,18 @@ class _DrawerDatabaseListTileWidgetState
     Scaffold.of(context).closeDrawer();
   }
 
+  void _onToggleFavorite() async {
+    setState(() => _isFavorite = !_isFavorite);
+
+    final result = await context.read<DatabaseNotifier>().toggleFavorite(
+      widget.database,
+    );
+
+    if (!mounted) return;
+
+    await handleError(context, result);
+  }
+
   void _showDeleteDialog() {
     showDialog(
       context: context,
@@ -61,17 +62,25 @@ class _DrawerDatabaseListTileWidgetState
           description:
               'Are you sure you want to permanently delete this database? This action cannot be undone.',
           confirmButton: ButtonWidget(
-            onPressed: () async {
-              context.pop(context);
-
-              await widget.onDelete();
-            },
+            onPressed: _onDeleteDatabase,
             text: 'Delete',
             style: ButtonStyleType.red,
           ),
         );
       },
     );
+  }
+
+  Future<void> _onDeleteDatabase() async {
+    context.pop(context);
+
+    final result = await context.read<DatabaseNotifier>().delete(
+      widget.database,
+    );
+
+    if (!mounted) return;
+
+    await handleError(context, result);
   }
 
   @override
@@ -130,7 +139,7 @@ class _DrawerDatabaseListTileWidgetState
               trailing: PopupMenuButtonWidget(
                 items: <PopupMenuItem>[
                   PopupMenuItem(
-                    onTap: _toggleFavorite,
+                    onTap: _onToggleFavorite,
                     child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
                   ),
                   PopupMenuItem(
