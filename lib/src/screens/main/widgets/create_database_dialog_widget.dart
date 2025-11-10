@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
@@ -11,9 +12,7 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 
 class CreateDatabaseDialogWidget extends StatefulWidget {
-  const CreateDatabaseDialogWidget({super.key, required this.onCreated});
-
-  final ValueChanged<DatabaseModel> onCreated;
+  const CreateDatabaseDialogWidget({super.key});
 
   @override
   State<CreateDatabaseDialogWidget> createState() =>
@@ -44,28 +43,43 @@ class _CreateDatabaseDialogWidgetState
     final label = labelController.text.trim();
     final name = nameController.text.trim();
 
-    final database = await context.read<DatabaseNotifier>().getByName(name);
+    final getByNameResult = await context.read<DatabaseNotifier>().getByName(
+      name,
+    );
 
-    if (database != null) {
-      if (mounted) {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return ErrorDialogWidget(
-              description: 'Database "$name" already exists',
-            );
-          },
-        );
-      }
+    await getByNameResult.fold(
+      onSuccess: (value) async {
+        if (value != null) {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return ErrorDialogWidget(
+                description: 'Database "$name" already exists',
+              );
+            },
+          );
 
-      return;
-    }
+          return;
+        }
+      },
+      onFailure: (error) async {
+        await handleError(context, getByNameResult);
+      },
+    );
 
     final createDatabase = DatabaseModel(label: label, name: name);
 
-    widget.onCreated(createDatabase);
+    if (!mounted) return;
 
-    if (mounted) Navigator.pop(context);
+    final result = await context.read<DatabaseNotifier>().create(
+      createDatabase,
+    );
+
+    if (!mounted) return;
+
+    await handleError(context, result);
+
+    if (result.isSuccess && mounted) Navigator.pop(context);
   }
 
   @override

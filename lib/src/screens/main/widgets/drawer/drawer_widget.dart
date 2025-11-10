@@ -6,6 +6,8 @@ import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/screens/main/widgets/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_group_widget.dart';
 
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
+
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
@@ -23,13 +25,25 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     showDialog(
       context: context,
       builder: (context) {
-        return CreateDatabaseDialogWidget(
-          onCreated: (database) async {
-            await context.read<DatabaseNotifier>().create(database);
-          },
-        );
+        return CreateDatabaseDialogWidget();
       },
     );
+  }
+
+  Future<void> _deleteDatabase(DatabaseNotifier notifier, database) async {
+    final result = await notifier.delete(database);
+
+    if (!mounted) return;
+
+    await handleError(context, result);
+  }
+
+  Future<void> _toggleFavorite(DatabaseNotifier notifier, database) async {
+    final result = await notifier.toggleFavorite(database);
+
+    if (!mounted) return;
+
+    await handleError(context, result);
   }
 
   @override
@@ -50,7 +64,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  margin: EdgeInsets.only(top: 32.0, bottom: 12.0),
+                  margin: const EdgeInsets.only(top: 32.0, bottom: 12.0),
                   child: InputWidget(
                     hintText: 'Search databases',
                     controller: _searchController,
@@ -68,14 +82,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               DatabaseGroupWidget(
                                 title: 'Favorites',
                                 databases: notifier.favorites,
-                                toggleFavorite: notifier.toggleFavorite,
-                                onDelete: notifier.delete,
+                                toggleFavorite: (db) =>
+                                    _toggleFavorite(notifier, db),
+                                onDelete: (db) => _deleteDatabase(notifier, db),
                               ),
                               DatabaseGroupWidget(
                                 title: 'All Databases',
                                 databases: notifier.others,
-                                toggleFavorite: notifier.toggleFavorite,
-                                onDelete: notifier.delete,
+                                toggleFavorite: (db) =>
+                                    _toggleFavorite(notifier, db),
+                                onDelete: (db) => _deleteDatabase(notifier, db),
                               ),
                             ],
                           ),
