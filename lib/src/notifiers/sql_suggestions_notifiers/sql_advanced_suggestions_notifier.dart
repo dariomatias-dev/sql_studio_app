@@ -2,45 +2,56 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
-import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/core/result.dart';
+
 import 'package:sql_studio/src/services/sql_advanced_suggestions_service.dart';
 
+import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
+
 class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
-  final _service = SqlAdvancedSuggestionsService();
   final _logger = Logger();
 
-  List<SqlAdvancedSuggestionModel> _suggestions = [];
+  final _service = SqlAdvancedSuggestionsService();
+
+  final _suggestions = <SqlAdvancedSuggestionModel>[];
   bool isLoading = false;
-  String? error;
 
-  List<SqlAdvancedSuggestionModel> get advancedSuggestions => _suggestions;
+  List<SqlAdvancedSuggestionModel> get suggestions => _suggestions;
 
-  Future<void> loadSuggestions() async {
+  Future<Result<void>> load() async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
     try {
-      _suggestions = await _service.getAll();
-    } catch (err, stackTrace) {
-      error = 'Failed to load suggestions';
+      final result = await _service.getAll();
 
+      _suggestions
+        ..clear()
+        ..addAll(
+          result.isEmpty ? defaultSqlAdvancedSuggestions : List.from(result),
+        );
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
       _logger.e(
-        'Error loading advanced suggestions',
+        'Failed to load advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
+
+      return FailureResult(AppFailure('Failed to load advanced suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
     }
-
-    isLoading = false;
-
-    notifyListeners();
   }
 
-  Future<bool> addSuggestion(SqlAdvancedSuggestionModel suggestion) async {
+  Future<Result<void>> addSuggestion(
+    SqlAdvancedSuggestionModel suggestion,
+  ) async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
@@ -49,17 +60,15 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
 
       _suggestions.add(suggestion);
 
-      return true;
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to add suggestion';
-
       _logger.e(
-        'Error adding advanced suggestion',
+        'Failed to add advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return false;
+      return FailureResult(AppFailure('Failed to add advanced suggestion'));
     } finally {
       isLoading = false;
 
@@ -67,9 +76,10 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateSuggestion(SqlAdvancedSuggestionModel suggestion) async {
+  Future<Result<void>> updateSuggestion(
+    SqlAdvancedSuggestionModel suggestion,
+  ) async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
@@ -79,17 +89,15 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       final index = _suggestions.indexWhere((s) => s.id == suggestion.id);
       if (index != -1) _suggestions[index] = suggestion;
 
-      return true;
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to update suggestion';
-
       _logger.e(
-        'Error updating advanced suggestion',
+        'Failed to update advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return false;
+      return FailureResult(AppFailure('Failed to update advanced suggestion'));
     } finally {
       isLoading = false;
 
@@ -97,9 +105,8 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
-  Future<bool> removeSuggestion(String id) async {
+  Future<Result<void>> removeSuggestion(String id) async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
@@ -108,17 +115,15 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
 
       _suggestions.removeWhere((s) => s.id == id);
 
-      return true;
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to delete suggestion';
-
       _logger.e(
-        'Error deleting advanced suggestion',
+        'Failed to remove advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return false;
+      return FailureResult(AppFailure('Failed to remove advanced suggestion'));
     } finally {
       isLoading = false;
 
@@ -126,49 +131,106 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> reorderSuggestions(
-    List<SqlAdvancedSuggestionModel> suggestions,
+  Future<Result<void>> saveAllSuggestions(
+    List<SqlAdvancedSuggestionModel> newSuggestions,
   ) async {
-    final updatedSuggestions = <SqlAdvancedSuggestionModel>[];
-
-    for (int i = 0; i < suggestions.length; i++) {
-      final suggestion = suggestions[i].copyWith(orderIndex: i);
-
-      await _service.update(suggestion);
-
-      updatedSuggestions.add(suggestion);
-    }
-
-    _suggestions
-      ..clear()
-      ..addAll(updatedSuggestions);
+    isLoading = true;
 
     notifyListeners();
-  }
 
-  Future<void> resetSuggestions() async {
     try {
       await _service.clear();
 
-      await _service.addAll(defaultSqlAdvancedSuggestions);
+      await _service.addAll(newSuggestions);
 
-      await loadSuggestions();
+      _suggestions
+        ..clear()
+        ..addAll(newSuggestions);
+
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to reset suggestions';
-
       _logger.e(
-        'Error resetting advanced suggestions',
+        'Failed to save all advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
+
+      return FailureResult(
+        AppFailure('Failed to save all advanced suggestions'),
+      );
+    } finally {
+      isLoading = false;
 
       notifyListeners();
     }
   }
 
-  void clearError() {
-    error = null;
+  Future<Result<void>> reorderSuggestions(
+    List<SqlAdvancedSuggestionModel> newOrder,
+  ) async {
+    isLoading = true;
 
     notifyListeners();
+
+    try {
+      final updated = <SqlAdvancedSuggestionModel>[];
+
+      for (int i = 0; i < newOrder.length; i++) {
+        final s = newOrder[i].copyWith(orderIndex: i);
+
+        await _service.update(s);
+
+        updated.add(s);
+      }
+
+      _suggestions
+        ..clear()
+        ..addAll(updated);
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to reorder advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(
+        AppFailure('Failed to reorder advanced suggestions'),
+      );
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
+    }
+  }
+
+  Future<Result<void>> resetSuggestions() async {
+    isLoading = true;
+
+    notifyListeners();
+
+    try {
+      _suggestions
+        ..clear()
+        ..addAll(List.from(defaultSqlAdvancedSuggestions));
+
+      await _service.clear();
+      await _service.addAll(_suggestions);
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to reset advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(AppFailure('Failed to reset advanced suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
+    }
   }
 }

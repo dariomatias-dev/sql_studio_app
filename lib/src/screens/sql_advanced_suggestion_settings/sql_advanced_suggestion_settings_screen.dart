@@ -32,7 +32,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
     return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionModel>(
       title: 'Advanced Suggestions',
       isLoading: notifier.isLoading,
-      initialItems: notifier.advancedSuggestions,
+      initialItems: notifier.suggestions,
       itemBuilder: (suggestion, index) {
         return SqlAdvancedSuggestionCardWidget(
           key: ValueKey(suggestion.id),

@@ -36,13 +36,13 @@ class _DeleteSqlAdvancedSuggestionDialogWidgetState
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-          final success = await notifier.removeSuggestion(widget.id);
+          final result = await notifier.removeSuggestion(widget.id);
 
           if (!mounted) return;
 
           SnackBarUtils.show(
             _getContext(),
-            success
+            result.isSuccess
                 ? 'Suggestion deleted successfully.'
                 : 'Failed to delete suggestion.',
           );

@@ -57,7 +57,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
           widget.initialValue?.orderIndex ??
           context
               .read<SqlAdvancedSuggestionsNotifier>()
-              .advancedSuggestions
+              .suggestions
               .length,
     );
 

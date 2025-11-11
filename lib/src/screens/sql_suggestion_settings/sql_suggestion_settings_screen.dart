@@ -52,7 +52,7 @@ class _SqlSuggestionSettingsScreenState
     final previousAdvancedEnabled = notifier.useAdvancedSuggestions;
 
     if (!previousAdvancedEnabled && _useAdvancedSuggestions) {
-      if (advancedNotifier.advancedSuggestions.isEmpty) {
+      if (advancedNotifier.suggestions.isEmpty) {
         await advancedNotifier.resetSuggestions();
       }
     }

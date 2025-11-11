@@ -15,7 +15,7 @@ class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final suggestions = context.watch<SqlAdvancedSuggestionsNotifier>().advancedSuggestions;
+    final suggestions = context.watch<SqlAdvancedSuggestionsNotifier>().suggestions;
 
     return SqlSuggestionsBarBaseWidget(
       onTap: (index) {

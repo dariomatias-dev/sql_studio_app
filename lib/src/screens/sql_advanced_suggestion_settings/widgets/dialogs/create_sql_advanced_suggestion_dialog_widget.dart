@@ -26,18 +26,18 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
       submitText: 'Create',
       onSubmit: (value) async {
         final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-        final success = await notifier.addSuggestion(value);
+        final result = await notifier.addSuggestion(value);
 
         if (!mounted) return false;
 
         SnackBarUtils.show(
           _getContext(),
-          success
+          result.isSuccess
               ? 'Suggestion added successfully.'
               : 'Failed to add suggestion.',
         );
 
-        return success;
+        return result.isSuccess;
       },
     );
   }
