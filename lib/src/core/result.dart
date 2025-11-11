@@ -10,6 +10,10 @@ class DatabaseFailure extends Failure {
   const DatabaseFailure(super.message);
 }
 
+class AppFailure extends Failure {
+  const AppFailure(super.message);
+}
+
 sealed class Result<T> {
   const Result();
 
