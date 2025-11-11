@@ -22,9 +22,11 @@ class WorkspaceLayoutScreen extends StatefulWidget {
 
 class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
   Future<void> _onHandleLayoutChange(WorkspaceLayoutType layout) async {
-    final result = await context.read<WorkspaceLayoutNotifier>().setLayout(
-      layout,
-    );
+    final workspaceLayoutNotifier = context.read<WorkspaceLayoutNotifier>();
+
+    if (workspaceLayoutNotifier.selectedLayout == layout) return;
+
+    final result = await workspaceLayoutNotifier.setLayout(layout);
 
     if (!mounted) return;
 

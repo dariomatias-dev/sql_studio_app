@@ -19,11 +19,9 @@ class WorkspaceLayoutNotifier extends ChangeNotifier {
       SharedPreferencesKeys.workspaceLayoutKey,
     );
 
-    if (savedLayout == 'tabs') {
-      _selectedLayout = WorkspaceLayoutType.tabs;
-    } else {
-      _selectedLayout = WorkspaceLayoutType.split;
-    }
+    _selectedLayout = savedLayout == WorkspaceLayoutType.tabs.name
+        ? WorkspaceLayoutType.tabs
+        : WorkspaceLayoutType.split;
 
     notifyListeners();
   }
