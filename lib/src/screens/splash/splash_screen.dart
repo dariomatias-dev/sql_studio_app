@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
@@ -36,7 +37,13 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    await context.read<AppVersionNotifier>().load();
+    final versionResult = await context.read<AppVersionNotifier>().load();
+
+    if (!mounted) return;
+
+    if (versionResult is FailureResult) {
+      await handleError(context, versionResult);
+    }
 
     if (!mounted) return;
 
@@ -46,7 +53,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    await handleError(context, dbResult);
+    if (dbResult is FailureResult) {
+      await handleError(context, dbResult);
+      return;
+    }
 
     if (!mounted) return;
 
