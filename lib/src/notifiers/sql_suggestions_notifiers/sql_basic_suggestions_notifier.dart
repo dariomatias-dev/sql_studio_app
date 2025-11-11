@@ -3,56 +3,59 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 class SqlBasicSuggestionsNotifier extends ChangeNotifier {
   final _logger = Logger();
 
-  List<String> _suggestions = <String>[];
-
+  final _suggestions = <String>[];
   bool isLoading = false;
-  String? error;
 
   List<String> get suggestions => _suggestions;
 
-  Future<void> load() async {
+  Future<Result<void>> load() async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
     try {
-      final storedSuggestions = SharedPreferencesService.getStringList(
+      final stored = SharedPreferencesService.getStringList(
         SharedPreferencesKeys.sqlCommandsKey,
       );
 
-      _suggestions = storedSuggestions.isNotEmpty
-          ? storedSuggestions
-          : List.from(defaultSqlBasicSuggestions);
-    } catch (err, stackTrace) {
-      error = 'Failed to load basic SQL suggestions';
+      _suggestions
+        ..clear()
+        ..addAll(
+          stored.isEmpty ? defaultSqlBasicSuggestions : List.from(stored),
+        );
 
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
       _logger.e(
-        'Error loading basic SQL suggestions',
+        'Failed to load suggestions',
         error: err,
         stackTrace: stackTrace,
       );
+
+      return FailureResult(AppFailure('Failed to load suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
     }
-
-    isLoading = false;
-
-    notifyListeners();
   }
 
-  Future<bool> addSuggestion(String suggestion) async {
+  Future<Result<void>> addSuggestion(String suggestion) async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
     try {
-      if (_suggestions.contains(suggestion)) return true;
+      if (_suggestions.contains(suggestion)) {
+        return const SuccessResult(null);
+      }
 
       _suggestions.add(suggestion);
 
@@ -61,59 +64,20 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         _suggestions,
       );
 
-      return true;
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to add basic suggestion';
+      _logger.e('Failed to add suggestion', error: err, stackTrace: stackTrace);
 
-      _logger.e(
-        'Error adding basic SQL suggestion',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return false;
+      return FailureResult(AppFailure('Failed to add suggestion'));
     } finally {
       isLoading = false;
+
       notifyListeners();
     }
   }
 
-  Future<bool> updateSuggestions(List<String> suggestions) async {
+  Future<Result<void>> removeSuggestion(String suggestion) async {
     isLoading = true;
-    error = null;
-
-    notifyListeners();
-
-    try {
-      _suggestions
-        ..clear()
-        ..addAll(suggestions);
-
-      await SharedPreferencesService.setStringList(
-        SharedPreferencesKeys.sqlCommandsKey,
-        _suggestions,
-      );
-
-      return true;
-    } catch (err, stackTrace) {
-      error = 'Failed to update basic suggestions';
-
-      _logger.e(
-        'Error updating basic SQL suggestions',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return false;
-    } finally {
-      isLoading = false;
-      notifyListeners();
-    }
-  }
-
-  Future<bool> removeSuggestion(String suggestion) async {
-    isLoading = true;
-    error = null;
 
     notifyListeners();
 
@@ -125,54 +89,81 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         _suggestions,
       );
 
-      return true;
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to remove basic suggestion';
-
       _logger.e(
-        'Error removing basic SQL suggestion',
+        'Failed to remove suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return false;
+      return FailureResult(AppFailure('Failed to remove suggestion'));
     } finally {
       isLoading = false;
+
       notifyListeners();
     }
   }
 
-  Future<void> resetSuggestions() async {
+  Future<Result<void>> updateSuggestions(List<String> newSuggestions) async {
     isLoading = true;
-    error = null;
 
     notifyListeners();
 
     try {
+      _suggestions
+        ..clear()
+        ..addAll(newSuggestions);
+
       await SharedPreferencesService.setStringList(
         SharedPreferencesKeys.sqlCommandsKey,
-        List.from(defaultSqlBasicSuggestions),
+        _suggestions,
       );
 
-      _suggestions = List.from(defaultSqlBasicSuggestions);
+      return const SuccessResult(null);
     } catch (err, stackTrace) {
-      error = 'Failed to reset basic SQL suggestions';
-
       _logger.e(
-        'Error resetting basic SQL suggestions',
+        'Failed to update suggestions',
         error: err,
         stackTrace: stackTrace,
       );
+
+      return FailureResult(AppFailure('Failed to update suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
     }
-
-    isLoading = false;
-
-    notifyListeners();
   }
 
-  void clearError() {
-    error = null;
+  Future<Result<void>> resetSuggestions() async {
+    isLoading = true;
 
     notifyListeners();
+
+    try {
+      _suggestions
+        ..clear()
+        ..addAll(List.from(defaultSqlBasicSuggestions));
+
+      await SharedPreferencesService.setStringList(
+        SharedPreferencesKeys.sqlCommandsKey,
+        _suggestions,
+      );
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to reset suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(AppFailure('Failed to reset suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
+    }
   }
 }
