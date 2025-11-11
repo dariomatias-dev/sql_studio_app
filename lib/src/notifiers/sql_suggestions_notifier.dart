@@ -1,10 +1,15 @@
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
+
+import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 enum SuggestionType { basic, advanced }
 
 class SqlSuggestionsNotifier extends ChangeNotifier {
+  final logger = Logger();
+
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
@@ -13,39 +18,65 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
   bool get useAdvancedSuggestions => _useAdvancedSuggestions;
   bool get useCharacterSuggestions => _useCharacterSuggestions;
 
-  Future<void> load() async {
-    _useBasicSuggestions = SharedPreferencesService.getBool(
-      'useBasicSuggestions',
-      defaultValue: true,
-    );
+  Future<Result<void>> load() async {
+    try {
+      _useBasicSuggestions = SharedPreferencesService.getBool(
+        'useBasicSuggestions',
+        defaultValue: true,
+      );
 
-    _useAdvancedSuggestions = SharedPreferencesService.getBool(
-      'useAdvancedSuggestions',
-    );
+      _useAdvancedSuggestions = SharedPreferencesService.getBool(
+        'useAdvancedSuggestions',
+      );
 
-    _useCharacterSuggestions = SharedPreferencesService.getBool(
-      'useCharacterSuggestions',
-      defaultValue: true,
-    );
+      _useCharacterSuggestions = SharedPreferencesService.getBool(
+        'useCharacterSuggestions',
+        defaultValue: true,
+      );
 
-    notifyListeners();
+      notifyListeners();
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      logger.e(
+        'Error loading SQL suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(DatabaseFailure('Failed to load SQL suggestions'));
+    }
   }
 
-  Future<void> saveSettings() async {
-    await SharedPreferencesService.setBool(
-      'useBasicSuggestions',
-      _useBasicSuggestions,
-    );
+  Future<Result<void>> saveSettings() async {
+    try {
+      await SharedPreferencesService.setBool(
+        'useBasicSuggestions',
+        _useBasicSuggestions,
+      );
 
-    await SharedPreferencesService.setBool(
-      'useAdvancedSuggestions',
-      _useAdvancedSuggestions,
-    );
+      await SharedPreferencesService.setBool(
+        'useAdvancedSuggestions',
+        _useAdvancedSuggestions,
+      );
 
-    await SharedPreferencesService.setBool(
-      'useCharacterSuggestions',
-      _useCharacterSuggestions,
-    );
+      await SharedPreferencesService.setBool(
+        'useCharacterSuggestions',
+        _useCharacterSuggestions,
+      );
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      logger.e(
+        'Error saving SQL suggestions settings',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(
+        DatabaseFailure('Failed to save SQL suggestions settings'),
+      );
+    }
   }
 
   void setBasicSuggestions(bool value) {
