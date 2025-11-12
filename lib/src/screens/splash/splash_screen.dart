@@ -65,7 +65,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (dbResult is FailureResult) {
       await handleError(context, dbResult);
-      return;
     }
 
     if (!mounted) return;

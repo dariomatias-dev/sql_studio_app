@@ -18,10 +18,12 @@ class SqlAdvancedSuggestionsController {
 
   late final SqlAdvancedSuggestionsNotifier notifier;
 
-  Future<void> saveOrder(List<SqlAdvancedSuggestionModel> suggestions) async {
+  Future<bool> saveOrder(List<SqlAdvancedSuggestionModel> suggestions) async {
     await notifier.reorderSuggestions(suggestions);
 
     SnackBarUtils.show(getContext(), 'Suggestions saved successfully.');
+
+    return true;
   }
 
   void showCreateDialog() {

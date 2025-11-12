@@ -20,7 +20,7 @@ class SuggestionsSettingsLayoutWidget<T> extends StatefulWidget {
   final String title;
   final bool isLoading;
   final List<T> initialItems;
-  final Future<void> Function(List<T>) onSave;
+  final Future<bool> Function(List<T>) onSave;
   final Widget Function(T item, int index) itemBuilder;
   final VoidCallback onReset;
   final VoidCallback onAdd;

@@ -19,10 +19,12 @@ class SqlBasicSuggestionsController {
 
   late final SqlBasicSuggestionsNotifier notifier;
 
-  Future<void> saveOrder(List<String> suggestions) async {
+  Future<bool> saveOrder(List<String> suggestions) async {
     await notifier.updateSuggestions(suggestions);
 
     SnackBarUtils.show(getContext(), 'Suggestions saved successfully.');
+
+    return true;
   }
 
   void showCreateCommandDialog() {

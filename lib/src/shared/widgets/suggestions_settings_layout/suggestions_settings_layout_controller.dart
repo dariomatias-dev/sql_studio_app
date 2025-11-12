@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class SuggestionsSettingsLayoutController<T> {
   final BuildContext context;
-  final Future<void> Function(List<T>) _onSave;
+  final Future<bool> Function(List<T>) _onSave;
   final _initialItems = <T>[];
 
   SuggestionsSettingsLayoutController({
     required this.context,
-    required Future<void> Function(List<T> value) onSave,
+    required Future<bool> Function(List<T> value) onSave,
     List<T>? initialItems,
   }) : _onSave = onSave {
     _initialItems.addAll(List<T>.from(initialItems ?? <T>[]));
@@ -37,8 +37,8 @@ class SuggestionsSettingsLayoutController<T> {
   }
 
   Future<void> saveItems() async {
-    await _onSave(itemsNotifier.value);
-    hasChangesNotifier.value = false;
+    final saved = await _onSave(itemsNotifier.value);
+    hasChangesNotifier.value = !saved;
   }
 
   void _checkForChanges() {
