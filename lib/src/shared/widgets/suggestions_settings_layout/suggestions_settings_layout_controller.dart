@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
 class SuggestionsSettingsLayoutController<T> {
-  final BuildContext context;
+  final BuildContext Function() getContext;
   final Future<bool> Function(List<T>) _onSave;
   final _initialItems = <T>[];
 
   SuggestionsSettingsLayoutController({
-    required this.context,
+    required this.getContext,
     required Future<bool> Function(List<T> value) onSave,
     List<T>? initialItems,
   }) : _onSave = onSave {
@@ -38,6 +39,12 @@ class SuggestionsSettingsLayoutController<T> {
 
   Future<void> saveItems() async {
     final saved = await _onSave(itemsNotifier.value);
+
+    SnackBarUtils.show(
+      getContext(),
+      saved ? 'Order saved successfully.' : 'Failed to save order.',
+    );
+
     hasChangesNotifier.value = !saved;
   }
 

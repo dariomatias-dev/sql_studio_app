@@ -33,7 +33,7 @@ class SuggestionsSettingsLayoutWidget<T> extends StatefulWidget {
 class _SuggestionsSettingsLayoutWidgetState<T>
     extends State<SuggestionsSettingsLayoutWidget<T>> {
   late final _controller = SuggestionsSettingsLayoutController<T>(
-    context: context,
+    getContext: () => context,
     onSave: widget.onSave,
     initialItems: widget.initialItems,
   );
