@@ -2,44 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
-class RemoveBasicCommandSuggestionDialogWidget extends StatefulWidget {
-  const RemoveBasicCommandSuggestionDialogWidget({
-    super.key,
-    required this.suggestion,
-  });
-
-  final String suggestion;
+class ResetSqlBasicSuggestionsDialogWidget extends StatefulWidget {
+  const ResetSqlBasicSuggestionsDialogWidget({super.key});
 
   @override
-  State<RemoveBasicCommandSuggestionDialogWidget> createState() =>
-      _RemoveBasicCommandSuggestionDialogWidgetState();
+  State<ResetSqlBasicSuggestionsDialogWidget> createState() =>
+      _ResetSqlBasicSuggestionsDialogWidgetState();
 }
 
-class _RemoveBasicCommandSuggestionDialogWidgetState
-    extends State<RemoveBasicCommandSuggestionDialogWidget> {
+class _ResetSqlBasicSuggestionsDialogWidgetState
+    extends State<ResetSqlBasicSuggestionsDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
-      title: 'Remove Command',
-      description: 'Are you sure you want to remove this command?',
+      title: 'Reset Commands',
+      description: 'Are you sure you want to reset the command list?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlBasicSuggestionsNotifier>().removeSuggestion(
-            widget.suggestion,
+          await context.read<SqlBasicSuggestionsNotifier>().updateSuggestions(
+            List<String>.from(defaultSqlBasicSuggestions),
           );
 
           _getContext().pop();
         },
-        text: 'Remove',
-        style: ButtonStyleType.red,
+        text: 'Reset',
+        style: ButtonStyleType.black,
       ),
     );
   }

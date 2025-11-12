@@ -2,41 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
-
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
-class ResetConfirmationDialogWidget extends StatefulWidget {
-  const ResetConfirmationDialogWidget({super.key});
+class RemoveSqlBasicSuggestionDialogWidget extends StatefulWidget {
+  const RemoveSqlBasicSuggestionDialogWidget({
+    super.key,
+    required this.suggestion,
+  });
+
+  final String suggestion;
 
   @override
-  State<ResetConfirmationDialogWidget> createState() =>
-      _ResetConfirmationDialogWidgetState();
+  State<RemoveSqlBasicSuggestionDialogWidget> createState() =>
+      _RemoveSqlBasicSuggestionDialogWidgetState();
 }
 
-class _ResetConfirmationDialogWidgetState
-    extends State<ResetConfirmationDialogWidget> {
+class _RemoveSqlBasicSuggestionDialogWidgetState
+    extends State<RemoveSqlBasicSuggestionDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
-      title: 'Reset Commands',
-      description: 'Are you sure you want to reset the command list?',
+      title: 'Remove Command',
+      description: 'Are you sure you want to remove this command?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlBasicSuggestionsNotifier>().updateSuggestions(
-            List<String>.from(defaultSqlBasicSuggestions),
+          await context.read<SqlBasicSuggestionsNotifier>().removeSuggestion(
+            widget.suggestion,
           );
 
           _getContext().pop();
         },
-        text: 'Reset',
-        style: ButtonStyleType.black,
+        text: 'Remove',
+        style: ButtonStyleType.red,
       ),
     );
   }

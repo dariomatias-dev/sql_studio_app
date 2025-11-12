@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_basic_command_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/reset_confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_sql_basic_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/reset_sql_basic_suggestions_dialog_widget.dart';
 
 class SqlBasicSuggestionsController {
   final BuildContext Function() getContext;
@@ -24,14 +24,14 @@ class SqlBasicSuggestionsController {
   void showCreateCommandDialog() {
     showDialog(
       context: getContext(),
-      builder: (context) => const CreateBasicCommandSuggestionDialogWidget(),
+      builder: (context) => const CreateSqlBasicSuggestionDialogWidget(),
     );
   }
 
   void showResetConfirmationDialog() {
     showDialog(
       context: getContext(),
-      builder: (context) => const ResetConfirmationDialogWidget(),
+      builder: (context) => const ResetSqlBasicSuggestionsDialogWidget(),
     );
   }
 }
