@@ -74,7 +74,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    await context.read<SqlBasicSuggestionsNotifier>().load();
+    final sqlBasicSuggestionsResult = await context
+        .read<SqlBasicSuggestionsNotifier>()
+        .load();
+
+    if (!mounted) return;
+
+    if (sqlBasicSuggestionsResult is FailureResult) {
+      await handleError(context, sqlBasicSuggestionsResult);
+    }
 
     if (mounted) {
       context

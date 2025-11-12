@@ -39,7 +39,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to load suggestions'));
+      return FailureResult(AppFailure('Failed to load basic suggestions'));
     } finally {
       isLoading = false;
 
