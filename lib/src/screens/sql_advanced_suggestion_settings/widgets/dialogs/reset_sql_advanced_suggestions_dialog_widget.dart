@@ -33,11 +33,16 @@ class _ResetSqlAdvancedSuggestionsDialogWidgetState
 
           final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
 
-          await notifier.resetSuggestions();
+          final result = await notifier.resetSuggestions();
 
           if (!mounted) return;
 
-          SnackBarUtils.show(_getContext(), 'All suggestions have been reset.');
+          SnackBarUtils.show(
+            _getContext(),
+            result.isSuccess
+                ? 'All advanced suggestions have been successfully reset.'
+                : 'Failed to reset advanced suggestions. Please try again.',
+          );
         },
         text: 'Ok',
         style: ButtonStyleType.black,
