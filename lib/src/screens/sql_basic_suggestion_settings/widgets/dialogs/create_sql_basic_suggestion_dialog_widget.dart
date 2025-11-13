@@ -30,13 +30,13 @@ class _CreateSqlBasicSuggestionDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return InputDialogWidget(
-      title: 'Create Command',
+      title: 'Create Suggestion',
       controller: _controller,
-      label: 'Command Name',
+      label: 'Suggestion name',
       submitText: 'Create',
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Enter a command name';
+          return 'Enter a name for the suggestion.';
         } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
           return 'Invalid characters';
         }
@@ -48,10 +48,10 @@ class _CreateSqlBasicSuggestionDialogWidgetState
           value,
         );
 
-        if (result.isFailure) {
-          handleError(_getContext(), result);
-        } else {
+        if (result.isSuccess) {
           _controller.text = '';
+        } else {
+          handleError(_getContext(), result);
         }
 
         return result.isSuccess;

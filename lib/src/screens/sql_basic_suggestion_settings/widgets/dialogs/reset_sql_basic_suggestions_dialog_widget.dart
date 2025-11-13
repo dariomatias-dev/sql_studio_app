@@ -25,8 +25,8 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
-      title: 'Reset Commands',
-      description: 'Are you sure you want to reset the command list?',
+      title: 'Reset Suggestions',
+      description: 'Are you sure you want to reset the suggestion list?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           await context.read<SqlBasicSuggestionsNotifier>().updateSuggestions(

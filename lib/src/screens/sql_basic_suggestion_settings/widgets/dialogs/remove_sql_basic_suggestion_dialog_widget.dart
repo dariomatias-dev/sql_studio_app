@@ -29,8 +29,8 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
-      title: 'Remove Command',
-      description: 'Are you sure you want to remove this command?',
+      title: 'Remove Suggestion',
+      description: 'Are you sure you want to remove this suggestion?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final result = await context

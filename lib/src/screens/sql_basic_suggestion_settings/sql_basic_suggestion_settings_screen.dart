@@ -29,7 +29,7 @@ class _SqlBasicSuggestionsSettingsScreenState
     final notifier = context.watch<SqlBasicSuggestionsNotifier>();
 
     return SuggestionsSettingsLayoutWidget<String>(
-      title: 'SQL Command Settings',
+      title: 'Basic Suggestions',
       isLoading: notifier.isLoading,
       initialItems: notifier.suggestions,
       itemBuilder: (suggestion, index) {
