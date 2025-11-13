@@ -44,9 +44,9 @@ class _CreateSqlBasicSuggestionDialogWidgetState
         return null;
       },
       onSubmit: (value) async {
-        final result = await context
-            .read<SqlBasicSuggestionsNotifier>()
-            .addSuggestion(value);
+        final result = await context.read<SqlBasicSuggestionsNotifier>().add(
+          value,
+        );
 
         if (result.isFailure) {
           handleError(_getContext(), result);

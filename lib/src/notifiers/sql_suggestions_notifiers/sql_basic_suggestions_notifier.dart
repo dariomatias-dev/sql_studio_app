@@ -47,7 +47,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
-  Future<Result<void>> addSuggestion(String suggestion) async {
+  Future<Result<void>> add(String suggestion) async {
     isLoading = true;
 
     notifyListeners();
@@ -69,35 +69,6 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       _logger.e('Failed to add suggestion', error: err, stackTrace: stackTrace);
 
       return FailureResult(AppFailure('Failed to add suggestion'));
-    } finally {
-      isLoading = false;
-
-      notifyListeners();
-    }
-  }
-
-  Future<Result<void>> removeSuggestion(String suggestion) async {
-    isLoading = true;
-
-    notifyListeners();
-
-    try {
-      _suggestions.remove(suggestion);
-
-      await SharedPreferencesService.setStringList(
-        SharedPreferencesKeys.sqlCommandsKey,
-        _suggestions,
-      );
-
-      return const SuccessResult(null);
-    } catch (err, stackTrace) {
-      _logger.e(
-        'Failed to remove suggestion',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return FailureResult(AppFailure('Failed to remove suggestion'));
     } finally {
       isLoading = false;
 
@@ -129,6 +100,35 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       );
 
       return FailureResult(AppFailure('Failed to update suggestions'));
+    } finally {
+      isLoading = false;
+
+      notifyListeners();
+    }
+  }
+
+  Future<Result<void>> remove(String suggestion) async {
+    isLoading = true;
+
+    notifyListeners();
+
+    try {
+      _suggestions.remove(suggestion);
+
+      await SharedPreferencesService.setStringList(
+        SharedPreferencesKeys.sqlCommandsKey,
+        _suggestions,
+      );
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to remove suggestion',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(AppFailure('Failed to remove suggestion'));
     } finally {
       isLoading = false;
 

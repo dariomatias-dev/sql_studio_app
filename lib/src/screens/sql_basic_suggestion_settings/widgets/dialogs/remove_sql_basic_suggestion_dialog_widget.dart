@@ -32,7 +32,7 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
       description: 'Are you sure you want to remove this command?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlBasicSuggestionsNotifier>().removeSuggestion(
+          await context.read<SqlBasicSuggestionsNotifier>().remove(
             widget.suggestion,
           );
 
