@@ -6,6 +6,7 @@ import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sq
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -29,11 +30,15 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
       description: 'Are you sure you want to reset the suggestion list?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlBasicSuggestionsNotifier>().updateSuggestions(
-            List<String>.from(defaultSqlBasicSuggestions),
-          );
+          final result = await context
+              .read<SqlBasicSuggestionsNotifier>()
+              .updateSuggestions(List<String>.from(defaultSqlBasicSuggestions));
 
-          _getContext().pop();
+          if (result.isSuccess) {
+            _getContext().pop();
+          } else {
+            handleError(_getContext(), result);
+          }
         },
         text: 'Reset',
         style: ButtonStyleType.black,
