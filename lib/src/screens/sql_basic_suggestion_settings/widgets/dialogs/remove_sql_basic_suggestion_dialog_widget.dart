@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -32,9 +33,15 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
       description: 'Are you sure you want to remove this command?',
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          await context.read<SqlBasicSuggestionsNotifier>().remove(
-            widget.suggestion,
-          );
+          final result = await context
+              .read<SqlBasicSuggestionsNotifier>()
+              .remove(widget.suggestion);
+
+          if (result.isFailure) {
+            handleError(_getContext(), result);
+
+            return;
+          }
 
           _getContext().pop();
         },
