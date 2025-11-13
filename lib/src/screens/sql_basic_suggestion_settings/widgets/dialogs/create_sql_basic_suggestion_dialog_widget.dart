@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 class CreateSqlBasicSuggestionDialogWidget extends StatefulWidget {
@@ -16,6 +17,8 @@ class CreateSqlBasicSuggestionDialogWidget extends StatefulWidget {
 class _CreateSqlBasicSuggestionDialogWidgetState
     extends State<CreateSqlBasicSuggestionDialogWidget> {
   final _controller = TextEditingController();
+
+  BuildContext _getContext() => context;
 
   @override
   void dispose() {
@@ -41,11 +44,17 @@ class _CreateSqlBasicSuggestionDialogWidgetState
         return null;
       },
       onSubmit: (value) async {
-        await context.read<SqlBasicSuggestionsNotifier>().addSuggestion(value);
+        final result = await context
+            .read<SqlBasicSuggestionsNotifier>()
+            .addSuggestion(value);
 
-        _controller.text = '';
+        if (result.isFailure) {
+          handleError(_getContext(), result);
+        } else {
+          _controller.text = '';
+        }
 
-        return true;
+        return result.isSuccess;
       },
     );
   }
