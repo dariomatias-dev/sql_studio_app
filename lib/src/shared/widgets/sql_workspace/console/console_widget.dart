@@ -21,7 +21,9 @@ class ConsoleWidget extends StatelessWidget {
   final VoidCallback? onFullScreen;
 
   String _extractTableName(SqlCommandsNotifier notifier) {
-    if (notifier.result is List && (notifier.result as List).isEmpty) {
+    if (notifier.result is SuccessResult &&
+        (notifier.result as SuccessResult).value is List &&
+        ((notifier.result as SuccessResult).value as List).isEmpty) {
       final sql = notifier.lastQuery;
       if (sql == null) return '';
 

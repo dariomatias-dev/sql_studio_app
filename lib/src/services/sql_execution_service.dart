@@ -13,7 +13,7 @@ class SqlExecutionService {
     required String? databaseName,
   }) async {
     if (databaseName == null || databaseName.isEmpty) {
-      return FailureResult(DatabaseFailure('No active database selected.'));
+      return FailureResult(DatabaseFailure('No active database. Select a database.'));
     }
 
     try {

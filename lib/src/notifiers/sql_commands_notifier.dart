@@ -37,7 +37,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
   Future<void> runQuery(String sql) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
-      error = 'No active database.';
+      error = 'No active database. Select a database.';
       notifyListeners();
       return;
     }
@@ -69,7 +69,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
   Future<List<String>> getTableColumns(String tableName) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
-      error = 'No active database.';
+      error = 'No active database. Select a database.';
       notifyListeners();
       return [];
     }
