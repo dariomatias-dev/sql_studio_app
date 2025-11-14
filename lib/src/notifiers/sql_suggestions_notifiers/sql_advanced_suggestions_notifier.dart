@@ -29,7 +29,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       _suggestions
         ..clear()
         ..addAll(
-          result.isEmpty ? defaultSqlAdvancedSuggestions : List.from(result),
+          List<SqlAdvancedSuggestionModel>.from(result),
         );
 
       return const SuccessResult(null);
@@ -213,7 +213,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     try {
       _suggestions
         ..clear()
-        ..addAll(List.from(defaultSqlAdvancedSuggestions));
+        ..addAll(List<SqlAdvancedSuggestionModel>.from(defaultSqlAdvancedSuggestions));
 
       await _service.clear();
       await _service.addAll(_suggestions);
