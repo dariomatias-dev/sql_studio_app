@@ -31,7 +31,7 @@ class SqlEditorWidget extends StatefulWidget {
 }
 
 class _SqlEditorWidgetState extends State<SqlEditorWidget> {
-  void _onRunQuery(BuildContext context) {
+  void _onRunQuery() {
     final notifier = context.read<SqlCommandsNotifier>();
     final editorNotifier = context.read<SqlEditorNotifier>();
     final sql = editorNotifier.controller.text.trim();
@@ -81,7 +81,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
           },
         ),
         IconButton(
-          onPressed: () => _onRunQuery(context),
+          onPressed: _onRunQuery,
           tooltip: 'Run Query',
           icon: const Icon(Icons.play_arrow_rounded),
         ),

@@ -13,7 +13,9 @@ class SqlExecutionService {
     required String? databaseName,
   }) async {
     if (databaseName == null || databaseName.isEmpty) {
-      return FailureResult(DatabaseFailure('No active database. Select a database.'));
+      return FailureResult(
+        DatabaseFailure('No active database. Select a database.'),
+      );
     }
 
     try {
@@ -21,50 +23,44 @@ class SqlExecutionService {
       final path = join(dbPath, '$databaseName.db');
       final db = await openDatabase(path);
 
-      final trimmed = sql.trim();
-      final upper = trimmed.toUpperCase();
+      final statements = sql
+          .split(';')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
 
-      if (upper.startsWith('SELECT')) {
-        final result = await db.rawQuery(sql);
+      dynamic lastResult;
 
-        _logger.i('Executed SELECT on $databaseName: $sql');
+      for (final stmt in statements) {
+        final upper = stmt.toUpperCase();
 
-        return SuccessResult(result);
-      } else if (upper.startsWith('DELETE')) {
-        final count = await db.rawDelete(sql);
-
-        _logger.i(
-          'Executed DELETE on $databaseName: $sql ($count rows affected)',
-        );
-
-        return SuccessResult(
-          'Delete executed successfully. $count rows affected.',
-        );
-      } else if (upper.startsWith('UPDATE')) {
-        final count = await db.rawUpdate(sql);
-
-        _logger.i(
-          'Executed UPDATE on $databaseName: $sql ($count rows affected)',
-        );
-
-        return SuccessResult(
-          'Update executed successfully. $count rows affected.',
-        );
-      } else if (upper.startsWith('INSERT')) {
-        final id = await db.rawInsert(sql);
-
-        _logger.i('Executed INSERT on $databaseName: $sql (insertId: $id)');
-
-        return SuccessResult(
-          'Insert executed successfully. Inserted row ID: $id.',
-        );
+        if (upper.startsWith('SELECT')) {
+          lastResult = await db.rawQuery(stmt);
+          _logger.i('Executed SELECT on $databaseName: $stmt');
+        } else if (upper.startsWith('DELETE')) {
+          final count = await db.rawDelete(stmt);
+          lastResult = 'Delete executed successfully. $count rows affected.';
+          _logger.i('Executed DELETE: $stmt');
+        } else if (upper.startsWith('UPDATE')) {
+          final count = await db.rawUpdate(stmt);
+          lastResult = 'Update executed successfully. $count rows affected.';
+          _logger.i('Executed UPDATE: $stmt');
+        } else if (upper.startsWith('INSERT')) {
+          final id = await db.rawInsert(stmt);
+          lastResult = 'Insert executed successfully. Inserted row ID: $id.';
+          _logger.i('Executed INSERT: $stmt');
+        } else {
+          await db.execute(stmt);
+          lastResult = 'Statement executed successfully.';
+          _logger.i('Executed SQL: $stmt');
+        }
       }
 
-      await db.execute(sql);
+      if (statements.length > 1) {
+        return SuccessResult('Statement executed successfully.');
+      }
 
-      _logger.i('Executed SQL on $databaseName: $sql');
-
-      return SuccessResult('Statement executed successfully.');
+      return SuccessResult(lastResult);
     } catch (err, stackTrace) {
       _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
 
