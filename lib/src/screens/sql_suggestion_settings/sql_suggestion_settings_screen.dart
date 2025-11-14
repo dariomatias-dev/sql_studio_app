@@ -31,6 +31,8 @@ class _SqlSuggestionSettingsScreenState
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
 
+  BuildContext _getContext() => context;
+
   void _openBasicConfig(BuildContext context) =>
       context.push(RouteNames.sqlBasicSuggestionSettings);
 
@@ -51,10 +53,17 @@ class _SqlSuggestionSettingsScreenState
 
     final previousAdvancedEnabled = notifier.useAdvancedSuggestions;
 
-    if (!previousAdvancedEnabled && _useAdvancedSuggestions) {
-      if (advancedNotifier.suggestions.isEmpty) {
-        await advancedNotifier.resetSuggestions();
-      }
+    if (!previousAdvancedEnabled &&
+        _useAdvancedSuggestions &&
+        advancedNotifier.suggestions.isEmpty) {
+      final result = await advancedNotifier.resetSuggestions();
+
+      SnackBarUtils.show(
+        _getContext(),
+        result.isSuccess
+            ? 'Advanced suggestions have been initialized successfully.'
+            : 'Failed to initialize advanced suggestions.',
+      );
     }
 
     notifier.setBasicSuggestions(_useBasicSuggestions);
