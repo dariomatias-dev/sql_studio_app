@@ -48,8 +48,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   margin: const EdgeInsets.only(top: 32.0, bottom: 12.0),
                   child: InputWidget(
-                    hintText: 'Search databases',
                     controller: _searchController,
+                    hintText: 'Search databases',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _searchController.text = '';
+
+                        notifier.setFilter('');
+                      },
+                      icon: Icon(Icons.close),
+                    ),
                     onChanged: notifier.setFilter,
                   ),
                 ),
