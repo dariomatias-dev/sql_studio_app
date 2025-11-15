@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -18,8 +18,6 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends StatefulWidget {
 
 class _ResetSqlAdvancedSuggestionsDialogWidgetState
     extends State<ResetSqlAdvancedSuggestionsDialogWidget> {
-  BuildContext _getContext() => context;
-
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
@@ -37,9 +35,8 @@ class _ResetSqlAdvancedSuggestionsDialogWidgetState
 
           if (!mounted) return;
 
-          SnackBarUtils.show(
-            _getContext(),
-            result.isSuccess
+          Fluttertoast.showToast(
+            msg: result.isSuccess
                 ? 'All advanced suggestions have been successfully reset.'
                 : 'Failed to reset advanced suggestions. Please try again.',
           );

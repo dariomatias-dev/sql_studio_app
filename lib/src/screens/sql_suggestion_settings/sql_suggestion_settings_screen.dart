@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,6 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_title_option_widget.dart';
 
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -30,8 +30,6 @@ class _SqlSuggestionSettingsScreenState
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
-
-  BuildContext _getContext() => context;
 
   void _openBasicConfig(BuildContext context) =>
       context.push(RouteNames.sqlBasicSuggestionSettings);
@@ -58,9 +56,8 @@ class _SqlSuggestionSettingsScreenState
         advancedNotifier.suggestions.isEmpty) {
       final result = await advancedNotifier.resetSuggestions();
 
-      SnackBarUtils.show(
-        _getContext(),
-        result.isSuccess
+      Fluttertoast.showToast(
+        msg: result.isSuccess
             ? 'Advanced suggestions have been initialized successfully.'
             : 'Failed to initialize advanced suggestions.',
       );
@@ -76,7 +73,7 @@ class _SqlSuggestionSettingsScreenState
 
     _hasChangesNotifier.value = _hasChanges;
 
-    SnackBarUtils.show(context, 'Settings saved successfully!');
+    Fluttertoast.showToast(msg: 'Settings saved successfully!');
   }
 
   @override

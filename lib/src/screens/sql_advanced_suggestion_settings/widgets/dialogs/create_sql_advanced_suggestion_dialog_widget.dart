@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
-
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
 class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
   const CreateSqlAdvancedSuggestionDialogWidget({super.key});
@@ -17,8 +16,6 @@ class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
 
 class _CreateSqlAdvancedSuggestionDialogWidgetState
     extends State<CreateSqlAdvancedSuggestionDialogWidget> {
-  BuildContext _getContext() => context;
-
   @override
   Widget build(BuildContext context) {
     return SqlAdvancedSuggestionFormDialogWidget(
@@ -30,9 +27,8 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
 
         if (!mounted) return false;
 
-        SnackBarUtils.show(
-          _getContext(),
-          result.isSuccess
+        Fluttertoast.showToast(
+          msg: result.isSuccess
               ? 'Suggestion added successfully.'
               : 'Failed to add suggestion.',
         );

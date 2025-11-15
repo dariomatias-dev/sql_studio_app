@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/default_database_model.dart';
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
@@ -30,7 +30,7 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
     await Clipboard.setData(ClipboardData(text: contents.join('\n')));
 
     if (mounted) {
-      SnackBarUtils.show(context, message);
+      Fluttertoast.showToast(msg: message);
     }
   }
 

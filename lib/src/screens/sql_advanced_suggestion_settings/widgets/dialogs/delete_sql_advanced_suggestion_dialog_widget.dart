@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -25,8 +25,6 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
 
 class _DeleteSqlAdvancedSuggestionDialogWidgetState
     extends State<DeleteSqlAdvancedSuggestionDialogWidget> {
-  BuildContext _getContext() => context;
-
   @override
   Widget build(BuildContext context) {
     return ConfirmationDialogWidget(
@@ -40,9 +38,8 @@ class _DeleteSqlAdvancedSuggestionDialogWidgetState
 
           if (!mounted) return;
 
-          SnackBarUtils.show(
-            _getContext(),
-            result.isSuccess
+          Fluttertoast.showToast(
+            msg: result.isSuccess
                 ? 'Suggestion deleted successfully.'
                 : 'Failed to delete suggestion.',
           );

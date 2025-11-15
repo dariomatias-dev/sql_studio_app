@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/result.dart';
@@ -11,7 +12,6 @@ import 'package:sql_studio/src/screens/workspace_layout/widgets/workspace_layout
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
 
 class WorkspaceLayoutScreen extends StatefulWidget {
   const WorkspaceLayoutScreen({super.key});
@@ -33,7 +33,7 @@ class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
     if (result is FailureResult) {
       await handleError(context, result);
     } else {
-      SnackBarUtils.show(context, 'Layout saved');
+      Fluttertoast.showToast(msg: 'Layout saved');
     }
   }
 

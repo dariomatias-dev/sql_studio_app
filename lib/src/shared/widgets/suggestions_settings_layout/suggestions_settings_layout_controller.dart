@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/shared/utils/snack_bar_utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SuggestionsSettingsLayoutController<T> {
   final BuildContext Function() getContext;
@@ -40,9 +40,8 @@ class SuggestionsSettingsLayoutController<T> {
   Future<void> saveItems() async {
     final saved = await _onSave(itemsNotifier.value);
 
-    SnackBarUtils.show(
-      getContext(),
-      saved ? 'Order saved successfully.' : 'Failed to save order.',
+    Fluttertoast.showToast(
+      msg: saved ? 'Order saved successfully.' : 'Failed to save order.',
     );
 
     hasChangesNotifier.value = !saved;
