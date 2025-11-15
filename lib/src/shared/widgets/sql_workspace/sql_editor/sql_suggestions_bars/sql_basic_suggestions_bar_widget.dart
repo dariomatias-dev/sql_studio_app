@@ -25,13 +25,10 @@ class SqlBasicSuggestionsBarWidget extends StatelessWidget {
         ? defaultSqlBasicSuggestions
         : notifier.suggestions;
 
-    final filtered = filterText.isEmpty
+    final filtered = filterText.isEmpty || filterText.endsWith(';')
         ? suggestions
         : suggestions
-              .where(
-                (suggestion) =>
-                    suggestion.toLowerCase().contains(filterText.toLowerCase()),
-              )
+              .where((s) => s.toLowerCase().contains(filterText.toLowerCase()))
               .toList();
 
     return SqlSuggestionsBarBaseWidget(

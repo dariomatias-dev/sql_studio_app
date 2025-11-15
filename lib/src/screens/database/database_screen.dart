@@ -8,9 +8,6 @@ class DatabaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldWidget(
-      appBar: AppBar(title: Text('Database')),
-      body: SqlWorkspaceWidget(),
-    );
+    return ScaffoldWidget(appBar: AppBar(), body: SqlWorkspaceWidget());
   }
 }
