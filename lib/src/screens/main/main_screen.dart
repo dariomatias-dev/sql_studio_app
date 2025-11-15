@@ -9,9 +9,8 @@ import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 
 import 'package:sql_studio/src/screens/main/screens/databases/databases_screen.dart';
 import 'package:sql_studio/src/screens/main/screens/home/home_screen.dart';
-import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/settings_screen.dart';
-import 'package:sql_studio/src/screens/main/widgets/theme_switcher_button_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -98,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
               tooltip: 'Open Fullscreen',
               icon: const Icon(Icons.open_in_full, color: Colors.black),
             ),
-            const ThemeSwitcherButtonWidget(),
+            // const ThemeSwitcherButtonWidget(),
           ],
         ),
         drawer: DrawerWidget(),

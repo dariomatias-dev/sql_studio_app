@@ -34,19 +34,22 @@ class _SettingsScreenState extends State<SettingsScreen>
             SettingsSectionWidget(
               title: 'General',
               children: <Widget>[
+                // SettingsCardWidget(
+                //   onTap: () {},
+                //   title: 'Language',
+                //   icon: Icons.arrow_forward_ios,
+                // ),
                 SettingsCardWidget(
-                  onTap: () {},
-                  title: 'Language',
-                  icon: Icons.arrow_forward_ios,
-                ),
-                SettingsCardWidget(
-                  onTap: () =>
-                      context.push(RouteNames.sqlSuggestionSettingsPath),
+                  onTap: () {
+                    context.push(RouteNames.sqlSuggestionSettingsPath);
+                  },
                   title: 'SQL Suggestions',
                   icon: Icons.arrow_forward_ios,
                 ),
                 SettingsCardWidget(
-                  onTap: () => context.push(RouteNames.workspaceLayout),
+                  onTap: () {
+                    context.push(RouteNames.workspaceLayout);
+                  },
                   title: 'Workspace Layout',
                   icon: Icons.arrow_forward_ios,
                 ),
