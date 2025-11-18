@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
@@ -7,6 +8,7 @@ import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
+import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -20,6 +22,22 @@ class _SettingsScreenState extends State<SettingsScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  BuildContext _getContext() => context;
+
+  Future<void> _openUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      await showDialog(
+        context: _getContext(),
+        builder: (context) {
+          return ErrorDialogWidget(
+            title: 'Error opening URL',
+            description: 'The URL $url could not be opened.',
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +78,13 @@ class _SettingsScreenState extends State<SettingsScreen>
               children: <Widget>[
                 AppVersionWidget(),
                 SettingsCardWidget(
-                  onTap: () {},
+                  onTap: () => _openUrl('https://sql-studio.vercel.app/'),
                   title: 'Official Website',
                   icon: Icons.open_in_new,
                 ),
                 SettingsCardWidget(
-                  onTap: () {},
+                  onTap: () =>
+                      _openUrl('https://sql-studio.vercel.app/privacy-policy'),
                   title: 'Privacy Policy',
                   icon: Icons.open_in_new,
                 ),
