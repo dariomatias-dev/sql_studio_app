@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
+import 'package:sql_studio/src/core/types/table_info.dart';
 
 class SqlExecutionService {
   final _logger = Logger();
@@ -89,5 +90,42 @@ class SqlExecutionService {
     final result = await db.rawQuery('PRAGMA table_info($tableName);');
 
     return result.builder((col, index) => col['name'] as String);
+  }
+
+  Future<List<TableInfo>> getDatabaseStructure({
+    required String databaseName,
+  }) async {
+    final path = join(await getDatabasesPath(), '$databaseName.db');
+    final db = await openDatabase(path);
+
+    final tableResult = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name != 'android_metadata';",
+    );
+
+    final tables = <TableInfo>[];
+
+    for (final row in tableResult) {
+      final name = row['name'] as String;
+      final columnsRaw = await db.rawQuery('PRAGMA table_info($name);');
+      final fkRaw = await db.rawQuery('PRAGMA foreign_key_list($name);');
+
+      final columns = columnsRaw.builder((col, index) {
+        final fk = fkRaw.firstWhere(
+          (f) => f['from'] == col['name'],
+          orElse: () => {},
+        );
+
+        return ColumnInfo(
+          name: col['name'] as String,
+          type: col['type'] as String,
+          foreignTable: fk['table'] as String?,
+          foreignColumn: fk['to'] as String?,
+        );
+      });
+
+      tables.add(TableInfo(name: name, columns: columns));
+    }
+
+    return tables;
   }
 }
