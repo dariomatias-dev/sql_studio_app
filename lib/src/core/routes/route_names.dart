@@ -6,9 +6,13 @@ class RouteNames {
   static const database = 'database';
   static const databasePath = '$main$database';
 
-  static const sqlBasicSuggestionSettings = '/settings/sql-basic-suggestion-settings';
+  static const databaseVisualizer = '/database-visualizer';
 
-  static const sqlAdvancedSuggestionSettings = '/settings/sql-advanced-suggestion-settings';
+  static const sqlBasicSuggestionSettings =
+      '/settings/sql-basic-suggestion-settings';
+
+  static const sqlAdvancedSuggestionSettings =
+      '/settings/sql-advanced-suggestion-settings';
 
   static const sqlSuggestionSettingsPath = '/settings/sql-suggestion-settings';
 
