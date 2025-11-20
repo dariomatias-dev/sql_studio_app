@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
 class WorkspaceLayoutOptionCardWidget extends StatelessWidget {
@@ -37,7 +39,7 @@ class WorkspaceLayoutOptionCardWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 12.0, color: Colors.black54),
         ),
         trailing: selected
-            ? const Icon(Icons.check, color: Colors.green)
+            ? const Icon(Icons.check, color: AppColors.aquaBlue)
             : null,
       ),
     );
