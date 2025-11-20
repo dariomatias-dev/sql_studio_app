@@ -102,7 +102,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
       ),
       body: SafeArea(
         child: tables == null
-            ? const SizedBox.shrink()
+            ? const Center(child: Text('The database is empty'))
             : tables?.isEmpty ?? false
             ? const Center(child: CircularProgressIndicator())
             : LayoutBuilder(

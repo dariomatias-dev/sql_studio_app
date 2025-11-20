@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/database_delete_dialog_widget.dart';
+import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
@@ -23,8 +26,7 @@ class DrawerDatabaseCardWidget extends StatefulWidget {
       _DrawerDatabaseCardWidgetState();
 }
 
-class _DrawerDatabaseCardWidgetState
-    extends State<DrawerDatabaseCardWidget> {
+class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
   late bool _isFavorite = widget.database.isFavorite;
 
   void _selectDatabase() {
@@ -37,16 +39,6 @@ class _DrawerDatabaseCardWidgetState
     context.read<SqlEditorNotifier>().focusNode.requestFocus();
 
     Scaffold.of(context).closeDrawer();
-  }
-
-  Future<void> _onToggleFavorite() async {
-    setState(() => _isFavorite = !_isFavorite);
-
-    final result = await context.read<DatabaseNotifier>().toggleFavorite(
-      widget.database,
-    );
-
-    if (mounted) await handleError(context, result);
   }
 
   Future<void> _onDeleteDatabase() async {
@@ -62,10 +54,24 @@ class _DrawerDatabaseCardWidgetState
       final commands = context.read<SqlCommandsNotifier>();
       if (commands.activeDatabase == widget.database.name) {
         commands.activeDatabase = null;
+
+        await SharedPreferencesService.remove(
+          SharedPreferencesKeys.selectedDatabaseKey,
+        );
       }
     } else {
       await handleError(context, result);
     }
+  }
+
+  Future<void> _onToggleFavorite() async {
+    setState(() => _isFavorite = !_isFavorite);
+
+    final result = await context.read<DatabaseNotifier>().toggleFavorite(
+      widget.database,
+    );
+
+    if (mounted) await handleError(context, result);
   }
 
   void _showDeleteDialog() {

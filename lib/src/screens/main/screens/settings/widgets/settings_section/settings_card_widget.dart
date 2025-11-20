@@ -36,7 +36,7 @@ class SettingsCardWidget extends StatelessWidget {
               )
             : null,
         trailing: icon != null
-            ? Icon(icon, size: 18.0, color: Colors.black38)
+            ? Icon(icon, size: 18.0, color: Colors.black87)
             : null,
       ),
     );
