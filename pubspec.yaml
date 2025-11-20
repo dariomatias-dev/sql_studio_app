@@ -33,6 +33,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/icons/
     - assets/sql/schemas/
     - assets/sql/seeds/
 
