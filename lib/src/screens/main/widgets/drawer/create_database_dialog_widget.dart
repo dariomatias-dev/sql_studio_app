@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
@@ -37,7 +38,7 @@ class _CreateDatabaseDialogWidgetState
         .toLowerCase();
   }
 
-  Future<void> _handleCreate() async {
+  Future<void> _onCreate() async {
     if (!formKey.currentState!.validate()) return;
 
     final label = labelController.text.trim();
@@ -77,9 +78,15 @@ class _CreateDatabaseDialogWidgetState
 
     if (!mounted) return;
 
-    await handleError(context, result);
+    if (result.isSuccess) {
+      Navigator.pop(context);
 
-    if (result.isSuccess && mounted) Navigator.pop(context);
+      context.read<SqlCommandsNotifier>().activeDatabase = name;
+
+      Navigator.pop(context);
+    } else {
+      await handleError(context, result);
+    }
   }
 
   @override
@@ -161,7 +168,7 @@ class _CreateDatabaseDialogWidgetState
         CancelButtonWidget(),
         ButtonWidget(
           text: 'Create',
-          onPressed: _handleCreate,
+          onPressed: _onCreate,
           style: ButtonStyleType.black,
         ),
       ],
