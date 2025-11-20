@@ -80,7 +80,15 @@ class _DrawerDatabaseListTileWidgetState
 
     if (!mounted) return;
 
-    await handleError(context, result);
+    if (result.isSuccess) {
+      final activeDatabase = context.read<SqlCommandsNotifier>().activeDatabase;
+
+      if (activeDatabase == widget.database.name) {
+        context.read<SqlCommandsNotifier>().activeDatabase = null;
+      }
+    } else {
+      await handleError(context, result);
+    }
   }
 
   @override
