@@ -48,9 +48,13 @@ class _CreateDatabaseDialogWidgetState
       name,
     );
 
+    bool shouldStopFlow = false;
+
     await getByNameResult.fold(
       onSuccess: (value) async {
         if (value != null) {
+          shouldStopFlow = true;
+
           await showDialog(
             context: context,
             builder: (context) {
@@ -59,14 +63,16 @@ class _CreateDatabaseDialogWidgetState
               );
             },
           );
-
-          return;
         }
       },
       onFailure: (error) async {
+        shouldStopFlow = true;
+
         await handleError(context, getByNameResult);
       },
     );
+
+    if (shouldStopFlow) return;
 
     final createDatabase = DatabaseModel(label: label, name: name);
 
