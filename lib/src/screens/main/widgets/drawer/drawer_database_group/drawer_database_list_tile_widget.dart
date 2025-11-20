@@ -7,10 +7,10 @@ import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
+import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/database_delete_dialog_widget.dart';
+
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 class DrawerDatabaseListTileWidget extends StatefulWidget {
@@ -53,24 +53,6 @@ class _DrawerDatabaseListTileWidgetState
     await handleError(context, result);
   }
 
-  void _showDeleteDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return ConfirmationDialogWidget(
-          title: 'Attention',
-          description:
-              'Are you sure you want to permanently delete this database? This action cannot be undone.',
-          confirmButton: ButtonWidget(
-            onPressed: _onDeleteDatabase,
-            text: 'Delete',
-            style: ButtonStyleType.red,
-          ),
-        );
-      },
-    );
-  }
-
   Future<void> _onDeleteDatabase() async {
     context.pop(context);
 
@@ -89,6 +71,15 @@ class _DrawerDatabaseListTileWidgetState
     } else {
       await handleError(context, result);
     }
+  }
+
+  void _showDeleteDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DatabaseDeleteDialogWidget(onDeleteDatabase: _onDeleteDatabase);
+      },
+    );
   }
 
   @override
