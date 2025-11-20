@@ -28,33 +28,29 @@ class _DrawerDatabaseListTileWidgetState
   late bool _isFavorite = widget.database.isFavorite;
 
   void _selectDatabase() {
-    final notifier = context.read<SqlCommandsNotifier>();
-    final databaseName = widget.database.label;
+    final commands = context.read<SqlCommandsNotifier>();
 
-    notifier.activeDatabase = databaseName;
-    notifier.clearResult();
+    commands.activeDatabase = widget.database.label;
+    commands.clearResult();
 
     context.read<MainScreenNotifier>().changeScreen(0);
-
     context.read<SqlEditorNotifier>().focusNode.requestFocus();
 
     Scaffold.of(context).closeDrawer();
   }
 
-  void _onToggleFavorite() async {
+  Future<void> _onToggleFavorite() async {
     setState(() => _isFavorite = !_isFavorite);
 
     final result = await context.read<DatabaseNotifier>().toggleFavorite(
       widget.database,
     );
 
-    if (!mounted) return;
-
-    await handleError(context, result);
+    if (mounted) await handleError(context, result);
   }
 
   Future<void> _onDeleteDatabase() async {
-    context.pop(context);
+    context.pop();
 
     final result = await context.read<DatabaseNotifier>().delete(
       widget.database,
@@ -63,10 +59,9 @@ class _DrawerDatabaseListTileWidgetState
     if (!mounted) return;
 
     if (result.isSuccess) {
-      final activeDatabase = context.read<SqlCommandsNotifier>().activeDatabase;
-
-      if (activeDatabase == widget.database.name) {
-        context.read<SqlCommandsNotifier>().activeDatabase = null;
+      final commands = context.read<SqlCommandsNotifier>();
+      if (commands.activeDatabase == widget.database.name) {
+        commands.activeDatabase = null;
       }
     } else {
       await handleError(context, result);
@@ -84,76 +79,72 @@ class _DrawerDatabaseListTileWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SqlCommandsNotifier>();
-    final isActive = notifier.activeDatabase == widget.database.label;
+    final commands = context.watch<SqlCommandsNotifier>();
+    final isActive = commands.activeDatabase == widget.database.label;
 
     final borderRadius = BorderRadius.circular(10.0);
+    final activeColor = Colors.black;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-      child: Material(
-        color: isActive ? Colors.grey.shade300.withAlpha(30) : Colors.white,
+      child: InkWell(
+        onTap: _selectDatabase,
         borderRadius: borderRadius,
-        elevation: 0.0,
-        child: InkWell(
-          borderRadius: borderRadius,
-          onTap: _selectDatabase,
-          splashColor: Colors.black12,
-          highlightColor: Colors.black12,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: borderRadius,
-              border: Border.all(
-                color: isActive
-                    ? Colors.black.withAlpha(40)
-                    : Colors.grey.shade200,
+        child: Container(
+          decoration: BoxDecoration(
+            color: isActive ? Colors.grey.shade300.withAlpha(30) : Colors.white,
+            borderRadius: borderRadius,
+            border: Border.all(
+              color: isActive
+                  ? activeColor.withAlpha(40)
+                  : Colors.grey.shade200,
+            ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black.withAlpha(10),
+                blurRadius: 6.0,
+                offset: const Offset(0.0, 2.0),
               ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.black.withAlpha(10),
-                  blurRadius: 6.0,
-                  offset: const Offset(0.0, 2.0),
+            ],
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(
+              top: 2.0,
+              bottom: 2.0,
+              left: 16.0,
+            ),
+            leading: Icon(
+              Icons.storage_rounded,
+              color: isActive ? activeColor : Colors.grey.shade600,
+            ),
+            title: Text(
+              widget.database.label,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: isActive ? activeColor : Colors.grey.shade800,
+              ),
+            ),
+            subtitle: Text(
+              widget.database.name,
+              style: TextStyle(
+                fontSize: 12.0,
+                color: isActive ? Colors.black87 : Colors.grey.shade600,
+              ),
+            ),
+            trailing: PopupMenuButtonWidget(
+              items: [
+                PopupMenuItem(
+                  onTap: _onToggleFavorite,
+                  child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
+                ),
+                PopupMenuItem(
+                  onTap: _showDeleteDialog,
+                  child: const Text(
+                    'Delete',
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
                 ),
               ],
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.storage_rounded,
-                color: isActive ? Colors.black : Colors.grey.shade600,
-              ),
-              title: Text(
-                widget.database.label,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: isActive ? Colors.black : Colors.grey.shade800,
-                ),
-              ),
-              subtitle: Text(
-                widget.database.name,
-                style: TextStyle(
-                  fontSize: 12.0,
-                  color: isActive ? Colors.black87 : Colors.grey.shade600,
-                ),
-              ),
-              trailing: PopupMenuButtonWidget(
-                items: <PopupMenuItem>[
-                  PopupMenuItem(
-                    onTap: _onToggleFavorite,
-                    child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
-                  ),
-                  PopupMenuItem(
-                    onTap: _showDeleteDialog,
-                    child: const Text(
-                      'Delete',
-                      style: TextStyle(color: Colors.redAccent),
-                    ),
-                  ),
-                ],
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 2.0,
-              ),
             ),
           ),
         ),
