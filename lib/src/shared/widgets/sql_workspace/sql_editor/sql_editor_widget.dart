@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
@@ -69,15 +72,31 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
         Consumer<SqlCommandsNotifier>(
-          builder: (context, notifier, child) {
-            if (notifier.isDefaultDatabase) {
-              return IconButton(
-                onPressed: sqlCommandsNotifier.resetDatabase,
-                tooltip: 'Reset Database',
-                icon: const Icon(Icons.refresh_outlined),
-              );
+          builder: (context, value, child) {
+            if (value.activeDatabase == null) {
+              return const SizedBox.shrink();
             }
-            return const SizedBox.shrink();
+
+            return IconButton(
+              onPressed: () {
+                context.push(RouteNames.databaseVisualizer);
+              },
+              tooltip: 'View Visual Scheme',
+              icon: const Icon(Icons.remove_red_eye_outlined),
+            );
+          },
+        ),
+        Consumer<SqlCommandsNotifier>(
+          builder: (context, notifier, child) {
+            if (!notifier.isDefaultDatabase) {
+              return const SizedBox.shrink();
+            }
+
+            return IconButton(
+              onPressed: sqlCommandsNotifier.resetDatabase,
+              tooltip: 'Reset Database',
+              icon: const Icon(Icons.refresh_outlined),
+            );
           },
         ),
         IconButton(
