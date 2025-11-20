@@ -83,6 +83,12 @@ class DatabaseNotifier extends ChangeNotifier {
   }
 
   Future<Result<void>> delete(DatabaseModel model) async {
+    final dropResult = await _service.dropTable(model);
+
+    if (dropResult is FailureResult) {
+      return FailureResult(DatabaseFailure(dropResult.error.message));
+    }
+
     final result = await _service.delete(model);
 
     if (result is SuccessResult) {

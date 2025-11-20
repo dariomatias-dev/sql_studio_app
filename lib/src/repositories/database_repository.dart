@@ -166,9 +166,17 @@ class DatabaseRepository<T> {
     await db.delete(tableName);
   }
 
-  Future<void> dropTable() async {
+  Future<void> dropTable(String tableName) async {
     final db = await _db;
 
     await db.execute('DROP TABLE IF EXISTS $tableName');
+  }
+
+  Future<void> dropDatabaseFile(String databaseName) async {
+    final dbPath = await getDatabasesPath();
+
+    final fullPath = join(dbPath, '$databaseName.db');
+
+    await deleteDatabase(fullPath);
   }
 }

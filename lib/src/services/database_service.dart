@@ -189,6 +189,26 @@ class DatabaseService {
     }
   }
 
+  Future<Result<void>> dropTable(DatabaseModel model) async {
+    try {
+      await _repository.dropDatabaseFile(model.name);
+
+      _logger.i('Complete drop executed for: ${model.name}');
+
+      return const SuccessResult(null);
+    } catch (err, stackTrace) {
+      _logger.e(
+        'Failed to perform complete drop for: ${model.name}',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return FailureResult(
+        DatabaseFailure('Unable to perform complete drop: $err'),
+      );
+    }
+  }
+
   Future<Result<void>> clearAll() async {
     try {
       await _repository.clear();
