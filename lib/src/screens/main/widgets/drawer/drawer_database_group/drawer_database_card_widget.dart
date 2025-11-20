@@ -13,18 +13,18 @@ import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
-class DrawerDatabaseListTileWidget extends StatefulWidget {
-  const DrawerDatabaseListTileWidget({super.key, required this.database});
+class DrawerDatabaseCardWidget extends StatefulWidget {
+  const DrawerDatabaseCardWidget({super.key, required this.database});
 
   final DatabaseModel database;
 
   @override
-  State<DrawerDatabaseListTileWidget> createState() =>
-      _DrawerDatabaseListTileWidgetState();
+  State<DrawerDatabaseCardWidget> createState() =>
+      _DrawerDatabaseCardWidgetState();
 }
 
-class _DrawerDatabaseListTileWidgetState
-    extends State<DrawerDatabaseListTileWidget> {
+class _DrawerDatabaseCardWidgetState
+    extends State<DrawerDatabaseCardWidget> {
   late bool _isFavorite = widget.database.isFavorite;
 
   void _selectDatabase() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_list_tile_widget.dart';
+import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/drawer_database_card_widget.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 
@@ -41,7 +41,7 @@ class DatabaseGroupWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             final database = databases[index];
 
-            return DrawerDatabaseListTileWidget(
+            return DrawerDatabaseCardWidget(
               database: database,
             );
           },
