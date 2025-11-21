@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
@@ -100,13 +102,16 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
             PopupMenuButtonWidget(
               items: <PopupMenuItem>[
                 PopupMenuItem(
-                  onTap: _copySchema,
-                  child: const Text('Copy Schemas'),
+                  onTap: () {
+                    context.push(RouteNames.databaseVisualizer(widget.db.name));
+                  },
+                  child: const Text('View Structure'),
                 ),
                 PopupMenuItem(
-                  onTap: _copySeed,
-                  child: const Text('Copy Seeds'),
+                  onTap: _copySchema,
+                  child: const Text('Copy Schema'),
                 ),
+                PopupMenuItem(onTap: _copySeed, child: const Text('Copy Seed')),
                 PopupMenuItem(onTap: _copyAll, child: const Text('Copy All')),
               ],
             ),
