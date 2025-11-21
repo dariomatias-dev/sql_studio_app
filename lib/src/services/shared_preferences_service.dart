@@ -12,14 +12,19 @@ class SharedPreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // ============== String Operations ==============
+  // ==================================================
+  // ============== String Operations =================
+  // ==================================================
 
   /// Retrieves a String value from SharedPreferences.
   ///
   /// [key] The key to retrieve the String value.
-  /// [defaultValue] The default value to return if the key does not exist. Defaults to an empty string.
+  /// [defaultValue] The default value to return if the key does not exist.
+  /// Defaults to an empty string.
   ///
-  /// Returns the stored String or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
+  /// Returns the stored String or the [defaultValue] if the key doesn't exist.
+  /// If the SharedPreferences instance is not initialized,
+  /// returns the [defaultValue].
   static String getString(String key, {String defaultValue = ''}) {
     return _prefs?.getString(key) ?? defaultValue;
   }
@@ -28,7 +33,8 @@ class SharedPreferencesService {
   ///
   /// [key] The key to retrieve the String value.
   ///
-  /// Returns the stored String or `null` if the key doesn't exist, or if the SharedPreferences instance is not initialized.
+  /// Returns the stored String or `null` if the key doesn't exist,
+  /// or if the SharedPreferences instance is not initialized.
   static String? getStringOrNull(String key) {
     return _prefs?.getString(key);
   }
@@ -41,18 +47,22 @@ class SharedPreferencesService {
   /// Returns the [value] that was stored.
   static Future<String> setString(String key, String value) async {
     await _prefs?.setString(key, value);
-
     return value;
   }
 
-  // ============== Boolean Operations ==============
+  // ==================================================
+  // ============== Boolean Operations ================
+  // ==================================================
 
   /// Retrieves a Boolean value from SharedPreferences.
   ///
   /// [key] The key to retrieve the Boolean value.
-  /// [defaultValue] The default value to return if the key does not exist. Defaults to false.
+  /// [defaultValue] The default value to return if the key does not exist.
+  /// Defaults to false.
   ///
-  /// Returns the stored Boolean or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
+  /// Returns the stored Boolean or the [defaultValue] if the key doesn't exist.
+  /// If the SharedPreferences instance is not initialized,
+  /// returns the [defaultValue].
   static bool getBool(String key, {bool defaultValue = false}) {
     return _prefs?.getBool(key) ?? defaultValue;
   }
@@ -61,7 +71,8 @@ class SharedPreferencesService {
   ///
   /// [key] The key to retrieve the Boolean value.
   ///
-  /// Returns the stored Boolean or `null` if the key doesn't exist, or if the SharedPreferences instance is not initialized.
+  /// Returns the stored Boolean or `null` if the key doesn't exist,
+  /// or if the SharedPreferences instance is not initialized.
   static bool? getBoolOrNull(String key) {
     return _prefs?.getBool(key);
   }
@@ -74,18 +85,60 @@ class SharedPreferencesService {
   /// Returns the [value] that was stored.
   static Future<bool> setBool(String key, bool value) async {
     await _prefs?.setBool(key, value);
-
     return value;
   }
 
-  // ============== String List Operations ==============
+  // ==================================================
+  // ============== Integer Operations ================
+  // ==================================================
+
+  /// Retrieves an Integer value from SharedPreferences.
+  ///
+  /// [key] The key to retrieve the Integer value.
+  /// [defaultValue] The default value to return if the key does not exist.
+  /// Defaults to 0.
+  ///
+  /// Returns the stored Integer or the [defaultValue] if the key doesn't exist.
+  /// If the SharedPreferences instance is not initialized,
+  /// returns the [defaultValue].
+  static int getInt(String key, {int defaultValue = 0}) {
+    return _prefs?.getInt(key) ?? defaultValue;
+  }
+
+  /// Retrieves an Integer value from SharedPreferences.
+  ///
+  /// [key] The key to retrieve the Integer value.
+  ///
+  /// Returns the stored Integer or `null` if the key doesn't exist,
+  /// or if the SharedPreferences instance is not initialized.
+  static int? getIntOrNull(String key) {
+    return _prefs?.getInt(key);
+  }
+
+  /// Saves an Integer value in SharedPreferences.
+  ///
+  /// [key] The key to store the Integer value.
+  /// [value] The Integer value to store.
+  ///
+  /// Returns the [value] that was stored.
+  static Future<int> setInt(String key, int value) async {
+    await _prefs?.setInt(key, value);
+    return value;
+  }
+
+  // ==================================================
+  // ============== String List Operations ============
+  // ==================================================
 
   /// Retrieves a List&lt;String&gt; value from SharedPreferences.
   ///
   /// [key] The key to retrieve the list of Strings.
-  /// [defaultValue] The default value to return if the key does not exist. Defaults to an empty list.
+  /// [defaultValue] The default value to return if the key does not exist.
+  /// Defaults to an empty list.
   ///
-  /// Returns the stored List&lt;String&gt; or the [defaultValue] if the key doesn't exist. If the SharedPreferences instance is not initialized, returns the [defaultValue].
+  /// Returns the stored List&lt;String&gt; or the [defaultValue] if the key doesn't exist.
+  /// If the SharedPreferences instance is not initialized,
+  /// returns the [defaultValue].
   static List<String> getStringList(String key, {List<String>? defaultValue}) {
     defaultValue ??= <String>[];
     return _prefs?.getStringList(key) ?? defaultValue;
@@ -95,7 +148,8 @@ class SharedPreferencesService {
   ///
   /// [key] The key to retrieve the list of Strings.
   ///
-  /// Returns the stored List&lt;String&gt; or `null` if the key doesn't exist, or if the SharedPreferences instance is not initialized.
+  /// Returns the stored List&lt;String&gt; or `null` if the key doesn't exist,
+  /// or if the SharedPreferences instance is not initialized.
   static List<String>? getStringListOrNull(String key) {
     return _prefs?.getStringList(key);
   }
@@ -114,22 +168,28 @@ class SharedPreferencesService {
     return value;
   }
 
-  // ============== Remove Data ==============
+  // ==================================================
+  // ============== Remove Data =======================
+  // ==================================================
 
   /// Removes a value associated with the given key from SharedPreferences.
   ///
   /// [key] The key whose value should be removed.
   ///
-  /// Returns `true` if the value was successfully removed, otherwise returns `false`.
+  /// Returns `true` if the value was successfully removed,
+  /// otherwise returns `false`.
   static Future<bool> remove(String key) async {
     return await _prefs?.remove(key) ?? false;
   }
 
-  // ============== Clear Data ==============
+  // ==================================================
+  // ============== Clear Data ========================
+  // ==================================================
 
   /// Clears all data stored in SharedPreferences.
   ///
-  /// Returns `true` if all data was successfully erased, otherwise returns `false`.
+  /// Returns `true` if all data was successfully erased,
+  /// otherwise returns `false`.
   Future<bool> clear() async {
     return await _prefs?.clear() ?? false;
   }
