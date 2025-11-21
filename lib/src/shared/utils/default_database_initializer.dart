@@ -1,13 +1,23 @@
 import 'package:flutter/services.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/services/sql_execution_service.dart';
+import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 class DefaultDatabaseInitializer {
   DefaultDatabaseInitializer._();
 
+  static const _currentVersion = 1;
+
   static Future<void> init() async {
+    final storedVersion = SharedPreferencesService.getInt(
+      SharedPreferencesKeys.defaultDatabaseVersionKey,
+    );
+
+    if (storedVersion == _currentVersion) return;
+
     final sqlService = SqlExecutionService();
 
     for (final dbModel in defaultDatabases) {
@@ -26,11 +36,14 @@ class DefaultDatabaseInitializer {
 
       for (final sql in allSqlCommands) {
         final trimmedSql = sql.trim();
-
         if (trimmedSql.isEmpty) continue;
-
         await sqlService.execute(sql: trimmedSql, databaseName: dbName);
       }
     }
+
+    await SharedPreferencesService.setInt(
+      SharedPreferencesKeys.defaultDatabaseVersionKey,
+      _currentVersion,
+    );
   }
 }
