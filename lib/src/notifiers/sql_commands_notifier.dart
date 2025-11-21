@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/result.dart';
 
+import 'package:sql_studio/src/services/database/default_database_service.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/services/sql_execution_service.dart';
 
@@ -95,43 +95,11 @@ class SqlCommandsNotifier extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final tables = await _sqlService.getTables(
-        databaseName: _activeDatabase!,
-      );
-      for (final table in tables) {
-        await _sqlService.execute(
-          sql: 'DROP TABLE IF EXISTS "$table";',
-          databaseName: _activeDatabase,
-        );
+      await DefaultDatabaseService.execute(_activeDatabase!);
+
+      if (error == null) {
+        result = SuccessResult('Database reset successfully');
       }
-
-      final schemaPath = 'assets/sql/schemas/${_activeDatabase!}_schema.sql';
-      final seedPath = 'assets/sql/seeds/${_activeDatabase!}_seed.sql';
-
-      final schemaSql = await rootBundle.loadString(schemaPath);
-      final seedSql = await rootBundle.loadString(seedPath);
-
-      final allSqlCommands = <String>[
-        ...schemaSql.split(';'),
-        ...seedSql.split(';'),
-      ];
-
-      for (final sql in allSqlCommands) {
-        final trimmedSql = sql.trim();
-        if (trimmedSql.isEmpty) continue;
-
-        final response = await _sqlService.execute(
-          sql: trimmedSql,
-          databaseName: _activeDatabase!,
-        );
-
-        if (response is FailureResult) {
-          error = response.error.message;
-          break;
-        }
-      }
-
-      if (error == null) result = SuccessResult('Database reset successfully');
     } catch (e) {
       error = 'Failed to reset database: $e';
       result = null;
