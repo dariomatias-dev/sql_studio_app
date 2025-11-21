@@ -15,6 +15,7 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_sug
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/shared/utils/default_database_initializer.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 
@@ -94,6 +95,8 @@ class _SplashScreenState extends State<SplashScreen>
     if (sqlBasicSuggestionsResult is FailureResult) {
       await handleError(context, sqlBasicSuggestionsResult);
     }
+
+    await DefaultDatabaseInitializer.init();
 
     if (mounted) {
       context
