@@ -29,8 +29,14 @@ final router = GoRouter(
           builder: (context, state) => const DatabaseScreen(),
         ),
         GoRoute(
-          path: RouteNames.databaseVisualizer,
-          builder: (context, state) => DatabaseVisualizerScreen(),
+          path: RouteNames.databaseVisualizerPath,
+          builder: (context, state) {
+            final databaseName = state.pathParameters['dbName'] as String;
+
+            return DatabaseVisualizerScreen(
+              databaseName: databaseName,
+            );
+          },
         ),
       ],
     ),

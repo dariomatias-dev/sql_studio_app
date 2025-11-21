@@ -79,7 +79,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
 
             return IconButton(
               onPressed: () {
-                context.push(RouteNames.databaseVisualizer);
+                context.push(RouteNames.databaseVisualizer(databaseName!));
               },
               tooltip: 'View Visual Scheme',
               icon: const Icon(Icons.remove_red_eye_outlined),

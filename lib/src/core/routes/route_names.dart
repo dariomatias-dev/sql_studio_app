@@ -6,7 +6,8 @@ class RouteNames {
   static const database = 'database';
   static const databasePath = '$main$database';
 
-  static const databaseVisualizer = '/database-visualizer';
+  static String databaseVisualizer(String dbName) => '/database-visualizer/$dbName';
+  static const databaseVisualizerPath = '/database-visualizer/:dbName';
 
   static const sqlBasicSuggestionSettings =
       '/settings/sql-basic-suggestion-settings';

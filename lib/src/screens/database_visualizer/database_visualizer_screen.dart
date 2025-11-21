@@ -1,11 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/types/table_info.dart';
-
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
 
@@ -14,7 +11,9 @@ import 'package:sql_studio/src/services/sql_execution_service.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class DatabaseVisualizerScreen extends StatefulWidget {
-  const DatabaseVisualizerScreen({super.key});
+  const DatabaseVisualizerScreen({super.key, required this.databaseName});
+
+  final String databaseName;
 
   @override
   State<DatabaseVisualizerScreen> createState() =>
@@ -34,7 +33,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
 
   Future<void> _loadDatabaseStructure() async {
     final result = await _sqlExecutionService.getDatabaseStructure(
-      databaseName: context.read<SqlCommandsNotifier>().activeDatabase!,
+      databaseName: widget.databaseName,
     );
 
     setState(() {
@@ -97,9 +96,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWidget(
-      appBar: AppBar(
-        title: Text(context.read<SqlCommandsNotifier>().activeDatabase ?? ''),
-      ),
+      appBar: AppBar(title: Text(widget.databaseName)),
       body: SafeArea(
         child: tables == null
             ? const Center(child: Text('The database is empty'))
