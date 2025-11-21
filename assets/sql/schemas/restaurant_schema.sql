@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS order_items;
+
+DROP TABLE IF EXISTS orders;
+
+DROP TABLE IF EXISTS menu_items;
+
+DROP TABLE IF EXISTS customers;
+
 CREATE TABLE IF NOT EXISTS "customers" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -22,7 +30,7 @@ CREATE TABLE IF NOT EXISTS "orders" (
     total REAL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES "customers"(id)
+    FOREIGN KEY (customer_id) REFERENCES "customers" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "order_items" (
@@ -32,6 +40,6 @@ CREATE TABLE IF NOT EXISTS "order_items" (
     quantity INTEGER DEFAULT 1,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES "orders"(id),
-    FOREIGN KEY (menu_item_id) REFERENCES "menu_items"(id)
+    FOREIGN KEY (order_id) REFERENCES "orders" (id),
+    FOREIGN KEY (menu_item_id) REFERENCES "menu_items" (id)
 );

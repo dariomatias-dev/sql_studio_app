@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS loans;
+
+DROP TABLE IF EXISTS members;
+
+DROP TABLE IF EXISTS books;
+
 CREATE TABLE IF NOT EXISTS "books" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
@@ -25,6 +31,6 @@ CREATE TABLE IF NOT EXISTS "loans" (
     return_date TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (book_id) REFERENCES "books"(id),
-    FOREIGN KEY (member_id) REFERENCES "members"(id)
+    FOREIGN KEY (book_id) REFERENCES "books" (id),
+    FOREIGN KEY (member_id) REFERENCES "members" (id)
 );

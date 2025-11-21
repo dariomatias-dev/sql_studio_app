@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS grades;
+
+DROP TABLE IF EXISTS enrollments;
+
+DROP TABLE IF EXISTS classes;
+
+DROP TABLE IF EXISTS teachers;
+
+DROP TABLE IF EXISTS students;
+
 CREATE TABLE IF NOT EXISTS "students" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -21,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "classes" (
     teacher_id INTEGER,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (teacher_id) REFERENCES "teachers"(id)
+    FOREIGN KEY (teacher_id) REFERENCES "teachers" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "enrollments" (
@@ -30,8 +40,8 @@ CREATE TABLE IF NOT EXISTS "enrollments" (
     class_id INTEGER NOT NULL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (student_id) REFERENCES "students"(id),
-    FOREIGN KEY (class_id) REFERENCES "classes"(id)
+    FOREIGN KEY (student_id) REFERENCES "students" (id),
+    FOREIGN KEY (class_id) REFERENCES "classes" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "grades" (
@@ -41,5 +51,5 @@ CREATE TABLE IF NOT EXISTS "grades" (
     date TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enrollment_id) REFERENCES "enrollments"(id)
+    FOREIGN KEY (enrollment_id) REFERENCES "enrollments" (id)
 );

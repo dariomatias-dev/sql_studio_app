@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS subscriptions;
+
+DROP TABLE IF EXISTS plans;
+
+DROP TABLE IF EXISTS members;
+
 CREATE TABLE IF NOT EXISTS "members" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -24,6 +30,6 @@ CREATE TABLE IF NOT EXISTS "subscriptions" (
     end_date TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (member_id) REFERENCES "members"(id),
-    FOREIGN KEY (plan_id) REFERENCES "plans"(id)
+    FOREIGN KEY (member_id) REFERENCES "members" (id),
+    FOREIGN KEY (plan_id) REFERENCES "plans" (id)
 );

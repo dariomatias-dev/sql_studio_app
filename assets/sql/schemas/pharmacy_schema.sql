@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS sale_items;
+
+DROP TABLE IF EXISTS sales;
+
+DROP TABLE IF EXISTS customers;
+
+DROP TABLE IF EXISTS suppliers;
+
+DROP TABLE IF EXISTS products;
+
 CREATE TABLE IF NOT EXISTS "products" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -31,7 +41,7 @@ CREATE TABLE IF NOT EXISTS "sales" (
     total REAL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES "customers"(id)
+    FOREIGN KEY (customer_id) REFERENCES "customers" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "sale_items" (
@@ -41,6 +51,6 @@ CREATE TABLE IF NOT EXISTS "sale_items" (
     quantity INTEGER DEFAULT 1,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sale_id) REFERENCES "sales"(id),
-    FOREIGN KEY (product_id) REFERENCES "products"(id)
+    FOREIGN KEY (sale_id) REFERENCES "sales" (id),
+    FOREIGN KEY (product_id) REFERENCES "products" (id)
 );

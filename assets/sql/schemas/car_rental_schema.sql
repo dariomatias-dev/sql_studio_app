@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS payments;
+
+DROP TABLE IF EXISTS rentals;
+
+DROP TABLE IF EXISTS customers;
+
+DROP TABLE IF EXISTS cars;
+
 CREATE TABLE IF NOT EXISTS "cars" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     brand TEXT NOT NULL,
@@ -25,8 +33,8 @@ CREATE TABLE IF NOT EXISTS "rentals" (
     end_date TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES "customers"(id),
-    FOREIGN KEY (car_id) REFERENCES "cars"(id)
+    FOREIGN KEY (customer_id) REFERENCES "customers" (id),
+    FOREIGN KEY (car_id) REFERENCES "cars" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "payments" (
@@ -36,5 +44,5 @@ CREATE TABLE IF NOT EXISTS "payments" (
     payment_date TEXT DEFAULT CURRENT_TIMESTAMP,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (rental_id) REFERENCES "rentals"(id)
+    FOREIGN KEY (rental_id) REFERENCES "rentals" (id)
 );

@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS contacts;
+
+DROP TABLE IF EXISTS groups;
+
 CREATE TABLE IF NOT EXISTS "groups" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -13,5 +17,5 @@ CREATE TABLE IF NOT EXISTS "contacts" (
     group_id INTEGER,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (group_id) REFERENCES "groups"(id)
+    FOREIGN KEY (group_id) REFERENCES "groups" (id)
 );

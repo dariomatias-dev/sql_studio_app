@@ -1,3 +1,15 @@
+DROP TABLE IF EXISTS payments;
+
+DROP TABLE IF EXISTS reservations;
+
+DROP TABLE IF EXISTS services;
+
+DROP TABLE IF EXISTS employees;
+
+DROP TABLE IF EXISTS rooms;
+
+DROP TABLE IF EXISTS guests;
+
 CREATE TABLE IF NOT EXISTS "guests" (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -23,8 +35,8 @@ CREATE TABLE IF NOT EXISTS "reservations" (
     check_out TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (guest_id) REFERENCES "guests"(id),
-    FOREIGN KEY (room_id) REFERENCES "rooms"(id)
+    FOREIGN KEY (guest_id) REFERENCES "guests" (id),
+    FOREIGN KEY (room_id) REFERENCES "rooms" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "payments" (
@@ -34,7 +46,7 @@ CREATE TABLE IF NOT EXISTS "payments" (
     date TEXT DEFAULT CURRENT_TIMESTAMP,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (reservation_id) REFERENCES "reservations"(id)
+    FOREIGN KEY (reservation_id) REFERENCES "reservations" (id)
 );
 
 CREATE TABLE IF NOT EXISTS "employees" (
