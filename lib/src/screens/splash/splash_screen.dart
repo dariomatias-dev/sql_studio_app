@@ -96,19 +96,25 @@ class _SplashScreenState extends State<SplashScreen>
       await handleError(context, sqlBasicSuggestionsResult);
     }
 
-    await DefaultDatabaseService.init();
+    final defaultDatabaseInitResult = await DefaultDatabaseService.init();
 
-    if (mounted) {
-      context
-          .read<SqlCommandsNotifier>()
-          .activeDatabase = SharedPreferencesService.getStringOrNull(
-        SharedPreferencesKeys.selectedDatabaseKey,
-      );
+    if (!mounted) return;
 
-      context.read<WorkspaceLayoutNotifier>().load();
-
-      context.go(RouteNames.main);
+    if (defaultDatabaseInitResult is FailureResult) {
+      await handleError(context, defaultDatabaseInitResult);
     }
+
+    if (!mounted) return;
+
+    context
+        .read<SqlCommandsNotifier>()
+        .activeDatabase = SharedPreferencesService.getStringOrNull(
+      SharedPreferencesKeys.selectedDatabaseKey,
+    );
+
+    context.read<WorkspaceLayoutNotifier>().load();
+
+    context.go(RouteNames.main);
   }
 
   void _init() {
