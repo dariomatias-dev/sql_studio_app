@@ -94,16 +94,20 @@ class SqlCommandsNotifier extends ChangeNotifier {
     error = null;
     notifyListeners();
 
-    try {
-      await DefaultDatabaseService.execute(_activeDatabase!);
+    final executeResult = await DefaultDatabaseService.execute(
+      _activeDatabase!,
+    );
 
-      if (error == null) {
-        result = SuccessResult('Database reset successfully');
-      }
-    } catch (e) {
-      error = 'Failed to reset database: $e';
-      result = null;
-    }
+    await executeResult.fold(
+      onSuccess: (_) {
+        result = const SuccessResult('Database reset successfully');
+        error = null;
+      },
+      onFailure: (failure) {
+        result = null;
+        error = failure.message;
+      },
+    );
 
     isLoading = false;
     notifyListeners();
