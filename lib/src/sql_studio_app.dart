@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/routes/router_config.dart';
 
 class SqlStudioApp extends StatelessWidget {
@@ -11,6 +13,8 @@ class SqlStudioApp extends StatelessWidget {
       title: 'SQL Studio',
       debugShowCheckedModeBanner: false,
       routerConfig: router,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
