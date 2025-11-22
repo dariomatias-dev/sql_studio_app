@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version_widget.dart';
+import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
@@ -39,6 +40,17 @@ class _SettingsScreenState extends State<SettingsScreen>
     }
   }
 
+  void _openLanguageSelector() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return const LanguageSelectorSheetWidget();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -52,11 +64,11 @@ class _SettingsScreenState extends State<SettingsScreen>
             SettingsSectionWidget(
               title: 'General',
               children: <Widget>[
-                // SettingsCardWidget(
-                //   onTap: () {},
-                //   title: 'Language',
-                //   icon: Icons.arrow_forward_ios,
-                // ),
+                SettingsCardWidget(
+                  onTap: _openLanguageSelector,
+                  title: 'Language',
+                  icon: Icons.arrow_forward_ios,
+                ),
                 SettingsCardWidget(
                   onTap: () {
                     context.push(RouteNames.sqlSuggestionSettingsPath);
@@ -88,11 +100,6 @@ class _SettingsScreenState extends State<SettingsScreen>
                   title: 'Privacy Policy',
                   icon: Icons.open_in_new,
                 ),
-                // SettingsCardWidget(
-                //   onTap: () {},
-                //   title: 'Contact',
-                //   icon: Icons.open_in_new,
-                // ),
               ],
             ),
           ],
