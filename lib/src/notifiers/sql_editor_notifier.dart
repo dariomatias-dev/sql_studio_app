@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:highlight/highlight_core.dart';
 import 'package:highlight/languages/sql.dart';
 
 class SqlEditorNotifier extends ChangeNotifier {
-  final controller = CodeController(language: sql);
+  final controller = CodeController(language: sql)
+    ..autocompleter.mode = Mode(disableAutodetect: true);
   final focusNode = FocusNode();
 
   SqlEditorNotifier() {
@@ -60,6 +62,7 @@ class SqlEditorNotifier extends ChangeNotifier {
       }
 
       notifyListeners();
+
       return;
     }
 
