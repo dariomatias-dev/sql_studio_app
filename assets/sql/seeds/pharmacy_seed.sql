@@ -8,7 +8,17 @@ INSERT INTO "products" (name, category, price, stock) VALUES
 ('Ibuprofen', 'Pain Relief', 5.99, 90),
 ('Allergy Pills', 'Allergy', 9.49, 70),
 ('Bandages', 'First Aid', 2.99, 300),
-('Thermometer', 'Equipment', 15.99, 50);
+('Thermometer', 'Equipment', 15.99, 50),
+('Antiseptic Wipes', 'First Aid', 4.50, 180),
+('Nasal Spray', 'Cold & Flu', 7.99, 90),
+('Omega 3', 'Supplements', 19.99, 110),
+('Eye Drops', 'Allergy', 6.49, 75),
+('Pain Relief Patch', 'Pain Relief', 3.99, 130),
+('Hand Sanitizer', 'First Aid', 5.25, 140),
+('Vitamin D', 'Supplements', 11.49, 100),
+('Cold Relief Capsules', 'Cold & Flu', 8.99, 85),
+('Glucose Tablets', 'Supplements', 7.50, 95),
+('Therapy Gel', 'Pain Relief', 6.75, 60);
 
 INSERT INTO "suppliers" (name, phone) VALUES
 ('HealthCorp', '+1-202-555-0101'),
@@ -20,7 +30,17 @@ INSERT INTO "suppliers" (name, phone) VALUES
 ('CareHealth', '+1-202-555-0707'),
 ('Sunrise Pharma', '+1-202-555-0808'),
 ('NatureMed', '+1-202-555-0909'),
-('Prime Pharma', '+1-202-555-1010');
+('Prime Pharma', '+1-202-555-1010'),
+('Healthy Life', '+1-202-555-1111'),
+('QuickMeds', '+1-202-555-1212'),
+('SafeMeds', '+1-202-555-1313'),
+('BioHealth', '+1-202-555-1414'),
+('MediQuick', '+1-202-555-1515'),
+('WellCare', '+1-202-555-1616'),
+('OptiHealth', '+1-202-555-1717'),
+('MediFast', '+1-202-555-1818'),
+('CarePlus', '+1-202-555-1919'),
+('PharmaDirect', '+1-202-555-2020');
 
 INSERT INTO "customers" (name, email) VALUES
 ('Alice Johnson', 'alice@gmail.com'),
@@ -32,7 +52,17 @@ INSERT INTO "customers" (name, email) VALUES
 ('Grace Lee', 'grace@gmail.com'),
 ('Henry Adams', 'henry@gmail.com'),
 ('Isabel Clark', 'isabel@gmail.com'),
-('Jack Lewis', 'jack@gmail.com');
+('Jack Lewis', 'jack@gmail.com'),
+('Chloe Taylor', 'chloe@gmail.com'),
+('Mason White', 'mason@gmail.com'),
+('Isabella Harris', 'isabella@gmail.com'),
+('Lucas Robinson', 'lucas@gmail.com'),
+('Mia Walker', 'mia@gmail.com'),
+('Ethan Turner', 'ethan@gmail.com'),
+('Olivia Brooks', 'olivia@gmail.com'),
+('Noah Evans', 'noah@gmail.com'),
+('Sophia Green', 'sophia@gmail.com'),
+('Liam Carter', 'liam@gmail.com');
 
 INSERT INTO "sales" (customer_id, total, date) VALUES
 (1, 19.95, '2025-10-01 10:15:00'),
@@ -44,7 +74,17 @@ INSERT INTO "sales" (customer_id, total, date) VALUES
 (7, 22.47, '2025-10-07 13:25:00'),
 (8, 15.99, '2025-10-08 15:40:00'),
 (9, 28.98, '2025-10-09 17:00:00'),
-(10, 10.99, '2025-10-10 10:05:00');
+(10, 10.99, '2025-10-10 10:05:00'),
+(11, 18.49, '2025-10-11 11:30:00'),
+(12, 24.99, '2025-10-12 12:45:00'),
+(13, 16.79, '2025-10-13 14:00:00'),
+(14, 21.50, '2025-10-14 15:15:00'),
+(15, 29.99, '2025-10-15 16:30:00'),
+(16, 14.75, '2025-10-16 10:45:00'),
+(17, 27.30, '2025-10-17 12:10:00'),
+(18, 19.60, '2025-10-18 13:35:00'),
+(19, 23.45, '2025-10-19 15:00:00'),
+(20, 31.20, '2025-10-20 16:25:00');
 
 INSERT INTO "sale_items" (sale_id, product_id, quantity) VALUES
 (1, 1, 2),
@@ -60,4 +100,14 @@ INSERT INTO "sale_items" (sale_id, product_id, quantity) VALUES
 (8, 1, 1),
 (9, 3, 2),
 (9, 5, 1),
-(10, 2, 2);
+(10, 2, 2),
+(11, 11, 3),
+(12, 12, 2),
+(13, 13, 1),
+(14, 14, 2),
+(15, 15, 4),
+(16, 16, 3),
+(17, 17, 2),
+(18, 18, 1),
+(19, 19, 4),
+(20, 20, 2);

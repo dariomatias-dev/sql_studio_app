@@ -8,7 +8,12 @@ INSERT INTO "groups" (name) VALUES
 ('School'),
 ('Travel Buddies'),
 ('Sports Team'),
-('Volunteers');
+('Volunteers'),
+('Colleagues'),
+('Acquaintances'),
+('Online Friends'),
+('Soccer Club'),
+('Music Band');
 
 INSERT INTO "contacts" (name, email, phone, group_id) VALUES
 ('Alice Smith', 'alice.smith@gmail.com', '+1-202-555-0145', 1),
@@ -20,4 +25,20 @@ INSERT INTO "contacts" (name, email, phone, group_id) VALUES
 ('Grace Lee', 'grace.lee@gmail.com', '+1-808-555-0178', 6),
 ('Henry Adams', 'henry.adams@gmail.com', '+1-909-555-0190', 7),
 ('Isabel Clark', 'isabel.clark@gmail.com', '+1-212-555-0123', 8),
-('Jack Lewis', 'jack.lewis@gmail.com', '+1-313-555-0145', 1);
+('Jack Lewis', 'jack.lewis@gmail.com', '+1-313-555-0145', 1),
+('Karen Turner', 'karen.turner@gmail.com', '+1-214-555-0160', 3),
+('Leonard White', 'leonard.white@gmail.com', '+1-215-555-0171', 4),
+('Maria Hill', 'maria.hill@gmail.com', '+1-216-555-0182', 5),
+('Nathan King', 'nathan.king@gmail.com', '+1-217-555-0193', 6),
+('Olivia Scott', 'olivia.scott@gmail.com', '+1-218-555-0114', 7),
+('Peter Evans', 'peter.evans@gmail.com', '+1-219-555-0125', 8),
+('Quincy Adams', 'quincy.adams@gmail.com', '+1-220-555-0136', 9),
+('Rachel Green', 'rachel.green@gmail.com', '+1-221-555-0147', 10),
+('Steven Brown', 'steven.brown@gmail.com', '+1-222-555-0158', 11),
+('Tina Lewis', 'tina.lewis@gmail.com', '+1-223-555-0169', 12),
+('Uma Carter', 'uma.carter@gmail.com', '+1-224-555-0170', 13),
+('Victor Harris', 'victor.harris@gmail.com', '+1-225-555-0181', 14),
+('Wendy Young', 'wendy.young@gmail.com', '+1-226-555-0192', 15),
+('Xavier King', 'xavier.king@gmail.com', '+1-227-555-0113', 1),
+('Yvonne Allen', 'yvonne.allen@gmail.com', '+1-228-555-0124', 2),
+('Zachary Scott', 'zachary.scott@gmail.com', '+1-229-555-0135', 3);

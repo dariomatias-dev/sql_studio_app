@@ -13,7 +13,12 @@ INSERT INTO "departments" (name) VALUES
 ('Administration'),
 ('Sales'),
 ('IT Infrastructure'),
-('Procurement');
+('Procurement'),
+('Legal'),
+('Public Relations'),
+('Design'),
+('Analytics'),
+('Training');
 
 INSERT INTO "job_positions" (title, base_salary) VALUES
 ('Software Engineer', 7200.00),
@@ -35,7 +40,12 @@ INSERT INTO "job_positions" (title, base_salary) VALUES
 ('Product Manager', 9100.00),
 ('Office Assistant', 3200.00),
 ('IT Technician', 5400.00),
-('Procurement Officer', 6000.00);
+('Procurement Officer', 6000.00),
+('Legal Advisor', 8000.00),
+('PR Manager', 6200.00),
+('Graphic Designer', 5000.00),
+('Data Analyst', 6800.00),
+('Training Coordinator', 4700.00);
 
 INSERT INTO "employees" (name, department_id, position_id, manager_id, hired_at) VALUES
 ('Alice Johnson', 1, 1, NULL, '2025-01-10 09:12:00'),
@@ -68,7 +78,12 @@ INSERT INTO "employees" (name, department_id, position_id, manager_id, hired_at)
 ('Jackson Evans', 14, 19, NULL, '2025-01-21 12:44:00'),
 ('Grace Edwards', 14, 19, 28, '2025-03-19 11:25:00'),
 ('Michael Collins', 15, 20, NULL, '2025-02-17 14:14:00'),
-('Chloe Stewart', 15, 20, 30, '2025-06-05 10:35:00');
+('Chloe Stewart', 15, 20, 30, '2025-06-05 10:35:00'),
+('Luna Foster', 16, 21, NULL, '2025-03-12 09:50:00'),
+('Owen Ward', 17, 22, NULL, '2025-04-10 10:20:00'),
+('Ella Griffin', 18, 23, NULL, '2025-05-05 11:05:00'),
+('Mason Hayes', 19, 24, NULL, '2025-06-15 12:40:00'),
+('Avery Brooks', 20, 25, NULL, '2025-07-01 13:30:00');
 
 INSERT INTO "salary_history" (employee_id, salary, valid_from, valid_to) VALUES
 (1, 7200.00, '2025-01-10 09:12:00', NULL),
@@ -101,4 +116,9 @@ INSERT INTO "salary_history" (employee_id, salary, valid_from, valid_to) VALUES
 (28, 5400.00, '2025-01-21 12:44:00', NULL),
 (29, 5400.00, '2025-03-19 11:25:00', NULL),
 (30, 6000.00, '2025-02-17 14:14:00', NULL),
-(31, 6000.00, '2025-06-05 10:35:00', NULL);
+(31, 6000.00, '2025-06-05 10:35:00', NULL),
+(32, 8000.00, '2025-03-12 09:50:00', NULL),
+(33, 6200.00, '2025-04-10 10:20:00', NULL),
+(34, 5000.00, '2025-05-05 11:05:00', NULL),
+(35, 6800.00, '2025-06-15 12:40:00', NULL),
+(36, 4700.00, '2025-07-01 13:30:00', NULL);

@@ -1,26 +1,58 @@
 INSERT INTO "customers" (name, cpf, email) VALUES
-('Alice Smith', '520-27-9600', 'alice.smith@gmail.com'),
-('Bruno Johnson', '185-23-7010', 'bruno.johnson@gmail.com'),
-('Carla Miller', '147-94-9220', 'carla.miller@gmail.com'),
-('Daniel Brown', '619-74-4720', 'daniel.brown@gmail.com'),
-('Elisa Davis', '344-89-4350', 'elisa.davis@gmail.com'),
-('Felipe Lewis', '221-31-1340', 'felipe.lewis@gmail.com'),
-('Gabriela Martin', '866-87-6540', 'gabriela.martin@gmail.com'),
-('Henry Adams', '106-99-3110', 'henry.adams@gmail.com'),
-('Isabel Clark', '403-58-6380', 'isabel.clark@gmail.com'),
-('John Carroll', '671-65-6020', 'john.carroll@gmail.com');
+('Alice Smith', '520.279.600-00', 'alice.smith@gmail.com'),
+('Bruno Johnson', '185.237.010-11', 'bruno.johnson@gmail.com'),
+('Carla Miller', '147.949.220-22', 'carla.miller@gmail.com'),
+('Daniel Brown', '619.744.720-33', 'daniel.brown@gmail.com'),
+('Elisa Davis', '344.894.350-44', 'elisa.davis@gmail.com'),
+('Felipe Lewis', '221.311.340-55', 'felipe.lewis@gmail.com'),
+('Gabriela Martin', '866.876.540-66', 'gabriela.martin@gmail.com'),
+('Henry Adams', '106.993.110-77', 'henry.adams@gmail.com'),
+('Isabel Clark', '403.586.380-88', 'isabel.clark@gmail.com'),
+('John Carroll', '671.656.020-99', 'john.carroll@gmail.com'),
+('Karen Turner', '234.559.980-12', 'karen.turner@gmail.com'),
+('Leonardo White', '512.183.340-23', 'leonardo.white@gmail.com'),
+('Maria Hill', '720.441.120-34', 'maria.hill@gmail.com'),
+('Nathan King', '305.772.210-45', 'nathan.king@gmail.com'),
+('Olivia Scott', '490.669.870-56', 'olivia.scott@gmail.com'),
+('Patrick Hall', '835.924.500-67', 'patrick.hall@gmail.com'),
+('Quinn Young', '623.117.780-78', 'quinn.young@gmail.com'),
+('Rachel Allen', '901.553.320-89', 'rachel.allen@gmail.com'),
+('Samuel Wright', '110.446.670-90', 'samuel.wright@gmail.com'),
+('Tina Evans', '772.338.810-01', 'tina.evans@gmail.com');
 
 INSERT INTO "branches" (name, address) VALUES
 ('New York Branch', '150 W 34th St, New York, NY 10001, USA'),
 ('Los Angeles Branch', '600 S Flower St, Los Angeles, CA 90017, USA'),
-('Chicago Branch', '233 S Wacker Dr, Chicago, IL 60606, USA');
+('Chicago Branch', '233 S Wacker Dr, Chicago, IL 60606, USA'),
+('Houston Branch', '910 Main St, Houston, TX 77002, USA'),
+('Miami Branch', '100 Biscayne Blvd, Miami, FL 33132, USA'),
+('Dallas Branch', '2200 Ross Ave, Dallas, TX 75201, USA'),
+('San Francisco Branch', '50 Fremont St, San Francisco, CA 94105, USA'),
+('Seattle Branch', '200 Pine St, Seattle, WA 98101, USA'),
+('Boston Branch', '10 Cambridge St, Boston, MA 02114, USA'),
+('Denver Branch', '999 16th St, Denver, CO 80202, USA');
 
 INSERT INTO "employees" (name, branch, role) VALUES
 ('Fernando Lewis', 'New York Branch', 'Manager'),
 ('Gabriela Smith', 'Los Angeles Branch', 'Teller'),
 ('Hugo Brown', 'Chicago Branch', 'Teller'),
 ('Irene Adams', 'New York Branch', 'Teller'),
-('Jason Martin', 'Los Angeles Branch', 'Assistant');
+('Jason Martin', 'Los Angeles Branch', 'Assistant'),
+('Kelly Johnson', 'Houston Branch', 'Manager'),
+('Liam Clark', 'Miami Branch', 'Teller'),
+('Mia Walker', 'Dallas Branch', 'Assistant'),
+('Noah Allen', 'San Francisco Branch', 'Manager'),
+('Olivia Harris', 'Seattle Branch', 'Teller'),
+('Peter Young', 'Boston Branch', 'Assistant'),
+('Quincy Evans', 'Denver Branch', 'Teller'),
+('Rachel Scott', 'New York Branch', 'Assistant'),
+('Samuel Hill', 'Los Angeles Branch', 'Teller'),
+('Tina Wright', 'Chicago Branch', 'Manager'),
+('Ulysses Turner', 'Houston Branch', 'Teller'),
+('Victoria King', 'Miami Branch', 'Assistant'),
+('William White', 'Dallas Branch', 'Teller'),
+('Xavier Brown', 'San Francisco Branch', 'Assistant'),
+('Yvonne Miller', 'Seattle Branch', 'Teller');
 
 INSERT INTO "accounts" (customer_id, balance, type) VALUES
 (1, 1500.75, 'CHECKING'),
@@ -32,7 +64,17 @@ INSERT INTO "accounts" (customer_id, balance, type) VALUES
 (7, 5300.00, 'CHECKING'),
 (8, 2200.00, 'CHECKING'),
 (9, 1800.50, 'SAVINGS'),
-(10, 7600.00, 'CHECKING');
+(10, 7600.00, 'CHECKING'),
+(11, 3400.00, 'SAVINGS'),
+(12, 2700.50, 'CHECKING'),
+(13, 8900.00, 'SAVINGS'),
+(14, 1200.75, 'CHECKING'),
+(15, 4300.00, 'SAVINGS'),
+(16, 150.00, 'CHECKING'),
+(17, 6600.50, 'SAVINGS'),
+(18, 7200.00, 'CHECKING'),
+(19, 980.25, 'SAVINGS'),
+(20, 5100.00, 'CHECKING');
 
 INSERT INTO "transactions" (account_id, amount, type) VALUES
 (1, 500.00, 'DEPOSIT'),
@@ -45,7 +87,27 @@ INSERT INTO "transactions" (account_id, amount, type) VALUES
 (7, 400.00, 'WITHDRAW'),
 (8, 600.00, 'DEPOSIT'),
 (9, 250.50, 'WITHDRAW'),
-(10, 800.00, 'DEPOSIT');
+(10, 800.00, 'DEPOSIT'),
+(11, 1200.00, 'DEPOSIT'),
+(12, 400.50, 'WITHDRAW'),
+(13, 1500.00, 'DEPOSIT'),
+(14, 300.25, 'WITHDRAW'),
+(15, 750.00, 'DEPOSIT'),
+(16, 50.00, 'DEPOSIT'),
+(17, 600.50, 'WITHDRAW'),
+(18, 700.00, 'DEPOSIT'),
+(19, 80.25, 'WITHDRAW'),
+(20, 1000.00, 'DEPOSIT'),
+(5, 500.00, 'WITHDRAW'),
+(3, 200.00, 'WITHDRAW'),
+(2, 350.00, 'WITHDRAW'),
+(7, 1000.00, 'DEPOSIT'),
+(8, 400.00, 'WITHDRAW'),
+(10, 200.00, 'WITHDRAW'),
+(12, 150.00, 'DEPOSIT'),
+(16, 25.00, 'WITHDRAW'),
+(11, 300.00, 'WITHDRAW'),
+(14, 100.00, 'DEPOSIT');
 
 INSERT INTO "loans" (customer_id, amount, interest_rate, due_date) VALUES
 (1, 5200.00, 5.1, '2025-12-28 10:00:00'),
@@ -57,4 +119,14 @@ INSERT INTO "loans" (customer_id, amount, interest_rate, due_date) VALUES
 (7, 8100.00, 5.0, '2026-05-07 13:10:00'),
 (8, 4200.00, 4.9, '2026-01-18 10:30:00'),
 (9, 3550.00, 5.3, '2025-12-15 17:40:00'),
-(10, 10200.00, 4.4, '2026-07-09 12:25:00');
+(10, 10200.00, 4.4, '2026-07-09 12:25:00'),
+(11, 7000.00, 5.5, '2026-02-10 09:00:00'),
+(12, 8300.00, 4.8, '2025-09-28 11:15:00'),
+(13, 9100.00, 4.9, '2026-03-14 16:20:00'),
+(14, 1250.00, 6.2, '2025-11-30 12:00:00'),
+(15, 5400.00, 5.0, '2026-08-05 14:45:00'),
+(16, 300.00, 6.5, '2025-10-20 09:30:00'),
+(17, 6200.00, 4.7, '2026-01-11 10:15:00'),
+(18, 7100.00, 5.2, '2026-04-17 15:00:00'),
+(19, 900.00, 6.0, '2025-12-01 13:25:00'),
+(20, 4800.00, 5.1, '2026-06-22 11:10:00');

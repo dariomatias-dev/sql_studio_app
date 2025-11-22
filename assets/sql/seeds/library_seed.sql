@@ -8,7 +8,27 @@ INSERT INTO "books" (title, author, year, genre) VALUES
 ('The Catcher in the Rye', 'J.D. Salinger', 1951, 'Fiction'),
 ('The Hobbit', 'J.R.R. Tolkien', 1937, 'Fantasy'),
 ('Crime and Punishment', 'Fyodor Dostoevsky', 1866, 'Crime'),
-('The Odyssey', 'Homer', -800, 'Epic');
+('The Odyssey', 'Homer', -800, 'Epic'),
+('Jane Eyre', 'Charlotte Brontë', 1847, 'Romance'),
+('The Iliad', 'Homer', -750, 'Epic'),
+('Brave New World', 'Aldous Huxley', 1932, 'Dystopian'),
+('Anna Karenina', 'Leo Tolstoy', 1877, 'Romance'),
+('Frankenstein', 'Mary Shelley', 1818, 'Horror'),
+('Dracula', 'Bram Stoker', 1897, 'Horror'),
+('The Lord of the Rings', 'J.R.R. Tolkien', 1954, 'Fantasy'),
+('Hamlet', 'William Shakespeare', 1603, 'Tragedy'),
+('Macbeth', 'William Shakespeare', 1606, 'Tragedy'),
+('The Adventures of Sherlock Holmes', 'Arthur Conan Doyle', 1892, 'Crime'),
+('The Alchemist', 'Paulo Coelho', 1988, 'Fiction'),
+('The Da Vinci Code', 'Dan Brown', 2003, 'Thriller'),
+('Harry Potter and the Sorcerer''s Stone', 'J.K. Rowling', 1997, 'Fantasy'),
+('The Hunger Games', 'Suzanne Collins', 2008, 'Dystopian'),
+('The Chronicles of Narnia', 'C.S. Lewis', 1956, 'Fantasy'),
+('Little Women', 'Louisa May Alcott', 1868, 'Fiction'),
+('The Kite Runner', 'Khaled Hosseini', 2003, 'Fiction'),
+('Memoirs of a Geisha', 'Arthur Golden', 1997, 'Historical'),
+('The Book Thief', 'Markus Zusak', 2005, 'Historical'),
+('Life of Pi', 'Yann Martel', 2001, 'Adventure');
 
 INSERT INTO "members" (name, email, join_date) VALUES
 ('Alice Johnson', 'alice@gmail.com', '2025-01-10 09:00:00'),
@@ -20,7 +40,17 @@ INSERT INTO "members" (name, email, join_date) VALUES
 ('Grace Lee', 'grace@gmail.com', '2025-07-10 10:10:00'),
 ('Henry Adams', 'henry@gmail.com', '2025-08-15 15:40:00'),
 ('Isabel Clark', 'isabel@gmail.com', '2025-09-20 12:00:00'),
-('Jack Lewis', 'jack@gmail.com', '2025-10-25 09:50:00');
+('Jack Lewis', 'jack@gmail.com', '2025-10-25 09:50:00'),
+('Karen Taylor', 'karen@gmail.com', '2025-11-02 11:15:00'),
+('Leo Harris', 'leo@gmail.com', '2025-11-10 14:30:00'),
+('Mia Robinson', 'mia@gmail.com', '2025-11-15 16:00:00'),
+('Noah Walker', 'noah@gmail.com', '2025-11-20 10:45:00'),
+('Olivia Young', 'olivia@gmail.com', '2025-11-25 12:30:00'),
+('Ethan Carter', 'ethan@gmail.com', '2025-11-28 09:20:00'),
+('Sophia Adams', 'sophia@gmail.com', '2025-11-29 14:10:00'),
+('Liam Johnson', 'liam@gmail.com', '2025-11-30 11:50:00'),
+('Ava Martinez', 'ava@gmail.com', '2025-12-01 16:35:00'),
+('Noah Thompson', 'noah.t@gmail.com', '2025-12-02 10:05:00');
 
 INSERT INTO "loans" (book_id, member_id, loan_date, return_date) VALUES
 (1, 1, '2025-10-01 14:00:00', '2025-10-10 18:00:00'),
@@ -32,4 +62,14 @@ INSERT INTO "loans" (book_id, member_id, loan_date, return_date) VALUES
 (7, 7, '2025-10-07 09:20:00', '2025-10-17 13:40:00'),
 (8, 8, '2025-10-08 15:10:00', '2025-10-18 18:30:00'),
 (9, 9, '2025-10-09 11:50:00', '2025-10-19 14:15:00'),
-(10, 10, '2025-10-10 13:35:00', '2025-10-20 16:00:00');
+(10, 10, '2025-10-10 13:35:00', '2025-10-20 16:00:00'),
+(11, 11, '2025-10-11 14:20:00', '2025-10-21 16:50:00'),
+(12, 12, '2025-10-12 09:10:00', '2025-10-22 12:30:00'),
+(13, 13, '2025-10-13 11:25:00', '2025-10-23 15:45:00'),
+(14, 14, '2025-10-14 13:40:00', '2025-10-24 17:00:00'),
+(15, 15, '2025-10-15 10:55:00', '2025-10-25 13:10:00'),
+(16, 16, '2025-10-16 12:10:00', '2025-10-26 14:20:00'),
+(17, 17, '2025-10-17 09:35:00', '2025-10-27 12:45:00'),
+(18, 18, '2025-10-18 15:20:00', '2025-10-28 16:50:00'),
+(19, 19, '2025-10-19 11:05:00', '2025-10-29 14:30:00'),
+(20, 20, '2025-10-20 13:45:00', '2025-10-30 17:10:00');

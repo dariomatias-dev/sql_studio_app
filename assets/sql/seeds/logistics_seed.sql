@@ -8,7 +8,17 @@ INSERT INTO "customers" (name, address) VALUES
 ('Olivia Martinez', '135 Elm Street, Seattle'),
 ('Noah Clark', '246 Cherry Avenue, Miami'),
 ('Ava Lewis', '369 Spruce Drive, Portland'),
-('Ethan Walker', '159 Aspen Road, Dallas');
+('Ethan Walker', '159 Aspen Road, Dallas'),
+('Chloe Taylor', '753 Poplar Lane, Orlando'),
+('Mason White', '852 Hickory Street, Atlanta'),
+('Isabella Harris', '951 Magnolia Avenue, Houston'),
+('Lucas Robinson', '147 Fir Drive, Phoenix'),
+('Mia Walker', '258 Willow Road, San Diego'),
+('Logan Scott', '369 Maple Street, Tampa'),
+('Ella Thompson', '471 Oak Avenue, Charlotte'),
+('Jackson Evans', '583 Pine Road, Kansas City'),
+('Amelia Carter', '695 Birch Lane, Nashville'),
+('Aiden Lee', '807 Cedar Court, Minneapolis');
 
 INSERT INTO "drivers" (name, vehicle) VALUES
 ('John Miller', 'Ford Transit'),
@@ -20,7 +30,17 @@ INSERT INTO "drivers" (name, vehicle) VALUES
 ('Benjamin Green', 'Toyota HiAce'),
 ('Amelia Baker', 'Volkswagen Crafter'),
 ('Elijah Adams', 'Hyundai H350'),
-('Evelyn Nelson', 'Renault Master');
+('Evelyn Nelson', 'Renault Master'),
+('Oliver Carter', 'Mercedes Sprinter'),
+('Sofia Mitchell', 'Ford Transit'),
+('Henry Collins', 'Ram ProMaster'),
+('Lily Stewart', 'Chevrolet Express'),
+('Jack Morris', 'Volkswagen Crafter'),
+('Lucas Adams', 'Ford Transit'),
+('Ella Harris', 'Mercedes Sprinter'),
+('Mason Lewis', 'Ram ProMaster'),
+('Grace Turner', 'Nissan NV200'),
+('Owen Clark', 'Chevrolet Express');
 
 INSERT INTO "packages" (customer_id, weight, created_at) VALUES
 (1, 2.5, '2025-01-10 09:12:00'),
@@ -32,7 +52,17 @@ INSERT INTO "packages" (customer_id, weight, created_at) VALUES
 (7, 6.3, '2025-01-25 09:40:00'),
 (8, 1.5, '2025-01-28 15:20:00'),
 (9, 3.2, '2025-01-30 11:55:00'),
-(10, 4.8, '2025-02-02 10:05:00');
+(10, 4.8, '2025-02-02 10:05:00'),
+(11, 2.7, '2025-02-04 12:15:00'),
+(12, 5.1, '2025-02-06 14:40:00'),
+(13, 3.3, '2025-02-08 09:55:00'),
+(14, 1.8, '2025-02-10 11:25:00'),
+(15, 4.0, '2025-02-12 10:10:00'),
+(16, 2.6, '2025-02-15 13:20:00'),
+(17, 3.9, '2025-02-17 15:30:00'),
+(18, 1.7, '2025-02-19 09:45:00'),
+(19, 4.2, '2025-02-21 12:10:00'),
+(20, 3.1, '2025-02-23 10:50:00');
 
 INSERT INTO "deliveries" (package_id, driver_id, estimated_date) VALUES
 (1, 1, '2025-01-12 12:00:00'),
@@ -44,7 +74,17 @@ INSERT INTO "deliveries" (package_id, driver_id, estimated_date) VALUES
 (7, 7, '2025-01-27 15:45:00'),
 (8, 8, '2025-01-29 11:00:00'),
 (9, 9, '2025-02-01 12:15:00'),
-(10, 10, '2025-02-04 10:20:00');
+(10, 10, '2025-02-04 10:20:00'),
+(11, 11, '2025-02-06 14:50:00'),
+(12, 12, '2025-02-08 15:25:00'),
+(13, 13, '2025-02-10 09:40:00'),
+(14, 14, '2025-02-12 11:15:00'),
+(15, 15, '2025-02-14 13:00:00'),
+(16, 16, '2025-02-16 12:10:00'),
+(17, 17, '2025-02-18 14:30:00'),
+(18, 18, '2025-02-20 09:50:00'),
+(19, 19, '2025-02-22 13:15:00'),
+(20, 20, '2025-02-24 11:40:00');
 
 INSERT INTO "status_history" (delivery_id, status, changed_at) VALUES
 (1, 'Created', '2025-01-10 09:12:00'),
@@ -76,4 +116,34 @@ INSERT INTO "status_history" (delivery_id, status, changed_at) VALUES
 (9, 'Delivered', '2025-02-01 12:20:00'),
 (10, 'Created', '2025-02-02 10:05:00'),
 (10, 'Dispatched', '2025-02-03 09:30:00'),
-(10, 'Delivered', '2025-02-04 10:25:00');
+(10, 'Delivered', '2025-02-04 10:25:00'),
+(11, 'Created', '2025-02-04 12:15:00'),
+(11, 'Dispatched', '2025-02-05 10:00:00'),
+(11, 'Delivered', '2025-02-06 14:55:00'),
+(12, 'Created', '2025-02-06 14:40:00'),
+(12, 'Dispatched', '2025-02-07 11:20:00'),
+(12, 'Delivered', '2025-02-08 15:30:00'),
+(13, 'Created', '2025-02-08 09:55:00'),
+(13, 'Dispatched', '2025-02-09 10:50:00'),
+(13, 'Delivered', '2025-02-10 09:45:00'),
+(14, 'Created', '2025-02-10 11:25:00'),
+(14, 'Dispatched', '2025-02-11 09:30:00'),
+(14, 'Delivered', '2025-02-12 13:05:00'),
+(15, 'Created', '2025-02-12 13:00:00'),
+(15, 'Dispatched', '2025-02-13 12:10:00'),
+(15, 'Delivered', '2025-02-14 13:05:00'),
+(16, 'Created', '2025-02-15 13:20:00'),
+(16, 'Dispatched', '2025-02-16 11:45:00'),
+(16, 'Delivered', '2025-02-16 12:15:00'),
+(17, 'Created', '2025-02-17 15:30:00'),
+(17, 'Dispatched', '2025-02-18 10:20:00'),
+(17, 'Delivered', '2025-02-18 14:35:00'),
+(18, 'Created', '2025-02-19 09:45:00'),
+(18, 'Dispatched', '2025-02-20 08:30:00'),
+(18, 'Delivered', '2025-02-20 09:55:00'),
+(19, 'Created', '2025-02-21 12:10:00'),
+(19, 'Dispatched', '2025-02-22 09:55:00'),
+(19, 'Delivered', '2025-02-22 13:25:00'),
+(20, 'Created', '2025-02-23 10:50:00'),
+(20, 'Dispatched', '2025-02-24 09:15:00'),
+(20, 'Delivered', '2025-02-24 11:45:00');
