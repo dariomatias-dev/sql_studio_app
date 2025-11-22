@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 
 class MainScreenNavButtonsWidget extends StatelessWidget {
@@ -13,23 +15,27 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
   final MainScreenNotifier notifier;
   final PageController pageController;
 
-  List<GButton> get buttons => <GButton>[
-    buildButton(
-      icon: Icons.circle_outlined,
-      text: 'Home',
-      selected: notifier.currentIndex == 0,
-    ),
-    buildButton(
-      icon: Icons.folder_open_outlined,
-      text: 'Databases',
-      selected: notifier.currentIndex == 1,
-    ),
-    buildButton(
-      icon: Icons.settings_outlined,
-      text: 'Settings',
-      selected: notifier.currentIndex == 2,
-    ),
-  ];
+  List<GButton> buttons(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
+    return <GButton>[
+      buildButton(
+        icon: Icons.circle_outlined,
+        text: appLocalizations.home,
+        selected: notifier.currentIndex == 0,
+      ),
+      buildButton(
+        icon: Icons.folder_open_outlined,
+        text: appLocalizations.databases,
+        selected: notifier.currentIndex == 1,
+      ),
+      buildButton(
+        icon: Icons.settings_outlined,
+        text: appLocalizations.settings,
+        selected: notifier.currentIndex == 2,
+      ),
+    ];
+  }
 
   GButton buildButton({
     required IconData icon,
@@ -51,9 +57,7 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
 
   void onTab(int index) {
     FocusManager.instance.primaryFocus?.unfocus();
-
     notifier.changeScreen(index);
-
     pageController.jumpToPage(index);
   }
 
@@ -72,7 +76,7 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
         tabBorder: Border.all(color: Colors.transparent),
         tabBorderRadius: 50.0,
         haptic: false,
-        tabs: buttons,
+        tabs: buttons(context),
       ),
     );
   }

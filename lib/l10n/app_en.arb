@@ -1,4 +1,7 @@
 {
+  "home": "Home",
+  "databases": "Databases",
+  "settings": "Settings",
   "general": "General",
   "language": "Language",
   "sqlSuggestions": "SQL Suggestions",

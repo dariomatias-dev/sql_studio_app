@@ -9,6 +9,15 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
+  String get home => 'Inicio';
+
+  @override
+  String get databases => 'Bases de Datos';
+
+  @override
+  String get settings => 'Configuración';
+
+  @override
   String get general => 'General';
 
   @override

@@ -97,6 +97,24 @@ abstract class AppLocalizations {
     Locale('pt')
   ];
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @databases.
+  ///
+  /// In en, this message translates to:
+  /// **'Databases'**
+  String get databases;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
   /// No description provided for @general.
   ///
   /// In en, this message translates to:

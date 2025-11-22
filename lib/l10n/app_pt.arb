@@ -1,4 +1,7 @@
 {
+  "home": "Início",
+  "databases": "Bancos de Dados",
+  "settings": "Configurações",
   "general": "Geral",
   "language": "Idioma",
   "sqlSuggestions": "Sugestões SQL",

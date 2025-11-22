@@ -9,6 +9,15 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
+  String get home => 'Início';
+
+  @override
+  String get databases => 'Bancos de Dados';
+
+  @override
+  String get settings => 'Configurações';
+
+  @override
   String get general => 'Geral';
 
   @override
