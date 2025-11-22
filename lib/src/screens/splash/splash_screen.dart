@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/locale_controller.dart';
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
@@ -41,6 +42,8 @@ class _SplashScreenState extends State<SplashScreen>
     await SharedPreferencesService.init();
 
     if (!mounted) return;
+
+    context.read<LocaleController>().loadLocale();
 
     final versionResult = await context.read<AppVersionNotifier>().load();
 

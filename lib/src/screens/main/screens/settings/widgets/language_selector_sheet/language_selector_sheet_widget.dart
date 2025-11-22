@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
+import 'package:sql_studio/src/core/locale_controller.dart';
 
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
@@ -14,8 +18,6 @@ class LanguageSelectorSheetWidget extends StatefulWidget {
 
 class _LanguageSelectorSheetWidgetState
     extends State<LanguageSelectorSheetWidget> {
-  String _selectedLanguage = 'English';
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,23 +47,26 @@ class _LanguageSelectorSheetWidgetState
             ),
           ),
           const SizedBox(height: 20.0),
-          Column(
-            spacing: 4.0,
-            children: ['English', 'Español', 'Português'].builder((
-              lang,
-              index,
-            ) {
-              return LanguageSelectorSheetOptionWidget(
-                selectedLanguage: _selectedLanguage,
-                lang: lang,
-                onUpdate: () {
-                  setState(() {
-                    _selectedLanguage = lang;
-                  });
-                },
+          Consumer<LocaleController>(
+            builder: (context, value, child) {
+              return Column(
+                spacing: 4.0,
+                children: ['English', 'Español', 'Português'].builder((
+                  lang,
+                  index,
+                ) {
+                  return LanguageSelectorSheetOptionWidget(
+                    lang: lang,
+                    code: AppLocalizations.supportedLocales[index].languageCode,
+                    onUpdate: () {
+                      setState(() {});
+                    },
+                  );
+                }),
               );
-            }),
+            },
           ),
+
           const SizedBox(height: 6.0),
         ],
       ),

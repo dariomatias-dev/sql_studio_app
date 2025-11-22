@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sql_studio/src/core/locale_controller.dart';
 
 class LanguageSelectorSheetOptionWidget extends StatefulWidget {
   const LanguageSelectorSheetOptionWidget({
     super.key,
-    required this.selectedLanguage,
     required this.lang,
+    required this.code,
     required this.onUpdate,
   });
 
-  final String selectedLanguage;
   final String lang;
+  final String code;
   final VoidCallback onUpdate;
 
   @override
@@ -19,12 +22,24 @@ class LanguageSelectorSheetOptionWidget extends StatefulWidget {
 
 class _LanguageSelectorSheetOptionWidgetState
     extends State<LanguageSelectorSheetOptionWidget> {
-  late bool isSelected = widget.lang == widget.selectedLanguage;
+  late bool _isSelected = _isSelectedLocale;
+
+  bool get _isSelectedLocale =>
+      widget.code == context.read<LocaleController>().locale.languageCode;
+
+  Future<void> _changeLanguage() async {
+    await context.read<LocaleController>().changeLocale(widget.code);
+
+    if (!mounted) return;
+
+    Navigator.pop(context);
+  }
 
   @override
   void didUpdateWidget(covariant LanguageSelectorSheetOptionWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    isSelected = widget.lang == widget.selectedLanguage;
+
+    _isSelected = _isSelectedLocale;
   }
 
   @override
@@ -32,8 +47,8 @@ class _LanguageSelectorSheetOptionWidgetState
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        onTap: _changeLanguage,
         borderRadius: BorderRadius.circular(14.0),
-        onTap: widget.onUpdate,
         splashColor: Colors.grey.shade400.withAlpha(40),
         highlightColor: Colors.grey.withAlpha(30),
         hoverColor: Colors.grey.withAlpha(20),
@@ -43,7 +58,7 @@ class _LanguageSelectorSheetOptionWidgetState
           padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 16.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.0),
-            color: isSelected ? Colors.blue.withAlpha(22) : Colors.transparent,
+            color: _isSelected ? Colors.blue.withAlpha(22) : Colors.transparent,
           ),
           child: Row(
             children: <Widget>[
@@ -52,12 +67,12 @@ class _LanguageSelectorSheetOptionWidgetState
                   widget.lang,
                   style: TextStyle(
                     fontSize: 16.0,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight: _isSelected ? FontWeight.w600 : FontWeight.w400,
                   ),
                 ),
               ),
               AnimatedScale(
-                scale: isSelected ? 1.0 : 0.0,
+                scale: _isSelected ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 180),
                 curve: Curves.easeOut,
                 child: const Icon(
