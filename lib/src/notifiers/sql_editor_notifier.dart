@@ -49,10 +49,17 @@ class SqlEditorNotifier extends ChangeNotifier {
 
     if (text.isEmpty) {
       controller.text = command;
-      controller.selection = TextSelection.collapsed(offset: command.length);
+      if (selectText != null && command.contains(selectText)) {
+        final start = command.indexOf(selectText);
+        controller.selection = TextSelection(
+          baseOffset: start,
+          extentOffset: start + selectText.length,
+        );
+      } else {
+        controller.selection = TextSelection.collapsed(offset: command.length);
+      }
 
       notifyListeners();
-
       return;
     }
 
@@ -64,9 +71,18 @@ class SqlEditorNotifier extends ChangeNotifier {
     final newText = before.replaceRange(start, before.length, command) + after;
 
     controller.text = newText;
-    controller.selection = TextSelection.collapsed(
-      offset: start + command.length,
-    );
+
+    if (selectText != null && command.contains(selectText)) {
+      final selectStart = start + command.indexOf(selectText);
+      controller.selection = TextSelection(
+        baseOffset: selectStart,
+        extentOffset: selectStart + selectText.length,
+      );
+    } else {
+      controller.selection = TextSelection.collapsed(
+        offset: start + command.length,
+      );
+    }
 
     notifyListeners();
   }

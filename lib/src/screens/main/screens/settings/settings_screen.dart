@@ -88,11 +88,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                   title: 'Privacy Policy',
                   icon: Icons.open_in_new,
                 ),
-                SettingsCardWidget(
-                  onTap: () {},
-                  title: 'Contact',
-                  icon: Icons.open_in_new,
-                ),
+                // SettingsCardWidget(
+                //   onTap: () {},
+                //   title: 'Contact',
+                //   icon: Icons.open_in_new,
+                // ),
               ],
             ),
           ],
