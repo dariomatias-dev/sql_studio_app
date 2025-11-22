@@ -75,4 +75,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get clearConsole => 'Limpiar Consola';
+
+  @override
+  String get schemaCopied => 'Esquema copiado!';
+
+  @override
+  String get seedCopied => 'Seed copiada!';
+
+  @override
+  String get schemaAndSeedCopied => 'Esquema y Seed copiados!';
+
+  @override
+  String get viewStructure => 'Ver Estructura';
+
+  @override
+  String get copySchema => 'Copiar Esquema';
+
+  @override
+  String get copySeed => 'Copiar Seed';
+
+  @override
+  String get copyAll => 'Copiar Todos';
 }

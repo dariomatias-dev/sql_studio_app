@@ -20,5 +20,12 @@
   "runQuery": "Executar Consulta",
   "clearEditor": "Limpar Editor",
   "console": "Console",
-  "clearConsole": "Limpar Console"
+  "clearConsole": "Limpar Console",
+  "schemaCopied": "Schema copiado!",
+  "seedCopied": "Seed copiada!",
+  "schemaAndSeedCopied": "Schema e Seed copiados!",
+  "viewStructure": "Ver Estrutura",
+  "copySchema": "Copiar Schema",
+  "copySeed": "Copiar Seed",
+  "copyAll": "Copiar Tudo"
 }

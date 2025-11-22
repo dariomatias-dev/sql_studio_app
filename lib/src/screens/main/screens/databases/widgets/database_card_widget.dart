@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
@@ -39,24 +42,26 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
   Future<void> _copySchema() async {
     await _copyFile(<String>[
       'assets/sql/schemas/${widget.db.name.toLowerCase()}_schema.sql',
-    ], 'Schema copied!');
+    ], AppLocalizations.of(context)!.schemaCopied);
   }
 
   Future<void> _copySeed() async {
     await _copyFile(<String>[
       'assets/sql/seeds/${widget.db.name.toLowerCase()}_seed.sql',
-    ], 'Seed copied!');
+    ], AppLocalizations.of(context)!.seedCopied);
   }
 
   Future<void> _copyAll() async {
     await _copyFile(<String>[
       'assets/sql/schemas/${widget.db.name.toLowerCase()}_schema.sql',
       'assets/sql/seeds/${widget.db.name.toLowerCase()}_seed.sql',
-    ], 'Schema and Seed copied!');
+    ], AppLocalizations.of(context)!.schemaAndSeedCopied);
   }
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return CardWidget(
       onTap: () {
         context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
@@ -105,14 +110,20 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
                   onTap: () {
                     context.push(RouteNames.databaseVisualizer(widget.db.name));
                   },
-                  child: const Text('View Structure'),
+                  child: Text(appLocalizations.viewStructure),
                 ),
                 PopupMenuItem(
                   onTap: _copySchema,
-                  child: const Text('Copy Schema'),
+                  child: Text(appLocalizations.copySchema),
                 ),
-                PopupMenuItem(onTap: _copySeed, child: const Text('Copy Seed')),
-                PopupMenuItem(onTap: _copyAll, child: const Text('Copy All')),
+                PopupMenuItem(
+                  onTap: _copySeed,
+                  child: Text(appLocalizations.copySeed),
+                ),
+                PopupMenuItem(
+                  onTap: _copyAll,
+                  child: Text(appLocalizations.copyAll),
+                ),
               ],
             ),
           ],

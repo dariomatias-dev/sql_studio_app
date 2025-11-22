@@ -20,5 +20,12 @@
   "runQuery": "Run Query",
   "clearEditor": "Clear Editor",
   "console": "Console",
-  "clearConsole": "Clear Console"
+  "clearConsole": "Clear Console",
+  "schemaCopied": "Schema copied!",
+  "seedCopied": "Seed copied!",
+  "schemaAndSeedCopied": "Schema and Seed copied!",
+  "viewStructure": "View Structure",
+  "copySchema": "Copy Schema",
+  "copySeed": "Copy Seed",
+  "copyAll": "Copy All"
 }

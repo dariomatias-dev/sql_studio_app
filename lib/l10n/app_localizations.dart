@@ -228,6 +228,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear Console'**
   String get clearConsole;
+
+  /// No description provided for @schemaCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema copied!'**
+  String get schemaCopied;
+
+  /// No description provided for @seedCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed copied!'**
+  String get seedCopied;
+
+  /// No description provided for @schemaAndSeedCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Schema and Seed copied!'**
+  String get schemaAndSeedCopied;
+
+  /// No description provided for @viewStructure.
+  ///
+  /// In en, this message translates to:
+  /// **'View Structure'**
+  String get viewStructure;
+
+  /// No description provided for @copySchema.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Schema'**
+  String get copySchema;
+
+  /// No description provided for @copySeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Seed'**
+  String get copySeed;
+
+  /// No description provided for @copyAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy All'**
+  String get copyAll;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
