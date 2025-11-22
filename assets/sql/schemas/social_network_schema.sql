@@ -1,0 +1,52 @@
+DROP TABLE IF EXISTS likes;
+
+DROP TABLE IF EXISTS comments;
+
+DROP TABLE IF EXISTS posts;
+
+DROP TABLE IF EXISTS followers;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE IF NOT EXISTS "users" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    username TEXT UNIQUE,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "followers" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    follower_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "users" (id),
+    FOREIGN KEY (follower_id) REFERENCES "users" (id)
+);
+
+CREATE TABLE IF NOT EXISTS "posts" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    content TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "users" (id)
+);
+
+CREATE TABLE IF NOT EXISTS "comments" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    content TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES "posts" (id),
+    FOREIGN KEY (user_id) REFERENCES "users" (id)
+);
+
+CREATE TABLE IF NOT EXISTS "likes" (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES "posts" (id),
+    FOREIGN KEY (user_id) REFERENCES "users" (id)
+);
