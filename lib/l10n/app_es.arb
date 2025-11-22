@@ -11,5 +11,14 @@
   "officialWebsite": "Sitio oficial",
   "privacyPolicy": "Política de privacidad",
   "errorOpeningUrl": "Error al abrir URL",
-  "errorOpeningUrlDescription": "La URL {url} no se pudo abrir."
+  "errorOpeningUrlDescription": "La URL {url} no se pudo abrir.",
+  "enterFullscreen": "Entrar en Pantalla Completa",
+  "exitFullscreen": "Salir de Pantalla Completa",
+  "editor": "Editor",
+  "viewVisualScheme": "Ver Esquema Visual",
+  "resetDatabase": "Restablecer Base de Datos",
+  "runQuery": "Ejecutar Consulta",
+  "clearEditor": "Limpiar Editor",
+  "console": "Consola",
+  "clearConsole": "Limpiar Consola"
 }

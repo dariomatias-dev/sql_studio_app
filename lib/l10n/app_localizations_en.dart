@@ -48,4 +48,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorOpeningUrlDescription(Object url) {
     return 'The URL $url could not be opened.';
   }
+
+  @override
+  String get enterFullscreen => 'Enter Fullscreen';
+
+  @override
+  String get exitFullscreen => 'Exit Fullscreen';
+
+  @override
+  String get editor => 'Editor';
+
+  @override
+  String get viewVisualScheme => 'View Visual Scheme';
+
+  @override
+  String get resetDatabase => 'Reset Database';
+
+  @override
+  String get runQuery => 'Run Query';
+
+  @override
+  String get clearEditor => 'Clear Editor';
+
+  @override
+  String get console => 'Console';
+
+  @override
+  String get clearConsole => 'Clear Console';
 }

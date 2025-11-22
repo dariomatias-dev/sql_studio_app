@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 class PanelWidget extends StatelessWidget {
   const PanelWidget({
     super.key,
@@ -20,6 +22,8 @@ class PanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final hasFullScreenButton = onFullScreen != null;
 
     return Container(
@@ -32,8 +36,8 @@ class PanelWidget extends StatelessWidget {
                 IconButton(
                   onPressed: onFullScreen,
                   tooltip: isFullScreen ?? false
-                      ? 'Exit Fullscreen'
-                      : 'Enter Fullscreen',
+                      ? appLocalizations.exitFullscreen
+                      : appLocalizations.enterFullscreen,
                   icon: Icon(
                     isFullScreen ?? false
                         ? Icons.fullscreen_exit

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
@@ -40,6 +42,8 @@ class ConsoleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    
     return Consumer<SqlCommandsNotifier>(
       builder: (context, notifier, child) {
         Widget content;
@@ -130,13 +134,13 @@ class ConsoleWidget extends StatelessWidget {
         }
 
         return PanelWidget(
-          title: showTitle ? 'Console' : null,
+          title: showTitle ? appLocalizations.console : null,
           isFullScreen: isFullScreen,
           onFullScreen: onFullScreen,
           actions: <Widget>[
             IconButton(
               onPressed: notifier.clearResult,
-              tooltip: 'Clear Console',
+              tooltip: appLocalizations.clearConsole,
               icon: const Icon(Icons.clear_rounded),
             ),
           ],

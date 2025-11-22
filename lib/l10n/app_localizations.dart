@@ -174,6 +174,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The URL {url} could not be opened.'**
   String errorOpeningUrlDescription(Object url);
+
+  /// No description provided for @enterFullscreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Fullscreen'**
+  String get enterFullscreen;
+
+  /// No description provided for @exitFullscreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit Fullscreen'**
+  String get exitFullscreen;
+
+  /// No description provided for @editor.
+  ///
+  /// In en, this message translates to:
+  /// **'Editor'**
+  String get editor;
+
+  /// No description provided for @viewVisualScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'View Visual Scheme'**
+  String get viewVisualScheme;
+
+  /// No description provided for @resetDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Database'**
+  String get resetDatabase;
+
+  /// No description provided for @runQuery.
+  ///
+  /// In en, this message translates to:
+  /// **'Run Query'**
+  String get runQuery;
+
+  /// No description provided for @clearEditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Editor'**
+  String get clearEditor;
+
+  /// No description provided for @console.
+  ///
+  /// In en, this message translates to:
+  /// **'Console'**
+  String get console;
+
+  /// No description provided for @clearConsole.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Console'**
+  String get clearConsole;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

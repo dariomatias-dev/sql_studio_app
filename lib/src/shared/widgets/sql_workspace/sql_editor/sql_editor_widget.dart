@@ -4,6 +4,8 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
@@ -60,13 +62,15 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
     final suggestionsNotifier = context.watch<SqlSuggestionsNotifier>();
     final editorNotifier = context.watch<SqlEditorNotifier>();
     final databaseName = sqlCommandsNotifier.activeDatabase;
 
     return PanelWidget(
-      title: widget.showTitle ? 'Editor' : null,
+      title: widget.showTitle ? appLocalizations.editor : null,
       databaseName: databaseName,
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,
@@ -81,7 +85,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
               onPressed: () {
                 context.push(RouteNames.databaseVisualizer(databaseName!));
               },
-              tooltip: 'View Visual Scheme',
+              tooltip: appLocalizations.viewVisualScheme,
               icon: const Icon(Icons.remove_red_eye_outlined),
             );
           },
@@ -94,19 +98,19 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
 
             return IconButton(
               onPressed: sqlCommandsNotifier.resetDatabase,
-              tooltip: 'Reset Database',
+              tooltip: appLocalizations.resetDatabase,
               icon: const Icon(Icons.refresh_outlined),
             );
           },
         ),
         IconButton(
           onPressed: _onRunQuery,
-          tooltip: 'Run Query',
+          tooltip: appLocalizations.runQuery,
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         IconButton(
           onPressed: editorNotifier.clear,
-          tooltip: 'Clear Editor',
+          tooltip: appLocalizations.clearEditor,
           icon: const Icon(Icons.clear_rounded),
         ),
       ],

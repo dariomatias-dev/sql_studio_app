@@ -11,5 +11,14 @@
   "officialWebsite": "Official Website",
   "privacyPolicy": "Privacy Policy",
   "errorOpeningUrl": "Error opening URL",
-  "errorOpeningUrlDescription": "The URL {url} could not be opened."
+  "errorOpeningUrlDescription": "The URL {url} could not be opened.",
+  "enterFullscreen": "Enter Fullscreen",
+  "exitFullscreen": "Exit Fullscreen",
+  "editor": "Editor",
+  "viewVisualScheme": "View Visual Scheme",
+  "resetDatabase": "Reset Database",
+  "runQuery": "Run Query",
+  "clearEditor": "Clear Editor",
+  "console": "Console",
+  "clearConsole": "Clear Console"
 }
