@@ -97,6 +97,65 @@ abstract class AppLocalizations {
     Locale('pt')
   ];
 
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @sqlSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL Suggestions'**
+  String get sqlSuggestions;
+
+  /// No description provided for @workspaceLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Workspace Layout'**
+  String get workspaceLayout;
+
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get appVersion;
+
+  /// No description provided for @officialWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Website'**
+  String get officialWebsite;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @errorOpeningUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Error opening URL'**
+  String get errorOpeningUrl;
+
+  /// No description provided for @errorOpeningUrlDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'The URL {url} could not be opened.'**
+  String errorOpeningUrlDescription(Object url);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

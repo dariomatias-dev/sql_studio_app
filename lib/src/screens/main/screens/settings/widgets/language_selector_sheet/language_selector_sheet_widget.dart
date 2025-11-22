@@ -38,8 +38,8 @@ class _LanguageSelectorSheetWidgetState
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
-          const Text(
-            'Language',
+          Text(
+            AppLocalizations.of(context)!.language,
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,

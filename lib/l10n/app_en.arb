@@ -1,1 +1,12 @@
-{}
+{
+  "general": "General",
+  "language": "Language",
+  "sqlSuggestions": "SQL Suggestions",
+  "workspaceLayout": "Workspace Layout",
+  "information": "Information",
+  "appVersion": "App Version",
+  "officialWebsite": "Official Website",
+  "privacyPolicy": "Privacy Policy",
+  "errorOpeningUrl": "Error opening URL",
+  "errorOpeningUrlDescription": "The URL {url} could not be opened."
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
@@ -31,9 +32,11 @@ class _SettingsScreenState extends State<SettingsScreen>
       await showDialog(
         context: _getContext(),
         builder: (context) {
+          final appLocalizations = AppLocalizations.of(context)!;
+
           return ErrorDialogWidget(
-            title: 'Error opening URL',
-            description: 'The URL $url could not be opened.',
+            title: appLocalizations.errorOpeningUrl,
+            description: appLocalizations.errorOpeningUrlDescription(url),
           );
         },
       );
@@ -55,6 +58,8 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ScaffoldWidget(
       showExitButton: false,
       body: Padding(
@@ -62,42 +67,45 @@ class _SettingsScreenState extends State<SettingsScreen>
         child: ListView(
           children: <Widget>[
             SettingsSectionWidget(
-              title: 'General',
+              title: appLocalizations.general,
               children: <Widget>[
                 SettingsCardWidget(
                   onTap: _openLanguageSelector,
-                  title: 'Language',
+                  title: appLocalizations.language,
                   icon: Icons.arrow_forward_ios,
                 ),
                 SettingsCardWidget(
                   onTap: () {
                     context.push(RouteNames.sqlSuggestionSettingsPath);
                   },
-                  title: 'SQL Suggestions',
+                  title: appLocalizations.sqlSuggestions,
                   icon: Icons.arrow_forward_ios,
                 ),
                 SettingsCardWidget(
                   onTap: () {
                     context.push(RouteNames.workspaceLayout);
                   },
-                  title: 'Workspace Layout',
+                  title: appLocalizations.workspaceLayout,
                   icon: Icons.arrow_forward_ios,
                 ),
               ],
             ),
             SettingsSectionWidget(
-              title: 'Information',
+              title: appLocalizations.information,
               children: <Widget>[
-                AppVersionWidget(),
+                const AppVersionWidget(),
                 SettingsCardWidget(
-                  onTap: () => _openUrl('https://sql-studio.vercel.app/'),
-                  title: 'Official Website',
+                  onTap: () {
+                    _openUrl('https://sql-studio.vercel.app/');
+                  },
+                  title: appLocalizations.officialWebsite,
                   icon: Icons.open_in_new,
                 ),
                 SettingsCardWidget(
-                  onTap: () =>
-                      _openUrl('https://sql-studio.vercel.app/privacy-policy'),
-                  title: 'Privacy Policy',
+                  onTap: () {
+                    _openUrl('https://sql-studio.vercel.app/privacy-policy');
+                  },
+                  title: appLocalizations.privacyPolicy,
                   icon: Icons.open_in_new,
                 ),
               ],

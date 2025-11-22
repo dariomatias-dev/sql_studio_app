@@ -1,1 +1,12 @@
-{}
+{
+  "general": "Geral",
+  "language": "Idioma",
+  "sqlSuggestions": "Sugestões SQL",
+  "workspaceLayout": "Layout de Trabalho",
+  "information": "Informações",
+  "appVersion": "Versão do App",
+  "officialWebsite": "Site Oficial",
+  "privacyPolicy": "Política de Privacidade",
+  "errorOpeningUrl": "Erro ao abrir URL",
+  "errorOpeningUrlDescription": "A URL {url} não pôde ser aberta."
+}

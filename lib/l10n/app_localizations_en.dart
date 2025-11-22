@@ -8,5 +8,35 @@ import 'app_localizations.dart';
 class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
+  @override
+  String get general => 'General';
 
+  @override
+  String get language => 'Language';
+
+  @override
+  String get sqlSuggestions => 'SQL Suggestions';
+
+  @override
+  String get workspaceLayout => 'Workspace Layout';
+
+  @override
+  String get information => 'Information';
+
+  @override
+  String get appVersion => 'App Version';
+
+  @override
+  String get officialWebsite => 'Official Website';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get errorOpeningUrl => 'Error opening URL';
+
+  @override
+  String errorOpeningUrlDescription(Object url) {
+    return 'The URL $url could not be opened.';
+  }
 }
