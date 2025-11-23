@@ -96,4 +96,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get copyAll => 'Copiar Tudo';
+
+  @override
+  String get searchDatabases => 'Pesquisar bancos de dados';
+
+  @override
+  String get newDatabase => 'Novo Banco de Dados';
+
+  @override
+  String get favorites => 'Favoritos';
+
+  @override
+  String get allDatabases => 'Todos os Bancos de Dados';
 }

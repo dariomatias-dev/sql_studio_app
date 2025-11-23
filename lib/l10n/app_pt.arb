@@ -27,5 +27,9 @@
   "viewStructure": "Ver Estrutura",
   "copySchema": "Copiar Schema",
   "copySeed": "Copiar Seed",
-  "copyAll": "Copiar Tudo"
+  "copyAll": "Copiar Tudo",
+  "searchDatabases": "Pesquisar bancos de dados",
+  "newDatabase": "Novo Banco de Dados",
+  "favorites": "Favoritos",
+  "allDatabases": "Todos os Bancos de Dados"
 }

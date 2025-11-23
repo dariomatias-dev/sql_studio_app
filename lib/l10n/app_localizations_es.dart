@@ -96,4 +96,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get copyAll => 'Copiar Todos';
+
+  @override
+  String get searchDatabases => 'Buscar bases de datos';
+
+  @override
+  String get newDatabase => 'Nueva Base de Datos';
+
+  @override
+  String get favorites => 'Favoritos';
+
+  @override
+  String get allDatabases => 'Todas las Bases de Datos';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 
@@ -37,6 +38,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return Consumer<DatabaseNotifier>(
       builder: (context, notifier, child) {
         return SafeArea(
@@ -49,7 +52,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   margin: const EdgeInsets.only(top: 32.0, bottom: 12.0),
                   child: InputWidget(
                     controller: _searchController,
-                    hintText: 'Search databases',
+                    hintText: appLocalizations.searchDatabases,
                     suffixIcon: IconButton(
                       onPressed: () {
                         _searchController.text = '';
@@ -70,11 +73,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             spacing: 24.0,
                             children: <Widget>[
                               DatabaseGroupWidget(
-                                title: 'Favorites',
+                                title: appLocalizations.favorites,
                                 databases: notifier.favorites,
                               ),
                               DatabaseGroupWidget(
-                                title: 'All Databases',
+                                title: appLocalizations.allDatabases,
                                 databases: notifier.others,
                               ),
                             ],
@@ -85,7 +88,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: ButtonWidget(
                     onPressed: _showCreateDatabaseDialog,
-                    text: 'New Database',
+                    text: appLocalizations.newDatabase,
                     backgroundColor: Colors.grey.shade100,
                     borderColor: Colors.grey.shade200,
                   ),

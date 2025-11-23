@@ -27,5 +27,9 @@
   "viewStructure": "View Structure",
   "copySchema": "Copy Schema",
   "copySeed": "Copy Seed",
-  "copyAll": "Copy All"
+  "copyAll": "Copy All",
+  "searchDatabases": "Search databases",
+  "newDatabase": "New Database",
+  "favorites": "Favorites",
+  "allDatabases": "All Databases"
 }

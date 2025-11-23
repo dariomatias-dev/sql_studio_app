@@ -96,4 +96,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copyAll => 'Copy All';
+
+  @override
+  String get searchDatabases => 'Search databases';
+
+  @override
+  String get newDatabase => 'New Database';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get allDatabases => 'All Databases';
 }

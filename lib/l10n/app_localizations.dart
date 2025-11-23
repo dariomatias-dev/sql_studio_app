@@ -270,6 +270,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy All'**
   String get copyAll;
+
+  /// No description provided for @searchDatabases.
+  ///
+  /// In en, this message translates to:
+  /// **'Search databases'**
+  String get searchDatabases;
+
+  /// No description provided for @newDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'New Database'**
+  String get newDatabase;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @allDatabases.
+  ///
+  /// In en, this message translates to:
+  /// **'All Databases'**
+  String get allDatabases;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
