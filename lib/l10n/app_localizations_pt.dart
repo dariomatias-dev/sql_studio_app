@@ -108,4 +108,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get allDatabases => 'Todos os Bancos de Dados';
+
+  @override
+  String get favorite => 'Favorito';
+
+  @override
+  String get unfavorite => 'Remover dos favoritos';
+
+  @override
+  String get delete => 'Excluir';
 }

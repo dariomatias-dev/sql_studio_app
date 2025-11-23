@@ -31,5 +31,8 @@
   "searchDatabases": "Buscar bases de datos",
   "newDatabase": "Nueva Base de Datos",
   "favorites": "Favoritos",
-  "allDatabases": "Todas las Bases de Datos"
+  "allDatabases": "Todas las Bases de Datos",
+  "favorite": "Favorito",
+  "unfavorite": "No favorito",
+  "delete": "Eliminar"
 }

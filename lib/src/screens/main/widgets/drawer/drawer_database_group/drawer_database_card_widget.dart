@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
@@ -10,6 +11,7 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_database_group/database_delete_dialog_widget.dart';
+
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
@@ -85,6 +87,8 @@ class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final commands = context.watch<SqlCommandsNotifier>();
     final isActive = commands.activeDatabase == widget.database.label;
 
@@ -141,13 +145,17 @@ class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
               items: [
                 PopupMenuItem(
                   onTap: _onToggleFavorite,
-                  child: Text(_isFavorite ? 'Unfavorite' : 'Favorite'),
+                  child: Text(
+                    _isFavorite
+                        ? appLocalizations.unfavorite
+                        : appLocalizations.favorite,
+                  ),
                 ),
                 PopupMenuItem(
                   onTap: _showDeleteDialog,
-                  child: const Text(
-                    'Delete',
-                    style: TextStyle(color: Colors.redAccent),
+                  child: Text(
+                    appLocalizations.delete,
+                    style: const TextStyle(color: Colors.redAccent),
                   ),
                 ),
               ],

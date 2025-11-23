@@ -31,5 +31,8 @@
   "searchDatabases": "Search databases",
   "newDatabase": "New Database",
   "favorites": "Favorites",
-  "allDatabases": "All Databases"
+  "allDatabases": "All Databases",
+  "favorite": "Favorite",
+  "unfavorite": "Unfavorite",
+  "delete": "Delete"
 }

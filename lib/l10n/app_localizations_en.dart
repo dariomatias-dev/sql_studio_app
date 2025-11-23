@@ -108,4 +108,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allDatabases => 'All Databases';
+
+  @override
+  String get favorite => 'Favorite';
+
+  @override
+  String get unfavorite => 'Unfavorite';
+
+  @override
+  String get delete => 'Delete';
 }
