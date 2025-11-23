@@ -34,5 +34,8 @@
   "allDatabases": "Todos os Bancos de Dados",
   "favorite": "Favorito",
   "unfavorite": "Remover dos favoritos",
-  "delete": "Excluir"
+  "delete": "Excluir",
+  "cancel": "Cancelar",
+  "attention": "Atenção",
+  "deleteDatabaseConfirmation": "Tem certeza de que deseja excluir permanentemente este banco de dados? Esta ação não pode ser desfeita."
 }

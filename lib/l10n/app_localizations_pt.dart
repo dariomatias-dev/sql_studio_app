@@ -117,4 +117,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get delete => 'Excluir';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get attention => 'Atenção';
+
+  @override
+  String get deleteDatabaseConfirmation => 'Tem certeza de que deseja excluir permanentemente este banco de dados? Esta ação não pode ser desfeita.';
 }

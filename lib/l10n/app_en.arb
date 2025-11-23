@@ -34,5 +34,8 @@
   "allDatabases": "All Databases",
   "favorite": "Favorite",
   "unfavorite": "Unfavorite",
-  "delete": "Delete"
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "attention": "Attention",
+  "deleteDatabaseConfirmation": "Are you sure you want to permanently delete this database? This action cannot be undone."
 }

@@ -117,4 +117,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get delete => 'Delete';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get attention => 'Attention';
+
+  @override
+  String get deleteDatabaseConfirmation => 'Are you sure you want to permanently delete this database? This action cannot be undone.';
 }

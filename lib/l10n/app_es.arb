@@ -34,5 +34,8 @@
   "allDatabases": "Todas las Bases de Datos",
   "favorite": "Favorito",
   "unfavorite": "No favorito",
-  "delete": "Eliminar"
+  "delete": "Eliminar",
+  "cancel": "Cancelar",
+  "attention": "Atención",
+  "deleteDatabaseConfirmation": "¿Está seguro de que desea eliminar permanentemente esta base de datos? Esta acción no se puede deshacer."
 }

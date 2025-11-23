@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 class CancelButtonWidget extends StatelessWidget {
@@ -9,7 +11,7 @@ class CancelButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonWidget(
       onPressed: () => Navigator.pop(context),
-      text: 'Cancel',
+      text: AppLocalizations.of(context)!.cancel,
     );
   }
 }
