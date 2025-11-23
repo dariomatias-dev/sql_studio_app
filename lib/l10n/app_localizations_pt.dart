@@ -126,4 +126,88 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteDatabaseConfirmation => 'Tem certeza de que deseja excluir permanentemente este banco de dados? Esta ação não pode ser desfeita.';
+
+  @override
+  String get toDoListLabel => 'Lista de Tarefas';
+
+  @override
+  String get toDoListDescription => 'Banco de dados simples para gerenciamento de tarefas';
+
+  @override
+  String get contactsLabel => 'Contatos';
+
+  @override
+  String get contactsDescription => 'Banco de dados de contatos e grupos';
+
+  @override
+  String get libraryLabel => 'Biblioteca';
+
+  @override
+  String get libraryDescription => 'Biblioteca com livros, membros e empréstimos';
+
+  @override
+  String get fitnessClubLabel => 'Clube de Fitness';
+
+  @override
+  String get fitnessClubDescription => 'Banco de dados de membros da academia e assinaturas';
+
+  @override
+  String get carRentalLabel => 'Locadora de Carros';
+
+  @override
+  String get carRentalDescription => 'Banco de dados de gestão de aluguel de carros';
+
+  @override
+  String get restaurantLabel => 'Restaurante';
+
+  @override
+  String get restaurantDescription => 'Banco de dados de pedidos e itens do menu';
+
+  @override
+  String get hrPayrollLabel => 'Folha de Pagamento';
+
+  @override
+  String get hrPayrollDescription => 'Departamentos, cargos, funcionários e histórico salarial';
+
+  @override
+  String get logisticsLabel => 'Logística';
+
+  @override
+  String get logisticsDescription => 'Banco de dados de pacotes, motoristas, entregas e histórico de status';
+
+  @override
+  String get pharmacyLabel => 'Farmácia';
+
+  @override
+  String get pharmacyDescription => 'Estoque da farmácia, fornecedores, clientes e vendas';
+
+  @override
+  String get schoolLabel => 'Escola';
+
+  @override
+  String get schoolDescription => 'Gestão escolar com alunos, professores, turmas, matrículas e notas';
+
+  @override
+  String get socialNetworkLabel => 'Rede Social';
+
+  @override
+  String get socialNetworkDescription => 'Plataforma social com usuários, posts, likes, comentários e seguidores';
+
+  @override
+  String get hotelLabel => 'Hotel';
+
+  @override
+  String get hotelDescription => 'Banco de dados de reservas, quartos, pagamentos, funcionários e serviços';
+
+  @override
+  String get bankingLabel => 'Banco';
+
+  @override
+  String get bankingDescription => 'Sistema bancário com contas, transações, empréstimos e funcionários';
+
+  @override
+  String get eCommerceLabel => 'E-Commerce';
+
+  @override
+  String get eCommerceDescription => 'Loja online com produtos, pedidos, carrinhos e avaliações';
 }

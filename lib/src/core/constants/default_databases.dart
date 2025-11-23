@@ -4,51 +4,50 @@ const defaultDatabases = <DefaultDatabaseModel>[
   // 1 table
   DefaultDatabaseModel(
     name: 'to_do_list',
-    label: 'TodoList',
-    description: 'Simple task management database',
+    labelKey: 'toDoListLabel',
+    descriptionKey: 'toDoListDescription',
     tables: <String>['tasks'],
   ),
 
   // 2 tables
   DefaultDatabaseModel(
     name: 'contacts',
-    label: 'Contacts',
-    description: 'Contacts and groups database',
+    labelKey: 'contactsLabel',
+    descriptionKey: 'contactsDescription',
     tables: <String>['groups', 'contacts'],
   ),
 
   // 3 tables
   DefaultDatabaseModel(
     name: 'library',
-    label: 'Library',
-    description: 'Library with books, members, and loans',
+    labelKey: 'libraryLabel',
+    descriptionKey: 'libraryDescription',
     tables: <String>['books', 'members', 'loans'],
   ),
   DefaultDatabaseModel(
     name: 'fitness_club',
-    label: 'FitnessClub',
-    description: 'Gym members and subscriptions database',
+    labelKey: 'fitnessClubLabel',
+    descriptionKey: 'fitnessClubDescription',
     tables: <String>['members', 'plans', 'subscriptions'],
   ),
 
   // 4 tables
   DefaultDatabaseModel(
     name: 'car_rental',
-    label: 'CarRental',
-    description: 'Car rental management database',
+    labelKey: 'carRentalLabel',
+    descriptionKey: 'carRentalDescription',
     tables: <String>['cars', 'customers', 'rentals', 'payments'],
   ),
   DefaultDatabaseModel(
     name: 'restaurant',
-    label: 'Restaurant',
-    description: 'Restaurant orders and menu items database',
+    labelKey: 'restaurantLabel',
+    descriptionKey: 'restaurantDescription',
     tables: <String>['customers', 'menu_items', 'orders', 'order_items'],
   ),
   DefaultDatabaseModel(
     name: 'hr_payroll',
-    label: 'HR Payroll',
-    description:
-        'Company departments, job positions, employees, and salary history',
+    labelKey: 'hrPayrollLabel',
+    descriptionKey: 'hrPayrollDescription',
     tables: <String>[
       'departments',
       'job_positions',
@@ -60,8 +59,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   // 5 tables
   DefaultDatabaseModel(
     name: 'logistics',
-    label: 'Logistics',
-    description: 'Packages, drivers, deliveries, and status history database',
+    labelKey: 'logisticsLabel',
+    descriptionKey: 'logisticsDescription',
     tables: <String>[
       'customers',
       'drivers',
@@ -72,8 +71,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'pharmacy',
-    label: 'Pharmacy',
-    description: 'Pharmacy inventory, suppliers, customers, and sales database',
+    labelKey: 'pharmacyLabel',
+    descriptionKey: 'pharmacyDescription',
     tables: <String>[
       'products',
       'suppliers',
@@ -84,9 +83,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'school',
-    label: 'School',
-    description:
-        'School management database with students, teachers, classes, enrollments, and grades',
+    labelKey: 'schoolLabel',
+    descriptionKey: 'schoolDescription',
     tables: <String>[
       'students',
       'teachers',
@@ -97,18 +95,16 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'social_network',
-    label: 'Social Network',
-    description:
-        'Social media platform with users, posts, likes, comments, and followers',
+    labelKey: 'socialNetworkLabel',
+    descriptionKey: 'socialNetworkDescription',
     tables: <String>['users', 'followers', 'posts', 'comments', 'likes'],
   ),
 
   // 6 tables
   DefaultDatabaseModel(
     name: 'hotel',
-    label: 'Hotel',
-    description:
-        'Hotel reservations, rooms, payments, employees, and services database',
+    labelKey: 'hotelLabel',
+    descriptionKey: 'hotelDescription',
     tables: <String>[
       'guests',
       'rooms',
@@ -120,9 +116,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'banking',
-    label: 'Banking',
-    description:
-        'Banking system with accounts, transactions, loans, and employees',
+    labelKey: 'bankingLabel',
+    descriptionKey: 'bankingDescription',
     tables: <String>[
       'customers',
       'accounts',
@@ -136,8 +131,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   // 8 tables
   DefaultDatabaseModel(
     name: 'e_commerce',
-    label: 'ECommerce',
-    description: 'Online store with products, orders, carts, and reviews',
+    labelKey: 'eCommerceLabel',
+    descriptionKey: 'eCommerceDescription',
     tables: <String>[
       'users',
       'categories',

@@ -1,13 +1,13 @@
 class DefaultDatabaseModel {
   final String name;
-  final String label;
-  final String description;
+  final String labelKey;
+  final String descriptionKey;
   final List<String> tables;
 
   const DefaultDatabaseModel({
     required this.name,
-    required this.label,
-    required this.description,
+    required this.labelKey,
+    required this.descriptionKey,
     required this.tables,
   });
 }

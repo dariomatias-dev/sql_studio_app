@@ -330,6 +330,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to permanently delete this database? This action cannot be undone.'**
   String get deleteDatabaseConfirmation;
+
+  /// No description provided for @toDoListLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To-Do List'**
+  String get toDoListLabel;
+
+  /// No description provided for @toDoListDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple task management database'**
+  String get toDoListDescription;
+
+  /// No description provided for @contactsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts'**
+  String get contactsLabel;
+
+  /// No description provided for @contactsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Contacts and groups database'**
+  String get contactsDescription;
+
+  /// No description provided for @libraryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get libraryLabel;
+
+  /// No description provided for @libraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Library with books, members, and loans'**
+  String get libraryDescription;
+
+  /// No description provided for @fitnessClubLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fitness Club'**
+  String get fitnessClubLabel;
+
+  /// No description provided for @fitnessClubDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Gym members and subscriptions database'**
+  String get fitnessClubDescription;
+
+  /// No description provided for @carRentalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Rental'**
+  String get carRentalLabel;
+
+  /// No description provided for @carRentalDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Car rental management database'**
+  String get carRentalDescription;
+
+  /// No description provided for @restaurantLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant'**
+  String get restaurantLabel;
+
+  /// No description provided for @restaurantDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant orders and menu items database'**
+  String get restaurantDescription;
+
+  /// No description provided for @hrPayrollLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'HR Payroll'**
+  String get hrPayrollLabel;
+
+  /// No description provided for @hrPayrollDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Company departments, job positions, employees, and salary history'**
+  String get hrPayrollDescription;
+
+  /// No description provided for @logisticsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Logistics'**
+  String get logisticsLabel;
+
+  /// No description provided for @logisticsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Packages, drivers, deliveries, and status history database'**
+  String get logisticsDescription;
+
+  /// No description provided for @pharmacyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy'**
+  String get pharmacyLabel;
+
+  /// No description provided for @pharmacyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Pharmacy inventory, suppliers, customers, and sales database'**
+  String get pharmacyDescription;
+
+  /// No description provided for @schoolLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'School'**
+  String get schoolLabel;
+
+  /// No description provided for @schoolDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'School management with students, teachers, classes, enrollments, and grades'**
+  String get schoolDescription;
+
+  /// No description provided for @socialNetworkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Network'**
+  String get socialNetworkLabel;
+
+  /// No description provided for @socialNetworkDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Social media with users, posts, likes, comments, and followers'**
+  String get socialNetworkDescription;
+
+  /// No description provided for @hotelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel'**
+  String get hotelLabel;
+
+  /// No description provided for @hotelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel reservations, rooms, payments, employees, and services database'**
+  String get hotelDescription;
+
+  /// No description provided for @bankingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Banking'**
+  String get bankingLabel;
+
+  /// No description provided for @bankingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Banking system with accounts, transactions, loans, and employees'**
+  String get bankingDescription;
+
+  /// No description provided for @eCommerceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'E-Commerce'**
+  String get eCommerceLabel;
+
+  /// No description provided for @eCommerceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Online store with products, orders, carts, and reviews'**
+  String get eCommerceDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

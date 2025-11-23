@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
@@ -76,17 +77,17 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.db.label,
+                    appLocalizations.key(widget.db.labelKey),
                     style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (widget.db.description.isNotEmpty) ...<Widget>[
+                  if (widget.db.descriptionKey.isNotEmpty) ...<Widget>[
                     const SizedBox(height: 4.0),
                     Text(
-                      widget.db.description,
+                      appLocalizations.key(widget.db.descriptionKey),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 12.0,
