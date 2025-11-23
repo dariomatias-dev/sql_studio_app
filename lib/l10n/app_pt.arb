@@ -94,5 +94,8 @@
   "suggestionName": "Nome da sugestão",
   "create": "Criar",
   "enterSuggestionName": "Digite um nome para a sugestão.",
-  "invalidCharacters": "Caracteres inválidos"
+  "invalidCharacters": "Caracteres inválidos",
+  "removeSuggestion": "Remover Sugestão",
+  "removeSuggestionDescription": "Tem certeza de que deseja remover esta sugestão?",
+  "remove": "Remover"
 }

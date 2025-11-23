@@ -672,6 +672,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid characters'**
   String get invalidCharacters;
+
+  /// No description provided for @removeSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Suggestion'**
+  String get removeSuggestion;
+
+  /// No description provided for @removeSuggestionDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove this suggestion?'**
+  String get removeSuggestionDescription;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

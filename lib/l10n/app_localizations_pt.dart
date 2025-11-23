@@ -297,4 +297,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get invalidCharacters => 'Caracteres inválidos';
+
+  @override
+  String get removeSuggestion => 'Remover Sugestão';
+
+  @override
+  String get removeSuggestionDescription => 'Tem certeza de que deseja remover esta sugestão?';
+
+  @override
+  String get remove => 'Remover';
 }

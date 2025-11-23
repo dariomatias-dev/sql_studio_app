@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
@@ -28,9 +29,11 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ConfirmationDialogWidget(
-      title: 'Remove Suggestion',
-      description: 'Are you sure you want to remove this suggestion?',
+      title: appLocalizations.removeSuggestion,
+      description: appLocalizations.removeSuggestionDescription,
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final result = await context
@@ -45,7 +48,7 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
 
           _getContext().pop();
         },
-        text: 'Remove',
+        text: appLocalizations.remove,
         style: ButtonStyleType.red,
       ),
     );
