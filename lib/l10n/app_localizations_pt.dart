@@ -341,4 +341,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get suggestionsResetFailed => 'Não foi possível redefinir as sugestões. Tente novamente.';
+
+  @override
+  String get label => 'Rótulo';
+
+  @override
+  String get sqlCode => 'Código SQL';
+
+  @override
+  String get selectableTextOptional => 'Texto selecionável (opcional)';
+
+  @override
+  String get selectableTextHint => 'Parte do SQL a ser selecionada automaticamente para substituição';
+
+  @override
+  String get fieldRequired => 'Este campo é obrigatório';
 }

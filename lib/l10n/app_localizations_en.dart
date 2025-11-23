@@ -341,4 +341,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestionsResetFailed => 'Failed to reset suggestions. Please try again.';
+
+  @override
+  String get label => 'Label';
+
+  @override
+  String get sqlCode => 'SQL Code';
+
+  @override
+  String get selectableTextOptional => 'Selectable Text (optional)';
+
+  @override
+  String get selectableTextHint => 'Part of SQL to auto-select for user replacement';
+
+  @override
+  String get fieldRequired => 'This field is required';
 }

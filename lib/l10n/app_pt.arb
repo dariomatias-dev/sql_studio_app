@@ -108,5 +108,10 @@
   "suggestionDeleteFailed": "Falha ao excluir sugestão.",
   "resetSuggestionsConfirm": "Tem certeza de que deseja redefinir as sugestões?",
   "suggestionsResetSuccess": "Todas as sugestões foram redefinidas com sucesso.",
-  "suggestionsResetFailed": "Não foi possível redefinir as sugestões. Tente novamente."
+  "suggestionsResetFailed": "Não foi possível redefinir as sugestões. Tente novamente.",
+  "label": "Rótulo",
+  "sqlCode": "Código SQL",
+  "selectableTextOptional": "Texto selecionável (opcional)",
+  "selectableTextHint": "Parte do SQL a ser selecionada automaticamente para substituição",
+  "fieldRequired": "Este campo é obrigatório"
 }

@@ -108,5 +108,10 @@
   "suggestionDeleteFailed": "Error al eliminar la sugerencia.",
   "resetSuggestionsConfirm": "¿Estás seguro de que deseas restablecer las sugerencias?",
   "suggestionsResetSuccess": "Todas las sugerencias se han restablecido con éxito.",
-  "suggestionsResetFailed": "No se pudieron restablecer las sugerencias. Inténtalo de nuevo."
+  "suggestionsResetFailed": "No se pudieron restablecer las sugerencias. Inténtalo de nuevo.",
+  "label": "Etiqueta",
+  "sqlCode": "Código SQL",
+  "selectableTextOptional": "Texto seleccionable (opcional)",
+  "selectableTextHint": "Parte del SQL que será seleccionada automáticamente para reemplazo",
+  "fieldRequired": "Este campo es obligatorio"
 }

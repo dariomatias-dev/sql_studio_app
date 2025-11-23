@@ -108,5 +108,10 @@
   "suggestionDeleteFailed": "Failed to delete suggestion.",
   "resetSuggestionsConfirm": "Are you sure you want to reset the suggestions?",
   "suggestionsResetSuccess": "All suggestions have been reset successfully.",
-  "suggestionsResetFailed": "Failed to reset suggestions. Please try again."
+  "suggestionsResetFailed": "Failed to reset suggestions. Please try again.",
+  "label": "Label",
+  "sqlCode": "SQL Code",
+  "selectableTextOptional": "Selectable Text (optional)",
+  "selectableTextHint": "Part of SQL to auto-select for user replacement",
+  "fieldRequired": "This field is required"
 }

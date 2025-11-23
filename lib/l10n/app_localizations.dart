@@ -756,6 +756,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to reset suggestions. Please try again.'**
   String get suggestionsResetFailed;
+
+  /// No description provided for @label.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get label;
+
+  /// No description provided for @sqlCode.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL Code'**
+  String get sqlCode;
+
+  /// No description provided for @selectableTextOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Selectable Text (optional)'**
+  String get selectableTextOptional;
+
+  /// No description provided for @selectableTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Part of SQL to auto-select for user replacement'**
+  String get selectableTextHint;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get fieldRequired;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

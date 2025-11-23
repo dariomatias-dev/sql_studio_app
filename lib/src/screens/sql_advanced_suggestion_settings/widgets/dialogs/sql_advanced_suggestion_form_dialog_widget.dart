@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
@@ -55,10 +57,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
           : _selectTextController.text.trim(),
       orderIndex:
           widget.initialValue?.orderIndex ??
-          context
-              .read<SqlAdvancedSuggestionsNotifier>()
-              .suggestions
-              .length,
+          context.read<SqlAdvancedSuggestionsNotifier>().suggestions.length,
     );
 
     final success = await widget.onSubmit(value);
@@ -70,6 +69,8 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return DialogWidget(
       title: widget.title,
       content: Form(
@@ -79,10 +80,10 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
           children: <Widget>[
             InputWidget(
               controller: _labelController,
-              labelText: 'Label',
+              labelText: appLocalizations.label,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'This field is required';
+                  return appLocalizations.fieldRequired;
                 }
 
                 return null;
@@ -91,10 +92,10 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
             const SizedBox(height: 12.0),
             InputWidget(
               controller: _codeController,
-              labelText: 'SQL Code',
+              labelText: appLocalizations.sqlCode,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'This field is required';
+                  return appLocalizations.fieldRequired;
                 }
 
                 return null;
@@ -103,8 +104,8 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
             const SizedBox(height: 12.0),
             InputWidget(
               controller: _selectTextController,
-              labelText: 'Selectable Text (optional)',
-              hintText: 'Part of SQL to auto-select for user replacement',
+              labelText: appLocalizations.selectableTextOptional,
+              hintText: appLocalizations.selectableTextHint,
             ),
           ],
         ),
