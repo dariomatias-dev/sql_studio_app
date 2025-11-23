@@ -102,5 +102,8 @@
   "resetSuggestionsDescription": "¿Estás seguro de que deseas restablecer la lista de sugerencias?",
   "reset": "Restablecer",
   "advancedSuggestionAdded": "Sugerencia agregada con éxito.",
-  "advancedSuggestionFailed": "Error al agregar la sugerencia."
+  "advancedSuggestionFailed": "Error al agregar la sugerencia.",
+  "deleteSuggestionConfirmation": "¿Está seguro de que desea eliminar la sugerencia \"{label}\"?",
+  "suggestionDeleted": "Sugerencia eliminada con éxito.",
+  "suggestionDeleteFailed": "Error al eliminar la sugerencia."
 }

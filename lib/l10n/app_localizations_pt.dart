@@ -321,4 +321,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get advancedSuggestionFailed => 'Falha ao adicionar sugestão.';
+
+  @override
+  String deleteSuggestionConfirmation(Object label) {
+    return 'Tem certeza de que deseja excluir a sugestão \"$label\"?';
+  }
+
+  @override
+  String get suggestionDeleted => 'Sugestão excluída com sucesso.';
+
+  @override
+  String get suggestionDeleteFailed => 'Falha ao excluir sugestão.';
 }

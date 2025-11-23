@@ -321,4 +321,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advancedSuggestionFailed => 'Failed to add suggestion.';
+
+  @override
+  String deleteSuggestionConfirmation(Object label) {
+    return 'Are you sure you want to delete the suggestion \"$label\"?';
+  }
+
+  @override
+  String get suggestionDeleted => 'Suggestion deleted successfully.';
+
+  @override
+  String get suggestionDeleteFailed => 'Failed to delete suggestion.';
 }

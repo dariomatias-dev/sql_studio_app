@@ -720,6 +720,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to add suggestion.'**
   String get advancedSuggestionFailed;
+
+  /// No description provided for @deleteSuggestionConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the suggestion \"{label}\"?'**
+  String deleteSuggestionConfirmation(Object label);
+
+  /// No description provided for @suggestionDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion deleted successfully.'**
+  String get suggestionDeleted;
+
+  /// No description provided for @suggestionDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete suggestion.'**
+  String get suggestionDeleteFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

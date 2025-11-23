@@ -102,5 +102,8 @@
   "resetSuggestionsDescription": "Are you sure you want to reset the suggestion list?",
   "reset": "Reset",
   "advancedSuggestionAdded": "Suggestion added successfully.",
-  "advancedSuggestionFailed": "Failed to add suggestion."
+  "advancedSuggestionFailed": "Failed to add suggestion.",
+  "deleteSuggestionConfirmation": "Are you sure you want to delete the suggestion \"{label}\"?",
+  "suggestionDeleted": "Suggestion deleted successfully.",
+  "suggestionDeleteFailed": "Failed to delete suggestion."
 }

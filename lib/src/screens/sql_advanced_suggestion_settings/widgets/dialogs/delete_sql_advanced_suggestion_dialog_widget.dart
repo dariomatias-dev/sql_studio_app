@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
@@ -8,7 +9,7 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
-class DeleteSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
+class DeleteSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
   const DeleteSqlAdvancedSuggestionDialogWidget({
     super.key,
     required this.id,
@@ -19,34 +20,27 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
   final String label;
 
   @override
-  State<DeleteSqlAdvancedSuggestionDialogWidget> createState() =>
-      _DeleteSqlAdvancedSuggestionDialogWidgetState();
-}
-
-class _DeleteSqlAdvancedSuggestionDialogWidgetState
-    extends State<DeleteSqlAdvancedSuggestionDialogWidget> {
-  @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ConfirmationDialogWidget(
-      title: 'Remove Suggestion',
+      title: appLocalizations.removeSuggestion,
       description:
-          'Are you sure you want to delete the suggestion "${widget.label}"?',
+          appLocalizations.deleteSuggestionConfirmation(label),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-          final result = await notifier.removeSuggestion(widget.id);
-
-          if (!mounted) return;
+          final result = await notifier.removeSuggestion(id);
 
           Fluttertoast.showToast(
             msg: result.isSuccess
-                ? 'Suggestion deleted successfully.'
-                : 'Failed to delete suggestion.',
+                ? appLocalizations.suggestionDeleted
+                : appLocalizations.suggestionDeleteFailed,
           );
 
           if (context.mounted) Navigator.pop(context);
         },
-        text: 'Delete',
+        text: appLocalizations.delete,
         style: ButtonStyleType.red,
       ),
     );

@@ -102,5 +102,8 @@
   "resetSuggestionsDescription": "Tem certeza de que deseja redefinir a lista de sugestões?",
   "reset": "Redefinir",
   "advancedSuggestionAdded": "Sugestão adicionada com sucesso.",
-  "advancedSuggestionFailed": "Falha ao adicionar sugestão."
+  "advancedSuggestionFailed": "Falha ao adicionar sugestão.",
+  "deleteSuggestionConfirmation": "Tem certeza de que deseja excluir a sugestão \"{label}\"?",
+  "suggestionDeleted": "Sugestão excluída com sucesso.",
+  "suggestionDeleteFailed": "Falha ao excluir sugestão."
 }
