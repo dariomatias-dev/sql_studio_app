@@ -75,5 +75,19 @@
   "tabsLayout": "Layout em Abas",
   "tabsLayoutSubtitle": "Editor e console em abas.",
   "preview": "Pré-visualização:",
-  "layoutSaved": "Layout salvo"
+  "layoutSaved": "Layout salvo",
+  "suggestionSettings": "Configurações de Sugestões",
+  "suggestionModes": "Modos de Sugestão",
+  "basicSuggestions": "Sugestões Básicas",
+  "basicSuggestionsDescription": "Exibe exemplos SQL completos como \"SELECT * FROM\". Ideal para consultas rápidas.",
+  "advancedSuggestions": "Sugestões Avançadas",
+  "advancedSuggestionsDescription": "Mostra dicas curtas como \"ALL\" ou \"COUNT\" que se expandem para instruções SQL completas ao clicar.",
+  "otherSuggestions": "Outras Sugestões",
+  "characterSuggestions": "Sugestões de Caracteres",
+  "characterSuggestionsDescription": "Adiciona botões rápidos para >, =, !, %, ; e mais.",
+  "saveSettings": "Salvar Configurações",
+  "advancedSuggestionsInitialized": "As sugestões avançadas foram inicializadas com sucesso.",
+  "advancedSuggestionsFailed": "Falha ao inicializar as sugestões avançadas.",
+  "settingsSavedSuccessfully": "Configurações salvas com sucesso!",
+  "configure": "Configurar"
 }

@@ -75,5 +75,19 @@
   "tabsLayout": "Diseño por Pestañas",
   "tabsLayoutSubtitle": "Editor y consola en pestañas.",
   "preview": "Vista previa:",
-  "layoutSaved": "Diseño guardado"
+  "layoutSaved": "Diseño guardado",
+  "suggestionSettings": "Configuración de Sugerencias",
+  "suggestionModes": "Modos de Sugerencia",
+  "basicSuggestions": "Sugerencias Básicas",
+  "basicSuggestionsDescription": "Muestra ejemplos SQL completos como \"SELECT * FROM\". Ideal para consultas rápidas.",
+  "advancedSuggestions": "Sugerencias Avanzadas",
+  "advancedSuggestionsDescription": "Muestra pistas cortas como \"ALL\" o \"COUNT\" que se expanden en sentencias SQL completas al hacer clic.",
+  "otherSuggestions": "Otras Sugerencias",
+  "characterSuggestions": "Sugerencias de Caracteres",
+  "characterSuggestionsDescription": "Agrega botones rápidos para >, =, !, %, ; y más.",
+  "saveSettings": "Guardar Configuración",
+  "advancedSuggestionsInitialized": "Las sugerencias avanzadas se han inicializado correctamente.",
+  "advancedSuggestionsFailed": "Error al inicializar las sugerencias avanzadas.",
+  "settingsSavedSuccessfully": "¡Configuración guardada con éxito!",
+  "configure": "Configurar"
 }

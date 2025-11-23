@@ -558,6 +558,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Layout saved'**
   String get layoutSaved;
+
+  /// No description provided for @suggestionSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Settings'**
+  String get suggestionSettings;
+
+  /// No description provided for @suggestionModes.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Modes'**
+  String get suggestionModes;
+
+  /// No description provided for @basicSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Suggestions'**
+  String get basicSuggestions;
+
+  /// No description provided for @basicSuggestionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Displays full SQL examples like \"SELECT * FROM\". Ideal for quick queries.'**
+  String get basicSuggestionsDescription;
+
+  /// No description provided for @advancedSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Suggestions'**
+  String get advancedSuggestions;
+
+  /// No description provided for @advancedSuggestionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.'**
+  String get advancedSuggestionsDescription;
+
+  /// No description provided for @otherSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Suggestions'**
+  String get otherSuggestions;
+
+  /// No description provided for @characterSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Character Suggestions'**
+  String get characterSuggestions;
+
+  /// No description provided for @characterSuggestionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Adds quick buttons to >, =, !, %, ; and more.'**
+  String get characterSuggestionsDescription;
+
+  /// No description provided for @saveSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Settings'**
+  String get saveSettings;
+
+  /// No description provided for @advancedSuggestionsInitialized.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced suggestions have been initialized successfully.'**
+  String get advancedSuggestionsInitialized;
+
+  /// No description provided for @advancedSuggestionsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to initialize advanced suggestions.'**
+  String get advancedSuggestionsFailed;
+
+  /// No description provided for @settingsSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved successfully!'**
+  String get settingsSavedSuccessfully;
+
+  /// No description provided for @configure.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get configure;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

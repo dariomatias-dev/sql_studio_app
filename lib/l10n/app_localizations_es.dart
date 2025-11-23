@@ -240,4 +240,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get layoutSaved => 'Diseño guardado';
+
+  @override
+  String get suggestionSettings => 'Configuración de Sugerencias';
+
+  @override
+  String get suggestionModes => 'Modos de Sugerencia';
+
+  @override
+  String get basicSuggestions => 'Sugerencias Básicas';
+
+  @override
+  String get basicSuggestionsDescription => 'Muestra ejemplos SQL completos como \"SELECT * FROM\". Ideal para consultas rápidas.';
+
+  @override
+  String get advancedSuggestions => 'Sugerencias Avanzadas';
+
+  @override
+  String get advancedSuggestionsDescription => 'Muestra pistas cortas como \"ALL\" o \"COUNT\" que se expanden en sentencias SQL completas al hacer clic.';
+
+  @override
+  String get otherSuggestions => 'Otras Sugerencias';
+
+  @override
+  String get characterSuggestions => 'Sugerencias de Caracteres';
+
+  @override
+  String get characterSuggestionsDescription => 'Agrega botones rápidos para >, =, !, %, ; y más.';
+
+  @override
+  String get saveSettings => 'Guardar Configuración';
+
+  @override
+  String get advancedSuggestionsInitialized => 'Las sugerencias avanzadas se han inicializado correctamente.';
+
+  @override
+  String get advancedSuggestionsFailed => 'Error al inicializar las sugerencias avanzadas.';
+
+  @override
+  String get settingsSavedSuccessfully => '¡Configuración guardada con éxito!';
+
+  @override
+  String get configure => 'Configurar';
 }

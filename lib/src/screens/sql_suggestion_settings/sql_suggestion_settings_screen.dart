@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
@@ -46,6 +48,8 @@ class _SqlSuggestionSettingsScreenState
   }
 
   Future<void> _onSave() async {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final notifier = context.read<SqlSuggestionsNotifier>();
     final advancedNotifier = context.read<SqlAdvancedSuggestionsNotifier>();
 
@@ -58,8 +62,8 @@ class _SqlSuggestionSettingsScreenState
 
       Fluttertoast.showToast(
         msg: result.isSuccess
-            ? 'Advanced suggestions have been initialized successfully.'
-            : 'Failed to initialize advanced suggestions.',
+            ? appLocalizations.advancedSuggestionsInitialized
+            : appLocalizations.advancedSuggestionsFailed,
       );
     }
 
@@ -73,7 +77,7 @@ class _SqlSuggestionSettingsScreenState
 
     _hasChangesNotifier.value = _hasChanges;
 
-    Fluttertoast.showToast(msg: 'Settings saved successfully!');
+    Fluttertoast.showToast(msg: appLocalizations.settingsSavedSuccessfully);
   }
 
   @override
@@ -89,8 +93,10 @@ class _SqlSuggestionSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ScaffoldWidget(
-      appBar: AppBar(title: const Text('Suggestion Settings')),
+      appBar: AppBar(title: Text(appLocalizations.suggestionSettings)),
       body: Consumer<SqlSuggestionsNotifier>(
         builder: (context, notifier, child) {
           return Padding(
@@ -98,14 +104,13 @@ class _SqlSuggestionSettingsScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SqlSuggestionSettingsTitleOptionWidget(
-                  title: 'Suggestion Modes',
+                SqlSuggestionSettingsTitleOptionWidget(
+                  title: appLocalizations.suggestionModes,
                 ),
                 const SizedBox(height: 12.0),
                 SqlSuggestionSettingsCardWidget(
-                  title: 'Basic Suggestions',
-                  subtitle:
-                      'Displays full SQL examples like "SELECT * FROM". Ideal for quick queries.',
+                  title: appLocalizations.basicSuggestions,
+                  subtitle: appLocalizations.basicSuggestionsDescription,
                   active: _useBasicSuggestions,
                   onChanged: (value) {
                     setState(() {
@@ -119,9 +124,8 @@ class _SqlSuggestionSettingsScreenState
                 ),
                 const SizedBox(height: 20.0),
                 SqlSuggestionSettingsCardWidget(
-                  title: 'Advanced Suggestions',
-                  subtitle:
-                      'Shows short hints like "ALL" or "COUNT" that expand into full SQL statements when clicked.',
+                  title: appLocalizations.advancedSuggestions,
+                  subtitle: appLocalizations.advancedSuggestionsDescription,
                   active: _useAdvancedSuggestions,
                   onChanged: (value) {
                     setState(() {
@@ -134,13 +138,13 @@ class _SqlSuggestionSettingsScreenState
                       : null,
                 ),
                 const SizedBox(height: 12.0),
-                const SqlSuggestionSettingsTitleOptionWidget(
-                  title: 'Other Suggestions',
+                SqlSuggestionSettingsTitleOptionWidget(
+                  title: appLocalizations.otherSuggestions,
                 ),
                 const SizedBox(height: 12.0),
                 SqlSuggestionSettingsCardWidget(
-                  title: 'Character Suggestions',
-                  subtitle: 'Adds quick buttons to >, =, !, %, ; and more.',
+                  title: appLocalizations.characterSuggestions,
+                  subtitle: appLocalizations.characterSuggestionsDescription,
                   active: _useCharacterSuggestions,
                   onChanged: (value) {
                     setState(() {
@@ -157,7 +161,7 @@ class _SqlSuggestionSettingsScreenState
                     builder: (context, value, child) {
                       return LoadingButtonWidget(
                         onPressed: _hasChanges ? _onSave : null,
-                        text: 'Save Settings',
+                        text: appLocalizations.saveSettings,
                         style: ButtonStyleType.black,
                       );
                     },

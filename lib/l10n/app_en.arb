@@ -75,5 +75,19 @@
   "tabsLayout": "Tabs Layout",
   "tabsLayoutSubtitle": "Editor and console in tabs.",
   "preview": "Preview:",
-  "layoutSaved": "Layout saved"
+  "layoutSaved": "Layout saved",
+  "suggestionSettings": "Suggestion Settings",
+  "suggestionModes": "Suggestion Modes",
+  "basicSuggestions": "Basic Suggestions",
+  "basicSuggestionsDescription": "Displays full SQL examples like \"SELECT * FROM\". Ideal for quick queries.",
+  "advancedSuggestions": "Advanced Suggestions",
+  "advancedSuggestionsDescription": "Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.",
+  "otherSuggestions": "Other Suggestions",
+  "characterSuggestions": "Character Suggestions",
+  "characterSuggestionsDescription": "Adds quick buttons to >, =, !, %, ; and more.",
+  "saveSettings": "Save Settings",
+  "advancedSuggestionsInitialized": "Advanced suggestions have been initialized successfully.",
+  "advancedSuggestionsFailed": "Failed to initialize advanced suggestions.",
+  "settingsSavedSuccessfully": "Settings saved successfully!",
+  "configure": "Configure"
 }

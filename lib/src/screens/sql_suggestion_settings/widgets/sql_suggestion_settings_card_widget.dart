@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/switch_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -62,7 +64,10 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
               const SizedBox(height: 16.0),
               SizedBox(
                 width: double.infinity,
-                child: ButtonWidget(onPressed: onConfigure!, text: 'Configure'),
+                child: ButtonWidget(
+                  onPressed: onConfigure!,
+                  text: AppLocalizations.of(context)!.configure,
+                ),
               ),
             ],
           ],
