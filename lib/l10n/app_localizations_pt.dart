@@ -315,4 +315,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reset => 'Redefinir';
+
+  @override
+  String get advancedSuggestionAdded => 'Sugestão adicionada com sucesso.';
+
+  @override
+  String get advancedSuggestionFailed => 'Falha ao adicionar sugestão.';
 }

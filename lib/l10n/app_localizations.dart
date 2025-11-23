@@ -708,6 +708,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get reset;
+
+  /// No description provided for @advancedSuggestionAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion added successfully.'**
+  String get advancedSuggestionAdded;
+
+  /// No description provided for @advancedSuggestionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add suggestion.'**
+  String get advancedSuggestionFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

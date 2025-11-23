@@ -100,5 +100,7 @@
   "remove": "Eliminar",
   "resetSuggestions": "Restablecer Sugerencias",
   "resetSuggestionsDescription": "¿Estás seguro de que deseas restablecer la lista de sugerencias?",
-  "reset": "Restablecer"
+  "reset": "Restablecer",
+  "advancedSuggestionAdded": "Sugerencia agregada con éxito.",
+  "advancedSuggestionFailed": "Error al agregar la sugerencia."
 }

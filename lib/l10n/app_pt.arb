@@ -100,5 +100,7 @@
   "remove": "Remover",
   "resetSuggestions": "Redefinir Sugestões",
   "resetSuggestionsDescription": "Tem certeza de que deseja redefinir a lista de sugestões?",
-  "reset": "Redefinir"
+  "reset": "Redefinir",
+  "advancedSuggestionAdded": "Sugestão adicionada com sucesso.",
+  "advancedSuggestionFailed": "Falha ao adicionar sugestão."
 }

@@ -315,4 +315,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reset => 'Restablecer';
+
+  @override
+  String get advancedSuggestionAdded => 'Sugerencia agregada con éxito.';
+
+  @override
+  String get advancedSuggestionFailed => 'Error al agregar la sugerencia.';
 }

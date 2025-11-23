@@ -100,5 +100,7 @@
   "remove": "Remove",
   "resetSuggestions": "Reset Suggestions",
   "resetSuggestionsDescription": "Are you sure you want to reset the suggestion list?",
-  "reset": "Reset"
+  "reset": "Reset",
+  "advancedSuggestionAdded": "Suggestion added successfully.",
+  "advancedSuggestionFailed": "Failed to add suggestion."
 }
