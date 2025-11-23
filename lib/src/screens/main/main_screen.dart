@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
@@ -37,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () {
                 context.push(RouteNames.databasePath);
               },
-              tooltip: 'Open Fullscreen',
+              tooltip: AppLocalizations.of(context)!.openFullscreen,
               icon: const Icon(Icons.open_in_full, color: Colors.black),
             ),
           ],

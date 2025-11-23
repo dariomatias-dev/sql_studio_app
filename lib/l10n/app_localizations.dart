@@ -498,6 +498,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online store with products, orders, carts, and reviews'**
   String get eCommerceDescription;
+
+  /// No description provided for @openFullscreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Fullscreen'**
+  String get openFullscreen;
+
+  /// No description provided for @options.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get options;
+
+  /// No description provided for @table.
+  ///
+  /// In en, this message translates to:
+  /// **'Table'**
+  String get table;
+
+  /// No description provided for @tables.
+  ///
+  /// In en, this message translates to:
+  /// **'Tables'**
+  String get tables;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

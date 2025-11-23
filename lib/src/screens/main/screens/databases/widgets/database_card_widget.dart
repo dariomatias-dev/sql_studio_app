@@ -63,6 +63,8 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
 
+    final tableCount = widget.db.tables.length;
+
     return CardWidget(
       onTap: () {
         context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
@@ -96,7 +98,7 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
                   ],
                   const SizedBox(height: 6.0),
                   Text(
-                    '${widget.db.tables.length} tables: ${widget.db.tables.join(', ')}',
+                    '$tableCount ${tableCount == 1 ? appLocalizations.table : appLocalizations.tables}: ${widget.db.tables.join(', ')}',
                     style: const TextStyle(
                       color: Colors.black45,
                       fontSize: 12.0,

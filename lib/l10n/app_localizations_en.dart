@@ -210,4 +210,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eCommerceDescription => 'Online store with products, orders, carts, and reviews';
+
+  @override
+  String get openFullscreen => 'Open Fullscreen';
+
+  @override
+  String get options => 'Options';
+
+  @override
+  String get table => 'Table';
+
+  @override
+  String get tables => 'Tables';
 }

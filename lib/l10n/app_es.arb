@@ -65,5 +65,9 @@
   "bankingLabel": "Banca",
   "bankingDescription": "Sistema bancario con cuentas, transacciones, préstamos y empleados",
   "eCommerceLabel": "Comercio Electrónico",
-  "eCommerceDescription": "Tienda en línea con productos, pedidos, carritos y reseñas"
+  "eCommerceDescription": "Tienda en línea con productos, pedidos, carritos y reseñas",
+  "openFullscreen": "Abrir pantalla completa",
+  "options": "Opciones",
+  "table": "Tabla",
+  "tables": "Tablas"
 }

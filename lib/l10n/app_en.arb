@@ -65,5 +65,9 @@
   "bankingLabel": "Banking",
   "bankingDescription": "Banking system with accounts, transactions, loans, and employees",
   "eCommerceLabel": "E-Commerce",
-  "eCommerceDescription": "Online store with products, orders, carts, and reviews"
+  "eCommerceDescription": "Online store with products, orders, carts, and reviews",
+  "openFullscreen": "Open Fullscreen",
+  "options": "Options",
+  "table": "Table",
+  "tables": "Tables"
 }
