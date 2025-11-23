@@ -786,6 +786,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This field is required'**
   String get fieldRequired;
+
+  /// No description provided for @updateSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Suggestion'**
+  String get updateSuggestion;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @updateSuggestionSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion updated successfully.'**
+  String get updateSuggestionSuccess;
+
+  /// No description provided for @updateSuggestionFail.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update suggestion.'**
+  String get updateSuggestionFail;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -113,5 +113,9 @@
   "sqlCode": "SQL Code",
   "selectableTextOptional": "Selectable Text (optional)",
   "selectableTextHint": "Part of SQL to auto-select for user replacement",
-  "fieldRequired": "This field is required"
+  "fieldRequired": "This field is required",
+  "updateSuggestion": "Update Suggestion",
+  "update": "Update",
+  "updateSuggestionSuccess": "Suggestion updated successfully.",
+  "updateSuggestionFail": "Failed to update suggestion."
 }

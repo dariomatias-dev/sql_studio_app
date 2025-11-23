@@ -356,4 +356,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fieldRequired => 'Este campo é obrigatório';
+
+  @override
+  String get updateSuggestion => 'Atualizar Sugestão';
+
+  @override
+  String get update => 'Atualizar';
+
+  @override
+  String get updateSuggestionSuccess => 'Sugestão atualizada com sucesso.';
+
+  @override
+  String get updateSuggestionFail => 'Falha ao atualizar sugestão.';
 }
