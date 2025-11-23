@@ -222,4 +222,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tables => 'Tabelas';
+
+  @override
+  String get splitLayout => 'Layout Dividido';
+
+  @override
+  String get splitLayoutSubtitle => 'Editor acima e console abaixo.';
+
+  @override
+  String get tabsLayout => 'Layout em Abas';
+
+  @override
+  String get tabsLayoutSubtitle => 'Editor e console em abas.';
+
+  @override
+  String get preview => 'Pré-visualização:';
+
+  @override
+  String get layoutSaved => 'Layout salvo';
 }

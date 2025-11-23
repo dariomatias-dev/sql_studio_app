@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
@@ -33,43 +35,45 @@ class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
     if (result is FailureResult) {
       await handleError(context, result);
     } else {
-      Fluttertoast.showToast(msg: 'Layout saved');
+      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.layoutSaved);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return Consumer<WorkspaceLayoutNotifier>(
       builder: (context, notifier, _) {
         final selectedLayout = notifier.selectedLayout;
 
         return ScaffoldWidget(
-          appBar: AppBar(title: const Text('Workspace Layout')),
+          appBar: AppBar(title: Text(appLocalizations.workspaceLayout)),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
                 WorkspaceLayoutOptionCardWidget(
                   icon: Icons.view_agenda_outlined,
-                  title: 'Split Layout',
-                  subtitle: 'Editor above and console below.',
+                  title: appLocalizations.splitLayout,
+                  subtitle: appLocalizations.splitLayoutSubtitle,
                   selected: selectedLayout == WorkspaceLayoutType.split,
                   onTap: () => _onHandleLayoutChange(WorkspaceLayoutType.split),
                 ),
                 const SizedBox(height: 8.0),
                 WorkspaceLayoutOptionCardWidget(
                   icon: Icons.tab,
-                  title: 'Tabs Layout',
-                  subtitle: 'Editor and console in tabs.',
+                  title: appLocalizations.tabsLayout,
+                  subtitle: appLocalizations.tabsLayoutSubtitle,
                   selected: selectedLayout == WorkspaceLayoutType.tabs,
                   onTap: () => _onHandleLayoutChange(WorkspaceLayoutType.tabs),
                 ),
                 const SizedBox(height: 28.0),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Preview:',
-                    style: TextStyle(
+                    appLocalizations.preview,
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,

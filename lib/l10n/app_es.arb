@@ -69,5 +69,11 @@
   "openFullscreen": "Abrir pantalla completa",
   "options": "Opciones",
   "table": "Tabla",
-  "tables": "Tablas"
+  "tables": "Tablas",
+  "splitLayout": "Diseño Dividido",
+  "splitLayoutSubtitle": "Editor arriba y consola abajo.",
+  "tabsLayout": "Diseño por Pestañas",
+  "tabsLayoutSubtitle": "Editor y consola en pestañas.",
+  "preview": "Vista previa:",
+  "layoutSaved": "Diseño guardado"
 }

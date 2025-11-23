@@ -222,4 +222,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tables => 'Tablas';
+
+  @override
+  String get splitLayout => 'Diseño Dividido';
+
+  @override
+  String get splitLayoutSubtitle => 'Editor arriba y consola abajo.';
+
+  @override
+  String get tabsLayout => 'Diseño por Pestañas';
+
+  @override
+  String get tabsLayoutSubtitle => 'Editor y consola en pestañas.';
+
+  @override
+  String get preview => 'Vista previa:';
+
+  @override
+  String get layoutSaved => 'Diseño guardado';
 }

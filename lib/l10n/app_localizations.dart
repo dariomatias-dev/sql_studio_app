@@ -522,6 +522,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tables'**
   String get tables;
+
+  /// No description provided for @splitLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Split Layout'**
+  String get splitLayout;
+
+  /// No description provided for @splitLayoutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editor above and console below.'**
+  String get splitLayoutSubtitle;
+
+  /// No description provided for @tabsLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Tabs Layout'**
+  String get tabsLayout;
+
+  /// No description provided for @tabsLayoutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editor and console in tabs.'**
+  String get tabsLayoutSubtitle;
+
+  /// No description provided for @preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview:'**
+  String get preview;
+
+  /// No description provided for @layoutSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout saved'**
+  String get layoutSaved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

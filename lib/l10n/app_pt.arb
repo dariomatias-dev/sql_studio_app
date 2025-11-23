@@ -69,5 +69,11 @@
   "openFullscreen": "Abrir em tela cheia",
   "options": "Opções",
   "table": "Tabela",
-  "tables": "Tabelas"
+  "tables": "Tabelas",
+  "splitLayout": "Layout Dividido",
+  "splitLayoutSubtitle": "Editor acima e console abaixo.",
+  "tabsLayout": "Layout em Abas",
+  "tabsLayoutSubtitle": "Editor e console em abas.",
+  "preview": "Pré-visualização:",
+  "layoutSaved": "Layout salvo"
 }

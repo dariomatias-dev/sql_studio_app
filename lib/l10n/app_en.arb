@@ -69,5 +69,11 @@
   "openFullscreen": "Open Fullscreen",
   "options": "Options",
   "table": "Table",
-  "tables": "Tables"
+  "tables": "Tables",
+  "splitLayout": "Split Layout",
+  "splitLayoutSubtitle": "Editor above and console below.",
+  "tabsLayout": "Tabs Layout",
+  "tabsLayoutSubtitle": "Editor and console in tabs.",
+  "preview": "Preview:",
+  "layoutSaved": "Layout saved"
 }
