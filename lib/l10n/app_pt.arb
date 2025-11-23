@@ -97,5 +97,8 @@
   "invalidCharacters": "Caracteres inválidos",
   "removeSuggestion": "Remover Sugestão",
   "removeSuggestionDescription": "Tem certeza de que deseja remover esta sugestão?",
-  "remove": "Remover"
+  "remove": "Remover",
+  "resetSuggestions": "Redefinir Sugestões",
+  "resetSuggestionsDescription": "Tem certeza de que deseja redefinir a lista de sugestões?",
+  "reset": "Redefinir"
 }

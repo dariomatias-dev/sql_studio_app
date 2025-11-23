@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
@@ -25,9 +27,11 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ConfirmationDialogWidget(
-      title: 'Reset Suggestions',
-      description: 'Are you sure you want to reset the suggestion list?',
+      title: appLocalizations.resetSuggestions,
+      description: appLocalizations.resetSuggestionsDescription,
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final result = await context
@@ -40,7 +44,7 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
             handleError(_getContext(), result);
           }
         },
-        text: 'Reset',
+        text: appLocalizations.reset,
         style: ButtonStyleType.black,
       ),
     );

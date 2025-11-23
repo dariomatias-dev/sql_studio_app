@@ -306,4 +306,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remove => 'Remove';
+
+  @override
+  String get resetSuggestions => 'Reset Suggestions';
+
+  @override
+  String get resetSuggestionsDescription => 'Are you sure you want to reset the suggestion list?';
+
+  @override
+  String get reset => 'Reset';
 }

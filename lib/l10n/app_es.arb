@@ -97,5 +97,8 @@
   "invalidCharacters": "Caracteres inválidos",
   "removeSuggestion": "Eliminar Sugerencia",
   "removeSuggestionDescription": "¿Estás seguro de que deseas eliminar esta sugerencia?",
-  "remove": "Eliminar"
+  "remove": "Eliminar",
+  "resetSuggestions": "Restablecer Sugerencias",
+  "resetSuggestionsDescription": "¿Estás seguro de que deseas restablecer la lista de sugerencias?",
+  "reset": "Restablecer"
 }

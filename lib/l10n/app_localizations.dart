@@ -690,6 +690,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
+
+  /// No description provided for @resetSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Suggestions'**
+  String get resetSuggestions;
+
+  /// No description provided for @resetSuggestionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reset the suggestion list?'**
+  String get resetSuggestionsDescription;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

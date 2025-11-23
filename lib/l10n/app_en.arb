@@ -97,5 +97,8 @@
   "invalidCharacters": "Invalid characters",
   "removeSuggestion": "Remove Suggestion",
   "removeSuggestionDescription": "Are you sure you want to remove this suggestion?",
-  "remove": "Remove"
+  "remove": "Remove",
+  "resetSuggestions": "Reset Suggestions",
+  "resetSuggestionsDescription": "Are you sure you want to reset the suggestion list?",
+  "reset": "Reset"
 }
