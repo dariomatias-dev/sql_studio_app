@@ -9,20 +9,20 @@ import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
-import 'package:sql_studio/src/screens/workspace_layout/widgets/workspace_layout_option_card_widget.dart';
+import 'package:sql_studio/src/screens/workspace_layout_settings/widgets/workspace_layout_settings_option_card_widget.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
-class WorkspaceLayoutScreen extends StatefulWidget {
-  const WorkspaceLayoutScreen({super.key});
+class WorkspaceLayoutSettingsScreen extends StatefulWidget {
+  const WorkspaceLayoutSettingsScreen({super.key});
 
   @override
-  State<WorkspaceLayoutScreen> createState() => _WorkspaceLayoutScreenState();
+  State<WorkspaceLayoutSettingsScreen> createState() => _WorkspaceLayoutConfigurationScreenState();
 }
 
-class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
+class _WorkspaceLayoutConfigurationScreenState extends State<WorkspaceLayoutSettingsScreen> {
   Future<void> _onHandleLayoutChange(WorkspaceLayoutType layout) async {
     final workspaceLayoutNotifier = context.read<WorkspaceLayoutNotifier>();
 
@@ -53,7 +53,7 @@ class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
-                WorkspaceLayoutOptionCardWidget(
+                WorkspaceLayoutSettingsOptionCardWidget(
                   icon: Icons.view_agenda_outlined,
                   title: appLocalizations.splitLayout,
                   subtitle: appLocalizations.splitLayoutSubtitle,
@@ -61,7 +61,7 @@ class _WorkspaceLayoutScreenState extends State<WorkspaceLayoutScreen> {
                   onTap: () => _onHandleLayoutChange(WorkspaceLayoutType.split),
                 ),
                 const SizedBox(height: 8.0),
-                WorkspaceLayoutOptionCardWidget(
+                WorkspaceLayoutSettingsOptionCardWidget(
                   icon: Icons.tab,
                   title: appLocalizations.tabsLayout,
                   subtitle: appLocalizations.tabsLayoutSubtitle,

@@ -83,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 ),
                 SettingsCardWidget(
                   onTap: () {
-                    context.push(RouteNames.workspaceLayout);
+                    context.push(RouteNames.workspaceLayoutSettings);
                   },
                   title: appLocalizations.workspaceLayout,
                   icon: Icons.arrow_forward_ios,

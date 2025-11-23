@@ -17,5 +17,5 @@ class RouteNames {
 
   static const sqlSuggestionSettingsPath = '/settings/sql-suggestion-settings';
 
-  static const workspaceLayout = '/settings/workspace-layout';
+  static const workspaceLayoutSettings = '/settings/workspace-layout-settings';
 }

@@ -4,8 +4,8 @@ import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
-class WorkspaceLayoutOptionCardWidget extends StatelessWidget {
-  const WorkspaceLayoutOptionCardWidget({
+class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
+  const WorkspaceLayoutSettingsOptionCardWidget({
     super.key,
     required this.onTap,
     required this.icon,
