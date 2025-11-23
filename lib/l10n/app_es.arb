@@ -105,5 +105,8 @@
   "advancedSuggestionFailed": "Error al agregar la sugerencia.",
   "deleteSuggestionConfirmation": "¿Está seguro de que desea eliminar la sugerencia \"{label}\"?",
   "suggestionDeleted": "Sugerencia eliminada con éxito.",
-  "suggestionDeleteFailed": "Error al eliminar la sugerencia."
+  "suggestionDeleteFailed": "Error al eliminar la sugerencia.",
+  "resetSuggestionsConfirm": "¿Estás seguro de que deseas restablecer las sugerencias?",
+  "suggestionsResetSuccess": "Todas las sugerencias se han restablecido con éxito.",
+  "suggestionsResetFailed": "No se pudieron restablecer las sugerencias. Inténtalo de nuevo."
 }

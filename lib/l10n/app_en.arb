@@ -105,5 +105,8 @@
   "advancedSuggestionFailed": "Failed to add suggestion.",
   "deleteSuggestionConfirmation": "Are you sure you want to delete the suggestion \"{label}\"?",
   "suggestionDeleted": "Suggestion deleted successfully.",
-  "suggestionDeleteFailed": "Failed to delete suggestion."
+  "suggestionDeleteFailed": "Failed to delete suggestion.",
+  "resetSuggestionsConfirm": "Are you sure you want to reset the suggestions?",
+  "suggestionsResetSuccess": "All suggestions have been reset successfully.",
+  "suggestionsResetFailed": "Failed to reset suggestions. Please try again."
 }

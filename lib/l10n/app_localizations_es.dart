@@ -332,4 +332,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get suggestionDeleteFailed => 'Error al eliminar la sugerencia.';
+
+  @override
+  String get resetSuggestionsConfirm => '¿Estás seguro de que deseas restablecer las sugerencias?';
+
+  @override
+  String get suggestionsResetSuccess => 'Todas las sugerencias se han restablecido con éxito.';
+
+  @override
+  String get suggestionsResetFailed => 'No se pudieron restablecer las sugerencias. Inténtalo de nuevo.';
 }

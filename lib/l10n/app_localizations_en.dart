@@ -332,4 +332,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestionDeleteFailed => 'Failed to delete suggestion.';
+
+  @override
+  String get resetSuggestionsConfirm => 'Are you sure you want to reset the suggestions?';
+
+  @override
+  String get suggestionsResetSuccess => 'All suggestions have been reset successfully.';
+
+  @override
+  String get suggestionsResetFailed => 'Failed to reset suggestions. Please try again.';
 }

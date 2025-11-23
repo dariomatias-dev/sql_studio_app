@@ -738,6 +738,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to delete suggestion.'**
   String get suggestionDeleteFailed;
+
+  /// No description provided for @resetSuggestionsConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reset the suggestions?'**
+  String get resetSuggestionsConfirm;
+
+  /// No description provided for @suggestionsResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'All suggestions have been reset successfully.'**
+  String get suggestionsResetSuccess;
+
+  /// No description provided for @suggestionsResetFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset suggestions. Please try again.'**
+  String get suggestionsResetFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

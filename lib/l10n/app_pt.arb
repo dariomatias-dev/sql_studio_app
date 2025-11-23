@@ -105,5 +105,8 @@
   "advancedSuggestionFailed": "Falha ao adicionar sugestão.",
   "deleteSuggestionConfirmation": "Tem certeza de que deseja excluir a sugestão \"{label}\"?",
   "suggestionDeleted": "Sugestão excluída com sucesso.",
-  "suggestionDeleteFailed": "Falha ao excluir sugestão."
+  "suggestionDeleteFailed": "Falha ao excluir sugestão.",
+  "resetSuggestionsConfirm": "Tem certeza de que deseja redefinir as sugestões?",
+  "suggestionsResetSuccess": "Todas as sugestões foram redefinidas com sucesso.",
+  "suggestionsResetFailed": "Não foi possível redefinir as sugestões. Tente novamente."
 }

@@ -332,4 +332,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get suggestionDeleteFailed => 'Falha ao excluir sugestão.';
+
+  @override
+  String get resetSuggestionsConfirm => 'Tem certeza de que deseja redefinir as sugestões?';
+
+  @override
+  String get suggestionsResetSuccess => 'Todas as sugestões foram redefinidas com sucesso.';
+
+  @override
+  String get suggestionsResetFailed => 'Não foi possível redefinir as sugestões. Tente novamente.';
 }
