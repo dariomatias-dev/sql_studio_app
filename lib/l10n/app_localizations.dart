@@ -642,6 +642,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Configure'**
   String get configure;
+
+  /// No description provided for @createSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Suggestion'**
+  String get createSuggestion;
+
+  /// No description provided for @suggestionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion name'**
+  String get suggestionName;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @enterSuggestionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name for the suggestion.'**
+  String get enterSuggestionName;
+
+  /// No description provided for @invalidCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid characters'**
+  String get invalidCharacters;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

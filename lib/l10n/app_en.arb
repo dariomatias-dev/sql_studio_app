@@ -89,5 +89,10 @@
   "advancedSuggestionsInitialized": "Advanced suggestions have been initialized successfully.",
   "advancedSuggestionsFailed": "Failed to initialize advanced suggestions.",
   "settingsSavedSuccessfully": "Settings saved successfully!",
-  "configure": "Configure"
+  "configure": "Configure",
+  "createSuggestion": "Create Suggestion",
+  "suggestionName": "Suggestion name",
+  "create": "Create",
+  "enterSuggestionName": "Enter a name for the suggestion.",
+  "invalidCharacters": "Invalid characters"
 }

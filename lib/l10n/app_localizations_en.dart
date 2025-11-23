@@ -282,4 +282,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get configure => 'Configure';
+
+  @override
+  String get createSuggestion => 'Create Suggestion';
+
+  @override
+  String get suggestionName => 'Suggestion name';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get enterSuggestionName => 'Enter a name for the suggestion.';
+
+  @override
+  String get invalidCharacters => 'Invalid characters';
 }

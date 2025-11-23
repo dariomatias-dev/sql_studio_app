@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
@@ -29,16 +31,18 @@ class _CreateSqlBasicSuggestionDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return InputDialogWidget(
-      title: 'Create Suggestion',
+      title: appLocalizations.createSuggestion,
       controller: _controller,
-      label: 'Suggestion name',
-      submitText: 'Create',
+      label: appLocalizations.suggestionName,
+      submitText: appLocalizations.create,
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Enter a name for the suggestion.';
+          return appLocalizations.enterSuggestionName;
         } else if (!RegExp(r'^[a-zA-Z0-9 _-]+$').hasMatch(value)) {
-          return 'Invalid characters';
+          return appLocalizations.invalidCharacters;
         }
 
         return null;
