@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -54,12 +56,15 @@ class _SuggestionsSettingsLayoutWidgetState<T>
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return ScaffoldWidget(
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
             onPressed: widget.onReset,
+            tooltip: appLocalizations.resetSuggestions,
             icon: const Icon(Icons.refresh, color: Colors.black87),
           ),
         ],
@@ -109,7 +114,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                                         ? _controller.saveItems
                                         : null,
                                     style: ButtonStyleType.black,
-                                    text: 'Save',
+                                    text: appLocalizations.save,
                                   );
                                 },
                               ),

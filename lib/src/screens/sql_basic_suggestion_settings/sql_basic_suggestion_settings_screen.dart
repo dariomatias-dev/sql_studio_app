@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_controller.dart';
@@ -29,7 +31,7 @@ class _SqlBasicSuggestionsSettingsScreenState
     final notifier = context.watch<SqlBasicSuggestionsNotifier>();
 
     return SuggestionsSettingsLayoutWidget<String>(
-      title: 'Basic Suggestions',
+      title: AppLocalizations.of(context)!.basicSuggestions,
       isLoading: notifier.isLoading,
       initialItems: notifier.suggestions,
       itemBuilder: (suggestion, index) {

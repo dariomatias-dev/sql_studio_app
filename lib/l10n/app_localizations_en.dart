@@ -368,4 +368,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateSuggestionFail => 'Failed to update suggestion.';
+
+  @override
+  String get deleteSuggestion => 'Delete suggestion';
+
+  @override
+  String get save => 'Save';
 }

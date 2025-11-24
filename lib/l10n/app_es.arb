@@ -117,5 +117,7 @@
   "updateSuggestion": "Actualizar Sugerencia",
   "update": "Actualizar",
   "updateSuggestionSuccess": "Sugerencia actualizada con éxito.",
-  "updateSuggestionFail": "No se pudo actualizar la sugerencia."
+  "updateSuggestionFail": "No se pudo actualizar la sugerencia.",
+  "deleteSuggestion": "Eliminar sugerencia",
+  "save": "Guardar"
 }

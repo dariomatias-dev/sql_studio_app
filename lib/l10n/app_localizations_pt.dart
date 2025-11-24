@@ -368,4 +368,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get updateSuggestionFail => 'Falha ao atualizar sugestão.';
+
+  @override
+  String get deleteSuggestion => 'Deletar sugestão';
+
+  @override
+  String get save => 'Salvar';
 }
