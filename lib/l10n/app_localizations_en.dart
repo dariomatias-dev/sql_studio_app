@@ -370,8 +370,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateSuggestionFail => 'Failed to update suggestion.';
 
   @override
+  String get editSuggestion => 'Edit suggestion';
+
+  @override
   String get deleteSuggestion => 'Delete suggestion';
 
   @override
   String get save => 'Save';
+
+  @override
+  String get exitScreen => 'Exit screen';
 }

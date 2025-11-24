@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/sql_advanced_suggestion_settings_controller.dart';
@@ -30,7 +32,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
     final notifier = context.watch<SqlAdvancedSuggestionsNotifier>();
 
     return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionModel>(
-      title: 'Advanced Suggestions',
+      title: AppLocalizations.of(context)!.advancedSuggestions,
       isLoading: notifier.isLoading,
       initialItems: notifier.suggestions,
       itemBuilder: (suggestion, index) {

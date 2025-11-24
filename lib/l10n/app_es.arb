@@ -118,6 +118,8 @@
   "update": "Actualizar",
   "updateSuggestionSuccess": "Sugerencia actualizada con éxito.",
   "updateSuggestionFail": "No se pudo actualizar la sugerencia.",
+  "editSuggestion": "Editar sugerencia",
   "deleteSuggestion": "Eliminar sugerencia",
-  "save": "Guardar"
+  "save": "Guardar",
+  "exitScreen": "Salir de la pantalla"
 }

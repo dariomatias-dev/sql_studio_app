@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 class ScaffoldWidget extends StatelessWidget {
   const ScaffoldWidget({
     super.key,
@@ -29,7 +31,7 @@ class ScaffoldWidget extends StatelessWidget {
               leading: showExitButton
                   ? IconButton(
                       onPressed: context.pop,
-                      tooltip: 'Exit Screen',
+                      tooltip: AppLocalizations.of(context)!.exitScreen,
                       icon: const Icon(
                         Icons.arrow_back_ios_new,
                         color: Colors.black54,

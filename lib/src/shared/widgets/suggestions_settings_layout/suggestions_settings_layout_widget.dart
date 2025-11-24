@@ -127,6 +127,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100.0),
                             ),
+                            tooltip: appLocalizations.createSuggestion,
                             child: const Icon(Icons.add, color: Colors.black),
                           ),
                         ],

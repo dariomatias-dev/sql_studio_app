@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card/sql_advanced_suggestion_card_controller.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
@@ -23,6 +25,8 @@ class _SqlAdvancedSuggestionCardWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
       decoration: BoxDecoration(
@@ -67,12 +71,12 @@ class _SqlAdvancedSuggestionCardWidgetState
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             IconButton(
-              tooltip: 'Edit "${widget.suggestion.label}"',
+              tooltip: appLocalizations.editSuggestion,
               onPressed: _controller.showEditDialog,
               icon: Icon(Icons.edit_outlined, color: Colors.grey.shade600),
             ),
             IconButton(
-              tooltip: 'Delete "${widget.suggestion.label}"',
+              tooltip: appLocalizations.removeSuggestion,
               onPressed: _controller.showDeleteDialog,
               icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
             ),

@@ -811,6 +811,12 @@ abstract class AppLocalizations {
   /// **'Failed to update suggestion.'**
   String get updateSuggestionFail;
 
+  /// No description provided for @editSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit suggestion'**
+  String get editSuggestion;
+
   /// No description provided for @deleteSuggestion.
   ///
   /// In en, this message translates to:
@@ -822,6 +828,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @exitScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit screen'**
+  String get exitScreen;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
