@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
+import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -21,16 +22,16 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
   Future<Result<void>> load() async {
     try {
       _useBasicSuggestions = SharedPreferencesService.getBool(
-        'useBasicSuggestions',
+        SharedPreferencesKeys.useBasicSuggestionsKey,
         defaultValue: true,
       );
 
       _useAdvancedSuggestions = SharedPreferencesService.getBool(
-        'useAdvancedSuggestions',
+        SharedPreferencesKeys.useAdvancedSuggestionsKey,
       );
 
       _useCharacterSuggestions = SharedPreferencesService.getBool(
-        'useCharacterSuggestions',
+        SharedPreferencesKeys.useCharacterSuggestionsKey,
         defaultValue: true,
       );
 
@@ -51,17 +52,17 @@ class SqlSuggestionsNotifier extends ChangeNotifier {
   Future<Result<void>> saveSettings() async {
     try {
       await SharedPreferencesService.setBool(
-        'useBasicSuggestions',
+        SharedPreferencesKeys.useBasicSuggestionsKey,
         _useBasicSuggestions,
       );
 
       await SharedPreferencesService.setBool(
-        'useAdvancedSuggestions',
+        SharedPreferencesKeys.useAdvancedSuggestionsKey,
         _useAdvancedSuggestions,
       );
 
       await SharedPreferencesService.setBool(
-        'useCharacterSuggestions',
+        SharedPreferencesKeys.useCharacterSuggestionsKey,
         _useCharacterSuggestions,
       );
 
