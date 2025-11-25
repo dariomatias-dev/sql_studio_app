@@ -380,4 +380,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exitScreen => 'Exit screen';
+
+  @override
+  String get failedToSaveWorkspaceLayout => 'Failed to save workspace layout. Please try again.';
 }

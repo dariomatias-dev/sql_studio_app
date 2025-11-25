@@ -121,5 +121,6 @@
   "editSuggestion": "Editar sugerencia",
   "deleteSuggestion": "Eliminar sugerencia",
   "save": "Guardar",
-  "exitScreen": "Salir de la pantalla"
+  "exitScreen": "Salir de la pantalla",
+  "failedToSaveWorkspaceLayout": "No se pudo guardar el diseño del espacio de trabajo. Por favor, inténtalo de nuevo."
 }

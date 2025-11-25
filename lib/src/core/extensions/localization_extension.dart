@@ -30,6 +30,7 @@ extension LocalizationExtension on AppLocalizations {
     'bankingDescription': (l) => l.bankingDescription,
     'eCommerceLabel': (l) => l.eCommerceLabel,
     'eCommerceDescription': (l) => l.eCommerceDescription,
+    'failedToSaveWorkspaceLayout': (l) => l.failedToSaveWorkspaceLayout,
   };
 
   String key(String k) => _translations[k]?.call(this) ?? k;

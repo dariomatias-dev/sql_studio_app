@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
@@ -19,10 +20,12 @@ class WorkspaceLayoutSettingsScreen extends StatefulWidget {
   const WorkspaceLayoutSettingsScreen({super.key});
 
   @override
-  State<WorkspaceLayoutSettingsScreen> createState() => _WorkspaceLayoutConfigurationScreenState();
+  State<WorkspaceLayoutSettingsScreen> createState() =>
+      _WorkspaceLayoutConfigurationScreenState();
 }
 
-class _WorkspaceLayoutConfigurationScreenState extends State<WorkspaceLayoutSettingsScreen> {
+class _WorkspaceLayoutConfigurationScreenState
+    extends State<WorkspaceLayoutSettingsScreen> {
   Future<void> _onHandleLayoutChange(WorkspaceLayoutType layout) async {
     final workspaceLayoutNotifier = context.read<WorkspaceLayoutNotifier>();
 
@@ -32,10 +35,15 @@ class _WorkspaceLayoutConfigurationScreenState extends State<WorkspaceLayoutSett
 
     if (!mounted) return;
 
+    final appLocalizations = AppLocalizations.of(context)!;
+
     if (result is FailureResult) {
-      await handleError(context, result);
+      await handleError(
+        context,
+        FailureResult(AppFailure(appLocalizations.key(result.error.message))),
+      );
     } else {
-      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.layoutSaved);
+      Fluttertoast.showToast(msg: appLocalizations.layoutSaved);
     }
   }
 

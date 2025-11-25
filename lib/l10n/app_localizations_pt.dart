@@ -380,4 +380,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get exitScreen => 'Sair da tela';
+
+  @override
+  String get failedToSaveWorkspaceLayout => 'Falha ao salvar o layout do espaço de trabalho. Por favor, tente novamente.';
 }

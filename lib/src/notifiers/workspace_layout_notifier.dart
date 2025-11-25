@@ -46,7 +46,7 @@ class WorkspaceLayoutNotifier extends ChangeNotifier {
       );
 
       return FailureResult(
-        AppFailure('Failed to save workspace layout. Please try again.'),
+        AppFailure('failedToSaveWorkspaceLayout'),
       );
     }
   }

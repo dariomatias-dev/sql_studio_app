@@ -834,6 +834,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exit screen'**
   String get exitScreen;
+
+  /// No description provided for @failedToSaveWorkspaceLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save workspace layout. Please try again.'**
+  String get failedToSaveWorkspaceLayout;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

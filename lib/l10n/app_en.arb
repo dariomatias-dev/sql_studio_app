@@ -121,5 +121,6 @@
   "editSuggestion": "Edit suggestion",
   "deleteSuggestion": "Delete suggestion",
   "save": "Save",
-  "exitScreen": "Exit screen"
+  "exitScreen": "Exit screen",
+  "failedToSaveWorkspaceLayout": "Failed to save workspace layout. Please try again."
 }
