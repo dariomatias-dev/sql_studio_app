@@ -1,10 +1,10 @@
-class ColumnInfo {
+class ColumnInfoModel {
   final String name;
   final String type;
   final String? foreignTable;
   final String? foreignColumn;
 
-  ColumnInfo({
+  ColumnInfoModel({
     required this.name,
     required this.type,
     this.foreignTable,
@@ -12,9 +12,9 @@ class ColumnInfo {
   });
 }
 
-class TableInfo {
+class TableInfoModel {
   final String name;
-  final List<ColumnInfo> columns;
+  final List<ColumnInfoModel> columns;
 
-  TableInfo({required this.name, required this.columns});
+  TableInfoModel({required this.name, required this.columns});
 }

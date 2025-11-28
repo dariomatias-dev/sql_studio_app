@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
-import 'package:sql_studio/src/core/types/table_info.dart';
+import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 class SqlExecutionService {
   final _logger = Logger();
@@ -95,7 +95,7 @@ class SqlExecutionService {
     return result.builder((col, index) => col['name'] as String);
   }
 
-  Future<List<TableInfo>> getDatabaseStructure({
+  Future<List<TableInfoModel>> getDatabaseStructure({
     required String databaseName,
   }) async {
     final path = join(await getDatabasesPath(), '$databaseName.db');
@@ -105,7 +105,7 @@ class SqlExecutionService {
       "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name != 'android_metadata';",
     );
 
-    final tables = <TableInfo>[];
+    final tables = <TableInfoModel>[];
 
     for (final row in tableResult) {
       final name = row['name'] as String;
@@ -118,7 +118,7 @@ class SqlExecutionService {
           orElse: () => {},
         );
 
-        return ColumnInfo(
+        return ColumnInfoModel(
           name: col['name'] as String,
           type: col['type'] as String,
           foreignTable: fk['table'] as String?,
@@ -126,7 +126,7 @@ class SqlExecutionService {
         );
       });
 
-      tables.add(TableInfo(name: name, columns: columns));
+      tables.add(TableInfoModel(name: name, columns: columns));
     }
 
     return tables;

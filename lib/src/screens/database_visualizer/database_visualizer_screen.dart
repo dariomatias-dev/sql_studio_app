@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/types/table_info.dart';
+import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
 
@@ -22,7 +22,7 @@ class DatabaseVisualizerScreen extends StatefulWidget {
 
 class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
   final _sqlExecutionService = SqlExecutionService();
-  List<TableInfo>? tables;
+  List<TableInfoModel>? tables;
   final _tableRects = <String, Rect>{};
 
   static const _tableWidgetWidth = 240.0;
@@ -167,7 +167,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
 }
 
 class TableRelationPainter extends CustomPainter {
-  final List<TableInfo> tables;
+  final List<TableInfoModel> tables;
   final Map<String, Rect> tableRects;
   final double tableHeaderHeight;
   final double tableColumnRowHeight;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/types/table_info.dart';
+import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 class DatabaseVisualizerTableWidget extends StatelessWidget {
   const DatabaseVisualizerTableWidget({super.key, required this.table});
 
-  final TableInfo table;
+  final TableInfoModel table;
 
   @override
   Widget build(BuildContext context) {
