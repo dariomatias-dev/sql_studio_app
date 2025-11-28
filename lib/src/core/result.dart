@@ -1,17 +1,20 @@
 import 'dart:async';
 
-abstract class Failure {
-  final String message;
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 
-  const Failure(this.message);
+abstract class Failure {
+  final AppLocalizationsKey type;
+  final Map<String, Object?> args;
+
+  const Failure(this.type, [this.args = const {}]);
 }
 
 class DatabaseFailure extends Failure {
-  const DatabaseFailure(super.message);
+  const DatabaseFailure(super.type, [super.args]);
 }
 
 class AppFailure extends Failure {
-  const AppFailure(super.message);
+  const AppFailure(super.type, [super.args]);
 }
 
 sealed class Result<T> {

@@ -835,11 +835,185 @@ abstract class AppLocalizations {
   /// **'Exit screen'**
   String get exitScreen;
 
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
   /// No description provided for @failedToSaveWorkspaceLayout.
   ///
   /// In en, this message translates to:
   /// **'Failed to save workspace layout. Please try again.'**
   String get failedToSaveWorkspaceLayout;
+
+  /// No description provided for @databaseCreationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create the database \"{databaseName}\".'**
+  String databaseCreationError(Object databaseName);
+
+  /// No description provided for @fetchDatabasesError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not fetch the created databases.'**
+  String get fetchDatabasesError;
+
+  /// No description provided for @checkDatabaseExistsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to check if the database already exists.'**
+  String get checkDatabaseExistsError;
+
+  /// No description provided for @deleteDatabaseError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to delete the database \"{databaseName}\".'**
+  String deleteDatabaseError(Object databaseName);
+
+  /// No description provided for @noRecordDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'No record was deleted'**
+  String get noRecordDeleted;
+
+  /// No description provided for @toggleDatabaseFavoriteError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to change the favorite status of the database \"{databaseName}\".'**
+  String toggleDatabaseFavoriteError(Object databaseName);
+
+  /// No description provided for @unableToClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to clear databases'**
+  String get unableToClear;
+
+  /// No description provided for @failedToGetAppVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get app version'**
+  String get failedToGetAppVersion;
+
+  /// No description provided for @sqlExecutionError.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL execution error: {error}'**
+  String sqlExecutionError(Object error);
+
+  /// No description provided for @noDatabaseSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No database selected'**
+  String get noDatabaseSelected;
+
+  /// No description provided for @failedToLoadSqlSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load SQL suggestions'**
+  String get failedToLoadSqlSuggestions;
+
+  /// No description provided for @failedToSaveSqlSuggestionsSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save SQL suggestions settings'**
+  String get failedToSaveSqlSuggestionsSettings;
+
+  /// No description provided for @failedToLoadAdvancedSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load advanced suggestions'**
+  String get failedToLoadAdvancedSuggestions;
+
+  /// No description provided for @failedToAddAdvancedSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add advanced suggestion'**
+  String get failedToAddAdvancedSuggestion;
+
+  /// No description provided for @failedToUpdateAdvancedSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update advanced suggestion'**
+  String get failedToUpdateAdvancedSuggestion;
+
+  /// No description provided for @failedToRemoveAdvancedSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove advanced suggestion'**
+  String get failedToRemoveAdvancedSuggestion;
+
+  /// No description provided for @failedToSaveAllAdvancedSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save all advanced suggestions'**
+  String get failedToSaveAllAdvancedSuggestions;
+
+  /// No description provided for @failedToReorderAdvancedSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reorder advanced suggestions'**
+  String get failedToReorderAdvancedSuggestions;
+
+  /// No description provided for @failedToResetAdvancedSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset advanced suggestions'**
+  String get failedToResetAdvancedSuggestions;
+
+  /// No description provided for @failedToLoadBasicSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load basic suggestions'**
+  String get failedToLoadBasicSuggestions;
+
+  /// No description provided for @failedToAddBasicSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add basic suggestion'**
+  String get failedToAddBasicSuggestion;
+
+  /// No description provided for @failedToUpdateBasicSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update basic suggestions'**
+  String get failedToUpdateBasicSuggestions;
+
+  /// No description provided for @failedToRemoveBasicSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove basic suggestion'**
+  String get failedToRemoveBasicSuggestion;
+
+  /// No description provided for @failedToResetBasicSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reset basic suggestions'**
+  String get failedToResetBasicSuggestions;
+
+  /// No description provided for @failedToLoadSqlFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load SQL files: {error}'**
+  String failedToLoadSqlFiles(Object error);
+
+  /// No description provided for @failedToExecuteSql.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to execute SQL for \"{dbName}\": {error}'**
+  String failedToExecuteSql(Object dbName, Object error);
+
+  /// No description provided for @databaseResetSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Database reset successfully'**
+  String get databaseResetSuccessfully;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknownError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

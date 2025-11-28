@@ -1,7 +1,9 @@
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+
 class DefaultDatabaseModel {
   final String name;
-  final String labelKey;
-  final String descriptionKey;
+  final AppLocalizationsKey labelKey;
+  final AppLocalizationsKey descriptionKey;
   final List<String> tables;
 
   const DefaultDatabaseModel({

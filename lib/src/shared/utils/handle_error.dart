@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
+import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -10,6 +13,8 @@ Future<void> handleError<T>(
   Result<T> result, {
   Future<void> Function(T value)? onSuccess,
 }) async {
+  final appLocalizations = AppLocalizations.of(context)!;
+
   await result.fold(
     onSuccess: onSuccess,
     onFailure: (error) async {
@@ -19,8 +24,11 @@ Future<void> handleError<T>(
             context: context,
             builder: (context) {
               return DialogWidget(
-                title: 'Error',
-                content: Text(error.message),
+                title: appLocalizations.error,
+                content: Text(
+                  appLocalizations.key(error.type, error.args),
+                  textAlign: TextAlign.center,
+                ),
                 actions: <Widget>[
                   ButtonWidget(
                     onPressed: () => Navigator.pop(context),

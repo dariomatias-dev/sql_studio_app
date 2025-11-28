@@ -86,16 +86,14 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (widget.db.descriptionKey.isNotEmpty) ...<Widget>[
-                    const SizedBox(height: 4.0),
-                    Text(
-                      appLocalizations.key(widget.db.descriptionKey),
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12.0,
-                      ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    appLocalizations.key(widget.db.descriptionKey),
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 12.0,
                     ),
-                  ],
+                  ),
                   const SizedBox(height: 6.0),
                   Text(
                     '$tableCount ${tableCount == 1 ? appLocalizations.table : appLocalizations.tables}: ${widget.db.tables.join(', ')}',

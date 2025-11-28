@@ -382,5 +382,104 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exitScreen => 'Salir de la pantalla';
 
   @override
+  String get error => 'Error';
+
+  @override
   String get failedToSaveWorkspaceLayout => 'No se pudo guardar el diseño del espacio de trabajo. Por favor, inténtalo de nuevo.';
+
+  @override
+  String databaseCreationError(Object databaseName) {
+    return 'No se pudo crear la base de datos \"$databaseName\".';
+  }
+
+  @override
+  String get fetchDatabasesError => 'No se pudo obtener las bases de datos creadas.';
+
+  @override
+  String get checkDatabaseExistsError => 'No se pudo comprobar si la base de datos ya existe.';
+
+  @override
+  String deleteDatabaseError(Object databaseName) {
+    return 'No se pudo eliminar la base de datos \"$databaseName\".';
+  }
+
+  @override
+  String get noRecordDeleted => 'Ningún registro fue eliminado';
+
+  @override
+  String toggleDatabaseFavoriteError(Object databaseName) {
+    return 'No se pudo cambiar el estado de favorito de la base de datos \"$databaseName\".';
+  }
+
+  @override
+  String get unableToClear => 'No se pueden borrar las bases de datos';
+
+  @override
+  String get failedToGetAppVersion => 'No se pudo obtener la versión de la aplicación';
+
+  @override
+  String sqlExecutionError(Object error) {
+    return 'SQL execution error: $error';
+  }
+
+  @override
+  String get noDatabaseSelected => 'Ninguna base de datos seleccionada';
+
+  @override
+  String get failedToLoadSqlSuggestions => 'No se pudieron cargar las sugerencias SQL';
+
+  @override
+  String get failedToSaveSqlSuggestionsSettings => 'No se pudieron guardar las configuraciones de sugerencias SQL';
+
+  @override
+  String get failedToLoadAdvancedSuggestions => 'No se pudieron cargar las sugerencias avanzadas';
+
+  @override
+  String get failedToAddAdvancedSuggestion => 'No se pudo agregar la sugerencia avanzada';
+
+  @override
+  String get failedToUpdateAdvancedSuggestion => 'No se pudo actualizar la sugerencia avanzada';
+
+  @override
+  String get failedToRemoveAdvancedSuggestion => 'No se pudo eliminar la sugerencia avanzada';
+
+  @override
+  String get failedToSaveAllAdvancedSuggestions => 'No se pudieron guardar todas las sugerencias avanzadas';
+
+  @override
+  String get failedToReorderAdvancedSuggestions => 'No se pudieron reordenar las sugerencias avanzadas';
+
+  @override
+  String get failedToResetAdvancedSuggestions => 'No se pudieron restablecer las sugerencias avanzadas';
+
+  @override
+  String get failedToLoadBasicSuggestions => 'No se pudieron cargar las sugerencias básicas';
+
+  @override
+  String get failedToAddBasicSuggestion => 'No se pudo agregar la sugerencia básica';
+
+  @override
+  String get failedToUpdateBasicSuggestions => 'No se pudieron actualizar las sugerencias básicas';
+
+  @override
+  String get failedToRemoveBasicSuggestion => 'No se pudo eliminar la sugerencia básica';
+
+  @override
+  String get failedToResetBasicSuggestions => 'No se pudieron restablecer las sugerencias básicas';
+
+  @override
+  String failedToLoadSqlFiles(Object error) {
+    return 'Error al cargar los archivos SQL: $error';
+  }
+
+  @override
+  String failedToExecuteSql(Object dbName, Object error) {
+    return 'Error al ejecutar SQL para \"$dbName\": $error';
+  }
+
+  @override
+  String get databaseResetSuccessfully => 'Base de datos restablecida correctamente';
+
+  @override
+  String get unknownError => 'Error desconocido';
 }

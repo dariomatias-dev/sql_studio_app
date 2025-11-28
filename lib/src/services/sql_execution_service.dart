@@ -2,6 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/types/table_info.dart';
@@ -15,7 +16,7 @@ class SqlExecutionService {
   }) async {
     if (databaseName == null || databaseName.isEmpty) {
       return FailureResult(
-        DatabaseFailure('No active database. Select a database.'),
+        DatabaseFailure(AppLocalizationsKey.noDatabaseSelected),
       );
     }
 
@@ -65,7 +66,9 @@ class SqlExecutionService {
     } catch (err, stackTrace) {
       _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
 
-      return FailureResult(DatabaseFailure('SQL execution error: $err'));
+      return FailureResult(
+        DatabaseFailure(AppLocalizationsKey.sqlExecutionError, {'error': err}),
+      );
     }
   }
 

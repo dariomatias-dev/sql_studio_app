@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -74,7 +75,9 @@ class DefaultDatabaseService {
       );
 
       return FailureResult(
-        AppFailure('Failed to load SQL files: ${err.message}'),
+        AppFailure(AppLocalizationsKey.failedToLoadSqlFiles, {
+          'error': err.message,
+        }),
       );
     } on Exception catch (err, stackTrace) {
       logger.e(
@@ -84,7 +87,10 @@ class DefaultDatabaseService {
       );
 
       return FailureResult(
-        DatabaseFailure('Failed to execute SQL for "$dbName": $err'),
+        DatabaseFailure(AppLocalizationsKey.failedToExecuteSql, {
+          'dbName': dbName,
+          'error': err.toString(),
+        }),
       );
     }
   }

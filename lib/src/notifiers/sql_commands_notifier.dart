@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/database/default_database_service.dart';
@@ -14,7 +15,8 @@ class SqlCommandsNotifier extends ChangeNotifier {
   String? _activeDatabase;
   Result? result;
   bool isLoading = false;
-  String? error;
+  AppLocalizationsKey? error;
+  Map<String, Object?>? errorArgs;
   String? lastQuery;
   bool isDefaultDatabase = false;
 
@@ -37,14 +39,19 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
   Future<void> runQuery(String sql) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
-      error = 'No active database. Select a database.';
+      error = AppLocalizationsKey.noDatabaseSelected;
+      errorArgs = null;
+
       notifyListeners();
+
       return;
     }
 
     lastQuery = sql;
     isLoading = true;
     error = null;
+    errorArgs = null;
+
     notifyListeners();
 
     final response = await _sqlService.execute(
@@ -54,24 +61,29 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
     isLoading = false;
 
-    switch (response) {
-      case SuccessResult():
+    await response.fold(
+      onSuccess: (value) {
         result = response;
-        break;
-      case FailureResult():
-        error = response.error.message;
+      },
+      onFailure: (err) {
+        error = err.type;
+        errorArgs = err.args;
+
         result = null;
-        break;
-    }
+      },
+    );
 
     notifyListeners();
   }
 
   Future<List<String>> getTableColumns(String tableName) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
-      error = 'No active database. Select a database.';
+      error = AppLocalizationsKey.noDatabaseSelected;
+      errorArgs = null;
+
       notifyListeners();
-      return [];
+
+      return <String>[];
     }
 
     try {
@@ -81,9 +93,12 @@ class SqlCommandsNotifier extends ChangeNotifier {
       );
       return columns;
     } catch (e) {
-      error = 'Failed to fetch table columns: $e';
+      error = AppLocalizationsKey.sqlExecutionError;
+      errorArgs = {'dbName': tableName, 'error': e.toString()};
+
       notifyListeners();
-      return [];
+
+      return <String>[];
     }
   }
 
@@ -92,6 +107,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
     isLoading = true;
     error = null;
+    errorArgs = null;
     notifyListeners();
 
     final executeResult = await DefaultDatabaseService.execute(
@@ -100,31 +116,43 @@ class SqlCommandsNotifier extends ChangeNotifier {
 
     await executeResult.fold(
       onSuccess: (_) {
-        result = const SuccessResult('Database reset successfully');
+        result = const SuccessResult(
+          AppLocalizationsKey.databaseResetSuccessfully,
+        );
         error = null;
+        errorArgs = null;
       },
       onFailure: (failure) {
         result = null;
-        error = failure.message;
+        if (failure is DatabaseFailure) {
+          error = AppLocalizationsKey.sqlExecutionError;
+          errorArgs = {'error': failure.type};
+        } else if (failure is AppFailure) {
+          error = AppLocalizationsKey.failedToLoadSqlFiles;
+          errorArgs = {'error': failure.type};
+        } else {
+          error = AppLocalizationsKey.unknownError;
+          errorArgs = null;
+        }
       },
     );
 
     isLoading = false;
+
     notifyListeners();
   }
 
   void clearResult() {
     result = null;
     error = null;
+    errorArgs = null;
+
     notifyListeners();
   }
 
   Future<void> _checkActiveDatabase() async {
     final dbName = activeDatabase;
-    if (dbName != null) {
-      isDefaultDatabase = defaultDatabases.any((db) => db.name == dbName);
-    } else {
-      isDefaultDatabase = false;
-    }
+    isDefaultDatabase =
+        dbName != null && defaultDatabases.any((db) => db.name == dbName);
   }
 }

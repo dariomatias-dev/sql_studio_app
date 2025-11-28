@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/sql_advanced_suggestions_service.dart';
@@ -10,7 +11,6 @@ import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart'
 
 class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
   final _logger = Logger();
-
   final _service = SqlAdvancedSuggestionsService();
 
   final _suggestions = <SqlAdvancedSuggestionModel>[];
@@ -20,7 +20,6 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
 
   Future<Result<void>> load() async {
     isLoading = true;
-
     notifyListeners();
 
     try {
@@ -28,9 +27,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
 
       _suggestions
         ..clear()
-        ..addAll(
-          List<SqlAdvancedSuggestionModel>.from(result),
-        );
+        ..addAll(List<SqlAdvancedSuggestionModel>.from(result));
 
       return const SuccessResult(null);
     } catch (err, stackTrace) {
@@ -40,7 +37,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to load advanced suggestions'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToLoadAdvancedSuggestions),
+      );
     } finally {
       isLoading = false;
 
@@ -68,7 +67,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to add advanced suggestion'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToAddAdvancedSuggestion),
+      );
     } finally {
       isLoading = false;
 
@@ -97,7 +98,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to update advanced suggestion'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToUpdateAdvancedSuggestion),
+      );
     } finally {
       isLoading = false;
 
@@ -123,7 +126,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to remove advanced suggestion'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToRemoveAdvancedSuggestion),
+      );
     } finally {
       isLoading = false;
 
@@ -140,7 +145,6 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
 
     try {
       await _service.clear();
-
       await _service.addAll(newSuggestions);
 
       _suggestions
@@ -156,7 +160,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       );
 
       return FailureResult(
-        AppFailure('Failed to save all advanced suggestions'),
+        AppFailure(AppLocalizationsKey.failedToSaveAllAdvancedSuggestions),
       );
     } finally {
       isLoading = false;
@@ -196,7 +200,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       );
 
       return FailureResult(
-        AppFailure('Failed to reorder advanced suggestions'),
+        AppFailure(AppLocalizationsKey.failedToReorderAdvancedSuggestions),
       );
     } finally {
       isLoading = false;
@@ -213,7 +217,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     try {
       _suggestions
         ..clear()
-        ..addAll(List<SqlAdvancedSuggestionModel>.from(defaultSqlAdvancedSuggestions));
+        ..addAll(
+          List<SqlAdvancedSuggestionModel>.from(defaultSqlAdvancedSuggestions),
+        );
 
       await _service.clear();
       await _service.addAll(_suggestions);
@@ -226,7 +232,9 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to reset advanced suggestions'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToResetAdvancedSuggestions),
+      );
     } finally {
       isLoading = false;
 

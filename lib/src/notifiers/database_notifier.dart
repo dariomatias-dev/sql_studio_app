@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/database_service.dart';
@@ -24,7 +26,6 @@ class DatabaseNotifier extends ChangeNotifier {
     if (_isLoading) return const SuccessResult(null);
 
     _isLoading = true;
-
     notifyListeners();
 
     final result = await _service.getAll();
@@ -46,12 +47,14 @@ class DatabaseNotifier extends ChangeNotifier {
     } else if (result is FailureResult<List<DatabaseModel>>) {
       notifyListeners();
 
-      return FailureResult(DatabaseFailure(result.error.message));
+      return FailureResult(DatabaseFailure(result.error.type));
     }
 
     notifyListeners();
 
-    return const FailureResult(DatabaseFailure('Unknown error'));
+    return const FailureResult(
+      DatabaseFailure(AppLocalizationsKey.unknownError),
+    );
   }
 
   Future<Result<void>> create(DatabaseModel model) async {
@@ -64,10 +67,14 @@ class DatabaseNotifier extends ChangeNotifier {
 
       return const SuccessResult(null);
     } else if (result is FailureResult) {
-      return FailureResult(DatabaseFailure(result.error.message));
+      return FailureResult(
+        DatabaseFailure(result.error.type, result.error.args),
+      );
     }
 
-    return const FailureResult(DatabaseFailure('Unknown error'));
+    return const FailureResult(
+      DatabaseFailure(AppLocalizationsKey.unknownError),
+    );
   }
 
   Future<Result<DatabaseModel?>> getByName(String name) async {
@@ -76,17 +83,21 @@ class DatabaseNotifier extends ChangeNotifier {
     if (result is SuccessResult<DatabaseModel?>) {
       return SuccessResult(result.value);
     } else if (result is FailureResult<DatabaseModel?>) {
-      return FailureResult(DatabaseFailure(result.error.message));
+      return FailureResult(DatabaseFailure(result.error.type));
     }
 
-    return const FailureResult(DatabaseFailure('Unknown error'));
+    return const FailureResult(
+      DatabaseFailure(AppLocalizationsKey.unknownError),
+    );
   }
 
   Future<Result<void>> delete(DatabaseModel model) async {
     final dropResult = await _service.dropTable(model);
 
     if (dropResult is FailureResult) {
-      return FailureResult(DatabaseFailure(dropResult.error.message));
+      return FailureResult(
+        DatabaseFailure(dropResult.error.type, dropResult.error.args),
+      );
     }
 
     final result = await _service.delete(model);
@@ -98,10 +109,14 @@ class DatabaseNotifier extends ChangeNotifier {
 
       return const SuccessResult(null);
     } else if (result is FailureResult) {
-      return FailureResult(DatabaseFailure(result.error.message));
+      return FailureResult(
+        DatabaseFailure(result.error.type, result.error.args),
+      );
     }
 
-    return const FailureResult(DatabaseFailure('Unknown error'));
+    return const FailureResult(
+      DatabaseFailure(AppLocalizationsKey.unknownError),
+    );
   }
 
   Future<Result<void>> toggleFavorite(DatabaseModel model) async {
@@ -118,10 +133,14 @@ class DatabaseNotifier extends ChangeNotifier {
 
       return const SuccessResult(null);
     } else if (result is FailureResult) {
-      return FailureResult(DatabaseFailure(result.error.message));
+      return FailureResult(
+        DatabaseFailure(result.error.type, result.error.args),
+      );
     }
 
-    return const FailureResult(DatabaseFailure('Unknown error'));
+    return const FailureResult(
+      DatabaseFailure(AppLocalizationsKey.unknownError),
+    );
   }
 
   void setFilter(String value) {

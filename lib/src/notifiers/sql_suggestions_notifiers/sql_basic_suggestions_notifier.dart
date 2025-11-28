@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -39,7 +40,9 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to load basic suggestions'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToLoadBasicSuggestions),
+      );
     } finally {
       isLoading = false;
 
@@ -68,7 +71,9 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     } catch (err, stackTrace) {
       _logger.e('Failed to add suggestion', error: err, stackTrace: stackTrace);
 
-      return FailureResult(AppFailure('Failed to add suggestion'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToAddBasicSuggestion),
+      );
     } finally {
       isLoading = false;
 
@@ -99,7 +104,9 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to update suggestions'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToUpdateBasicSuggestions),
+      );
     } finally {
       isLoading = false;
 
@@ -128,7 +135,9 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to remove suggestion'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToRemoveBasicSuggestion),
+      );
     } finally {
       isLoading = false;
 
@@ -159,7 +168,9 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(AppFailure('Failed to reset suggestions'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToResetBasicSuggestions),
+      );
     } finally {
       isLoading = false;
 

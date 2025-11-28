@@ -1,53 +1,55 @@
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+
 import 'package:sql_studio/src/shared/models/default_database_model.dart';
 
 const defaultDatabases = <DefaultDatabaseModel>[
   // 1 table
   DefaultDatabaseModel(
     name: 'to_do_list',
-    labelKey: 'toDoListLabel',
-    descriptionKey: 'toDoListDescription',
+    labelKey: AppLocalizationsKey.toDoListLabel,
+    descriptionKey: AppLocalizationsKey.toDoListDescription,
     tables: <String>['tasks'],
   ),
 
   // 2 tables
   DefaultDatabaseModel(
     name: 'contacts',
-    labelKey: 'contactsLabel',
-    descriptionKey: 'contactsDescription',
+    labelKey: AppLocalizationsKey.contactsLabel,
+    descriptionKey: AppLocalizationsKey.contactsDescription,
     tables: <String>['groups', 'contacts'],
   ),
 
   // 3 tables
   DefaultDatabaseModel(
     name: 'library',
-    labelKey: 'libraryLabel',
-    descriptionKey: 'libraryDescription',
+    labelKey: AppLocalizationsKey.libraryLabel,
+    descriptionKey: AppLocalizationsKey.libraryDescription,
     tables: <String>['books', 'members', 'loans'],
   ),
   DefaultDatabaseModel(
     name: 'fitness_club',
-    labelKey: 'fitnessClubLabel',
-    descriptionKey: 'fitnessClubDescription',
+    labelKey: AppLocalizationsKey.fitnessClubLabel,
+    descriptionKey: AppLocalizationsKey.fitnessClubDescription,
     tables: <String>['members', 'plans', 'subscriptions'],
   ),
 
   // 4 tables
   DefaultDatabaseModel(
     name: 'car_rental',
-    labelKey: 'carRentalLabel',
-    descriptionKey: 'carRentalDescription',
+    labelKey: AppLocalizationsKey.carRentalLabel,
+    descriptionKey: AppLocalizationsKey.carRentalDescription,
     tables: <String>['cars', 'customers', 'rentals', 'payments'],
   ),
   DefaultDatabaseModel(
     name: 'restaurant',
-    labelKey: 'restaurantLabel',
-    descriptionKey: 'restaurantDescription',
+    labelKey: AppLocalizationsKey.restaurantLabel,
+    descriptionKey: AppLocalizationsKey.restaurantDescription,
     tables: <String>['customers', 'menu_items', 'orders', 'order_items'],
   ),
   DefaultDatabaseModel(
     name: 'hr_payroll',
-    labelKey: 'hrPayrollLabel',
-    descriptionKey: 'hrPayrollDescription',
+    labelKey: AppLocalizationsKey.hrPayrollLabel,
+    descriptionKey: AppLocalizationsKey.hrPayrollDescription,
     tables: <String>[
       'departments',
       'job_positions',
@@ -59,8 +61,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   // 5 tables
   DefaultDatabaseModel(
     name: 'logistics',
-    labelKey: 'logisticsLabel',
-    descriptionKey: 'logisticsDescription',
+    labelKey: AppLocalizationsKey.logisticsLabel,
+    descriptionKey: AppLocalizationsKey.logisticsDescription,
     tables: <String>[
       'customers',
       'drivers',
@@ -71,8 +73,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'pharmacy',
-    labelKey: 'pharmacyLabel',
-    descriptionKey: 'pharmacyDescription',
+    labelKey: AppLocalizationsKey.pharmacyLabel,
+    descriptionKey: AppLocalizationsKey.pharmacyDescription,
     tables: <String>[
       'products',
       'suppliers',
@@ -83,8 +85,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'school',
-    labelKey: 'schoolLabel',
-    descriptionKey: 'schoolDescription',
+    labelKey: AppLocalizationsKey.schoolLabel,
+    descriptionKey: AppLocalizationsKey.schoolDescription,
     tables: <String>[
       'students',
       'teachers',
@@ -95,16 +97,16 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'social_network',
-    labelKey: 'socialNetworkLabel',
-    descriptionKey: 'socialNetworkDescription',
+    labelKey: AppLocalizationsKey.socialNetworkLabel,
+    descriptionKey: AppLocalizationsKey.socialNetworkDescription,
     tables: <String>['users', 'followers', 'posts', 'comments', 'likes'],
   ),
 
   // 6 tables
   DefaultDatabaseModel(
     name: 'hotel',
-    labelKey: 'hotelLabel',
-    descriptionKey: 'hotelDescription',
+    labelKey: AppLocalizationsKey.hotelLabel,
+    descriptionKey: AppLocalizationsKey.hotelDescription,
     tables: <String>[
       'guests',
       'rooms',
@@ -116,8 +118,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   ),
   DefaultDatabaseModel(
     name: 'banking',
-    labelKey: 'bankingLabel',
-    descriptionKey: 'bankingDescription',
+    labelKey: AppLocalizationsKey.bankingLabel,
+    descriptionKey: AppLocalizationsKey.bankingDescription,
     tables: <String>[
       'customers',
       'accounts',
@@ -131,8 +133,8 @@ const defaultDatabases = <DefaultDatabaseModel>[
   // 8 tables
   DefaultDatabaseModel(
     name: 'e_commerce',
-    labelKey: 'eCommerceLabel',
-    descriptionKey: 'eCommerceDescription',
+    labelKey: AppLocalizationsKey.eCommerceLabel,
+    descriptionKey: AppLocalizationsKey.eCommerceDescription,
     tables: <String>[
       'users',
       'categories',

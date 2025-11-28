@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
@@ -43,7 +44,7 @@ class ConsoleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
-    
+
     return Consumer<SqlCommandsNotifier>(
       builder: (context, notifier, child) {
         Widget content;
@@ -64,9 +65,11 @@ class ConsoleWidget extends StatelessWidget {
           );
         } else if (notifier.error != null) {
           content = SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
-              notifier.error!,
+              AppLocalizations.of(
+                context,
+              )!.key(notifier.error!, notifier.errorArgs ?? {}),
               style: const TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,

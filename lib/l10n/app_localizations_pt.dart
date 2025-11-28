@@ -382,5 +382,104 @@ class AppLocalizationsPt extends AppLocalizations {
   String get exitScreen => 'Sair da tela';
 
   @override
+  String get error => 'Erro';
+
+  @override
   String get failedToSaveWorkspaceLayout => 'Falha ao salvar o layout do espaço de trabalho. Por favor, tente novamente.';
+
+  @override
+  String databaseCreationError(Object databaseName) {
+    return 'Não foi possível criar o banco de dados \"$databaseName\".';
+  }
+
+  @override
+  String get fetchDatabasesError => 'Não foi possível obter os bancos de dados criados.';
+
+  @override
+  String get checkDatabaseExistsError => 'Não foi possível checar se o banco de dados já existe.';
+
+  @override
+  String deleteDatabaseError(Object databaseName) {
+    return 'Não foi possível excluir o banco de dados \"$databaseName\".';
+  }
+
+  @override
+  String get noRecordDeleted => 'Nenhum registro foi excluído';
+
+  @override
+  String toggleDatabaseFavoriteError(Object databaseName) {
+    return 'Não foi possível mudar o status de favorito do banco de dados \"$databaseName\".';
+  }
+
+  @override
+  String get unableToClear => 'Não foi possível limpar os bancos de dados';
+
+  @override
+  String get failedToGetAppVersion => 'Falha ao obter a versão do app';
+
+  @override
+  String sqlExecutionError(Object error) {
+    return 'Erro na execução do SQL: $error';
+  }
+
+  @override
+  String get noDatabaseSelected => 'Nenhum banco de dados selecionado';
+
+  @override
+  String get failedToLoadSqlSuggestions => 'Falha ao carregar sugestões SQL';
+
+  @override
+  String get failedToSaveSqlSuggestionsSettings => 'Falha ao salvar configurações de sugestões SQL';
+
+  @override
+  String get failedToLoadAdvancedSuggestions => 'Falha ao carregar sugestões avançadas';
+
+  @override
+  String get failedToAddAdvancedSuggestion => 'Falha ao adicionar sugestão avançada';
+
+  @override
+  String get failedToUpdateAdvancedSuggestion => 'Falha ao atualizar sugestão avançada';
+
+  @override
+  String get failedToRemoveAdvancedSuggestion => 'Falha ao remover sugestão avançada';
+
+  @override
+  String get failedToSaveAllAdvancedSuggestions => 'Falha ao salvar todas as sugestões avançadas';
+
+  @override
+  String get failedToReorderAdvancedSuggestions => 'Falha ao reordenar sugestões avançadas';
+
+  @override
+  String get failedToResetAdvancedSuggestions => 'Falha ao resetar sugestões avançadas';
+
+  @override
+  String get failedToLoadBasicSuggestions => 'Falha ao carregar sugestões básicas';
+
+  @override
+  String get failedToAddBasicSuggestion => 'Falha ao adicionar sugestão básica';
+
+  @override
+  String get failedToUpdateBasicSuggestions => 'Falha ao atualizar sugestões básicas';
+
+  @override
+  String get failedToRemoveBasicSuggestion => 'Falha ao remover sugestão básica';
+
+  @override
+  String get failedToResetBasicSuggestions => 'Falha ao resetar sugestões básicas';
+
+  @override
+  String failedToLoadSqlFiles(Object error) {
+    return 'Falha ao carregar os arquivos SQL: $error';
+  }
+
+  @override
+  String failedToExecuteSql(Object dbName, Object error) {
+    return 'Falha ao executar SQL para \"$dbName\": $error';
+  }
+
+  @override
+  String get databaseResetSuccessfully => 'Banco de dados reiniciado com sucesso';
+
+  @override
+  String get unknownError => 'Erro desconhecido';
 }

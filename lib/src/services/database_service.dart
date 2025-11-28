@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 
@@ -31,7 +32,11 @@ class DatabaseService {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(DatabaseFailure('Unable to create database: $err'));
+      return FailureResult(
+        DatabaseFailure(AppLocalizationsKey.databaseCreationError, {
+          'databaseName': model.name,
+        }),
+      );
     }
   }
 
@@ -52,7 +57,9 @@ class DatabaseService {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(DatabaseFailure('Unable to fetch databases: $err'));
+      return const FailureResult(
+        DatabaseFailure(AppLocalizationsKey.fetchDatabasesError),
+      );
     }
   }
 
@@ -81,61 +88,9 @@ class DatabaseService {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
-        DatabaseFailure('Unable to retrieve database by name: $err'),
+      return const FailureResult(
+        DatabaseFailure(AppLocalizationsKey.checkDatabaseExistsError),
       );
-    }
-  }
-
-  Future<Result<DatabaseModel?>> getById(String id) async {
-    try {
-      final result = await _repository.getById(id);
-
-      if (result != null) {
-        final model = DatabaseModel.fromMap(result);
-
-        _logger.i('Fetched database by id: $id');
-
-        return SuccessResult(model);
-      }
-
-      _logger.w('No database found with id: $id');
-
-      return const SuccessResult(null);
-    } catch (err, stackTrace) {
-      _logger.e(
-        'Failed to retrieve database',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return FailureResult(
-        DatabaseFailure('Unable to retrieve database: $err'),
-      );
-    }
-  }
-
-  Future<Result<void>> update(DatabaseModel model) async {
-    try {
-      final updatedCount = await _repository.update(model.toMap());
-
-      if (updatedCount > 0) {
-        _logger.i('Database updated: ${model.name}');
-
-        return const SuccessResult(null);
-      }
-
-      _logger.w('No record updated for database: ${model.name}');
-
-      return FailureResult(DatabaseFailure('No record was updated.'));
-    } catch (err, stackTrace) {
-      _logger.e(
-        'Failed to update database',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return FailureResult(DatabaseFailure('Unable to update database: $err'));
     }
   }
 
@@ -151,7 +106,9 @@ class DatabaseService {
 
       _logger.w('No record deleted for database: ${model.name}');
 
-      return FailureResult(DatabaseFailure('No record was deleted.'));
+      return const FailureResult(
+        DatabaseFailure(AppLocalizationsKey.noRecordDeleted),
+      );
     } catch (err, stackTrace) {
       _logger.e(
         'Failed to delete database',
@@ -159,7 +116,11 @@ class DatabaseService {
         stackTrace: stackTrace,
       );
 
-      return FailureResult(DatabaseFailure('Unable to delete database: $err'));
+      return FailureResult(
+        DatabaseFailure(AppLocalizationsKey.deleteDatabaseError, {
+          'databaseName': model.name,
+        }),
+      );
     }
   }
 
@@ -180,12 +141,18 @@ class DatabaseService {
       _logger.w('Unable to toggle favorite for database: ${model.name}');
 
       return FailureResult(
-        DatabaseFailure('Unable to update favorite status.'),
+        DatabaseFailure(AppLocalizationsKey.toggleDatabaseFavoriteError, {
+          'databaseName': model.name,
+        }),
       );
     } catch (err, stackTrace) {
       _logger.e('Error toggling favorite', error: err, stackTrace: stackTrace);
 
-      return FailureResult(DatabaseFailure('Error toggling favorite: $err'));
+      return FailureResult(
+        DatabaseFailure(AppLocalizationsKey.toggleDatabaseFavoriteError, {
+          'databaseName': model.name,
+        }),
+      );
     }
   }
 
@@ -204,26 +171,10 @@ class DatabaseService {
       );
 
       return FailureResult(
-        DatabaseFailure('Unable to perform complete drop: $err'),
+        DatabaseFailure(AppLocalizationsKey.deleteDatabaseError, {
+          'databaseName': model.name,
+        }),
       );
-    }
-  }
-
-  Future<Result<void>> clearAll() async {
-    try {
-      await _repository.clear();
-
-      _logger.i('All databases cleared');
-
-      return const SuccessResult(null);
-    } catch (err, stackTrace) {
-      _logger.e(
-        'Failed to clear databases',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return FailureResult(DatabaseFailure('Unable to clear databases: $err'));
     }
   }
 }

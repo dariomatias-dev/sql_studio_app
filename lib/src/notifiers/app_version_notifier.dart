@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/result.dart';
 
 class AppVersionNotifier extends ChangeNotifier {
@@ -30,7 +31,9 @@ class AppVersionNotifier extends ChangeNotifier {
 
       notifyListeners();
 
-      return FailureResult(AppFailure('Failed to get app version'));
+      return FailureResult(
+        AppFailure(AppLocalizationsKey.failedToGetAppVersion),
+      );
     }
   }
 }

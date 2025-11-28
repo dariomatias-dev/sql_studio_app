@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
@@ -40,7 +39,7 @@ class _WorkspaceLayoutConfigurationScreenState
     if (result is FailureResult) {
       await handleError(
         context,
-        FailureResult(AppFailure(appLocalizations.key(result.error.message))),
+        FailureResult(AppFailure(result.error.type)),
       );
     } else {
       Fluttertoast.showToast(msg: appLocalizations.layoutSaved);
