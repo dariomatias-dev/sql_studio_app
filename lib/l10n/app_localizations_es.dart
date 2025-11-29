@@ -482,4 +482,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unknownError => 'Error desconocido';
+
+  @override
+  String get createDatabase => 'Crear Base de Datos';
+
+  @override
+  String get name => 'Nombre';
+
+  @override
+  String get pleaseEnterLabel => 'Por favor, ingrese una etiqueta';
+
+  @override
+  String get pleaseEnterName => 'Por favor, ingrese un nombre';
+
+  @override
+  String get invalidCharactersDetected => 'Se detectaron caracteres no válidos';
+
+  @override
+  String databaseAlreadyExists(Object name) {
+    return 'La base de datos \"\$$name\" ya existe';
+  }
+
+  @override
+  String languageUpdated(Object lang) {
+    return 'Idioma actualizado a \$$lang.';
+  }
 }

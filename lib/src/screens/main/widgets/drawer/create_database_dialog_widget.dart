@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
@@ -59,7 +61,9 @@ class _CreateDatabaseDialogWidgetState
             context: context,
             builder: (context) {
               return ErrorDialogWidget(
-                description: 'Database "$name" already exists',
+                description: AppLocalizations.of(
+                  context,
+                )!.databaseAlreadyExists(name),
               );
             },
           );
@@ -105,8 +109,10 @@ class _CreateDatabaseDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return DialogWidget(
-      title: 'Create Database',
+      title: appLocalizations.createDatabase,
       content: Form(
         key: formKey,
         child: Column(
@@ -114,7 +120,7 @@ class _CreateDatabaseDialogWidgetState
           children: <Widget>[
             InputWidget(
               controller: labelController,
-              labelText: 'Label',
+              labelText: appLocalizations.label,
               suffixIcon: IconButton(
                 onPressed: () {
                   labelController.clear();
@@ -135,7 +141,7 @@ class _CreateDatabaseDialogWidgetState
               },
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter a label';
+                  return appLocalizations.pleaseEnterLabel;
                 }
 
                 return null;
@@ -144,7 +150,7 @@ class _CreateDatabaseDialogWidgetState
             const SizedBox(height: 16),
             InputWidget(
               controller: nameController,
-              labelText: 'Name',
+              labelText: appLocalizations.name,
               suffixIcon: IconButton(
                 onPressed: () {
                   nameController.clear();
@@ -157,11 +163,11 @@ class _CreateDatabaseDialogWidgetState
               onChanged: (_) => _nameEdited = true,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter a name';
+                  return appLocalizations.pleaseEnterName;
                 } else if (!RegExp(
                   r'^[a-z0-9_]+$',
                 ).hasMatch(_toSnakeCase(value))) {
-                  return 'Invalid characters detected';
+                  return appLocalizations.invalidCharactersDetected;
                 }
 
                 return null;
@@ -173,7 +179,7 @@ class _CreateDatabaseDialogWidgetState
       actions: <Widget>[
         CancelButtonWidget(),
         ButtonWidget(
-          text: 'Create',
+          text: appLocalizations.create,
           onPressed: _onCreate,
           style: ButtonStyleType.black,
         ),

@@ -151,5 +151,12 @@
   "failedToLoadSqlFiles": "Error al cargar los archivos SQL: {error}",
   "failedToExecuteSql": "Error al ejecutar SQL para \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Base de datos restablecida correctamente",
-  "unknownError": "Error desconocido"
+  "unknownError": "Error desconocido",
+  "createDatabase": "Crear Base de Datos",
+  "name": "Nombre",
+  "pleaseEnterLabel": "Por favor, ingrese una etiqueta",
+  "pleaseEnterName": "Por favor, ingrese un nombre",
+  "invalidCharactersDetected": "Se detectaron caracteres no válidos",
+  "databaseAlreadyExists": "La base de datos \"${name}\" ya existe",
+  "languageUpdated": "Idioma actualizado a ${lang}."
 }

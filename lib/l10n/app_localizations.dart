@@ -1014,6 +1014,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown error'**
   String get unknownError;
+
+  /// No description provided for @createDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Database'**
+  String get createDatabase;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @pleaseEnterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a label'**
+  String get pleaseEnterLabel;
+
+  /// No description provided for @pleaseEnterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a name'**
+  String get pleaseEnterName;
+
+  /// No description provided for @invalidCharactersDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid characters detected'**
+  String get invalidCharactersDetected;
+
+  /// No description provided for @databaseAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'Database \"\${name}\" already exists'**
+  String databaseAlreadyExists(Object name);
+
+  /// No description provided for @languageUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Language updated to \${lang}.'**
+  String languageUpdated(Object lang);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

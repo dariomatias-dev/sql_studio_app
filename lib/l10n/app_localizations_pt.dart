@@ -482,4 +482,29 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get unknownError => 'Erro desconhecido';
+
+  @override
+  String get createDatabase => 'Criar Banco de Dados';
+
+  @override
+  String get name => 'Nome';
+
+  @override
+  String get pleaseEnterLabel => 'Por favor, insira um rótulo';
+
+  @override
+  String get pleaseEnterName => 'Por favor, insira um nome';
+
+  @override
+  String get invalidCharactersDetected => 'Caracteres inválidos detectados';
+
+  @override
+  String databaseAlreadyExists(Object name) {
+    return 'O banco de dados \"\$$name\" já existe';
+  }
+
+  @override
+  String languageUpdated(Object lang) {
+    return 'Idioma atualizado para $lang.';
+  }
 }

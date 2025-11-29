@@ -151,5 +151,12 @@
   "failedToLoadSqlFiles": "Failed to load SQL files: {error}",
   "failedToExecuteSql": "Failed to execute SQL for \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Database reset successfully",
-  "unknownError": "Unknown error"
+  "unknownError": "Unknown error",
+  "createDatabase": "Create Database",
+  "name": "Name",
+  "pleaseEnterLabel": "Please enter a label",
+  "pleaseEnterName": "Please enter a name",
+  "invalidCharactersDetected": "Invalid characters detected",
+  "databaseAlreadyExists": "Database \"${name}\" already exists",
+  "languageUpdated": "Language updated to ${lang}."
 }

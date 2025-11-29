@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/locale_controller.dart';
 
@@ -33,6 +36,8 @@ class _LanguageSelectorSheetOptionWidgetState
     if (!mounted) return;
 
     Navigator.pop(context);
+
+    Fluttertoast.showToast(msg: AppLocalizations.of(context)!.languageUpdated(widget.lang));
   }
 
   @override

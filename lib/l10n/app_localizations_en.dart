@@ -482,4 +482,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unknownError => 'Unknown error';
+
+  @override
+  String get createDatabase => 'Create Database';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get pleaseEnterLabel => 'Please enter a label';
+
+  @override
+  String get pleaseEnterName => 'Please enter a name';
+
+  @override
+  String get invalidCharactersDetected => 'Invalid characters detected';
+
+  @override
+  String databaseAlreadyExists(Object name) {
+    return 'Database \"\$$name\" already exists';
+  }
+
+  @override
+  String languageUpdated(Object lang) {
+    return 'Language updated to \$$lang.';
+  }
 }
