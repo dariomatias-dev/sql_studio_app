@@ -42,6 +42,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get privacyPolicy => 'Política de Privacidade';
 
   @override
+  String get contact => 'Contato';
+
+  @override
   String get errorOpeningUrl => 'Erro ao abrir URL';
 
   @override

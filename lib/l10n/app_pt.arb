@@ -10,6 +10,7 @@
   "appVersion": "Versão do App",
   "officialWebsite": "Site Oficial",
   "privacyPolicy": "Política de Privacidade",
+  "contact": "Contato",
   "errorOpeningUrl": "Erro ao abrir URL",
   "errorOpeningUrlDescription": "A URL {url} não pôde ser aberta.",
   "enterFullscreen": "Entrar em Tela Cheia",

@@ -10,6 +10,7 @@
   "appVersion": "App Version",
   "officialWebsite": "Official Website",
   "privacyPolicy": "Privacy Policy",
+  "contact": "Contact",
   "errorOpeningUrl": "Error opening URL",
   "errorOpeningUrlDescription": "The URL {url} could not be opened.",
   "enterFullscreen": "Enter Fullscreen",

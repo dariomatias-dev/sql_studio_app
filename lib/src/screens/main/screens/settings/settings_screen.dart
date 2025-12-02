@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
@@ -106,6 +107,13 @@ class _SettingsScreenState extends State<SettingsScreen>
                     _openUrl('https://sql-studio.vercel.app/privacy-policy');
                   },
                   title: appLocalizations.privacyPolicy,
+                  icon: Icons.open_in_new,
+                ),
+                SettingsCardWidget(
+                  onTap: () {
+                    _openUrl('https://sql-studio.vercel.app/contact');
+                  },
+                  title: appLocalizations.contact,
                   icon: Icons.open_in_new,
                 ),
               ],

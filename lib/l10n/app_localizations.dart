@@ -163,6 +163,12 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacyPolicy;
 
+  /// No description provided for @contact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contact;
+
   /// No description provided for @errorOpeningUrl.
   ///
   /// In en, this message translates to:
