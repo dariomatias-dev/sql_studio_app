@@ -500,11 +500,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String databaseAlreadyExists(Object name) {
-    return 'Database \"\$$name\" already exists';
+    return 'Database \"$name\" already exists';
   }
 
   @override
   String languageUpdated(Object lang) {
-    return 'Language updated to \$$lang.';
+    return 'Language updated to $lang.';
   }
 }

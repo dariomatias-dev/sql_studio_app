@@ -157,6 +157,6 @@
   "pleaseEnterLabel": "Por favor, insira um rótulo",
   "pleaseEnterName": "Por favor, insira um nome",
   "invalidCharactersDetected": "Caracteres inválidos detectados",
-  "databaseAlreadyExists": "O banco de dados \"${name}\" já existe",
+  "databaseAlreadyExists": "O banco de dados \"{name}\" já existe",
   "languageUpdated": "Idioma atualizado para {lang}."
 }

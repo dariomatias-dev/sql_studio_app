@@ -500,7 +500,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String databaseAlreadyExists(Object name) {
-    return 'O banco de dados \"\$$name\" já existe';
+    return 'O banco de dados \"$name\" já existe';
   }
 
   @override

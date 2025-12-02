@@ -157,6 +157,6 @@
   "pleaseEnterLabel": "Please enter a label",
   "pleaseEnterName": "Please enter a name",
   "invalidCharactersDetected": "Invalid characters detected",
-  "databaseAlreadyExists": "Database \"${name}\" already exists",
-  "languageUpdated": "Language updated to ${lang}."
+  "databaseAlreadyExists": "Database \"{name}\" already exists",
+  "languageUpdated": "Language updated to {lang}."
 }

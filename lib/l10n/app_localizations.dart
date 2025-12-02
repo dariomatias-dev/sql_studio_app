@@ -1048,13 +1048,13 @@ abstract class AppLocalizations {
   /// No description provided for @databaseAlreadyExists.
   ///
   /// In en, this message translates to:
-  /// **'Database \"\${name}\" already exists'**
+  /// **'Database \"{name}\" already exists'**
   String databaseAlreadyExists(Object name);
 
   /// No description provided for @languageUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Language updated to \${lang}.'**
+  /// **'Language updated to {lang}.'**
   String languageUpdated(Object lang);
 }
 
