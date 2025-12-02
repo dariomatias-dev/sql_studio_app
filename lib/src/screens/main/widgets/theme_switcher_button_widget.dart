@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 class ThemeSwitcherButtonWidget extends StatefulWidget {
   const ThemeSwitcherButtonWidget({super.key});
 
@@ -21,7 +23,7 @@ class _ThemeSwitcherButtonWidgetState extends State<ThemeSwitcherButtonWidget> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: _toggleTheme,
-      tooltip: 'Toggle Theme',
+      tooltip: AppLocalizations.of(context)!.toggleTheme,
       icon: Icon(
         _isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
         color: Colors.black,

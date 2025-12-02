@@ -1074,6 +1074,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The database is empty'**
   String get theDatabaseIsEmpty;
+
+  /// No description provided for @toggleTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Theme'**
+  String get toggleTheme;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

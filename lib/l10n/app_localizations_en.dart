@@ -516,4 +516,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get theDatabaseIsEmpty => 'The database is empty';
+
+  @override
+  String get toggleTheme => 'Toggle Theme';
 }

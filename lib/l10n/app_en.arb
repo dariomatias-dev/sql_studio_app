@@ -161,5 +161,6 @@
   "databaseAlreadyExists": "Database \"{name}\" already exists",
   "languageUpdated": "Language updated to {lang}.",
   "loading": "Loading...",
-  "theDatabaseIsEmpty": "The database is empty"
+  "theDatabaseIsEmpty": "The database is empty",
+  "toggleTheme": "Toggle Theme"
 }

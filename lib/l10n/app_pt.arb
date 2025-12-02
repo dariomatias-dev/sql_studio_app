@@ -161,5 +161,6 @@
   "databaseAlreadyExists": "O banco de dados \"{name}\" já existe",
   "languageUpdated": "Idioma atualizado para {lang}.",
   "loading": "Carregando...",
-  "theDatabaseIsEmpty": "O banco de dados está vazio"
+  "theDatabaseIsEmpty": "O banco de dados está vazio",
+  "toggleTheme": "Alternar tema"
 }
