@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
@@ -22,8 +24,9 @@ class DatabaseVisualizerScreen extends StatefulWidget {
 
 class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
   final _sqlExecutionService = SqlExecutionService();
-  List<TableInfoModel>? tables;
   final _tableRects = <String, Rect>{};
+
+  List<TableInfoModel>? tables;
 
   static const _tableWidgetWidth = 240.0;
   static const _tableHeaderHeight = 60.0;
@@ -99,7 +102,9 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
       appBar: AppBar(title: Text(widget.databaseName)),
       body: SafeArea(
         child: tables == null
-            ? const Center(child: Text('The database is empty'))
+            ? Center(
+                child: Text(AppLocalizations.of(context)!.theDatabaseIsEmpty),
+              )
             : tables?.isEmpty ?? false
             ? const Center(child: CircularProgressIndicator())
             : LayoutBuilder(

@@ -160,5 +160,6 @@
   "invalidCharactersDetected": "Invalid characters detected",
   "databaseAlreadyExists": "Database \"{name}\" already exists",
   "languageUpdated": "Language updated to {lang}.",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "theDatabaseIsEmpty": "The database is empty"
 }

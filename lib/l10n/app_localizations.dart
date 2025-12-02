@@ -1068,6 +1068,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
+
+  /// No description provided for @theDatabaseIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The database is empty'**
+  String get theDatabaseIsEmpty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

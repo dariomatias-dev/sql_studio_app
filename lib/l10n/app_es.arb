@@ -160,5 +160,6 @@
   "invalidCharactersDetected": "Se detectaron caracteres no válidos",
   "databaseAlreadyExists": "La base de datos \"{name}\" ya existe",
   "languageUpdated": "Idioma actualizado a {lang}.",
-  "loading": "Cargando..."
+  "loading": "Cargando...",
+  "theDatabaseIsEmpty": "La base de datos está vacía"
 }

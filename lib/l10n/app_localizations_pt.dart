@@ -513,4 +513,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get loading => 'Carregando...';
+
+  @override
+  String get theDatabaseIsEmpty => 'O banco de dados está vazio';
 }
