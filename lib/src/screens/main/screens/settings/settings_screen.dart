@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/constants/urls.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version_widget.dart';
@@ -96,23 +97,17 @@ class _SettingsScreenState extends State<SettingsScreen>
               children: <Widget>[
                 const AppVersionWidget(),
                 SettingsCardWidget(
-                  onTap: () {
-                    _openUrl('https://sql-studio.vercel.app/');
-                  },
+                  onTap: () => _openUrl(Urls.officialWebsite),
                   title: appLocalizations.officialWebsite,
                   icon: Icons.open_in_new,
                 ),
                 SettingsCardWidget(
-                  onTap: () {
-                    _openUrl('https://sql-studio.vercel.app/privacy-policy');
-                  },
+                  onTap: () => _openUrl(Urls.officialWebsitePrivacyPolicy),
                   title: appLocalizations.privacyPolicy,
                   icon: Icons.open_in_new,
                 ),
                 SettingsCardWidget(
-                  onTap: () {
-                    _openUrl('https://sql-studio.vercel.app/contact');
-                  },
+                  onTap: () => _openUrl(Urls.officialWebsiteContact),
                   title: appLocalizations.contact,
                   icon: Icons.open_in_new,
                 ),
