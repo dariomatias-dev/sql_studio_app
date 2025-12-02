@@ -507,4 +507,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String languageUpdated(Object lang) {
     return 'Idioma actualizado a $lang.';
   }
+
+  @override
+  String get loading => 'Cargando...';
 }

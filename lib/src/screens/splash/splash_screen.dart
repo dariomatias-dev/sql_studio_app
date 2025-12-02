@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/locale_controller.dart';
 import 'package:sql_studio/src/core/result.dart';
@@ -335,8 +337,8 @@ class _SplashScreenState extends State<SplashScreen>
                   const SizedBox(height: 15.0),
                   FadeTransition(
                     opacity: _progressOpacityAnimation,
-                    child: const Text(
-                      'Loading data...',
+                    child: Text(
+                      AppLocalizations.of(context)!.loading,
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white70,

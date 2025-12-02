@@ -158,5 +158,6 @@
   "pleaseEnterName": "Por favor, insira um nome",
   "invalidCharactersDetected": "Caracteres inválidos detectados",
   "databaseAlreadyExists": "O banco de dados \"{name}\" já existe",
-  "languageUpdated": "Idioma atualizado para {lang}."
+  "languageUpdated": "Idioma atualizado para {lang}.",
+  "loading": "Carregando..."
 }
