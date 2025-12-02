@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
@@ -12,7 +14,7 @@ class ErrorDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogWidget(
-      title: title ?? 'Error',
+      title: title ?? AppLocalizations.of(context)!.error,
       content: Text(description, textAlign: TextAlign.center),
       actions: <Widget>[
         ButtonWidget(

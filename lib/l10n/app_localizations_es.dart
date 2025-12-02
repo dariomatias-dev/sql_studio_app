@@ -528,4 +528,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get goHome => 'Ir al inicio';
+
+  @override
+  String get submit => 'Enviar';
+
+  @override
+  String get thisFieldIsRequired => 'Este campo es obligatorio';
 }

@@ -31,8 +31,8 @@ class _SqlBasicSuggestionCardWidgetState
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.grey.withAlpha(25),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            blurRadius: 8.0,
+            offset: const Offset(0.0, 2.0),
           ),
         ],
       ),

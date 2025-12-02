@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
@@ -14,7 +16,7 @@ class InputDialogWidget extends StatefulWidget {
     required this.label,
     required this.onSubmit,
     this.validator,
-    this.submitText = 'Submit',
+    this.submitText,
   });
 
   final String title;
@@ -22,7 +24,7 @@ class InputDialogWidget extends StatefulWidget {
   final String label;
   final String? Function(String? value)? validator;
   final Future<bool> Function(String value) onSubmit;
-  final String submitText;
+  final String? submitText;
 
   @override
   State<InputDialogWidget> createState() => _InputDialogWidgetState();
@@ -43,6 +45,8 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return DialogWidget(
       title: widget.title,
       content: Form(
@@ -55,7 +59,7 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
               widget.validator ??
               (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'This field is required';
+                  return appLocalizations.thisFieldIsRequired;
                 }
 
                 return null;
@@ -66,7 +70,7 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
         const CancelButtonWidget(),
         LoadingButtonWidget(
           onPressed: _handleSubmit,
-          text: widget.submitText,
+          text: widget.submitText ?? appLocalizations.submit,
           style: ButtonStyleType.black,
         ),
       ],

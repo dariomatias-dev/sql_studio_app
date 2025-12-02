@@ -165,5 +165,7 @@
   "toggleTheme": "Toggle Theme",
   "screenNotFound": "Screen Not Found",
   "screenNotFoundDescription": "The screen you are looking for does not exist or has been moved.",
-  "goHome": "Go Home"
+  "goHome": "Go Home",
+  "submit": "Submit",
+  "thisFieldIsRequired": "This field is required"
 }

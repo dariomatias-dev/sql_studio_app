@@ -528,4 +528,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goHome => 'Go Home';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get thisFieldIsRequired => 'This field is required';
 }

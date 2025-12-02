@@ -165,5 +165,7 @@
   "toggleTheme": "Alternar tema",
   "screenNotFound": "Tela não encontrada",
   "screenNotFoundDescription": "A tela que você procura não existe ou foi movida.",
-  "goHome": "Ir para o início"
+  "goHome": "Ir para o início",
+  "submit": "Enviar",
+  "thisFieldIsRequired": "Este campo é obrigatório"
 }
