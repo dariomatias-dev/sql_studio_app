@@ -167,5 +167,7 @@
   "screenNotFoundDescription": "A tela que você procura não existe ou foi movida.",
   "goHome": "Ir para o início",
   "submit": "Enviar",
-  "thisFieldIsRequired": "Este campo é obrigatório"
+  "thisFieldIsRequired": "Este campo é obrigatório",
+  "sortOrderSavedSuccessfully": "Ordenação salva com sucesso.",
+  "failedToSaveSortOrder": "Falha ao salvar a ordenação."
 }

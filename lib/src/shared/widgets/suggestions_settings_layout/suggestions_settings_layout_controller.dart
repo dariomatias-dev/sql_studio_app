@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
+
 class SuggestionsSettingsLayoutController<T> {
   final BuildContext Function() getContext;
   final Future<bool> Function(List<T>) _onSave;
@@ -40,8 +42,12 @@ class SuggestionsSettingsLayoutController<T> {
   Future<void> saveItems() async {
     final saved = await _onSave(itemsNotifier.value);
 
+    final appLocalizations = AppLocalizations.of(getContext())!;
+
     Fluttertoast.showToast(
-      msg: saved ? 'Order saved successfully.' : 'Failed to save order.',
+      msg: saved
+          ? appLocalizations.sortOrderSavedSuccessfully
+          : appLocalizations.failedToSaveSortOrder,
     );
 
     hasChangesNotifier.value = !saved;

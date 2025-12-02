@@ -1110,6 +1110,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This field is required'**
   String get thisFieldIsRequired;
+
+  /// No description provided for @sortOrderSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort order saved successfully.'**
+  String get sortOrderSavedSuccessfully;
+
+  /// No description provided for @failedToSaveSortOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save sort order.'**
+  String get failedToSaveSortOrder;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

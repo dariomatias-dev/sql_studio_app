@@ -534,4 +534,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get thisFieldIsRequired => 'Este campo é obrigatório';
+
+  @override
+  String get sortOrderSavedSuccessfully => 'Ordenação salva com sucesso.';
+
+  @override
+  String get failedToSaveSortOrder => 'Falha ao salvar a ordenação.';
 }
