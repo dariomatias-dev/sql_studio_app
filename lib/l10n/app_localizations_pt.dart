@@ -519,4 +519,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get toggleTheme => 'Alternar tema';
+
+  @override
+  String get screenNotFound => 'Tela não encontrada';
+
+  @override
+  String get screenNotFoundDescription => 'A tela que você procura não existe ou foi movida.';
+
+  @override
+  String get goHome => 'Ir para o início';
 }

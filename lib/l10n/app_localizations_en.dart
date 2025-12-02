@@ -519,4 +519,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toggleTheme => 'Toggle Theme';
+
+  @override
+  String get screenNotFound => 'Screen Not Found';
+
+  @override
+  String get screenNotFoundDescription => 'The screen you are looking for does not exist or has been moved.';
+
+  @override
+  String get goHome => 'Go Home';
 }

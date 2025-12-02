@@ -1080,6 +1080,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Toggle Theme'**
   String get toggleTheme;
+
+  /// No description provided for @screenNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Not Found'**
+  String get screenNotFound;
+
+  /// No description provided for @screenNotFoundDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'The screen you are looking for does not exist or has been moved.'**
+  String get screenNotFoundDescription;
+
+  /// No description provided for @goHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get goHome;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
