@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/core/locale_controller.dart';
 import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
@@ -41,12 +40,6 @@ class _SplashScreenState extends State<SplashScreen>
   late final Animation<AlignmentGeometry> _gradientAlignmentAnimation;
 
   Future<void> _loadResources() async {
-    await SharedPreferencesService.init();
-
-    if (!mounted) return;
-
-    context.read<LocaleController>().loadLocale();
-
     final versionResult = await context.read<AppVersionNotifier>().load();
 
     if (!mounted) return;

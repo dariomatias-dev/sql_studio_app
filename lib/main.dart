@@ -15,13 +15,17 @@ import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
 
+import 'package:sql_studio/src/services/shared_preferences_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SharedPreferencesService.init();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleController()),
+        ChangeNotifierProvider(create: (_) => LocaleController()..loadLocale()),
         ChangeNotifierProvider(create: (_) => SqlAdvancedSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => SqlBasicSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => AppVersionNotifier()),
