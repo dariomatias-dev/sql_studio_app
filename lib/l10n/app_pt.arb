@@ -169,5 +169,9 @@
   "submit": "Enviar",
   "thisFieldIsRequired": "Este campo é obrigatório",
   "sortOrderSavedSuccessfully": "Ordenação salva com sucesso.",
-  "failedToSaveSortOrder": "Falha ao salvar a ordenação."
+  "failedToSaveSortOrder": "Falha ao salvar a ordenação.",
+  "deleteSuccess": "Exclusão executada com sucesso. {count} linha(s) afetada(s).",
+  "updateSuccess": "Atualização executada com sucesso. {count} linha(s) afetada(s).",
+  "insertSuccess": "Inserção executada com sucesso. {count} linha(s) afetada(s).",
+  "statementSuccess": "Instrução executada com sucesso."
 }

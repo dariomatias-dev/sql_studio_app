@@ -1122,6 +1122,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to save sort order.'**
   String get failedToSaveSortOrder;
+
+  /// No description provided for @deleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete executed successfully. {count} rows affected.'**
+  String deleteSuccess(Object count);
+
+  /// No description provided for @updateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Update executed successfully. {count} rows affected.'**
+  String updateSuccess(Object count);
+
+  /// No description provided for @insertSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert executed successfully. {count} rows affected.'**
+  String insertSuccess(Object count);
+
+  /// No description provided for @statementSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Statement executed successfully.'**
+  String get statementSuccess;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

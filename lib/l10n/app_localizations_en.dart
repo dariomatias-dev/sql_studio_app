@@ -540,4 +540,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToSaveSortOrder => 'Failed to save sort order.';
+
+  @override
+  String deleteSuccess(Object count) {
+    return 'Delete executed successfully. $count rows affected.';
+  }
+
+  @override
+  String updateSuccess(Object count) {
+    return 'Update executed successfully. $count rows affected.';
+  }
+
+  @override
+  String insertSuccess(Object count) {
+    return 'Insert executed successfully. $count rows affected.';
+  }
+
+  @override
+  String get statementSuccess => 'Statement executed successfully.';
 }

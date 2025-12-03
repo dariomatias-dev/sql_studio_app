@@ -169,5 +169,9 @@
   "submit": "Enviar",
   "thisFieldIsRequired": "Este campo es obligatorio",
   "sortOrderSavedSuccessfully": "El orden de clasificación se guardó correctamente.",
-  "failedToSaveSortOrder": "No se pudo guardar el orden de clasificación."
+  "failedToSaveSortOrder": "No se pudo guardar el orden de clasificación.",
+  "deleteSuccess": "Eliminación ejecutada correctamente. {count} filas afectadas.",
+  "updateSuccess": "Actualización ejecutada correctamente. {count} filas afectadas.",
+  "insertSuccess": "Inserción ejecutada correctamente. {count} filas afectadas.",
+  "statementSuccess": "Sentencia ejecutada correctamente."
 }

@@ -540,4 +540,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get failedToSaveSortOrder => 'Falha ao salvar a ordenação.';
+
+  @override
+  String deleteSuccess(Object count) {
+    return 'Exclusão executada com sucesso. $count linha(s) afetada(s).';
+  }
+
+  @override
+  String updateSuccess(Object count) {
+    return 'Atualização executada com sucesso. $count linha(s) afetada(s).';
+  }
+
+  @override
+  String insertSuccess(Object count) {
+    return 'Inserção executada com sucesso. $count linha(s) afetada(s).';
+  }
+
+  @override
+  String get statementSuccess => 'Instrução executada com sucesso.';
 }
