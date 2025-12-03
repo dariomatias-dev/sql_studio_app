@@ -1,5 +1,4 @@
 enum AppLocalizationsKey {
-  // UI labels & descriptions
   toDoListLabel,
   toDoListDescription,
   contactsLabel,
@@ -28,8 +27,10 @@ enum AppLocalizationsKey {
   bankingDescription,
   eCommerceLabel,
   eCommerceDescription,
-
-  // Failures / errors
+  deleteSuccess,
+  updateSuccess,
+  insertSuccess,
+  statementSuccess,
   failedToSaveWorkspaceLayout,
   databaseCreationError,
   fetchDatabasesError,

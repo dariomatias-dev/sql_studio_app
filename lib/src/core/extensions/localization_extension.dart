@@ -96,6 +96,12 @@ extension LocalizationExtension on AppLocalizations {
     AppLocalizationsKey.databaseResetSuccessfully: (l, args) =>
         l.databaseResetSuccessfully,
     AppLocalizationsKey.unknownError: (l, args) => l.unknownError,
+    AppLocalizationsKey.deleteSuccess: (l, args) =>
+        l.deleteSuccess(args['count']),
+    AppLocalizationsKey.updateSuccess: (l, args) =>
+        l.updateSuccess(args['count']),
+    AppLocalizationsKey.insertSuccess: (l, args) => l.insertSuccess(args['id']),
+    AppLocalizationsKey.statementSuccess: (l, args) => l.statementSuccess,
   };
 
   String key(AppLocalizationsKey k, [Map<String, dynamic> args = const {}]) {

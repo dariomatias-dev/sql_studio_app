@@ -5,12 +5,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/result.dart';
+
 import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 class SqlExecutionService {
   final _logger = Logger();
 
-  Future<Result<dynamic>> execute({
+  Future<Result> execute({
     required String sql,
     required String? databaseName,
   }) async {
@@ -31,35 +32,59 @@ class SqlExecutionService {
           .where((e) => e.isNotEmpty)
           .toList();
 
-      dynamic lastResult;
+      DatabaseSuccess? lastResult;
 
       for (final stmt in statements) {
         final upper = stmt.toUpperCase();
 
         if (upper.startsWith('SELECT')) {
-          lastResult = await db.rawQuery(stmt);
+          final result = await db.rawQuery(stmt);
+
+          lastResult = DatabaseSuccess(result: result);
+
           _logger.i('Executed SELECT on $databaseName: $stmt');
         } else if (upper.startsWith('DELETE')) {
           final count = await db.rawDelete(stmt);
-          lastResult = 'Delete executed successfully. $count rows affected.';
+
+          lastResult = DatabaseSuccess(
+            type: AppLocalizationsKey.deleteSuccess,
+            args: {'count': count},
+          );
+
           _logger.i('Executed DELETE: $stmt');
         } else if (upper.startsWith('UPDATE')) {
           final count = await db.rawUpdate(stmt);
-          lastResult = 'Update executed successfully. $count rows affected.';
+
+          lastResult = DatabaseSuccess(
+            type: AppLocalizationsKey.updateSuccess,
+            args: {'count': count},
+          );
+
           _logger.i('Executed UPDATE: $stmt');
         } else if (upper.startsWith('INSERT')) {
           final id = await db.rawInsert(stmt);
-          lastResult = 'Insert executed successfully. Inserted row ID: $id.';
+
+          lastResult = DatabaseSuccess(
+            type: AppLocalizationsKey.insertSuccess,
+            args: {'id': id},
+          );
+
           _logger.i('Executed INSERT: $stmt');
         } else {
           await db.execute(stmt);
-          lastResult = 'Statement executed successfully.';
+
+          lastResult = DatabaseSuccess(
+            type: AppLocalizationsKey.statementSuccess,
+          );
+
           _logger.i('Executed SQL: $stmt');
         }
       }
 
       if (statements.length > 1) {
-        return SuccessResult('Statement executed successfully.');
+        return SuccessResult(
+          DatabaseSuccess(type: AppLocalizationsKey.statementSuccess),
+        );
       }
 
       return SuccessResult(lastResult);
