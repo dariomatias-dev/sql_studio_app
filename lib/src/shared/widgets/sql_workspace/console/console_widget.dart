@@ -25,8 +25,13 @@ class ConsoleWidget extends StatelessWidget {
 
   String _extractTableName(SqlCommandsNotifier notifier) {
     if (notifier.result is SuccessResult &&
-        (notifier.result as SuccessResult).value is List &&
-        ((notifier.result as SuccessResult).value as List).isEmpty) {
+        ((notifier.result as SuccessResult).value is DatabaseSuccess) &&
+        (((notifier.result as SuccessResult).value as DatabaseSuccess).result
+                is List &&
+            (((notifier.result as SuccessResult).value as DatabaseSuccess)
+                        .result
+                    as List)
+                .isEmpty)) {
       final sql = notifier.lastQuery;
       if (sql == null) return '';
 
@@ -67,9 +72,7 @@ class ConsoleWidget extends StatelessWidget {
           content = SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              AppLocalizations.of(
-                context,
-              )!.key(notifier.error!, notifier.errorArgs ?? {}),
+              appLocalizations.key(notifier.error!, notifier.errorArgs ?? {}),
               style: const TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
@@ -78,62 +81,75 @@ class ConsoleWidget extends StatelessWidget {
           );
         } else if (notifier.result == null) {
           content = const SizedBox.shrink();
-        } else if ((notifier.result as SuccessResult).value is List) {
-          final rows =
-              (notifier.result as SuccessResult).value
-                  as List<Map<String, dynamic>>;
+        } else {
+          final result = (notifier.result as SuccessResult).value;
 
-          if (rows.isEmpty) {
-            content = FutureBuilder<List<String>>(
-              future: notifier.getTableColumns(_extractTableName(notifier)),
-              builder: (context, snapshot) {
-                final columns = snapshot.data ?? <String>[];
-                if (columns.isEmpty) return const SizedBox.shrink();
+          if (result is DatabaseSuccess) {
+            if (result.result is List) {
+              final rows = result.result as List<Map<String, dynamic>>;
 
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+              if (rows.isEmpty) {
+                content = FutureBuilder<List<String>>(
+                  future: notifier.getTableColumns(_extractTableName(notifier)),
+                  builder: (context, snapshot) {
+                    final columns = snapshot.data ?? <String>[];
+                    if (columns.isEmpty) return const SizedBox.shrink();
+
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: StyledDataTableWidget(
+                            columns: columns,
+                            rows: const <Map<String, dynamic>>[],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                final columns = rows.first.keys.toList();
+
+                content = Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: StyledDataTableWidget(
-                        columns: columns,
-                        rows: const <Map<String, dynamic>>[],
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 16.0,
+                          right: 16.0,
+                          left: 16.0,
+                        ),
+                        child: StyledDataTableWidget(
+                          columns: columns,
+                          rows: rows,
+                        ),
                       ),
                     ),
                   ),
                 );
-              },
-            );
-          } else {
-            final columns = rows.first.keys.toList();
+              }
+            } else {
+              final text = result.type != null
+                  ? appLocalizations.key(result.type!, result.args)
+                  : '';
 
-            content = Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 16.0,
-                      right: 16.0,
-                      left: 16.0,
-                    ),
-                    child: StyledDataTableWidget(columns: columns, rows: rows),
-                  ),
+              content = Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  text,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
-              ),
-            );
+              );
+            }
+          } else {
+            content = const SizedBox.shrink();
           }
-        } else {
-          content = Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              (notifier.result as SuccessResult).value,
-              style: const TextStyle(fontWeight: FontWeight.w500),
-            ),
-          );
         }
 
         return PanelWidget(
