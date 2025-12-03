@@ -17,6 +17,14 @@ class AppFailure extends Failure {
   const AppFailure(super.type, [super.args]);
 }
 
+class DatabaseSuccess {
+  final AppLocalizationsKey? type;
+  final Map<String, Object?> args;
+  final List<Map<String, Object?>>? result;
+
+  const DatabaseSuccess({this.type, this.result, this.args = const {}});
+}
+
 sealed class Result<T> {
   const Result();
 
