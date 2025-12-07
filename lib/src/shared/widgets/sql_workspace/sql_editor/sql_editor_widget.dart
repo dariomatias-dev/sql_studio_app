@@ -12,6 +12,7 @@ import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
+import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
@@ -75,34 +76,6 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
       onFullScreen: widget.onFullScreen,
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
-        Consumer<SqlCommandsNotifier>(
-          builder: (context, value, child) {
-            if (value.activeDatabase == null) {
-              return const SizedBox.shrink();
-            }
-
-            return IconButton(
-              onPressed: () {
-                context.push(RouteNames.databaseVisualizer(databaseName!));
-              },
-              tooltip: appLocalizations.viewVisualScheme,
-              icon: const Icon(Icons.remove_red_eye_outlined),
-            );
-          },
-        ),
-        Consumer<SqlCommandsNotifier>(
-          builder: (context, notifier, child) {
-            if (!notifier.isDefaultDatabase) {
-              return const SizedBox.shrink();
-            }
-
-            return IconButton(
-              onPressed: sqlCommandsNotifier.resetDatabase,
-              tooltip: appLocalizations.resetDatabase,
-              icon: const Icon(Icons.refresh_outlined),
-            );
-          },
-        ),
         IconButton(
           onPressed: _onRunQuery,
           tooltip: appLocalizations.runQuery,
@@ -112,6 +85,60 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
           onPressed: editorNotifier.clear,
           tooltip: appLocalizations.clearEditor,
           icon: const Icon(Icons.clear_rounded),
+        ),
+        Consumer<SqlCommandsNotifier>(
+          builder: (context, notifier, child) {
+            final menuItems = <PopupMenuItem>[];
+
+            if (notifier.activeDatabase != null) {
+              menuItems.add(
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+
+                      context.push(
+                        RouteNames.databaseVisualizer(databaseName!),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.remove_red_eye_outlined, size: 20.0),
+                        const SizedBox(width: 8.0),
+                        Text(appLocalizations.viewVisualScheme),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            if (notifier.isDefaultDatabase) {
+              menuItems.add(
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      notifier.resetDatabase();
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.refresh_outlined, size: 20.0),
+                        const SizedBox(width: 8.0),
+                        Text(appLocalizations.resetDatabase),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            if (menuItems.isEmpty) {
+              return const SizedBox.shrink();
+            }
+
+            return PopupMenuButtonWidget(items: menuItems);
+          },
         ),
       ],
       child: Column(
