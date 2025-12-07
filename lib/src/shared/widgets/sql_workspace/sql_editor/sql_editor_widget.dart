@@ -77,6 +77,11 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
         IconButton(
+          onPressed: () {},
+          tooltip: 'Load Last Query',
+          icon: const Icon(Icons.undo),
+        ),
+        IconButton(
           onPressed: _onRunQuery,
           tooltip: appLocalizations.runQuery,
           icon: const Icon(Icons.play_arrow_rounded),
@@ -91,7 +96,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
             final menuItems = <PopupMenuItem>[];
 
             if (notifier.activeDatabase != null) {
-              menuItems.add(
+              menuItems.addAll([
                 PopupMenuItem(
                   child: InkWell(
                     onTap: () {
@@ -110,7 +115,35 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     ),
                   ),
                 ),
-              );
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.share, size: 20.0),
+                        const SizedBox(width: 8.0),
+                        Text('Share SQL'),
+                      ],
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.download, size: 20.0),
+                        const SizedBox(width: 8.0),
+                        Text('Download SQL'),
+                      ],
+                    ),
+                  ),
+                ),
+              ]);
             }
 
             if (notifier.isDefaultDatabase) {
