@@ -178,5 +178,6 @@
   "shareSql": "Compartir SQL",
   "downloadSql": "Descargar SQL",
   "nothingToShare": "No hay nada para compartir",
-  "sqlSharedSuccess": "SQL compartido con éxito"
+  "sqlSharedSuccess": "SQL compartido con éxito",
+  "copySql": "Copiar SQL"
 }

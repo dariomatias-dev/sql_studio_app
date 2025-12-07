@@ -71,8 +71,6 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
     if (sql.isEmpty) {
       Fluttertoast.showToast(msg: appLocalizations.nothingToShare);
 
-      FocusManager.instance.primaryFocus?.unfocus();
-
       return;
     }
 
@@ -81,6 +79,8 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
     if (result.status == ShareResultStatus.success) {
       Fluttertoast.showToast(msg: appLocalizations.sqlSharedSuccess);
     }
+
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
@@ -133,6 +133,20 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                         const Icon(Icons.remove_red_eye_outlined, size: 20.0),
                         const SizedBox(width: 8.0),
                         Text(appLocalizations.viewVisualScheme),
+                      ],
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        const Icon(Icons.share, size: 20.0),
+                        const SizedBox(width: 8.0),
+                        Text(appLocalizations.copySql),
                       ],
                     ),
                   ),

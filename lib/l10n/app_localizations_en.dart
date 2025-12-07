@@ -573,4 +573,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sqlSharedSuccess => 'SQL shared successfully';
+
+  @override
+  String get copySql => 'Copy SQL';
 }

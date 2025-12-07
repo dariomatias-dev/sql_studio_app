@@ -1176,6 +1176,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SQL shared successfully'**
   String get sqlSharedSuccess;
+
+  /// No description provided for @copySql.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy SQL'**
+  String get copySql;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
