@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
@@ -61,6 +63,28 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
     );
   }
 
+  Future<void> _onShareSql() async {
+    final sql = context.read<SqlEditorNotifier>().controller.text.trim();
+
+    if (sql.isEmpty) {
+      Fluttertoast.showToast(msg: 'There is nothing to share');
+
+      FocusManager.instance.primaryFocus?.unfocus();
+
+      return;
+    }
+
+    final result = await SharePlus.instance.share(ShareParams(text: sql));
+
+    if (result.status == ShareResultStatus.success) {
+      Fluttertoast.showToast(msg: 'SQL shared successfully');
+    } else {
+      Fluttertoast.showToast(
+        msg: 'An error occurred while trying to share the SQL',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -117,8 +141,10 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                 ),
                 PopupMenuItem(
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.pop(context);
+
+                      await _onShareSql();
                     },
                     child: Row(
                       children: <Widget>[
