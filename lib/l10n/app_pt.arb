@@ -176,5 +176,7 @@
   "statementSuccess": "Instrução executada com sucesso.",
   "loadLastSql": "Carregar último SQL",
   "shareSql": "Compartilhar SQL",
-  "downloadSql": "Baixar SQL"
+  "downloadSql": "Baixar SQL",
+  "nothingToShare": "Não há nada para compartilhar",
+  "sqlSharedSuccess": "SQL compartilhado com sucesso"
 }

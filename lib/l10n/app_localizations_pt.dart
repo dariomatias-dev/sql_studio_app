@@ -567,4 +567,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get downloadSql => 'Baixar SQL';
+
+  @override
+  String get nothingToShare => 'Não há nada para compartilhar';
+
+  @override
+  String get sqlSharedSuccess => 'SQL compartilhado com sucesso';
 }

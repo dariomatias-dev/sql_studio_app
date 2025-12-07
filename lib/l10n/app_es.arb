@@ -176,5 +176,7 @@
   "statementSuccess": "Sentencia ejecutada correctamente.",
   "loadLastSql": "Cargar último SQL",
   "shareSql": "Compartir SQL",
-  "downloadSql": "Descargar SQL"
+  "downloadSql": "Descargar SQL",
+  "nothingToShare": "No hay nada para compartir",
+  "sqlSharedSuccess": "SQL compartido con éxito"
 }

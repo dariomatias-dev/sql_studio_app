@@ -64,10 +64,12 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
   }
 
   Future<void> _onShareSql() async {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final sql = context.read<SqlEditorNotifier>().controller.text.trim();
 
     if (sql.isEmpty) {
-      Fluttertoast.showToast(msg: 'There is nothing to share');
+      Fluttertoast.showToast(msg: appLocalizations.nothingToShare);
 
       FocusManager.instance.primaryFocus?.unfocus();
 
@@ -77,11 +79,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
     final result = await SharePlus.instance.share(ShareParams(text: sql));
 
     if (result.status == ShareResultStatus.success) {
-      Fluttertoast.showToast(msg: 'SQL shared successfully');
-    } else {
-      Fluttertoast.showToast(
-        msg: 'An error occurred while trying to share the SQL',
-      );
+      Fluttertoast.showToast(msg: appLocalizations.sqlSharedSuccess);
     }
   }
 

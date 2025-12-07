@@ -1164,6 +1164,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Download SQL'**
   String get downloadSql;
+
+  /// No description provided for @nothingToShare.
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to share'**
+  String get nothingToShare;
+
+  /// No description provided for @sqlSharedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL shared successfully'**
+  String get sqlSharedSuccess;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

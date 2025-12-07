@@ -176,5 +176,7 @@
   "statementSuccess": "Statement executed successfully.",
   "loadLastSql": "Load Last SQL",
   "shareSql": "Share SQL",
-  "downloadSql": "Download SQL"
+  "downloadSql": "Download SQL",
+  "nothingToShare": "There is nothing to share",
+  "sqlSharedSuccess": "SQL shared successfully"
 }
