@@ -85,16 +85,18 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
   }
 
   Future<void> _onCopySql() async {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     final sql = context.read<SqlEditorNotifier>().controller.text.trim();
 
     if (sql.isEmpty) {
-      Fluttertoast.showToast(msg: 'There is nothing to copy');
+      Fluttertoast.showToast(msg: appLocalizations.nothingToCopy);
       return;
     }
 
     await Clipboard.setData(ClipboardData(text: sql));
 
-    Fluttertoast.showToast(msg: 'SQL copied to clipboard');
+    Fluttertoast.showToast(msg: appLocalizations.sqlCopied);
 
     FocusManager.instance.primaryFocus?.unfocus();
   }

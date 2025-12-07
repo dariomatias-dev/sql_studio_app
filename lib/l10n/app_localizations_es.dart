@@ -576,4 +576,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get copySql => 'Copiar SQL';
+
+  @override
+  String get nothingToCopy => 'No hay nada para copiar';
+
+  @override
+  String get sqlCopied => 'SQL copiado al portapapeles';
 }

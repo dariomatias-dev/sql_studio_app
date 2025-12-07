@@ -179,5 +179,7 @@
   "downloadSql": "Baixar SQL",
   "nothingToShare": "Não há nada para compartilhar",
   "sqlSharedSuccess": "SQL compartilhado com sucesso",
-  "copySql": "Copiar SQL"
+  "copySql": "Copiar SQL",
+  "nothingToCopy": "Não há nada para copiar",
+  "sqlCopied": "SQL copiado para a área de transferência"
 }

@@ -576,4 +576,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get copySql => 'Copiar SQL';
+
+  @override
+  String get nothingToCopy => 'Não há nada para copiar';
+
+  @override
+  String get sqlCopied => 'SQL copiado para a área de transferência';
 }

@@ -1182,6 +1182,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy SQL'**
   String get copySql;
+
+  /// No description provided for @nothingToCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to copy'**
+  String get nothingToCopy;
+
+  /// No description provided for @sqlCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL copied to clipboard'**
+  String get sqlCopied;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
