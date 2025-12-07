@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -83,6 +84,21 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
+  Future<void> _onCopySql() async {
+    final sql = context.read<SqlEditorNotifier>().controller.text.trim();
+
+    if (sql.isEmpty) {
+      Fluttertoast.showToast(msg: 'There is nothing to copy');
+      return;
+    }
+
+    await Clipboard.setData(ClipboardData(text: sql));
+
+    Fluttertoast.showToast(msg: 'SQL copied to clipboard');
+
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -139,8 +155,10 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                 ),
                 PopupMenuItem(
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.pop(context);
+
+                      await _onCopySql();
                     },
                     child: Row(
                       children: <Widget>[
