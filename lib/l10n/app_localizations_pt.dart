@@ -558,4 +558,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get statementSuccess => 'Instrução executada com sucesso.';
+
+  @override
+  String get loadLastSql => 'Carregar último SQL';
+
+  @override
+  String get shareSql => 'Compartilhar SQL';
+
+  @override
+  String get downloadSql => 'Baixar SQL';
 }

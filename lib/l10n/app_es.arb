@@ -173,5 +173,8 @@
   "deleteSuccess": "Eliminación ejecutada correctamente. {count} filas afectadas.",
   "updateSuccess": "Actualización ejecutada correctamente. {count} filas afectadas.",
   "insertSuccess": "Inserción ejecutada correctamente. {count} filas afectadas.",
-  "statementSuccess": "Sentencia ejecutada correctamente."
+  "statementSuccess": "Sentencia ejecutada correctamente.",
+  "loadLastSql": "Cargar último SQL",
+  "shareSql": "Compartir SQL",
+  "downloadSql": "Descargar SQL"
 }

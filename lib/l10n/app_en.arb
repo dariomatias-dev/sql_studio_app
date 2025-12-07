@@ -173,5 +173,8 @@
   "deleteSuccess": "Delete executed successfully. {count} rows affected.",
   "updateSuccess": "Update executed successfully. {count} rows affected.",
   "insertSuccess": "Insert executed successfully. {count} rows affected.",
-  "statementSuccess": "Statement executed successfully."
+  "statementSuccess": "Statement executed successfully.",
+  "loadLastSql": "Load Last SQL",
+  "shareSql": "Share SQL",
+  "downloadSql": "Download SQL"
 }

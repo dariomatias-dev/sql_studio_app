@@ -1146,6 +1146,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Statement executed successfully.'**
   String get statementSuccess;
+
+  /// No description provided for @loadLastSql.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Last SQL'**
+  String get loadLastSql;
+
+  /// No description provided for @shareSql.
+  ///
+  /// In en, this message translates to:
+  /// **'Share SQL'**
+  String get shareSql;
+
+  /// No description provided for @downloadSql.
+  ///
+  /// In en, this message translates to:
+  /// **'Download SQL'**
+  String get downloadSql;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

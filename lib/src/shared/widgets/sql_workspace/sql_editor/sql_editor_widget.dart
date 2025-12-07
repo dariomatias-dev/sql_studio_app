@@ -78,7 +78,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
       actions: <Widget>[
         IconButton(
           onPressed: () {},
-          tooltip: 'Load Last Query',
+          tooltip: appLocalizations.loadLastSql,
           icon: const Icon(Icons.undo),
         ),
         IconButton(
@@ -124,7 +124,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                       children: <Widget>[
                         const Icon(Icons.share, size: 20.0),
                         const SizedBox(width: 8.0),
-                        Text('Share SQL'),
+                        Text(appLocalizations.shareSql),
                       ],
                     ),
                   ),
@@ -138,7 +138,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                       children: <Widget>[
                         const Icon(Icons.download, size: 20.0),
                         const SizedBox(width: 8.0),
-                        Text('Download SQL'),
+                        Text(appLocalizations.downloadSql),
                       ],
                     ),
                   ),

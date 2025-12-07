@@ -173,5 +173,8 @@
   "deleteSuccess": "Exclusão executada com sucesso. {count} linha(s) afetada(s).",
   "updateSuccess": "Atualização executada com sucesso. {count} linha(s) afetada(s).",
   "insertSuccess": "Inserção executada com sucesso. {count} linha(s) afetada(s).",
-  "statementSuccess": "Instrução executada com sucesso."
+  "statementSuccess": "Instrução executada com sucesso.",
+  "loadLastSql": "Carregar último SQL",
+  "shareSql": "Compartilhar SQL",
+  "downloadSql": "Baixar SQL"
 }
