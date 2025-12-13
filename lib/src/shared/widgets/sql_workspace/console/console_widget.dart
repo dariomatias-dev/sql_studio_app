@@ -8,10 +8,11 @@ import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
+import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 
-class ConsoleWidget extends StatelessWidget {
+class ConsoleWidget extends StatefulWidget {
   const ConsoleWidget({
     super.key,
     this.showTitle = true,
@@ -23,28 +24,12 @@ class ConsoleWidget extends StatelessWidget {
   final bool? isFullScreen;
   final VoidCallback? onFullScreen;
 
-  String _extractTableName(SqlCommandsNotifier notifier) {
-    if (notifier.result is SuccessResult &&
-        ((notifier.result as SuccessResult).value is DatabaseSuccess) &&
-        (((notifier.result as SuccessResult).value as DatabaseSuccess).result
-                is List &&
-            (((notifier.result as SuccessResult).value as DatabaseSuccess)
-                        .result
-                    as List)
-                .isEmpty)) {
-      final sql = notifier.lastQuery;
-      if (sql == null) return '';
+  @override
+  State<ConsoleWidget> createState() => _ConsoleWidgetState();
+}
 
-      final match = RegExp(
-        r'\bfrom\s+([a-zA-Z_][\w]*)\b',
-        caseSensitive: false,
-      ).firstMatch(sql);
-
-      return match?.group(1) ?? '';
-    }
-
-    return '';
-  }
+class _ConsoleWidgetState extends State<ConsoleWidget> {
+  final _controller = ConsoleController();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +75,9 @@ class ConsoleWidget extends StatelessWidget {
 
               if (rows.isEmpty) {
                 content = FutureBuilder<List<String>>(
-                  future: notifier.getTableColumns(_extractTableName(notifier)),
+                  future: notifier.getTableColumns(
+                    _controller.extractTableName(notifier),
+                  ),
                   builder: (context, snapshot) {
                     final columns = snapshot.data ?? <String>[];
                     if (columns.isEmpty) return const SizedBox.shrink();
@@ -153,9 +140,9 @@ class ConsoleWidget extends StatelessWidget {
         }
 
         return PanelWidget(
-          title: showTitle ? appLocalizations.console : null,
-          isFullScreen: isFullScreen,
-          onFullScreen: onFullScreen,
+          title: widget.showTitle ? appLocalizations.console : null,
+          isFullScreen: widget.isFullScreen,
+          onFullScreen: widget.onFullScreen,
           actions: <Widget>[
             IconButton(
               onPressed: notifier.clearResult,
