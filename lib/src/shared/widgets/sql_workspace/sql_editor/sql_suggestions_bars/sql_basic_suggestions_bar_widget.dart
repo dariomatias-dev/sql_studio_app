@@ -14,7 +14,7 @@ class SqlBasicSuggestionsBarWidget extends StatelessWidget {
     required this.filterText,
   });
 
-  final void Function(String, {String? selectText}) onInsertCommand;
+  final void Function(String value, {String? selectText}) onInsertCommand;
   final String filterText;
 
   @override

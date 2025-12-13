@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/route_names.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
+import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
-import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
-import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
 
 class SqlEditorWidget extends StatefulWidget {
   const SqlEditorWidget({
@@ -40,65 +38,10 @@ class SqlEditorWidget extends StatefulWidget {
 }
 
 class _SqlEditorWidgetState extends State<SqlEditorWidget> {
-  void _onRunQuery() {
-    final notifier = context.read<SqlCommandsNotifier>();
-    final editorNotifier = context.read<SqlEditorNotifier>();
-    final sql = editorNotifier.controller.text.trim();
+  final _controller = SqlEditorController();
 
-    if (sql.isEmpty) return;
-
-    notifier.runQuery(sql);
-
-    if (widget.onQueryRun != null) widget.onQueryRun!();
-  }
-
-  void _onInsertCommand(String value, {String? selectText}) {
-    final focusNode = context.read<SqlEditorNotifier>().focusNode;
-    if (!focusNode.hasFocus) {
-      focusNode.requestFocus();
-    }
-
-    context.read<SqlEditorNotifier>().insertCommand(
-      value,
-      selectText: selectText,
-    );
-  }
-
-  Future<void> _onShareSql() async {
-    final appLocalizations = AppLocalizations.of(context)!;
-
-    final sql = context.read<SqlEditorNotifier>().controller.text.trim();
-
-    if (sql.isEmpty) {
-      Fluttertoast.showToast(msg: appLocalizations.nothingToShare);
-
-      return;
-    }
-
-    final result = await SharePlus.instance.share(ShareParams(text: sql));
-
-    if (result.status == ShareResultStatus.success) {
-      Fluttertoast.showToast(msg: appLocalizations.sqlSharedSuccess);
-    }
-
-    FocusManager.instance.primaryFocus?.unfocus();
-  }
-
-  Future<void> _onCopySql() async {
-    final appLocalizations = AppLocalizations.of(context)!;
-
-    final sql = context.read<SqlEditorNotifier>().controller.text.trim();
-
-    if (sql.isEmpty) {
-      Fluttertoast.showToast(msg: appLocalizations.nothingToCopy);
-      return;
-    }
-
-    await Clipboard.setData(ClipboardData(text: sql));
-
-    Fluttertoast.showToast(msg: appLocalizations.sqlCopied);
-
-    FocusManager.instance.primaryFocus?.unfocus();
+  void _onInsertCommand(String code, {String? selectText}) {
+    _controller.onInsertCommand(context, code, selectText: selectText);
   }
 
   @override
@@ -122,7 +65,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
           icon: const Icon(Icons.undo),
         ),
         IconButton(
-          onPressed: _onRunQuery,
+          onPressed: () => _controller.onRunQuery(context, widget.onQueryRun),
           tooltip: appLocalizations.runQuery,
           icon: const Icon(Icons.play_arrow_rounded),
         ),
@@ -160,7 +103,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     onTap: () async {
                       Navigator.pop(context);
 
-                      await _onCopySql();
+                      await _controller.onCopySql(context);
                     },
                     child: Row(
                       children: <Widget>[
@@ -176,7 +119,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     onTap: () async {
                       Navigator.pop(context);
 
-                      await _onShareSql();
+                      await _controller.onShareSql(context);
                     },
                     child: Row(
                       children: <Widget>[
