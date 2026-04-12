@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'package:sql_studio/src/sql_studio_app.dart';
 
-import 'package:sql_studio/src/core/locale_controller.dart';
+import 'package:sql_studio/src/core/app_localization_notifier.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
@@ -24,8 +25,8 @@ void main() async {
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocaleController()..loadLocale()),
+      providers: <SingleChildWidget>[
+        ChangeNotifierProvider(create: (_) => AppLocalizationNotifier()),
         ChangeNotifierProvider(create: (_) => SqlAdvancedSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => SqlBasicSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => AppVersionNotifier()),

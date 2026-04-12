@@ -4,7 +4,11 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
-class LocaleController extends ChangeNotifier {
+class AppLocalizationNotifier extends ChangeNotifier {
+  AppLocalizationNotifier() {
+    loadLocale();
+  }
+
   Locale _locale = Locale('en');
 
   Locale get locale => _locale;

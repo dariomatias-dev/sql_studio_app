@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/locale_controller.dart';
+import 'package:sql_studio/src/core/app_localization_notifier.dart';
 
 class LanguageSelectorSheetOptionWidget extends StatefulWidget {
   const LanguageSelectorSheetOptionWidget({
@@ -28,16 +28,19 @@ class _LanguageSelectorSheetOptionWidgetState
   late bool _isSelected = _isSelectedLocale;
 
   bool get _isSelectedLocale =>
-      widget.code == context.read<LocaleController>().locale.languageCode;
+      widget.code ==
+      context.read<AppLocalizationNotifier>().locale.languageCode;
 
   Future<void> _changeLanguage() async {
-    await context.read<LocaleController>().changeLocale(widget.code);
+    await context.read<AppLocalizationNotifier>().changeLocale(widget.code);
 
     if (!mounted) return;
 
     Navigator.pop(context);
 
-    Fluttertoast.showToast(msg: AppLocalizations.of(context)!.languageUpdated(widget.lang));
+    Fluttertoast.showToast(
+      msg: AppLocalizations.of(context)!.languageUpdated(widget.lang),
+    );
   }
 
   @override

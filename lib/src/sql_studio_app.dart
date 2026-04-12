@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/locale_controller.dart';
+import 'package:sql_studio/src/core/app_localization_notifier.dart';
 import 'package:sql_studio/src/core/routes/router_config.dart';
 
 class SqlStudioApp extends StatelessWidget {
@@ -11,7 +11,7 @@ class SqlStudioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocaleController>(
+    return Consumer<AppLocalizationNotifier>(
       builder: (context, value, child) {
         return MaterialApp.router(
           title: 'SQL Studio',

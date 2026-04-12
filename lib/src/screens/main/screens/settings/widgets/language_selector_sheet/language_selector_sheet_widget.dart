@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
-import 'package:sql_studio/src/core/locale_controller.dart';
+import 'package:sql_studio/src/core/app_localization_notifier.dart';
 
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
@@ -47,7 +47,7 @@ class _LanguageSelectorSheetWidgetState
             ),
           ),
           const SizedBox(height: 20.0),
-          Consumer<LocaleController>(
+          Consumer<AppLocalizationNotifier>(
             builder: (context, value, child) {
               return Column(
                 spacing: 4.0,
