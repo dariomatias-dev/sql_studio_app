@@ -18,6 +18,20 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
 
   final SqlAdvancedSuggestionModel initialValue;
 
+  static Future<void> show(
+    BuildContext context, {
+    required SqlAdvancedSuggestionModel initialValue,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return UpdateSqlAdvancedSuggestionDialogWidget(
+          initialValue: initialValue,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;

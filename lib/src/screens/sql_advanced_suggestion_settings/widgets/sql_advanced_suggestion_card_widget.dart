@@ -2,26 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/sql_advanced_suggestion_card/sql_advanced_suggestion_card_controller.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
-class SqlAdvancedSuggestionCardWidget extends StatefulWidget {
+class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
   const SqlAdvancedSuggestionCardWidget({super.key, required this.suggestion});
 
   final SqlAdvancedSuggestionModel suggestion;
-
-  @override
-  State<SqlAdvancedSuggestionCardWidget> createState() =>
-      _SqlAdvancedSuggestionCardWidgetState();
-}
-
-class _SqlAdvancedSuggestionCardWidgetState
-    extends State<SqlAdvancedSuggestionCardWidget> {
-  late final _controller = SqlAdvancedSuggestionCardController(
-    context: context,
-    suggestion: widget.suggestion,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +39,7 @@ class _SqlAdvancedSuggestionCardWidgetState
         ),
         leading: const Icon(Icons.drag_handle, color: Colors.black54),
         title: Text(
-          widget.suggestion.label,
+          suggestion.label,
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w600,
@@ -58,7 +47,7 @@ class _SqlAdvancedSuggestionCardWidgetState
           ),
         ),
         subtitle: Text(
-          widget.suggestion.code,
+          suggestion.code,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
@@ -72,12 +61,23 @@ class _SqlAdvancedSuggestionCardWidgetState
           children: <Widget>[
             IconButton(
               tooltip: appLocalizations.editSuggestion,
-              onPressed: _controller.showEditDialog,
+              onPressed: () {
+                UpdateSqlAdvancedSuggestionDialogWidget.show(
+                  context,
+                  initialValue: suggestion,
+                );
+              },
               icon: Icon(Icons.edit_outlined, color: Colors.grey.shade600),
             ),
             IconButton(
               tooltip: appLocalizations.removeSuggestion,
-              onPressed: _controller.showDeleteDialog,
+              onPressed: () {
+                DeleteSqlAdvancedSuggestionDialogWidget.show(
+                  context,
+                  id: suggestion.id,
+                  label: suggestion.label,
+                );
+              },
               icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
             ),
           ],

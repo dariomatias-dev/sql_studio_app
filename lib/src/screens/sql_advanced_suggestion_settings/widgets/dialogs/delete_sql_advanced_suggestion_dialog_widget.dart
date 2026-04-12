@@ -19,14 +19,26 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
   final String id;
   final String label;
 
+  static Future<void> show(
+    BuildContext context, {
+    required String id,
+    required String label,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return DeleteSqlAdvancedSuggestionDialogWidget(id: id, label: label);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
 
     return ConfirmationDialogWidget(
       title: appLocalizations.removeSuggestion,
-      description:
-          appLocalizations.deleteSuggestionConfirmation(label),
+      description: appLocalizations.deleteSuggestionConfirmation(label),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
