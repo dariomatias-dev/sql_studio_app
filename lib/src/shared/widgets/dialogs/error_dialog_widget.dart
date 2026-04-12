@@ -11,6 +11,19 @@ class ErrorDialogWidget extends StatelessWidget {
   final String? title;
   final String description;
 
+  static Future<void> show(
+    BuildContext context, {
+    String? title,
+    required String description,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return ErrorDialogWidget(title: title, description: description);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DialogWidget(

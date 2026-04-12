@@ -26,6 +26,30 @@ class InputDialogWidget extends StatefulWidget {
   final Future<bool> Function(String value) onSubmit;
   final String? submitText;
 
+  static Future<void> show(
+    BuildContext context, {
+    required String title,
+    required TextEditingController controller,
+    required String label,
+    required Future<bool> Function(String value) onSubmit,
+    String? Function(String? value)? validator,
+    String? submitText,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return InputDialogWidget(
+          title: title,
+          controller: controller,
+          label: label,
+          onSubmit: onSubmit,
+          validator: validator,
+          submitText: submitText,
+        );
+      },
+    );
+  }
+
   @override
   State<InputDialogWidget> createState() => _InputDialogWidgetState();
 }

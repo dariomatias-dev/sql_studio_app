@@ -16,6 +16,15 @@ import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget
 class ResetSqlBasicSuggestionsDialogWidget extends StatefulWidget {
   const ResetSqlBasicSuggestionsDialogWidget({super.key});
 
+  static Future<void> show(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return const ResetSqlBasicSuggestionsDialogWidget();
+      },
+    );
+  }
+
   @override
   State<ResetSqlBasicSuggestionsDialogWidget> createState() =>
       _ResetSqlBasicSuggestionsDialogWidgetState();

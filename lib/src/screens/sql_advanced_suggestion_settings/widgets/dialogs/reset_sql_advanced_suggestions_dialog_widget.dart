@@ -13,6 +13,15 @@ import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget
 class ResetSqlAdvancedSuggestionsDialogWidget extends StatelessWidget {
   const ResetSqlAdvancedSuggestionsDialogWidget({super.key});
 
+  static Future<void> show(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return const ResetSqlAdvancedSuggestionsDialogWidget();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;

@@ -17,6 +17,15 @@ import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 class CreateDatabaseDialogWidget extends StatefulWidget {
   const CreateDatabaseDialogWidget({super.key});
 
+  static Future<void> show(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return const CreateDatabaseDialogWidget();
+      },
+    );
+  }
+
   @override
   State<CreateDatabaseDialogWidget> createState() =>
       _CreateDatabaseDialogWidgetState();
@@ -57,15 +66,11 @@ class _CreateDatabaseDialogWidgetState
         if (value != null) {
           shouldStopFlow = true;
 
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return ErrorDialogWidget(
-                description: AppLocalizations.of(
-                  context,
-                )!.databaseAlreadyExists(name),
-              );
-            },
+          final appLocalizations = AppLocalizations.of(context)!;
+
+          await ErrorDialogWidget.show(
+            context,
+            description: appLocalizations.databaseAlreadyExists(name),
           );
         }
       },

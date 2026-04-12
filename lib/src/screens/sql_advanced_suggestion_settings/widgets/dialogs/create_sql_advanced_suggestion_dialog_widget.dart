@@ -11,6 +11,15 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
   const CreateSqlAdvancedSuggestionDialogWidget({super.key});
 
+  static Future<void> show(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return const CreateSqlAdvancedSuggestionDialogWidget();
+      },
+    );
+  }
+
   @override
   State<CreateSqlAdvancedSuggestionDialogWidget> createState() =>
       _CreateSqlAdvancedSuggestionDialogWidgetState();

@@ -10,6 +10,18 @@ class DatabaseDeleteDialogWidget extends StatelessWidget {
 
   final VoidCallback onDeleteDatabase;
 
+  static Future<void> show(
+    BuildContext context, {
+    required VoidCallback onDeleteDatabase,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return DatabaseDeleteDialogWidget(onDeleteDatabase: onDeleteDatabase);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
