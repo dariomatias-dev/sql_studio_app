@@ -18,6 +18,18 @@ class RemoveSqlBasicSuggestionDialogWidget extends StatefulWidget {
 
   final String suggestion;
 
+  static Future<void> show(
+    BuildContext context, {
+    required String suggestion,
+  }) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return RemoveSqlBasicSuggestionDialogWidget(suggestion: suggestion);
+      },
+    );
+  }
+
   @override
   State<RemoveSqlBasicSuggestionDialogWidget> createState() =>
       _RemoveSqlBasicSuggestionDialogWidgetState();

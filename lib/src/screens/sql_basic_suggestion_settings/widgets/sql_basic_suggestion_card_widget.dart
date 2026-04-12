@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql_basic_suggestion_card/sql_basic_suggestion_card_controller.dart';
+import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 
 class SqlBasicSuggestionCardWidget extends StatefulWidget {
   const SqlBasicSuggestionCardWidget({super.key, required this.suggestion});
@@ -16,11 +16,6 @@ class SqlBasicSuggestionCardWidget extends StatefulWidget {
 
 class _SqlBasicSuggestionCardWidgetState
     extends State<SqlBasicSuggestionCardWidget> {
-  late final _controller = SqlBasicSuggestionCardController(
-    context: context,
-    suggestion: widget.suggestion,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +49,12 @@ class _SqlBasicSuggestionCardWidgetState
           ),
         ),
         trailing: IconButton(
-          onPressed: _controller.showRemoveCommandDialog,
+          onPressed: () {
+            RemoveSqlBasicSuggestionDialogWidget.show(
+              context,
+              suggestion: widget.suggestion,
+            );
+          },
           tooltip: AppLocalizations.of(context)!.deleteSuggestion,
           icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
         ),
