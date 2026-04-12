@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
 
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/create_sql_advanced_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/reset_sql_advanced_suggestions_dialog_widget.dart';
-
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 class SqlAdvancedSuggestionsController {
@@ -21,19 +18,5 @@ class SqlAdvancedSuggestionsController {
     final result = await notifier.reorderSuggestions(suggestions);
 
     return result.isSuccess;
-  }
-
-  void showCreateDialog() {
-    showDialog(
-      context: getContext(),
-      builder: (context) => const CreateSqlAdvancedSuggestionDialogWidget(),
-    );
-  }
-
-  void showResetDialog() {
-    showDialog(
-      context: getContext(),
-      builder: (context) => const ResetSqlAdvancedSuggestionsDialogWidget(),
-    );
   }
 }

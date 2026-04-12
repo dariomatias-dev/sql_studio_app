@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
@@ -76,15 +77,6 @@ class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
     if (mounted) await handleError(context, result);
   }
 
-  void _showDeleteDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DatabaseDeleteDialogWidget(onDeleteDatabase: _onDeleteDatabase);
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -152,7 +144,12 @@ class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
                   ),
                 ),
                 PopupMenuItem(
-                  onTap: _showDeleteDialog,
+                  onTap: () {
+                    DatabaseDeleteDialogWidget.show(
+                      context,
+                      onDeleteDatabase: _onDeleteDatabase,
+                    );
+                  },
                   child: Text(
                     appLocalizations.delete,
                     style: const TextStyle(color: Colors.redAccent),

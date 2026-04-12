@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
@@ -19,15 +20,6 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   final _searchController = TextEditingController();
-
-  void _showCreateDatabaseDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CreateDatabaseDialogWidget();
-      },
-    );
-  }
 
   @override
   void dispose() {
@@ -87,7 +79,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: ButtonWidget(
-                    onPressed: _showCreateDatabaseDialog,
+                    onPressed: () => CreateDatabaseDialogWidget.show(context),
                     text: appLocalizations.newDatabase,
                     backgroundColor: Colors.grey.shade100,
                     borderColor: Colors.grey.shade200,

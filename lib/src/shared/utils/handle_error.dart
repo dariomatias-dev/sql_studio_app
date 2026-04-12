@@ -20,24 +20,20 @@ Future<void> handleError<T>(
     onFailure: (error) async {
       switch (error) {
         default:
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return DialogWidget(
-                title: appLocalizations.error,
-                content: Text(
-                  appLocalizations.key(error.type, error.args),
-                  textAlign: TextAlign.center,
-                ),
-                actions: <Widget>[
-                  ButtonWidget(
-                    onPressed: () => Navigator.pop(context),
-                    style: ButtonStyleType.red,
-                    text: 'Ok',
-                  ),
-                ],
-              );
-            },
+          await DialogWidget.show(
+            context,
+            title: appLocalizations.error,
+            content: Text(
+              appLocalizations.key(error.type, error.args),
+              textAlign: TextAlign.center,
+            ),
+            actions: <Widget>[
+              ButtonWidget(
+                onPressed: () => Navigator.pop(context),
+                style: ButtonStyleType.red,
+                text: 'Ok',
+              ),
+            ],
           );
       }
     },

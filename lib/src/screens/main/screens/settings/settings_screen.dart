@@ -31,16 +31,14 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   Future<void> _openUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
-      await showDialog(
-        context: _getContext(),
-        builder: (context) {
-          final appLocalizations = AppLocalizations.of(context)!;
+      if (!context.mounted) return;
 
-          return ErrorDialogWidget(
-            title: appLocalizations.errorOpeningUrl,
-            description: appLocalizations.errorOpeningUrlDescription(url),
-          );
-        },
+      final appLocalizations = AppLocalizations.of(_getContext())!;
+
+      await ErrorDialogWidget.show(
+        _getContext(),
+        title: appLocalizations.errorOpeningUrl,
+        description: appLocalizations.errorOpeningUrlDescription(url),
       );
     }
   }
