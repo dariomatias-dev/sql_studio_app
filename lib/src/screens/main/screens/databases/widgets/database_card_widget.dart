@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
@@ -158,7 +157,10 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
               items: <PopupMenuItem>[
                 PopupMenuItem(
                   onTap: () {
-                    context.push(RouteNames.databaseVisualizerFn(widget.db.name));
+                    AppRoutes.goToDatabaseVisualizer(
+                      context,
+                      dbName: widget.db.name,
+                    );
                   },
                   child: Row(
                     children: <Widget>[

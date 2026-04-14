@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/urls.dart';
-import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version_widget.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
@@ -76,14 +75,14 @@ class _SettingsScreenState extends State<SettingsScreen>
                 ),
                 SettingsCardWidget(
                   onTap: () {
-                    context.push(RouteNames.sqlSuggestionSettingsPath);
+                    AppRoutes.goToSqlSuggestionSettings(context);
                   },
                   title: appLocalizations.sqlSuggestions,
                   icon: Icons.arrow_forward_ios,
                 ),
                 SettingsCardWidget(
                   onTap: () {
-                    context.push(RouteNames.workspaceLayoutSettings);
+                    AppRoutes.goToWorkspaceLayoutSettings(context);
                   },
                   title: appLocalizations.workspaceLayout,
                   icon: Icons.arrow_forward_ios,

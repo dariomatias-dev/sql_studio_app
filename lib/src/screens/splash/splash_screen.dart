@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/result.dart';
-import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
@@ -112,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     context.read<WorkspaceLayoutNotifier>().load();
 
-    context.go(RouteNames.main);
+    AppRoutes.goToMain(context);
   }
 
   void _init() {

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
@@ -32,12 +31,6 @@ class _SqlSuggestionSettingsScreenState
   bool _useBasicSuggestions = true;
   bool _useAdvancedSuggestions = false;
   bool _useCharacterSuggestions = true;
-
-  void _openBasicConfig(BuildContext context) =>
-      context.push(RouteNames.sqlBasicSuggestionSettings);
-
-  void _openAdvancedConfig(BuildContext context) =>
-      context.push(RouteNames.sqlAdvancedSuggestionSettings);
 
   bool get _hasChanges {
     final notifier = context.read<SqlSuggestionsNotifier>();
@@ -119,7 +112,7 @@ class _SqlSuggestionSettingsScreenState
                     });
                   },
                   onConfigure: _useBasicSuggestions
-                      ? () => _openBasicConfig(context)
+                      ? () => AppRoutes.goToSqlBasicSettings(context)
                       : null,
                 ),
                 const SizedBox(height: 20.0),
@@ -134,7 +127,7 @@ class _SqlSuggestionSettingsScreenState
                     });
                   },
                   onConfigure: _useAdvancedSuggestions
-                      ? () => _openAdvancedConfig(context)
+                      ? () => AppRoutes.goToSqlAdvancedSettings(context)
                       : null,
                 ),
                 const SizedBox(height: 12.0),

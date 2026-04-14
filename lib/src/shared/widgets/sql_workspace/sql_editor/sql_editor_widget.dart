@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/routes/route_names.dart';
+import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
@@ -85,8 +84,9 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     onTap: () {
                       Navigator.pop(context);
 
-                      context.push(
-                        RouteNames.databaseVisualizerFn(databaseName!),
+                      AppRoutes.goToDatabaseVisualizer(
+                        context,
+                        dbName: databaseName!,
                       );
                     },
                     child: Row(
