@@ -10,7 +10,7 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
 import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
@@ -31,7 +31,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SqlBasicSuggestionsNotifier()),
         ChangeNotifierProvider(create: (_) => AppVersionNotifier()),
         ChangeNotifierProvider(create: (_) => DatabaseNotifier()),
-        ChangeNotifierProvider(create: (_) => MainScreenNotifier()),
+        ChangeNotifierProvider(create: (_) => NavigationNotifier()),
         ChangeNotifierProvider(create: (_) => SqlCommandsNotifier()),
         ChangeNotifierProvider(create: (_) => SqlEditorNotifier()),
         ChangeNotifierProvider(create: (_) => SqlSuggestionsNotifier()),

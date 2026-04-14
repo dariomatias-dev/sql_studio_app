@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 
 class MainScreenSwipeWrapper extends StatelessWidget {
   const MainScreenSwipeWrapper({
     super.key,
     required this.child,
-    required this.notifier,
+    required this.navigationNotifier,
     required this.pageController,
   });
 
   final Widget child;
-  final MainScreenNotifier notifier;
+  final NavigationNotifier navigationNotifier;
   final PageController pageController;
 
   void handleSwipe(DragEndDetails details) {
     if (details.primaryVelocity == null) return;
 
     if (details.primaryVelocity! < 0) {
-      if (notifier.currentIndex < 2) {
-        notifier.changeScreen(notifier.currentIndex + 1);
-        pageController.jumpToPage(notifier.currentIndex);
+      if (navigationNotifier.index < 2) {
+        navigationNotifier.setIndex(navigationNotifier.index + 1);
+        pageController.jumpToPage(navigationNotifier.index);
       }
     } else if (details.primaryVelocity! > 0) {
-      if (notifier.currentIndex > 0) {
-        notifier.changeScreen(notifier.currentIndex - 1);
-        pageController.jumpToPage(notifier.currentIndex);
+      if (navigationNotifier.index > 0) {
+        navigationNotifier.setIndex(navigationNotifier.index - 1);
+        pageController.jumpToPage(navigationNotifier.index);
       }
     }
   }

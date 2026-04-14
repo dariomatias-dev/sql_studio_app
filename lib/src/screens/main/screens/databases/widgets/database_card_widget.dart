@@ -8,7 +8,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
 import 'package:sql_studio/src/shared/models/default_database_model.dart';
@@ -70,7 +70,7 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
     return CardWidget(
       onTap: () {
         context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
-        context.read<MainScreenNotifier>().changeScreen(0);
+        context.read<NavigationNotifier>().setIndex(0);
       },
       child: Container(
         padding: const EdgeInsets.all(16.0),

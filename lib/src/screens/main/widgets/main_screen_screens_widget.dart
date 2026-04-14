@@ -4,16 +4,16 @@ import 'package:sql_studio/src/screens/main/screens/home/home_screen.dart';
 import 'package:sql_studio/src/screens/main/screens/databases/databases_screen.dart';
 import 'package:sql_studio/src/screens/main/screens/settings/settings_screen.dart';
 
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 
 class MainScreenScreensWidget extends StatelessWidget {
   const MainScreenScreensWidget({
     super.key,
-    required this.notifier,
+    required this.navigationNotifier,
     required this.pageController,
   });
 
-  final MainScreenNotifier notifier;
+  final NavigationNotifier navigationNotifier;
   final PageController pageController;
 
   List<Widget> get pages => const [
@@ -26,15 +26,15 @@ class MainScreenScreensWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (pageController.hasClients &&
-          pageController.page?.round() != notifier.currentIndex) {
-        pageController.jumpToPage(notifier.currentIndex);
+          pageController.page?.round() != navigationNotifier.index) {
+        pageController.jumpToPage(navigationNotifier.index);
       }
     });
 
     return PageView(
       controller: pageController,
       physics: const BouncingScrollPhysics(),
-      onPageChanged: notifier.changeScreen,
+      onPageChanged: navigationNotifier.setIndex,
       children: pages,
     );
   }

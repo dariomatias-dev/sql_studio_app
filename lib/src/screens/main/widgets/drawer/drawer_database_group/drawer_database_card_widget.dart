@@ -7,7 +7,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 
@@ -38,7 +38,7 @@ class _DrawerDatabaseCardWidgetState extends State<DrawerDatabaseCardWidget> {
     commands.activeDatabase = widget.database.label;
     commands.clearResult();
 
-    context.read<MainScreenNotifier>().changeScreen(0);
+    context.read<NavigationNotifier>().setIndex(0);
     context.read<SqlEditorNotifier>().focusNode.requestFocus();
 
     Scaffold.of(context).closeDrawer();

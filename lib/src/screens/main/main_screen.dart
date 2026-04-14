@@ -5,7 +5,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 
 import 'package:sql_studio/src/screens/main/widgets/drawer/drawer_widget.dart';
 import 'package:sql_studio/src/screens/main/widgets/main_screen_nav_buttons_widget.dart';
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<MainScreenNotifier>();
+    final navigationNotifier = context.watch<NavigationNotifier>();
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
@@ -45,18 +45,18 @@ class _MainScreenState extends State<MainScreen> {
         ),
         drawer: DrawerWidget(),
         body: MainScreenSwipeWrapper(
-          notifier: notifier,
+          navigationNotifier: navigationNotifier,
           pageController: _pageController,
           child: MainScreenScreensWidget(
-            notifier: notifier,
+            navigationNotifier: navigationNotifier,
             pageController: _pageController,
           ),
         ),
         bottomNavigationBar: MainScreenSwipeWrapper(
-          notifier: notifier,
+          navigationNotifier: navigationNotifier,
           pageController: _pageController,
           child: MainScreenNavButtonsWidget(
-            notifier: notifier,
+            navigationNotifier: navigationNotifier,
             pageController: _pageController,
           ),
         ),

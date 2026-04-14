@@ -3,16 +3,16 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/main_screen_notifier.dart';
+import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 
 class MainScreenNavButtonsWidget extends StatelessWidget {
   const MainScreenNavButtonsWidget({
     super.key,
-    required this.notifier,
+    required this.navigationNotifier,
     required this.pageController,
   });
 
-  final MainScreenNotifier notifier;
+  final NavigationNotifier navigationNotifier;
   final PageController pageController;
 
   List<GButton> buttons(BuildContext context) {
@@ -22,17 +22,17 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
       buildButton(
         icon: Icons.circle_outlined,
         text: appLocalizations.home,
-        selected: notifier.currentIndex == 0,
+        selected: navigationNotifier.index == 0,
       ),
       buildButton(
         icon: Icons.folder_open_outlined,
         text: appLocalizations.databases,
-        selected: notifier.currentIndex == 1,
+        selected: navigationNotifier.index == 1,
       ),
       buildButton(
         icon: Icons.settings_outlined,
         text: appLocalizations.settings,
-        selected: notifier.currentIndex == 2,
+        selected: navigationNotifier.index == 2,
       ),
     ];
   }
@@ -57,7 +57,7 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
 
   void onTab(int index) {
     FocusManager.instance.primaryFocus?.unfocus();
-    notifier.changeScreen(index);
+    navigationNotifier.setIndex(index);
     pageController.jumpToPage(index);
   }
 
@@ -69,7 +69,7 @@ class MainScreenNavButtonsWidget extends StatelessWidget {
         backgroundColor: Colors.white,
         gap: 8.0,
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-        selectedIndex: notifier.currentIndex,
+        selectedIndex: navigationNotifier.index,
         color: Colors.grey.shade600,
         activeColor: Colors.black,
         tabBackgroundColor: Colors.transparent,
