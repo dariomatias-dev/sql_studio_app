@@ -6,7 +6,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/app_localization_notifier.dart';
 
-import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
+import 'package:sql_studio/src/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
 class LanguageSelectorSheetWidget extends StatefulWidget {
   const LanguageSelectorSheetWidget({super.key});

@@ -3,8 +3,7 @@ class RoutePaths {
 
   static const main = '/';
 
-  static const database = 'database';
-  static const databaseFull = '/database';
+  static const database = '/database';
 
   static const databaseVisualizer = '/database-visualizer/:dbName';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 
-import 'package:sql_studio/src/screens/main/screens/databases/widgets/database_card_widget.dart';
+import 'package:sql_studio/src/screens/databases/widgets/database_card_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 

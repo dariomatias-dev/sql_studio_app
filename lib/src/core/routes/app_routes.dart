@@ -13,7 +13,7 @@ class AppRoutes {
   }
 
   static void goToDatabase(BuildContext context) {
-    context.push(RoutePaths.databaseFull);
+    context.push(RoutePaths.database);
   }
 
   static void goToDatabaseVisualizer(

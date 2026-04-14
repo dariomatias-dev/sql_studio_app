@@ -1,11 +1,11 @@
 import 'package:go_router/go_router.dart';
 
+import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/core/routes/route_paths.dart';
 
 import 'package:sql_studio/src/screens/database/database_screen.dart';
 import 'package:sql_studio/src/screens/database_visualizer/database_visualizer_screen.dart';
-import 'package:sql_studio/src/screens/main/main_screen.dart';
 import 'package:sql_studio/src/screens/not_found/not_found_screen.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/sql_advanced_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_screen.dart';
@@ -24,9 +24,9 @@ class AppRouter {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        name: RouteNames.main,
+        name: RouteNames.root,
         path: RoutePaths.main,
-        builder: (context, state) => const MainScreen(),
+        builder: (context, state) => const RootNavigation(),
         routes: <GoRoute>[
           GoRoute(
             name: RouteNames.database,
@@ -61,7 +61,7 @@ class AppRouter {
         builder: (context, state) => const WorkspaceLayoutSettingsScreen(),
       ),
       GoRoute(
-        name: RouteNames.sqlSuggestionSettingsPath,
+        name: RouteNames.sqlSuggestionSettings,
         path: RoutePaths.sqlSuggestionSettings,
         builder: (context, state) => const SqlSuggestionSettingsScreen(),
       ),

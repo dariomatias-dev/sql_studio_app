@@ -6,10 +6,10 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/urls.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/screens/main/screens/settings/widgets/app_version_widget.dart';
-import 'package:sql_studio/src/screens/main/screens/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
-import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_card_widget.dart';
-import 'package:sql_studio/src/screens/main/screens/settings/widgets/settings_section/settings_section_widget.dart';
+import 'package:sql_studio/src/screens/settings/widgets/app_version_widget.dart';
+import 'package:sql_studio/src/screens/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
+import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_card_widget.dart';
+import 'package:sql_studio/src/screens/settings/widgets/settings_section/settings_section_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
