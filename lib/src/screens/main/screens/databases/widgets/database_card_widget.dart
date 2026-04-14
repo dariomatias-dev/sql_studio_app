@@ -158,7 +158,7 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
               items: <PopupMenuItem>[
                 PopupMenuItem(
                   onTap: () {
-                    context.push(RouteNames.databaseVisualizer(widget.db.name));
+                    context.push(RouteNames.databaseVisualizerFn(widget.db.name));
                   },
                   child: Row(
                     children: <Widget>[

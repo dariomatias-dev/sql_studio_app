@@ -34,7 +34,7 @@ class AppRouter {
             builder: (context, state) => const DatabaseScreen(),
           ),
           GoRoute(
-            name: RouteNames.databaseVisualizerPath,
+            name: RouteNames.databaseVisualizer,
             path: RoutePaths.databaseVisualizer,
             builder: (context, state) {
               final databaseName = state.pathParameters['dbName'] as String;

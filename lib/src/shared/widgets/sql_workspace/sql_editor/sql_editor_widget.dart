@@ -86,7 +86,7 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                       Navigator.pop(context);
 
                       context.push(
-                        RouteNames.databaseVisualizer(databaseName!),
+                        RouteNames.databaseVisualizerFn(databaseName!),
                       );
                     },
                     child: Row(
