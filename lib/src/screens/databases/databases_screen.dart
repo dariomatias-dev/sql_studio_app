@@ -27,6 +27,7 @@ class _DatabasesScreenState extends State<DatabasesScreen>
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView.separated(
+          padding: EdgeInsets.only(bottom: 64.0),
           itemCount: defaultDatabases.length,
           separatorBuilder: (context, index) => const SizedBox(height: 8.0),
           itemBuilder: (context, index) {

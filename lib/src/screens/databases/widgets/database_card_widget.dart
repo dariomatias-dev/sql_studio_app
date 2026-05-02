@@ -28,8 +28,8 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
   Future<void> _copyFile(List<String> paths, String message) async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final contents = await Future.wait(
-      paths.map((path) => rootBundle.loadString(path)),
+    final List<String> contents = await Future.wait(
+      paths.map((String path) => rootBundle.loadString(path)),
     );
 
     await Clipboard.setData(ClipboardData(text: contents.join('\n')));
@@ -37,8 +37,9 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
     if (mounted) {
       Fluttertoast.showToast(
         msg: message,
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: const Color(0xFF111111),
         textColor: Colors.white,
+        fontSize: 14.0,
       );
     }
   }
@@ -64,159 +65,237 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
-    final tableCount = widget.db.tables.length;
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final int tableCount = widget.db.tables.length;
 
-    return CardWidget(
-      onTap: () {
-        context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
-        context.read<NavigationNotifier>().setIndex(0);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.withAlpha(26)),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[Colors.white, Colors.grey.shade50],
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24.0),
+      child: CardWidget(
+        onTap: () {
+          context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
+          context.read<NavigationNotifier>().setIndex(0);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24.0),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black.withAlpha(12),
+                blurRadius: 30.0,
+                offset: const Offset(0.0, 10.0),
+              ),
+            ],
           ),
-        ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24.0, 24.0, 12.0, 20.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        appLocalizations.key(widget.db.labelKey),
-                        style: const TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
+                      Container(
+                        height: 54.0,
+                        width: 54.0,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        child: const Icon(
+                          Icons.dns_rounded,
+                          color: Colors.white,
+                          size: 26.0,
                         ),
                       ),
-                      const SizedBox(width: 12.0),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                          vertical: 4.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey.withAlpha(26),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
+                      const SizedBox(width: 18.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Icon(
-                              Icons.table_chart_outlined,
-                              size: 12.0,
-                              color: Colors.blueGrey.shade700,
-                            ),
-                            const SizedBox(width: 4.0),
                             Text(
-                              '$tableCount',
+                              l10n.key(widget.db.labelKey),
+                              style: const TextStyle(
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.black,
+                                letterSpacing: -0.8,
+                              ),
+                            ),
+                            const SizedBox(height: 4.0),
+                            Text(
+                              'root/${widget.db.name.toLowerCase()}',
                               style: TextStyle(
-                                fontSize: 11.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueGrey.shade700,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black.withAlpha(100),
+                                fontFamily: 'monospace',
                               ),
                             ),
                           ],
                         ),
                       ),
+                      PopupMenuButtonWidget(
+                        items: <PopupMenuItem>[
+                          PopupMenuItem(
+                            onTap: () => AppRoutes.goToDatabaseVisualizer(
+                              context,
+                              dbName: widget.db.name,
+                            ),
+                            child: _MenuAction(
+                              icon: Icons.account_tree_outlined,
+                              label: l10n.viewStructure,
+                            ),
+                          ),
+                          PopupMenuItem(
+                            onTap: _copySchema,
+                            child: _MenuAction(
+                              icon: Icons.terminal_rounded,
+                              label: l10n.copySchema,
+                            ),
+                          ),
+                          PopupMenuItem(
+                            onTap: _copySeed,
+                            child: _MenuAction(
+                              icon: Icons.data_object_outlined,
+                              label: l10n.copySeed,
+                            ),
+                          ),
+                          PopupMenuItem(
+                            onTap: _copyAll,
+                            child: _MenuAction(
+                              icon: Icons.auto_awesome_rounded,
+                              label: l10n.copyAll,
+                              isBold: true,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 6.0),
-                  Text(
-                    appLocalizations.key(widget.db.descriptionKey),
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 13.0,
-                      height: 1.3,
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Text(
-                    '${appLocalizations.tables}: ${widget.db.tables.join(', ')}',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Text(
+                    l10n.key(widget.db.descriptionKey),
                     style: TextStyle(
-                      color: Colors.grey.shade400,
-                      fontSize: 11.0,
-                      fontStyle: FontStyle.italic,
+                      fontSize: 15.0,
+                      color: Colors.black.withAlpha(180),
+                      height: 1.5,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
-              ),
-            ),
-            PopupMenuButtonWidget(
-              items: <PopupMenuItem>[
-                PopupMenuItem(
-                  onTap: () {
-                    AppRoutes.goToDatabaseVisualizer(
-                      context,
-                      dbName: widget.db.name,
-                    );
-                  },
+                ),
+                const SizedBox(height: 28.0),
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFAFAFA),
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.black.withAlpha(15),
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
                   child: Row(
                     children: <Widget>[
-                      const Icon(
-                        Icons.schema_outlined,
-                        size: 20.0,
-                        color: Colors.black54,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 6.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          '$tableCount',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 12.0),
-                      Text(appLocalizations.viewStructure),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: _copySchema,
-                  child: Row(
-                    children: <Widget>[
-                      const Icon(Icons.code, size: 20.0, color: Colors.black54),
-                      const SizedBox(width: 12.0),
-                      Text(appLocalizations.copySchema),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: _copySeed,
-                  child: Row(
-                    children: <Widget>[
-                      const Icon(
-                        Icons.data_array,
-                        size: 20.0,
-                        color: Colors.black54,
+                      Text(
+                        l10n.tables.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.0,
+                          color: Colors.black,
+                        ),
                       ),
-                      const SizedBox(width: 12.0),
-                      Text(appLocalizations.copySeed),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  onTap: _copyAll,
-                  child: Row(
-                    children: <Widget>[
-                      const Icon(
-                        Icons.copy_all,
-                        size: 20.0,
-                        color: Colors.black54,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          '|',
+                          style: TextStyle(color: Color(0xFFE0E0E0)),
+                        ),
                       ),
-                      const SizedBox(width: 12.0),
-                      Text(appLocalizations.copyAll),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: widget.db.tables.map((String table) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Text(
+                                  table,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black.withAlpha(120),
+                                    fontFamily: 'monospace',
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _MenuAction extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isBold;
+
+  const _MenuAction({
+    required this.icon,
+    required this.label,
+    this.isBold = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Icon(icon, size: 20.0, color: Colors.black),
+        const SizedBox(width: 12.0),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: isBold ? FontWeight.w900 : FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
   }
 }
