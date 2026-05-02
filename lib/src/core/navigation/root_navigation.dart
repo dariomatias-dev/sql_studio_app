@@ -19,39 +19,88 @@ class RootNavigation extends StatefulWidget {
 }
 
 class _RootNavigationState extends State<RootNavigation> {
-  final _pageController = PageController();
+  late final PageController _pageController;
+  late final NavigationNotifier _notifier;
 
-  List<Widget> get _screens => const <Widget>[
-    HomeScreen(),
-    DatabasesScreen(),
-    SettingsScreen(),
+  List<Widget> get _screens => <Widget>[
+    const HomeScreen(),
+    const DatabasesScreen(),
+    const SettingsScreen(),
   ];
+
+  void _onIndexChanged() {
+    if (!_pageController.hasClients) return;
+
+    final int page = _notifier.index;
+
+    if (_pageController.page?.round() == page) return;
+
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOutQuart,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _pageController = PageController();
+    _notifier = context.read<NavigationNotifier>();
+
+    _notifier.addListener(_onIndexChanged);
+  }
+
+  @override
+  void dispose() {
+    _notifier.removeListener(_onIndexChanged);
+    _pageController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<NavigationNotifier>();
+    final NavigationNotifier notifier = context.watch<NavigationNotifier>();
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: AppBar(),
-        drawer: const RootDrawerWidget(),
-        body: RootSwipeWrapperWidget(
-          notifier: notifier,
-          pageController: _pageController,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: notifier.setIndex,
-            children: _screens,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          scrolledUnderElevation: 0.0,
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: Colors.black, size: 22.0),
+          shape: const Border(
+            bottom: BorderSide(color: Color(0xFFF2F2F2), width: 1.0),
           ),
         ),
-        bottomNavigationBar: RootSwipeWrapperWidget(
-          notifier: notifier,
-          pageController: _pageController,
-          child: RootNavBarWidget(
-            notifier: notifier,
-            pageController: _pageController,
-          ),
+        drawer: const RootDrawerWidget(),
+        body: Stack(
+          children: <Widget>[
+            RootSwipeWrapperWidget(
+              notifier: notifier,
+              pageController: _pageController,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: notifier.setIndex,
+                children: _screens,
+              ),
+            ),
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: 0.0,
+              child: RootSwipeWrapperWidget(
+                notifier: notifier,
+                pageController: _pageController,
+                child: RootNavBarWidget(pageController: _pageController),
+              ),
+            ),
+          ],
         ),
       ),
     );
