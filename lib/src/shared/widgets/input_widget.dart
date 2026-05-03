@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class InputWidget extends StatelessWidget {
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
+  final String? labelText;
+  final String hintText;
+  final Widget? suffixIcon;
+  final String? Function(String? value)? validator;
+
   const InputWidget({
     super.key,
     this.onChanged,
@@ -11,16 +18,9 @@ class InputWidget extends StatelessWidget {
     this.validator,
   });
 
-  final ValueChanged<String>? onChanged;
-  final TextEditingController? controller;
-  final String? labelText;
-  final String hintText;
-  final Widget? suffixIcon;
-  final String? Function(String? value)? validator;
-
-  OutlineInputBorder _border(Color color, {double width = 1}) {
+  OutlineInputBorder _border(Color color, {double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(12.0),
       borderSide: BorderSide(color: color, width: width),
     );
   }
@@ -30,27 +30,45 @@ class InputWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       cursorColor: Colors.black,
+      cursorWidth: 1.0,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey.shade600),
-        labelStyle: const TextStyle(color: Colors.black),
+        hintStyle: TextStyle(
+          color: Colors.black.withAlpha(80),
+          fontSize: 14.0,
+          fontWeight: FontWeight.w500,
+        ),
+        labelStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 14.0,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5,
+        ),
         suffixIcon: suffixIcon,
-        enabledBorder: _border(Colors.grey.shade400),
+        suffixIconColor: Colors.black,
+        enabledBorder: _border(const Color(0xFFEEEEEE)),
         focusedBorder: _border(Colors.black, width: 1.5),
-        errorBorder: _border(Colors.red, width: 1.5),
-        focusedErrorBorder: _border(Colors.red, width: 1.5),
+        errorBorder: _border(const Color(0xFFFF3B30), width: 1.0),
+        focusedErrorBorder: _border(const Color(0xFFFF3B30), width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12.0,
-          vertical: 12.0,
+          horizontal: 16.0,
+          vertical: 18.0,
         ),
-        fillColor: Colors.white,
+        fillColor: const Color(0xFFF8F8F8),
         filled: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        alignLabelWithHint: true,
       ),
-      style: const TextStyle(color: Colors.black),
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 15.0,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -0.1,
+      ),
       onChanged: onChanged,
-      onTapOutside: (event) {
+      onTapOutside: (PointerDownEvent event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       validator: validator,
