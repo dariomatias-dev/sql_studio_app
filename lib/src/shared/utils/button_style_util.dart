@@ -24,24 +24,24 @@ ButtonStyleData resolveButtonStyle({
 }) {
   switch (style) {
     case ButtonStyleType.black:
-      return const ButtonStyleData(
+      return ButtonStyleData(
         background: Colors.black,
         foreground: Colors.white,
-        border: Colors.black,
+        border: Colors.black.withAlpha(20),
         text: Colors.white,
       );
     case ButtonStyleType.red:
-      return const ButtonStyleData(
-        background: Colors.red,
+      return ButtonStyleData(
+        background: const Color(0xFFFF3B30),
         foreground: Colors.white,
-        border: Colors.red,
+        border: const Color(0xFFFF3B30).withAlpha(30),
         text: Colors.white,
       );
-    default:
+    case ButtonStyleType.custom:
       return ButtonStyleData(
         background: backgroundColor ?? Colors.white,
         foreground: foregroundColor ?? Colors.black,
-        border: borderColor ?? Colors.grey,
+        border: borderColor ?? Colors.black.withAlpha(25),
         text: foregroundColor ?? Colors.black,
       );
   }
