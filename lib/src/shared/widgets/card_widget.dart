@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key, this.onTap, required this.child});
+  const CardWidget({
+    super.key,
+    this.onTap,
+    this.borderRadius,
+    required this.child,
+  });
 
   final VoidCallback? onTap;
+  final BorderRadius? borderRadius;
   final Widget child;
 
-  BorderRadius get borderRadius => BorderRadius.circular(12.0);
+  BorderRadius get _borderRadius => borderRadius ?? BorderRadius.circular(12.0);
 
   @override
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: borderRadius,
+        borderRadius: _borderRadius,
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black.withAlpha(13),
@@ -22,7 +28,7 @@ class CardWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: InkWell(borderRadius: borderRadius, onTap: onTap, child: child),
+      child: InkWell(borderRadius: _borderRadius, onTap: onTap, child: child),
     );
   }
 }
