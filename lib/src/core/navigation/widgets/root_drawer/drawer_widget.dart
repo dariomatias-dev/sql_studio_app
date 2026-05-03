@@ -19,77 +19,114 @@ class RootDrawerWidget extends StatefulWidget {
 }
 
 class _RootDrawerWidgetState extends State<RootDrawerWidget> {
-  final _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {
     _searchController.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
 
     return Consumer<DatabaseNotifier>(
-      builder: (context, notifier, child) {
-        return SafeArea(
-          child: Drawer(
-            backgroundColor: const Color(0xFFF8F9FB),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  margin: const EdgeInsets.only(top: 32.0, bottom: 12.0),
-                  child: InputWidget(
-                    controller: _searchController,
-                    hintText: appLocalizations.searchDatabases,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        _searchController.text = '';
-
-                        notifier.setFilter('');
-                      },
-                      icon: Icon(Icons.close),
-                    ),
-                    onChanged: notifier.setFilter,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Expanded(
-                  child: notifier.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : SingleChildScrollView(
-                          child: Column(
-                            spacing: 24.0,
-                            children: <Widget>[
-                              RootDrawerDatabaseGroupWidget(
-                                title: appLocalizations.favorites,
-                                databases: notifier.favorites,
-                              ),
-                              RootDrawerDatabaseGroupWidget(
-                                title: appLocalizations.allDatabases,
-                                databases: notifier.others,
-                              ),
-                            ],
+      builder:
+          (BuildContext context, DatabaseNotifier notifier, Widget? child) {
+            return Drawer(
+              backgroundColor: Colors.white,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              child: SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        20.0,
+                        24.0,
+                        20.0,
+                        16.0,
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          const Icon(
+                            Icons.auto_awesome_mosaic_rounded,
+                            size: 24.0,
                           ),
-                        ),
+                          const SizedBox(width: 12.0),
+                          Text(
+                            l10n.databases.toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: InputWidget(
+                        controller: _searchController,
+                        hintText: l10n.searchDatabases,
+                        suffixIcon: _searchController.text.isNotEmpty
+                            ? IconButton(
+                                onPressed: () {
+                                  _searchController.clear();
+                                  notifier.setFilter('');
+                                },
+                                icon: const Icon(
+                                  Icons.close_rounded,
+                                  size: 18.0,
+                                ),
+                              )
+                            : const Icon(Icons.search_rounded, size: 18.0),
+                        onChanged: notifier.setFilter,
+                      ),
+                    ),
+                    const SizedBox(height: 24.0),
+                    Expanded(
+                      child: notifier.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                                strokeWidth: 2.0,
+                              ),
+                            )
+                          : ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: <Widget>[
+                                RootDrawerDatabaseGroupWidget(
+                                  title: l10n.favorites,
+                                  databases: notifier.favorites,
+                                ),
+                                const SizedBox(height: 12.0),
+                                RootDrawerDatabaseGroupWidget(
+                                  title: l10n.allDatabases,
+                                  databases: notifier.others,
+                                ),
+                                const SizedBox(height: 100.0),
+                              ],
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ButtonWidget(
+                        onPressed: () =>
+                            CreateDatabaseDialogWidget.show(context),
+                        text: l10n.newDatabase,
+                        width: double.infinity,
+                        style: ButtonStyleType.black,
+                      ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: ButtonWidget(
-                    onPressed: () => CreateDatabaseDialogWidget.show(context),
-                    text: appLocalizations.newDatabase,
-                    backgroundColor: Colors.grey.shade100,
-                    borderColor: Colors.grey.shade200,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+            );
+          },
     );
   }
 }
