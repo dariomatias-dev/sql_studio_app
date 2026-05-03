@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
 class DatabaseVisualizerTableWidget extends StatelessWidget {
-  const DatabaseVisualizerTableWidget({super.key, required this.table});
-
   final TableInfoModel table;
+
+  const DatabaseVisualizerTableWidget({super.key, required this.table});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 240.0,
+      width: 260.0,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: Colors.black, width: 1.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 6,
-            offset: const Offset(2, 2),
+            color: Colors.black.withAlpha(15),
+            blurRadius: 20.0,
+            offset: const Offset(0.0, 10.0),
           ),
         ],
       ),
@@ -29,53 +29,81 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
-              vertical: 10.0,
+              vertical: 14.0,
               horizontal: 16.0,
             ),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(12.0),
-              ),
-              border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(14.0)),
             ),
-            child: Text(
-              table.name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14.0,
-                color: Colors.grey.shade700,
-              ),
+            child: Row(
+              children: <Widget>[
+                const Icon(
+                  Icons.table_chart_rounded,
+                  color: Colors.white,
+                  size: 18.0,
+                ),
+                const SizedBox(width: 10.0),
+                Expanded(
+                  child: Text(
+                    table.name.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 13.0,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           ...table.columns.map((column) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 6.0,
-                horizontal: 16.0,
+            final isFk = column.foreignTable != null;
+
+            return Container(
+              height: 44.0,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Color(0xFFF5F5F5), width: 1.0),
+                ),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                    column.name,
-                    style: const TextStyle(
-                      fontSize: 13.0,
-                      color: Colors.black87,
+                  if (isFk)
+                    const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        Icons.link_rounded,
+                        size: 16.0,
+                        color: Color(0xFF757575),
+                      ),
+                    ),
+                  Expanded(
+                    child: Text(
+                      column.name,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 13.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   Text(
-                    column.type,
+                    column.type.toLowerCase(),
                     style: TextStyle(
-                      fontSize: 13.0,
-                      color: Colors.grey.shade600,
+                      color: Colors.black.withAlpha(100),
+                      fontSize: 11.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'monospace',
                     ),
                   ),
                 ],
               ),
             );
           }),
-          const SizedBox(height: 6),
+          const SizedBox(height: 12.0),
         ],
       ),
     );

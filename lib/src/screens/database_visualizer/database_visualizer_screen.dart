@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/shared/models/table_info_model.dart';
-
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
 
 import 'package:sql_studio/src/services/sql_execution_service.dart';
 
+import 'package:sql_studio/src/shared/models/table_info_model.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 class DatabaseVisualizerScreen extends StatefulWidget {
@@ -28,11 +27,11 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
 
   List<TableInfoModel>? tables;
 
-  static const _tableWidgetWidth = 240.0;
-  static const _tableHeaderHeight = 60.0;
-  static const _tableColumnRowHeight = 40.0;
-  static const _tableFooterHeight = 10.0;
-  static const _tablePadding = 40.0;
+  static const _tableWidgetWidth = 260.0;
+  static const _tableHeaderHeight = 54.0;
+  static const _tableColumnRowHeight = 44.0;
+  static const _tableFooterHeight = 12.0;
+  static const _tablePadding = 100.0;
 
   Future<void> _loadDatabaseStructure() async {
     final result = await _sqlExecutionService.getDatabaseStructure(
@@ -40,50 +39,44 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
     );
 
     setState(() {
-      if (result.isNotEmpty) {
-        tables = result;
-      }
-
+      tables = result.isNotEmpty ? result : [];
       _calculateTableRects();
     });
   }
 
   void _calculateTableRects() {
     _tableRects.clear();
+    if (tables == null || tables!.isEmpty) return;
 
-    if (tables?.isEmpty ?? true) return;
-
-    final tableWidth = _tableWidgetWidth;
     double currentX = _tablePadding;
     double currentY = _tablePadding;
-    int tableCount = 0;
-
-    double currentRowMaxHeight = 0;
+    double currentRowMaxHeight = 0.0;
 
     const columnsInGrid = 3;
 
-    for (var table in tables!) {
-      final double estimatedTableHeight =
+    for (int i = 0; i < tables!.length; i++) {
+      final table = tables![i];
+
+      final height =
           _tableHeaderHeight +
           _tableFooterHeight +
-          (table.columns.length * _tableColumnRowHeight);
+          table.columns.length * _tableColumnRowHeight;
 
-      if (tableCount > 0 && tableCount % columnsInGrid == 0) {
+      if (i > 0 && i % columnsInGrid == 0) {
         currentX = _tablePadding;
         currentY += currentRowMaxHeight + _tablePadding;
-        currentRowMaxHeight = 0;
+        currentRowMaxHeight = 0.0;
       }
 
       _tableRects[table.name] = Rect.fromLTWH(
         currentX,
         currentY,
-        tableWidth,
-        estimatedTableHeight,
+        _tableWidgetWidth,
+        height,
       );
 
-      currentX += tableWidth + _tablePadding;
-      currentRowMaxHeight = math.max(currentRowMaxHeight, estimatedTableHeight);
-      tableCount++;
+      currentX += _tableWidgetWidth + _tablePadding;
+      currentRowMaxHeight = math.max(currentRowMaxHeight, height);
     }
   }
 
@@ -99,24 +92,40 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWidget(
-      appBar: AppBar(title: Text(widget.databaseName)),
+      appBar: AppBar(
+        title: Text(
+          widget.databaseName,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1.5,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        shape: const Border(bottom: BorderSide(color: Color(0xFFF0F0F0))),
+      ),
       body: SafeArea(
         child: tables == null
+            ? const Center(
+                child: CircularProgressIndicator(color: Colors.black),
+              )
+            : tables!.isEmpty
             ? Center(
                 child: Text(AppLocalizations.of(context)!.theDatabaseIsEmpty),
               )
-            : tables?.isEmpty ?? false
-            ? const Center(child: CircularProgressIndicator())
             : LayoutBuilder(
                 builder: (context, constraints) {
                   double contentWidth =
                       _tableRects.values
-                          .map((rect) => rect.right)
+                          .map((e) => e.right)
                           .fold(0.0, math.max) +
                       _tablePadding;
+
                   double contentHeight =
                       _tableRects.values
-                          .map((rect) => rect.bottom)
+                          .map((e) => e.bottom)
                           .fold(0.0, math.max) +
                       _tablePadding;
 
@@ -126,49 +135,78 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
                     constraints.maxHeight,
                   );
 
-                  return InteractiveViewer(
-                    constrained: false,
-                    scaleFactor: 0.1,
-                    minScale: 0.5,
-                    maxScale: 50.0,
-                    boundaryMargin: const EdgeInsets.all(1000.0),
-                    child: SizedBox(
-                      width: contentWidth,
-                      child: Stack(
-                        children: <Widget>[
-                          CustomPaint(
-                            painter: TableRelationPainter(
-                              tables: tables!,
-                              tableRects: _tableRects,
-                              tableHeaderHeight: _tableHeaderHeight,
-                              tableColumnRowHeight: _tableColumnRowHeight,
-                            ),
-                            size: Size(contentWidth, contentHeight),
-                          ),
-                          ...tables!.map((table) {
-                            final rect = _tableRects[table.name];
-
-                            if (rect == null) return const SizedBox.shrink();
-
-                            return Positioned(
-                              left: rect.left,
-                              top: rect.top,
-                              width: rect.width,
-                              height: rect.height,
-                              child: DatabaseVisualizerTableWidget(
-                                table: table,
-                              ),
-                            );
-                          }),
-                        ],
+                  return Stack(
+                    children: [
+                      Positioned.fill(
+                        child: CustomPaint(painter: _GridBackgroundPainter()),
                       ),
-                    ),
+                      InteractiveViewer(
+                        constrained: false,
+                        scaleFactor: 1000,
+                        minScale: 0.2,
+                        maxScale: 2,
+                        boundaryMargin: const EdgeInsets.all(5000),
+                        child: SizedBox(
+                          width: contentWidth,
+                          height: contentHeight,
+                          child: Stack(
+                            children: [
+                              CustomPaint(
+                                size: Size(contentWidth, contentHeight),
+                                painter: TableRelationPainter(
+                                  tables: tables!,
+                                  tableRects: _tableRects,
+                                  tableHeaderHeight: _tableHeaderHeight,
+                                  tableColumnRowHeight: _tableColumnRowHeight,
+                                ),
+                              ),
+                              ...tables!.map((table) {
+                                final rect = _tableRects[table.name];
+                                if (rect == null) return const SizedBox();
+
+                                return Positioned(
+                                  left: rect.left,
+                                  top: rect.top,
+                                  width: rect.width,
+                                  height: rect.height,
+                                  child: DatabaseVisualizerTableWidget(
+                                    table: table,
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
       ),
     );
   }
+}
+
+class _GridBackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black.withAlpha(12)
+      ..strokeWidth = 1;
+
+    const step = 28.0;
+
+    for (double i = 0; i <= size.width; i += step) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    }
+
+    for (double i = 0; i <= size.height; i += step) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class TableRelationPainter extends CustomPainter {
@@ -184,162 +222,84 @@ class TableRelationPainter extends CustomPainter {
     required this.tableColumnRowHeight,
   });
 
-  Offset _findBoundaryIntersection(Offset p1, Rect rect) {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black.withAlpha(100)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    final arrowPaint = Paint()
+      ..color = Colors.black.withAlpha(100)
+      ..style = PaintingStyle.fill;
+
+    for (var source in tables) {
+      final sourceRect = tableRects[source.name];
+      if (sourceRect == null) continue;
+
+      for (int i = 0; i < source.columns.length; i++) {
+        final column = source.columns[i];
+
+        if (column.foreignTable == null) continue;
+
+        final targetRect = tableRects[column.foreignTable];
+        if (targetRect == null) continue;
+
+        final y =
+            sourceRect.top +
+            tableHeaderHeight +
+            i * tableColumnRowHeight +
+            tableColumnRowHeight / 2;
+
+        final start = targetRect.center.dx > sourceRect.center.dx
+            ? Offset(sourceRect.right, y)
+            : Offset(sourceRect.left, y);
+
+        final end = _intersection(start, targetRect);
+
+        final controlX = start.dx + (end.dx - start.dx) / 2;
+
+        final path = Path()
+          ..moveTo(start.dx, start.dy)
+          ..cubicTo(controlX, start.dy, controlX, end.dy, end.dx, end.dy);
+
+        canvas.drawPath(path, paint);
+        _arrow(canvas, end, Offset(controlX, end.dy), arrowPaint);
+      }
+    }
+  }
+
+  Offset _intersection(Offset p1, Rect rect) {
     final p2 = rect.center;
     final dx = p2.dx - p1.dx;
     final dy = p2.dy - p1.dy;
 
-    double tMin = double.infinity;
-    Offset intersection = p2;
-
-    if (dx == 0) {
-      if (p1.dy < rect.top && p2.dy > rect.top) return Offset(p2.dx, rect.top);
-      if (p1.dy > rect.bottom && p2.dy < rect.bottom) {
-        return Offset(p2.dx, rect.bottom);
-      }
+    if (dx.abs() > dy.abs()) {
+      return dx > 0 ? Offset(rect.left, p2.dy) : Offset(rect.right, p2.dy);
     }
 
-    if (dy == 0) {
-      if (p1.dx < rect.left && p2.dx > rect.left) {
-        return Offset(rect.left, p2.dy);
-      }
-      if (p1.dx > rect.right && p2.dx < rect.right) {
-        return Offset(rect.right, p2.dy);
-      }
-    }
-
-    if (dy != 0) {
-      double t = (rect.top - p1.dy) / dy;
-      if (t > 0 && t < tMin) {
-        double intersectX = p1.dx + t * dx;
-        if (intersectX >= rect.left && intersectX <= rect.right) {
-          tMin = t;
-          intersection = Offset(intersectX, rect.top);
-        }
-      }
-    }
-
-    if (dy != 0) {
-      double t = (rect.bottom - p1.dy) / dy;
-      if (t > 0 && t < tMin) {
-        double intersectX = p1.dx + t * dx;
-        if (intersectX >= rect.left && intersectX <= rect.right) {
-          tMin = t;
-          intersection = Offset(intersectX, rect.bottom);
-        }
-      }
-    }
-
-    if (dx != 0) {
-      double t = (rect.left - p1.dx) / dx;
-      if (t > 0 && t < tMin) {
-        double intersectY = p1.dy + t * dy;
-        if (intersectY >= rect.top && intersectY <= rect.bottom) {
-          tMin = t;
-          intersection = Offset(rect.left, intersectY);
-        }
-      }
-    }
-
-    if (dx != 0) {
-      double t = (rect.right - p1.dx) / dx;
-      if (t > 0 && t < tMin) {
-        double intersectY = p1.dy + t * dy;
-        if (intersectY >= rect.top && intersectY <= rect.bottom) {
-          tMin = t;
-          intersection = Offset(rect.right, intersectY);
-        }
-      }
-    }
-
-    return intersection;
+    return dy > 0 ? Offset(p2.dx, rect.top) : Offset(p2.dx, rect.bottom);
   }
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.blueGrey.shade400
-      ..strokeWidth = 2.0
-      ..style = PaintingStyle.stroke;
-
-    final arrowPaint = Paint()
-      ..color = Colors.blueGrey.shade400
-      ..strokeWidth = 2.0
-      ..style = PaintingStyle.fill;
-
-    for (var sourceTable in tables) {
-      final sourceRect = tableRects[sourceTable.name];
-      if (sourceRect == null) continue;
-
-      for (int i = 0; i < sourceTable.columns.length; i++) {
-        final column = sourceTable.columns[i];
-
-        if (column.foreignTable != null) {
-          final targetRect = tableRects[column.foreignTable];
-          if (targetRect == null) continue;
-
-          final double columnCenterY =
-              sourceRect.top +
-              tableHeaderHeight +
-              (i * tableColumnRowHeight) +
-              (tableColumnRowHeight / 2);
-
-          Offset startPoint;
-
-          if (targetRect.center.dx > sourceRect.center.dx) {
-            startPoint = Offset(sourceRect.right, columnCenterY);
-          } else {
-            startPoint = Offset(sourceRect.left, columnCenterY);
-          }
-
-          final Offset endPointForLineAndArrow = _findBoundaryIntersection(
-            startPoint,
-            targetRect,
-          );
-
-          canvas.drawLine(startPoint, endPointForLineAndArrow, paint);
-          _drawArrowhead(
-            canvas,
-            endPointForLineAndArrow,
-            startPoint,
-            arrowPaint,
-          );
-        }
-      }
-    }
-  }
-
-  void _drawArrowhead(Canvas canvas, Offset tip, Offset tail, Paint paint) {
-    const arrowSize = 10;
-
+  void _arrow(Canvas canvas, Offset tip, Offset tail, Paint paint) {
+    const size = 8.0;
     final angle = math.atan2(tip.dy - tail.dy, tip.dx - tail.dx);
 
-    final path = Path();
-
-    path.moveTo(tip.dx, tip.dy);
-
-    path.lineTo(
-      tip.dx - arrowSize * math.cos(angle - math.pi / 6),
-      tip.dy - arrowSize * math.sin(angle - math.pi / 6),
-    );
-    path.lineTo(
-      tip.dx - arrowSize * math.cos(angle + math.pi / 6),
-      tip.dy - arrowSize * math.sin(angle + math.pi / 6),
-    );
-    path.close();
+    final path = Path()
+      ..moveTo(tip.dx, tip.dy)
+      ..lineTo(
+        tip.dx - size * math.cos(angle - math.pi / 6),
+        tip.dy - size * math.sin(angle - math.pi / 6),
+      )
+      ..lineTo(
+        tip.dx - size * math.cos(angle + math.pi / 6),
+        tip.dy - size * math.sin(angle + math.pi / 6),
+      )
+      ..close();
 
     canvas.drawPath(path, paint);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    if (oldDelegate is TableRelationPainter) {
-      return oldDelegate.tables != tables ||
-          oldDelegate.tableRects != tableRects ||
-          oldDelegate.tableHeaderHeight != tableHeaderHeight ||
-          oldDelegate.tableColumnRowHeight != tableColumnRowHeight;
-    }
-
-    return true;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
