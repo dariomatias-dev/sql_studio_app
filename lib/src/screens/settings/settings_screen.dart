@@ -26,18 +26,16 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   bool get wantKeepAlive => true;
 
-  BuildContext _getContext() => context;
-
   Future<void> _openUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
-      if (!context.mounted) return;
+      if (!mounted) return;
 
-      final appLocalizations = AppLocalizations.of(_getContext())!;
+      final AppLocalizations l10n = AppLocalizations.of(context)!;
 
       await ErrorDialogWidget.show(
-        _getContext(),
-        title: appLocalizations.errorOpeningUrl,
-        description: appLocalizations.errorOpeningUrlDescription(url),
+        context,
+        title: l10n.errorOpeningUrl,
+        description: l10n.errorOpeningUrlDescription(url),
       );
     }
   }
@@ -47,9 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       context: context,
       isScrollControlled: false,
       backgroundColor: Colors.transparent,
-      builder: (context) {
-        return const LanguageSelectorSheetWidget();
-      },
+      builder: (BuildContext context) => const LanguageSelectorSheetWidget(),
     );
   }
 
@@ -57,56 +53,97 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final appLocalizations = AppLocalizations.of(context)!;
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
 
     return ScaffoldWidget(
       showExitButton: false,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: ListView(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(24.0, 28.0, 24.0, 140.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  height: 68.0,
+                  width: 68.0,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(22.0),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black.withAlpha(40),
+                        blurRadius: 20.0,
+                        offset: const Offset(0.0, 10.0),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.tune_rounded,
+                    color: Colors.white,
+                    size: 32.0,
+                  ),
+                ),
+                const SizedBox(width: 20.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        l10n.settings,
+                        style: const TextStyle(
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -1.0,
+                          height: 1.1,
+                        ),
+                      ),
+                      const SizedBox(height: 4.0),
+                      const AppVersionWidget(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12.0),
             SettingsSectionWidget(
-              title: appLocalizations.general,
+              title: l10n.general,
               children: <Widget>[
                 SettingsCardWidget(
                   onTap: _openLanguageSelector,
-                  title: appLocalizations.language,
-                  icon: Icons.arrow_forward_ios,
+                  title: l10n.language,
+                  icon: Icons.language_rounded,
                 ),
                 SettingsCardWidget(
-                  onTap: () {
-                    AppRoutes.goToSqlSuggestionSettings(context);
-                  },
-                  title: appLocalizations.sqlSuggestions,
-                  icon: Icons.arrow_forward_ios,
+                  onTap: () => AppRoutes.goToSqlSuggestionSettings(context),
+                  title: l10n.sqlSuggestions,
+                  icon: Icons.auto_fix_high_rounded,
                 ),
                 SettingsCardWidget(
-                  onTap: () {
-                    AppRoutes.goToWorkspaceLayoutSettings(context);
-                  },
-                  title: appLocalizations.workspaceLayout,
-                  icon: Icons.arrow_forward_ios,
+                  onTap: () => AppRoutes.goToWorkspaceLayoutSettings(context),
+                  title: l10n.workspaceLayout,
+                  icon: Icons.dashboard_rounded,
                 ),
               ],
             ),
             SettingsSectionWidget(
-              title: appLocalizations.information,
+              title: l10n.information,
               children: <Widget>[
-                const AppVersionWidget(),
                 SettingsCardWidget(
                   onTap: () => _openUrl(Urls.officialWebsite),
-                  title: appLocalizations.officialWebsite,
-                  icon: Icons.open_in_new,
+                  title: l10n.officialWebsite,
+                  icon: Icons.public_rounded,
                 ),
                 SettingsCardWidget(
                   onTap: () => _openUrl(Urls.officialWebsitePrivacyPolicy),
-                  title: appLocalizations.privacyPolicy,
-                  icon: Icons.open_in_new,
+                  title: l10n.privacyPolicy,
+                  icon: Icons.verified_user_rounded,
                 ),
                 SettingsCardWidget(
                   onTap: () => _openUrl(Urls.officialWebsiteContact),
-                  title: appLocalizations.contact,
-                  icon: Icons.open_in_new,
+                  title: l10n.contact,
+                  icon: Icons.alternate_email_rounded,
                 ),
               ],
             ),

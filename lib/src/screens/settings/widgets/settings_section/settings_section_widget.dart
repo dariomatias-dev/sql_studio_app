@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SettingsSectionWidget extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+
   const SettingsSectionWidget({
     super.key,
     required this.title,
     required this.children,
   });
-
-  final String title;
-  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +16,38 @@ class SettingsSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
+          padding: const EdgeInsets.fromLTRB(4.0, 28.0, 0.0, 20.0),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 4.0,
+                height: 14.0,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(2.0),
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              Text(
+                title.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 8.0),
-        Column(spacing: 8.0, children: children),
+        Column(
+          children: children.map((Widget child) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: child,
+            );
+          }).toList(),
+        ),
       ],
     );
   }
