@@ -3,20 +3,30 @@ import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:highlight/highlight_core.dart';
 import 'package:highlight/languages/sql.dart';
 
+/// Manages the SQL editor's text controller, focus and cursor state.
 class SqlEditorNotifier extends ChangeNotifier {
-  final controller = CodeController(language: sql)
-    ..autocompleter.mode = Mode(disableAutodetect: true);
-  final focusNode = FocusNode();
-
+  /// Creates the notifier and starts listening to the editor's controller
+  /// and focus node.
   SqlEditorNotifier() {
     controller.addListener(_onTextChanged);
     focusNode.addListener(_onFocusChanged);
   }
 
+  /// Controller that holds and highlights the SQL editor's text.
+  final controller = CodeController(language: sql)
+    ..autocompleter.mode = Mode(disableAutodetect: true);
+
+  /// Focus node attached to the SQL editor's input field.
+  final focusNode = FocusNode();
+
   String _lastWord = '';
+
+  /// The last word typed before the current cursor position.
   String get lastWord => _lastWord;
 
   bool _hasFocus = false;
+
+  /// Whether the SQL editor currently has input focus.
   bool get hasFocus => _hasFocus;
 
   void _onTextChanged() {
@@ -38,6 +48,7 @@ class SqlEditorNotifier extends ChangeNotifier {
     }
   }
 
+  /// Clears the editor's text and resets the tracked last word.
   void clear() {
     controller.text = '';
     _lastWord = '';
@@ -45,6 +56,8 @@ class SqlEditorNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Inserts [command] at the cursor, optionally selecting [selectText]
+  /// within the inserted text.
   void insertCommand(String command, {String? selectText}) {
     final text = controller.text;
     final selection = controller.selection;
@@ -93,8 +106,9 @@ class SqlEditorNotifier extends ChangeNotifier {
   @override
   void dispose() {
     controller.removeListener(_onTextChanged);
-    focusNode.removeListener(_onFocusChanged);
-    focusNode.dispose();
+    focusNode
+      ..removeListener(_onFocusChanged)
+      ..dispose();
 
     super.dispose();
   }

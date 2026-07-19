@@ -12,7 +12,9 @@ import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql
 
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_widget.dart';
 
+/// Screen that lets the user manage the list of basic SQL suggestions.
 class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
+  /// Creates the basic SQL suggestions settings screen.
   const SqlBasicSuggestionsSettingsScreen({super.key});
 
   @override

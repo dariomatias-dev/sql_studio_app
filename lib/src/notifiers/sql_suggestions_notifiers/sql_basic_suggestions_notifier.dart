@@ -8,14 +8,19 @@ import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
+/// Manages the persisted list of basic SQL autocomplete suggestions.
 class SqlBasicSuggestionsNotifier extends ChangeNotifier {
   final _logger = Logger();
 
   final _suggestions = <String>[];
+
+  /// Whether a suggestions operation is currently in progress.
   bool isLoading = false;
 
+  /// The currently known basic suggestions.
   List<String> get suggestions => _suggestions;
 
+  /// Loads the basic suggestions from storage, falling back to defaults.
   Future<Result<void>> load() async {
     isLoading = true;
 
@@ -33,14 +38,14 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
         );
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to load suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToLoadBasicSuggestions),
       );
     } finally {
@@ -50,6 +55,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Adds [suggestion] to the list if it isn't already present.
   Future<Result<void>> add(String suggestion) async {
     isLoading = true;
 
@@ -68,10 +74,10 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       );
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e('Failed to add suggestion', error: err, stackTrace: stackTrace);
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToAddBasicSuggestion),
       );
     } finally {
@@ -81,6 +87,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Replaces all stored suggestions with [newSuggestions].
   Future<Result<void>> updateSuggestions(List<String> newSuggestions) async {
     isLoading = true;
 
@@ -97,14 +104,14 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       );
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to update suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToUpdateBasicSuggestions),
       );
     } finally {
@@ -114,6 +121,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Removes [suggestion] from the list.
   Future<Result<void>> remove(String suggestion) async {
     isLoading = true;
 
@@ -128,14 +136,14 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       );
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to remove suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToRemoveBasicSuggestion),
       );
     } finally {
@@ -145,6 +153,7 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Restores the default basic suggestions, overwriting stored ones.
   Future<Result<void>> resetSuggestions() async {
     isLoading = true;
 
@@ -161,14 +170,14 @@ class SqlBasicSuggestionsNotifier extends ChangeNotifier {
       );
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to reset suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToResetBasicSuggestions),
       );
     } finally {

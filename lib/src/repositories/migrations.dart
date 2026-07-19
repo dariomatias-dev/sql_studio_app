@@ -1,4 +1,7 @@
+/// SQL statements used to create the application's local database tables.
 class DatabaseMigrations {
+  /// Creates the `databases` table, which stores registered database
+  /// records.
   static const databasesTable = '''
     CREATE TABLE IF NOT EXISTS databases (
       id TEXT PRIMARY KEY,
@@ -10,6 +13,8 @@ class DatabaseMigrations {
     )
   ''';
 
+  /// Creates the `sql_advanced_suggestions` table, which stores advanced
+  /// SQL autocomplete suggestions.
   static const sqlAdvancedSuggestionsTable = '''
   CREATE TABLE IF NOT EXISTS sql_advanced_suggestions (
     id TEXT PRIMARY KEY,
@@ -20,6 +25,7 @@ class DatabaseMigrations {
   )
 ''';
 
+  /// All table creation statements to run when the database is created.
   static const allTables = <String>[
     databasesTable,
     sqlAdvancedSuggestionsTable,

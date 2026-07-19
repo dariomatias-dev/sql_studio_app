@@ -13,11 +13,15 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
+/// Confirmation dialog for resetting basic SQL suggestions back to the
+/// default list.
 class ResetSqlBasicSuggestionsDialogWidget extends StatefulWidget {
+  /// Creates the reset confirmation dialog.
   const ResetSqlBasicSuggestionsDialogWidget({super.key});
 
+  /// Displays this dialog on top of the given [context].
   static Future<void> show(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return const ResetSqlBasicSuggestionsDialogWidget();
@@ -50,7 +54,7 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
           if (result.isSuccess) {
             _getContext().pop();
           } else {
-            handleError(_getContext(), result);
+            await handleError(_getContext(), result);
           }
         },
         text: appLocalizations.reset,

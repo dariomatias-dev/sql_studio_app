@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +10,14 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
 
+/// Dialog form for creating a new advanced SQL suggestion.
 class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
+  /// Creates the create-suggestion dialog widget.
   const CreateSqlAdvancedSuggestionDialogWidget({super.key});
 
+  /// Displays the create-suggestion dialog above [context].
   static Future<void> show(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return const CreateSqlAdvancedSuggestionDialogWidget();
@@ -40,10 +45,12 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
 
         if (!mounted) return false;
 
-        Fluttertoast.showToast(
-          msg: result.isSuccess
-              ? appLocalizations.advancedSuggestionAdded
-              : appLocalizations.advancedSuggestionFailed,
+        unawaited(
+          Fluttertoast.showToast(
+            msg: result.isSuccess
+                ? appLocalizations.advancedSuggestionAdded
+                : appLocalizations.advancedSuggestionFailed,
+          ),
         );
 
         return result.isSuccess;

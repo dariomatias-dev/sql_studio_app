@@ -7,9 +7,11 @@ import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_controller.dart';
 
+/// Generic screen for reordering, saving, resetting, and adding suggestion
+/// items, used by the various suggestion settings screens of the app.
 class SuggestionsSettingsLayoutWidget<T> extends StatefulWidget {
+  /// Creates a suggestions settings screen.
   const SuggestionsSettingsLayoutWidget({
-    super.key,
     required this.title,
     required this.isLoading,
     required this.initialItems,
@@ -17,14 +19,28 @@ class SuggestionsSettingsLayoutWidget<T> extends StatefulWidget {
     required this.itemBuilder,
     required this.onReset,
     required this.onAdd,
+    super.key,
   });
 
+  /// Title shown in the app bar.
   final String title;
+
+  /// Whether the initial items are still being loaded.
   final bool isLoading;
+
+  /// Items to populate the reorderable list with initially.
   final List<T> initialItems;
+
+  /// Persists the reordered list, returning whether it succeeded.
   final Future<bool> Function(List<T>) onSave;
+
+  /// Builds the widget for a single item at the given index.
   final Widget Function(T item, int index) itemBuilder;
+
+  /// Called when the reset action is pressed.
   final VoidCallback onReset;
+
+  /// Called when the add action is pressed.
   final VoidCallback onAdd;
 
   @override
@@ -44,7 +60,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
   void didUpdateWidget(covariant SuggestionsSettingsLayoutWidget<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    _controller.updateItemsNotifier(widget.initialItems);
+    _controller.items = widget.initialItems;
   }
 
   @override
@@ -79,10 +95,10 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     data: Theme.of(context).copyWith(canvasColor: Colors.white),
                     child: ReorderableListView.builder(
                       padding: const EdgeInsets.only(
-                        top: 8.0,
-                        right: 12.0,
-                        bottom: 80.0,
-                        left: 12.0,
+                        top: 8,
+                        right: 12,
+                        bottom: 80,
+                        left: 12,
                       ),
                       itemCount: items.length,
                       onReorder: _controller.reorderItems,
@@ -92,20 +108,20 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     ),
                   ),
                   Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: 0.0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     child: Container(
                       color: Colors.transparent,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
+                        horizontal: 16,
+                        vertical: 12,
                       ),
                       child: Row(
                         children: <Widget>[
                           Expanded(
                             child: SizedBox(
-                              height: 48.0,
+                              height: 48,
                               child: ValueListenableBuilder<bool>(
                                 valueListenable: _controller.hasChangesNotifier,
                                 builder: (context, value, child) {
@@ -120,12 +136,12 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12.0),
+                          const SizedBox(width: 12),
                           FloatingActionButton(
                             onPressed: widget.onAdd,
                             backgroundColor: Colors.grey.shade100,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100.0),
+                              borderRadius: BorderRadius.circular(100),
                             ),
                             tooltip: appLocalizations.createSuggestion,
                             child: const Icon(Icons.add, color: Colors.black),

@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
+/// A rounded, elevated surface that optionally responds to taps.
 class CardWidget extends StatelessWidget {
+  /// Creates a card wrapping [child].
   const CardWidget({
+    required this.child,
     super.key,
     this.onTap,
     this.borderRadius,
-    required this.child,
   });
 
+  /// Called when the card is tapped. When `null`, the card is inert.
   final VoidCallback? onTap;
+
+  /// Corner radius of the card. Defaults to 12 logical pixels.
   final BorderRadius? borderRadius;
+
+  /// Content displayed inside the card.
   final Widget child;
 
-  BorderRadius get _borderRadius => borderRadius ?? BorderRadius.circular(12.0);
+  BorderRadius get _borderRadius => borderRadius ?? BorderRadius.circular(12);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +30,8 @@ class CardWidget extends StatelessWidget {
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.black.withAlpha(13),
-            blurRadius: 4.0,
-            offset: const Offset(0.0, 2.0),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),

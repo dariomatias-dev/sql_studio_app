@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
+/// Groups related settings entries under a titled section header.
 class SettingsSectionWidget extends StatelessWidget {
-  final String title;
-  final List<Widget> children;
-
+  /// Creates a settings section labeled with [title], wrapping [children].
   const SettingsSectionWidget({
-    super.key,
     required this.title,
     required this.children,
+    super.key,
   });
+
+  /// Header label for this section.
+  final String title;
+
+  /// Settings entries displayed within this section.
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +21,22 @@ class SettingsSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(4.0, 28.0, 0.0, 20.0),
+          padding: const EdgeInsets.fromLTRB(4, 28, 0, 20),
           child: Row(
             children: <Widget>[
               Container(
-                width: 4.0,
-                height: 14.0,
+                width: 4,
+                height: 14,
                 decoration: BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.circular(2.0),
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(width: 12.0),
+              const SizedBox(width: 12),
               Text(
                 title.toUpperCase(),
                 style: const TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 12,
                   fontWeight: FontWeight.w900,
                   color: Colors.black,
                   letterSpacing: 1.5,
@@ -41,9 +46,9 @@ class SettingsSectionWidget extends StatelessWidget {
           ),
         ),
         Column(
-          children: children.map((Widget child) {
+          children: children.map((child) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
+              padding: const EdgeInsets.only(bottom: 12),
               child: child,
             );
           }).toList(),

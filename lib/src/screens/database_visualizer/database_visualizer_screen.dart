@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -11,9 +12,13 @@ import 'package:sql_studio/src/services/sql_execution_service.dart';
 import 'package:sql_studio/src/shared/models/table_info_model.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
+/// Screen that renders an interactive diagram of a database's tables and
+/// their relations.
 class DatabaseVisualizerScreen extends StatefulWidget {
-  const DatabaseVisualizerScreen({super.key, required this.databaseName});
+  /// Creates the visualizer screen for the database named [databaseName].
+  const DatabaseVisualizerScreen({required this.databaseName, super.key});
 
+  /// The name of the database whose structure is being visualized.
   final String databaseName;
 
   @override
@@ -48,13 +53,13 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
     _tableRects.clear();
     if (tables == null || tables!.isEmpty) return;
 
-    double currentX = _tablePadding;
-    double currentY = _tablePadding;
-    double currentRowMaxHeight = 0.0;
+    var currentX = _tablePadding;
+    var currentY = _tablePadding;
+    double currentRowMaxHeight = 0;
 
     const columnsInGrid = 3;
 
-    for (int i = 0; i < tables!.length; i++) {
+    for (var i = 0; i < tables!.length; i++) {
       final table = tables![i];
 
       final height =
@@ -85,7 +90,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadDatabaseStructure();
+      unawaited(_loadDatabaseStructure());
     });
   }
 
@@ -117,16 +122,16 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
               )
             : LayoutBuilder(
                 builder: (context, constraints) {
-                  double contentWidth =
+                  var contentWidth =
                       _tableRects.values
                           .map((e) => e.right)
-                          .fold(0.0, math.max) +
+                          .fold<double>(0, math.max) +
                       _tablePadding;
 
-                  double contentHeight =
+                  var contentHeight =
                       _tableRects.values
                           .map((e) => e.bottom)
-                          .fold(0.0, math.max) +
+                          .fold<double>(0, math.max) +
                       _tablePadding;
 
                   contentWidth = math.max(contentWidth, constraints.maxWidth);
@@ -209,18 +214,28 @@ class _GridBackgroundPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
+/// Paints the foreign-key relation arrows between visualized tables.
 class TableRelationPainter extends CustomPainter {
-  final List<TableInfoModel> tables;
-  final Map<String, Rect> tableRects;
-  final double tableHeaderHeight;
-  final double tableColumnRowHeight;
-
+  /// Creates a painter for the relations between [tables], positioned
+  /// according to [tableRects].
   TableRelationPainter({
     required this.tables,
     required this.tableRects,
     required this.tableHeaderHeight,
     required this.tableColumnRowHeight,
   });
+
+  /// The tables whose relations are drawn.
+  final List<TableInfoModel> tables;
+
+  /// The on-screen bounds of each table, keyed by table name.
+  final Map<String, Rect> tableRects;
+
+  /// The height of a table's header, used to position relation lines.
+  final double tableHeaderHeight;
+
+  /// The height of a single column row, used to position relation lines.
+  final double tableColumnRowHeight;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -233,11 +248,11 @@ class TableRelationPainter extends CustomPainter {
       ..color = Colors.black.withAlpha(100)
       ..style = PaintingStyle.fill;
 
-    for (var source in tables) {
+    for (final source in tables) {
       final sourceRect = tableRects[source.name];
       if (sourceRect == null) continue;
 
-      for (int i = 0; i < source.columns.length; i++) {
+      for (var i = 0; i < source.columns.length; i++) {
         final column = source.columns[i];
 
         if (column.foreignTable == null) continue;

@@ -9,7 +9,11 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_widg
 import 'package:sql_studio/src/shared/widgets/sql_workspace/divider_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_widget.dart';
 
+/// Combines the SQL editor and console panels into a single workspace,
+/// arranged either as a resizable split view or as tabs depending on the
+/// selected layout.
 class SqlWorkspaceWidget extends StatefulWidget {
+  /// Creates the SQL workspace.
   const SqlWorkspaceWidget({super.key});
 
   @override
@@ -47,7 +51,7 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
     if (layoutType == WorkspaceLayoutType.tabs) {
       return Column(
         children: <Widget>[
-          Container(
+          ColoredBox(
             color: Colors.white,
             child: TabBar(
               controller: _tabController,
@@ -77,7 +81,7 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
                   },
                 ),
 
-                ConsoleWidget(showTitle: false),
+                const ConsoleWidget(showTitle: false),
               ],
             ),
           ),

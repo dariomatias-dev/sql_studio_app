@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +13,10 @@ import 'package:sql_studio/src/screens/databases/databases_screen.dart';
 import 'package:sql_studio/src/screens/home/home_screen.dart';
 import 'package:sql_studio/src/screens/settings/settings_screen.dart';
 
+/// Root scaffold hosting the app's drawer, swipeable pages, and bottom
+/// navigation bar.
 class RootNavigation extends StatefulWidget {
+  /// Creates the root navigation scaffold.
   const RootNavigation({super.key});
 
   @override
@@ -31,14 +36,16 @@ class _RootNavigationState extends State<RootNavigation> {
   void _onIndexChanged() {
     if (!_pageController.hasClients) return;
 
-    final int page = _notifier.index;
+    final page = _notifier.index;
 
     if (_pageController.page?.round() == page) return;
 
-    _pageController.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOutQuart,
+    unawaited(
+      _pageController.animateToPage(
+        page,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOutQuart,
+      ),
     );
   }
 
@@ -62,7 +69,7 @@ class _RootNavigationState extends State<RootNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final NavigationNotifier notifier = context.watch<NavigationNotifier>();
+    final notifier = context.watch<NavigationNotifier>();
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
@@ -70,12 +77,12 @@ class _RootNavigationState extends State<RootNavigation> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          elevation: 0.0,
-          scrolledUnderElevation: 0.0,
+          elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.black, size: 22.0),
+          iconTheme: const IconThemeData(color: Colors.black, size: 22),
           shape: const Border(
-            bottom: BorderSide(color: Color(0xFFF2F2F2), width: 1.0),
+            bottom: BorderSide(color: Color(0xFFF2F2F2)),
           ),
         ),
         drawer: const RootDrawerWidget(),
@@ -91,9 +98,9 @@ class _RootNavigationState extends State<RootNavigation> {
               ),
             ),
             Positioned(
-              left: 0.0,
-              right: 0.0,
-              bottom: 0.0,
+              left: 0,
+              right: 0,
+              bottom: 0,
               child: RootSwipeWrapperWidget(
                 notifier: notifier,
                 pageController: _pageController,

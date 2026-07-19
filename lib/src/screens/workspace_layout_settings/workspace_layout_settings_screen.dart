@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,9 @@ import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
+/// Screen where the user chooses and previews the workspace layout.
 class WorkspaceLayoutSettingsScreen extends StatefulWidget {
+  /// Creates the workspace layout settings screen.
   const WorkspaceLayoutSettingsScreen({super.key});
 
   @override
@@ -39,10 +43,10 @@ class _WorkspaceLayoutConfigurationScreenState
     if (result is FailureResult) {
       await handleError(
         context,
-        FailureResult(AppFailure(result.error.type)),
+        FailureResult<void>(AppFailure(result.error.type)),
       );
     } else {
-      Fluttertoast.showToast(msg: appLocalizations.layoutSaved);
+      unawaited(Fluttertoast.showToast(msg: appLocalizations.layoutSaved));
     }
   }
 
@@ -57,7 +61,7 @@ class _WorkspaceLayoutConfigurationScreenState
         return ScaffoldWidget(
           appBar: AppBar(title: Text(appLocalizations.workspaceLayout)),
           body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: <Widget>[
                 WorkspaceLayoutSettingsOptionCardWidget(
@@ -67,7 +71,7 @@ class _WorkspaceLayoutConfigurationScreenState
                   selected: selectedLayout == WorkspaceLayoutType.split,
                   onTap: () => _onHandleLayoutChange(WorkspaceLayoutType.split),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 8),
                 WorkspaceLayoutSettingsOptionCardWidget(
                   icon: Icons.tab,
                   title: appLocalizations.tabsLayout,
@@ -75,19 +79,19 @@ class _WorkspaceLayoutConfigurationScreenState
                   selected: selectedLayout == WorkspaceLayoutType.tabs,
                   onTap: () => _onHandleLayoutChange(WorkspaceLayoutType.tabs),
                 ),
-                const SizedBox(height: 28.0),
+                const SizedBox(height: 28),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     appLocalizations.preview,
                     style: const TextStyle(
                       color: Colors.black87,
-                      fontSize: 16.0,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 8),
                 Expanded(
                   child: SafeArea(
                     child: Container(

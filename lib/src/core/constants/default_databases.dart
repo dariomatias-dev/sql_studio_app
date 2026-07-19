@@ -2,6 +2,7 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 
 import 'package:sql_studio/src/shared/models/default_database_model.dart';
 
+/// Built-in sample databases offered to users, ordered by table count.
 const defaultDatabases = <DefaultDatabaseModel>[
   // 1 table
   DefaultDatabaseModel(

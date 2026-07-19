@@ -83,7 +83,7 @@ class SharedPreferencesService {
   /// [value] The Boolean value to store.
   ///
   /// Returns the [value] that was stored.
-  static Future<bool> setBool(String key, bool value) async {
+  static Future<bool> setBool(String key, {required bool value}) async {
     await _prefs?.setBool(key, value);
     return value;
   }
@@ -136,7 +136,8 @@ class SharedPreferencesService {
   /// [defaultValue] The default value to return if the key does not exist.
   /// Defaults to an empty list.
   ///
-  /// Returns the stored List&lt;String&gt; or the [defaultValue] if the key doesn't exist.
+  /// Returns the stored List&lt;String&gt; or the [defaultValue] if the key
+  /// doesn't exist.
   /// If the SharedPreferences instance is not initialized,
   /// returns the [defaultValue].
   static List<String> getStringList(String key, {List<String>? defaultValue}) {

@@ -6,7 +6,9 @@ import 'package:sql_studio/src/screens/databases/widgets/database_card_widget.da
 
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
+/// Screen that lists the available default databases.
 class DatabasesScreen extends StatefulWidget {
+  /// Creates the databases screen.
   const DatabasesScreen({super.key});
 
   @override
@@ -25,11 +27,11 @@ class _DatabasesScreenState extends State<DatabasesScreen>
     return ScaffoldWidget(
       showExitButton: false,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: ListView.separated(
-          padding: EdgeInsets.only(bottom: 64.0),
+          padding: const EdgeInsets.only(bottom: 64),
           itemCount: defaultDatabases.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+          separatorBuilder: (context, index) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
             return DatabaseCardWidget(db: defaultDatabases[index]);
           },

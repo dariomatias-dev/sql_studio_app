@@ -5,7 +5,9 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
+/// Screen shown when a navigation route could not be resolved.
 class NotFoundScreen extends StatelessWidget {
+  /// Creates the not found screen.
   const NotFoundScreen({super.key});
 
   @override
@@ -16,31 +18,31 @@ class NotFoundScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Icon(
                 Icons.error_outline,
-                size: 80.0,
+                size: 80,
                 color: Colors.redAccent,
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 20),
               Text(
                 appLocalizations.screenNotFound,
                 style: const TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 8.0),
+              const SizedBox(height: 8),
               Text(
                 appLocalizations.screenNotFoundDescription,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14.0, color: Colors.black54),
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
               ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 20),
               ButtonWidget(
                 onPressed: () => context.go('/'),
                 style: ButtonStyleType.red,

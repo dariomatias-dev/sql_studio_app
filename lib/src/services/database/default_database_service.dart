@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 
@@ -12,11 +11,14 @@ import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/services/sql_execution_service.dart';
 
+/// Seeds and upgrades the bundled default (sample) databases.
 class DefaultDatabaseService {
   DefaultDatabaseService._();
 
   static const _currentVersion = 1;
 
+  /// Runs schema/seed scripts for every default database when the
+  /// stored version differs from [_currentVersion].
   static Future<Result<void>> init() async {
     final storedVersion = SharedPreferencesService.getInt(
       SharedPreferencesKeys.defaultDatabaseVersionKey,
@@ -42,6 +44,7 @@ class DefaultDatabaseService {
     return const SuccessResult(null);
   }
 
+  /// Loads and runs the schema and seed SQL scripts for [dbName].
   static Future<Result<void>> execute(String dbName) async {
     final sqlService = SqlExecutionService();
     final logger = Logger();
@@ -67,18 +70,6 @@ class DefaultDatabaseService {
       }
 
       return const SuccessResult(null);
-    } on FlutterError catch (err, stackTrace) {
-      logger.e(
-        'Error loading SQL files for database "$dbName".',
-        error: err,
-        stackTrace: stackTrace,
-      );
-
-      return FailureResult(
-        AppFailure(AppLocalizationsKey.failedToLoadSqlFiles, {
-          'error': err.message,
-        }),
-      );
     } on Exception catch (err, stackTrace) {
       logger.e(
         'Error executing SQL for database "$dbName".',

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// A styled text form field used throughout the app's forms.
 class InputWidget extends StatelessWidget {
-  final ValueChanged<String>? onChanged;
-  final TextEditingController? controller;
-  final String? labelText;
-  final String hintText;
-  final Widget? suffixIcon;
-  final String? Function(String? value)? validator;
-
+  /// Creates an input field.
   const InputWidget({
     super.key,
     this.onChanged,
@@ -18,9 +13,28 @@ class InputWidget extends StatelessWidget {
     this.validator,
   });
 
+  /// Called every time the field's text changes.
+  final ValueChanged<String>? onChanged;
+
+  /// Controller backing the field's text.
+  final TextEditingController? controller;
+
+  /// Floating label text shown above the field.
+  final String? labelText;
+
+  /// Placeholder text shown when the field is empty.
+  final String hintText;
+
+  /// Optional icon displayed at the end of the field.
+  final Widget? suffixIcon;
+
+  /// Optional validation function returning an error message, or
+  /// `null` when the value is valid.
+  final String? Function(String? value)? validator;
+
   OutlineInputBorder _border(Color color, {double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.0),
+      borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: color, width: width),
     );
   }
@@ -30,18 +44,18 @@ class InputWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       cursorColor: Colors.black,
-      cursorWidth: 1.0,
+      cursorWidth: 1,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.black.withAlpha(80),
-          fontSize: 14.0,
+          fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         labelStyle: const TextStyle(
           color: Colors.black,
-          fontSize: 14.0,
+          fontSize: 14,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
@@ -49,12 +63,12 @@ class InputWidget extends StatelessWidget {
         suffixIconColor: Colors.black,
         enabledBorder: _border(const Color(0xFFEEEEEE)),
         focusedBorder: _border(Colors.black, width: 1.5),
-        errorBorder: _border(const Color(0xFFFF3B30), width: 1.0),
+        errorBorder: _border(const Color(0xFFFF3B30)),
         focusedErrorBorder: _border(const Color(0xFFFF3B30), width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 18.0,
+          horizontal: 16,
+          vertical: 18,
         ),
         fillColor: const Color(0xFFF8F8F8),
         filled: true,
@@ -63,12 +77,12 @@ class InputWidget extends StatelessWidget {
       ),
       style: const TextStyle(
         color: Colors.black,
-        fontSize: 15.0,
+        fontSize: 15,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.1,
       ),
       onChanged: onChanged,
-      onTapOutside: (PointerDownEvent event) {
+      onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       validator: validator,

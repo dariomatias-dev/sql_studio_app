@@ -1,9 +1,14 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
+import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/repositories/migrations.dart';
 
+/// Manages a singleton connection to the application's local SQLite
+/// database.
 class DatabaseManager {
+  /// Returns the single shared instance of [DatabaseManager].
+  factory DatabaseManager() => _singleton;
+
+  DatabaseManager._internal();
   static const _databaseName = 'sql_studio_app.db';
   static const _databaseVersion = 1;
 
@@ -11,9 +16,7 @@ class DatabaseManager {
 
   static final _singleton = DatabaseManager._internal();
 
-  DatabaseManager._internal();
-  factory DatabaseManager() => _singleton;
-
+  /// The opened database connection, creating it on first access.
   Future<Database> get database async {
     if (_instance != null) return _instance!;
 
@@ -30,13 +33,14 @@ class DatabaseManager {
       path,
       version: _databaseVersion,
       onCreate: (db, version) async {
-        for (var tableSql in DatabaseMigrations.allTables) {
+        for (final tableSql in DatabaseMigrations.allTables) {
           await db.execute(tableSql);
         }
       },
     );
   }
 
+  /// Deletes the underlying database file and clears the cached instance.
   Future<void> deleteDatabaseFile() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
@@ -47,14 +51,18 @@ class DatabaseManager {
   }
 }
 
+/// Generic CRUD access to a single SQLite table.
 class DatabaseRepository<T> {
+  /// Creates a repository bound to [tableName].
+  DatabaseRepository({required this.tableName});
+
+  /// The name of the SQLite table this repository operates on.
   final String tableName;
   final _manager = DatabaseManager();
 
-  DatabaseRepository({required this.tableName});
+  Future<Database> get _db async => _manager.database;
 
-  Future<Database> get _db async => await _manager.database;
-
+  /// Inserts [modelMap] into the table, replacing on conflict.
   Future<int> insert(Map<String, dynamic> modelMap) async {
     final db = await _db;
 
@@ -65,6 +73,7 @@ class DatabaseRepository<T> {
     );
   }
 
+  /// Inserts all [models] into the table in a single batch.
   Future<List<Object?>> insertAll(List<Map<String, dynamic>> models) async {
     if (models.isEmpty) return <List<Object?>>[];
 
@@ -79,9 +88,10 @@ class DatabaseRepository<T> {
       );
     }
 
-    return await batch.commit(noResult: false);
+    return batch.commit(noResult: false);
   }
 
+  /// Retrieves all rows from the table, optionally filtered and ordered.
   Future<List<Map<String, dynamic>>> getAll({
     String? orderBy,
     String? where,
@@ -98,6 +108,7 @@ class DatabaseRepository<T> {
     return maps;
   }
 
+  /// Retrieves rows matching all the given [conditions].
   Future<List<Map<String, dynamic>>> getWhere({
     required Map<String, dynamic> conditions,
     String? orderBy,
@@ -124,6 +135,7 @@ class DatabaseRepository<T> {
     return maps;
   }
 
+  /// Retrieves the row with the given [id], or `null` if none is found.
   Future<Map<String, dynamic>?> getById(String id) async {
     final db = await _db;
     final maps = await db.query(
@@ -138,6 +150,7 @@ class DatabaseRepository<T> {
     return null;
   }
 
+  /// Updates the row matching `modelMap['id']` with [modelMap].
   Future<int> update(Map<String, dynamic> modelMap) async {
     final db = await _db;
 
@@ -150,28 +163,33 @@ class DatabaseRepository<T> {
     );
   }
 
+  /// Deletes the row with the given [id].
   Future<int> deleteById(String id) async {
     final db = await _db;
 
     return db.delete(tableName, where: 'id = ?', whereArgs: [id]);
   }
 
+  /// Deletes the row identified by `modelMap['id']`.
   Future<int> delete(Map<String, dynamic> modelMap) async {
-    return deleteById(modelMap['id']);
+    return deleteById(modelMap['id'] as String);
   }
 
+  /// Removes all rows from the table.
   Future<void> clear() async {
     final db = await _db;
 
     await db.delete(tableName);
   }
 
+  /// Drops the table named [tableName] if it exists.
   Future<void> dropTable(String tableName) async {
     final db = await _db;
 
     await db.execute('DROP TABLE IF EXISTS $tableName');
   }
 
+  /// Deletes the SQLite file for the database named [databaseName].
   Future<void> dropDatabaseFile(String databaseName) async {
     final dbPath = await getDatabasesPath();
 

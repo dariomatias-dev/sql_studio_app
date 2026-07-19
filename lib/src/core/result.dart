@@ -2,35 +2,62 @@ import 'dart:async';
 
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 
+/// Base class for an error that can be surfaced to the user.
 abstract class Failure {
-  final AppLocalizationsKey type;
-  final Map<String, Object?> args;
-
+  /// Creates a failure identified by a localization [type] and optional
+  /// [args] used to interpolate the localized message.
   const Failure(this.type, [this.args = const {}]);
+
+  /// Localization key describing this failure.
+  final AppLocalizationsKey type;
+
+  /// Arguments interpolated into the localized failure message.
+  final Map<String, Object?> args;
 }
 
+/// A failure originating from a database operation.
 class DatabaseFailure extends Failure {
+  /// Creates a database failure with the given localization [type] and
+  /// optional [args].
   const DatabaseFailure(super.type, [super.args]);
 }
 
+/// A failure originating from general app logic.
 class AppFailure extends Failure {
+  /// Creates an app failure with the given localization [type] and
+  /// optional [args].
   const AppFailure(super.type, [super.args]);
 }
 
+/// Describes the outcome of a successful database operation.
 class DatabaseSuccess {
-  final AppLocalizationsKey? type;
-  final Map<String, Object?> args;
-  final List<Map<String, Object?>>? result;
-
+  /// Creates a database success, optionally carrying a localization
+  /// [type], its [args], and the affected [result] rows.
   const DatabaseSuccess({this.type, this.result, this.args = const {}});
+
+  /// Localization key describing this success, if any.
+  final AppLocalizationsKey? type;
+
+  /// Arguments interpolated into the localized success message.
+  final Map<String, Object?> args;
+
+  /// Rows affected or returned by the operation, if any.
+  final List<Map<String, Object?>>? result;
 }
 
+/// Represents the result of an operation that can either succeed with a
+/// value of type [T] or fail with a [Failure].
 sealed class Result<T> {
+  /// Const constructor for subclasses.
   const Result();
 
+  /// Whether this result represents a success.
   bool get isSuccess => this is SuccessResult<T>;
+
+  /// Whether this result represents a failure.
   bool get isFailure => this is FailureResult<T>;
 
+  /// Invokes [onSuccess] or [onFailure] depending on this result's variant.
   FutureOr<void> fold({
     FutureOr<void> Function(T value)? onSuccess,
     FutureOr<void> Function(Failure error)? onFailure,
@@ -47,14 +74,20 @@ sealed class Result<T> {
   }
 }
 
+/// A [Result] variant representing a failed operation.
 final class FailureResult<T> extends Result<T> {
-  final Failure error;
-
+  /// Creates a failure result carrying the given [error].
   const FailureResult(this.error);
+
+  /// The failure describing why the operation did not succeed.
+  final Failure error;
 }
 
+/// A [Result] variant representing a successful operation.
 final class SuccessResult<T> extends Result<T> {
-  final T value;
-
+  /// Creates a success result carrying the given [value].
   const SuccessResult(this.value);
+
+  /// The value produced by the successful operation.
+  final T value;
 }

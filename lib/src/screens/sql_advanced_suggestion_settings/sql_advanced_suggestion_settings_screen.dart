@@ -13,7 +13,10 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_widget.dart';
 
+/// Screen for managing the user's advanced SQL suggestions: listing,
+/// creating, reordering, and resetting them.
 class SqlAdvancedSuggestionSettingsScreen extends StatefulWidget {
+  /// Creates the advanced SQL suggestions settings screen.
   const SqlAdvancedSuggestionSettingsScreen({super.key});
 
   @override

@@ -2,20 +2,32 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
+/// Resolved color set used to render a button.
 class ButtonStyleData {
-  final Color background;
-  final Color foreground;
-  final Color border;
-  final Color text;
-
+  /// Creates a resolved button style.
   const ButtonStyleData({
     required this.background,
     required this.foreground,
     required this.border,
     required this.text,
   });
+
+  /// Background fill color.
+  final Color background;
+
+  /// Foreground (icon) color.
+  final Color foreground;
+
+  /// Border color.
+  final Color border;
+
+  /// Text color.
+  final Color text;
 }
 
+/// Resolves the [ButtonStyleData] for a given [style], falling back
+/// to the provided custom colors when [style] is
+/// [ButtonStyleType.custom].
 ButtonStyleData resolveButtonStyle({
   required ButtonStyleType style,
   Color? backgroundColor,

@@ -1,17 +1,13 @@
 import 'package:uuid/uuid.dart';
 
+/// A saved user database record.
 class DatabaseModel {
-  final String id;
-  final String label;
-  final String name;
-  final bool isFavorite;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
+  /// Creates a database record, generating an [id] and timestamps
+  /// when not provided.
   DatabaseModel({
-    String? id,
     required this.label,
     required this.name,
+    String? id,
     this.isFavorite = false,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -19,17 +15,37 @@ class DatabaseModel {
        createdAt = createdAt ?? DateTime.now(),
        updatedAt = updatedAt ?? DateTime.now();
 
+  /// Builds a [DatabaseModel] from a persistence [map].
   factory DatabaseModel.fromMap(Map<String, dynamic> map) {
     return DatabaseModel(
       id: map['id'] as String,
       label: map['label'] as String,
       name: map['name'] as String,
       isFavorite: (map['is_favorite'] as int) == 1,
-      createdAt: DateTime.parse(map['created_at']),
-      updatedAt: DateTime.parse(map['updated_at']),
+      createdAt: DateTime.parse(map['created_at'] as String),
+      updatedAt: DateTime.parse(map['updated_at'] as String),
     );
   }
 
+  /// Unique identifier of the database.
+  final String id;
+
+  /// Display label shown to the user.
+  final String label;
+
+  /// Underlying database file name.
+  final String name;
+
+  /// Whether the database is marked as a favorite.
+  final bool isFavorite;
+
+  /// When the database was created.
+  final DateTime createdAt;
+
+  /// When the database was last updated.
+  final DateTime updatedAt;
+
+  /// Converts this model into a persistence-ready map.
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -41,6 +57,7 @@ class DatabaseModel {
     };
   }
 
+  /// Returns a copy of this model with the given fields replaced.
   DatabaseModel copyWith({
     String? id,
     String? label,

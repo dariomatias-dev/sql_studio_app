@@ -3,18 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
+/// A dialog asking the user to confirm or cancel an action.
 class ConfirmationDialogWidget extends StatelessWidget {
+  /// Creates a confirmation dialog with the given [title],
+  /// [description] and [confirmButton].
   const ConfirmationDialogWidget({
-    super.key,
     required this.title,
     required this.description,
     required this.confirmButton,
+    super.key,
   });
 
+  /// Title displayed at the top of the dialog.
   final String title;
+
+  /// Descriptive body text explaining the action to confirm.
   final String description;
+
+  /// Widget triggering the confirmed action, shown alongside a cancel
+  /// button.
   final Widget confirmButton;
 
+  /// Displays a [ConfirmationDialogWidget] and returns the result
+  /// once it's dismissed.
   static Future<T?> show<T>(
     BuildContext context, {
     required String title,
@@ -22,7 +33,7 @@ class ConfirmationDialogWidget extends StatelessWidget {
     required Widget confirmButton,
     bool barrierDismissible = true,
   }) async {
-    return await showDialog<T>(
+    return showDialog<T>(
       context: context,
       barrierDismissible: barrierDismissible,
       builder: (context) {

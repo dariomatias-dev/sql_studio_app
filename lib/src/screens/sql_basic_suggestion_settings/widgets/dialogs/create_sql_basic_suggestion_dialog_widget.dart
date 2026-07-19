@@ -8,11 +8,14 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_sug
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
+/// Dialog for creating a new basic SQL suggestion.
 class CreateSqlBasicSuggestionDialogWidget extends StatefulWidget {
+  /// Creates the dialog widget for adding a basic SQL suggestion.
   const CreateSqlBasicSuggestionDialogWidget({super.key});
 
+  /// Displays this dialog on top of the given [context].
   static Future<void> show(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return const CreateSqlBasicSuggestionDialogWidget();
@@ -64,7 +67,7 @@ class _CreateSqlBasicSuggestionDialogWidgetState
         if (result.isSuccess) {
           _controller.text = '';
         } else {
-          handleError(_getContext(), result);
+          await handleError(_getContext(), result);
         }
 
         return result.isSuccess;

@@ -1,23 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
-import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
+/// Drawer list item representing a single database, with actions to
+/// select, favorite, and delete it.
 class RootDrawerDatabaseCardWidget extends StatefulWidget {
-  final DatabaseModel database;
+  /// Creates a database card for the given [database].
+  const RootDrawerDatabaseCardWidget({required this.database, super.key});
 
-  const RootDrawerDatabaseCardWidget({super.key, required this.database});
+  /// The database this card represents.
+  final DatabaseModel database;
 
   @override
   State<RootDrawerDatabaseCardWidget> createState() =>
@@ -29,10 +34,9 @@ class _RootDrawerDatabaseCardWidgetState
   late bool _isFavorite = widget.database.isFavorite;
 
   void _selectDatabase() {
-    final SqlCommandsNotifier commands = context.read<SqlCommandsNotifier>();
-
-    commands.activeDatabase = widget.database.label;
-    commands.clearResult();
+    context.read<SqlCommandsNotifier>()
+      ..activeDatabase = widget.database.label
+      ..clearResult();
 
     context.read<NavigationNotifier>().setIndex(0);
     context.read<SqlEditorNotifier>().focusNode.requestFocus();
@@ -50,7 +54,7 @@ class _RootDrawerDatabaseCardWidgetState
     if (!mounted) return;
 
     if (result.isSuccess) {
-      final SqlCommandsNotifier commands = context.read<SqlCommandsNotifier>();
+      final commands = context.read<SqlCommandsNotifier>();
       if (commands.activeDatabase == widget.database.name) {
         commands.activeDatabase = null;
 
@@ -75,38 +79,37 @@ class _RootDrawerDatabaseCardWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
-    final SqlCommandsNotifier commands = context.watch<SqlCommandsNotifier>();
-    final bool isActive = commands.activeDatabase == widget.database.label;
+    final l10n = AppLocalizations.of(context)!;
+    final commands = context.watch<SqlCommandsNotifier>();
+    final isActive = commands.activeDatabase == widget.database.label;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
+      padding: const EdgeInsets.only(bottom: 6),
       child: Material(
         color: isActive ? Colors.black : Colors.transparent,
-        borderRadius: BorderRadius.circular(14.0),
+        borderRadius: BorderRadius.circular(14),
         child: InkWell(
           onTap: _selectDatabase,
-          borderRadius: BorderRadius.circular(14.0),
+          borderRadius: BorderRadius.circular(14),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 12.0,
+              horizontal: 16,
+              vertical: 12,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14.0),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: isActive ? Colors.black : const Color(0xFFF0F0F0),
-                width: 1.0,
               ),
             ),
             child: Row(
               children: <Widget>[
                 Icon(
                   Icons.dns_rounded,
-                  size: 20.0,
+                  size: 20,
                   color: isActive ? Colors.white : const Color(0xFF757575),
                 ),
-                const SizedBox(width: 12.0),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +117,7 @@ class _RootDrawerDatabaseCardWidgetState
                       Text(
                         widget.database.label,
                         style: TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: isActive ? Colors.white : Colors.black,
                         ),
@@ -122,7 +125,7 @@ class _RootDrawerDatabaseCardWidgetState
                       Text(
                         widget.database.name,
                         style: TextStyle(
-                          fontSize: 11.0,
+                          fontSize: 11,
                           fontWeight: FontWeight.w500,
                           color: isActive
                               ? Colors.white.withAlpha(160)
@@ -133,8 +136,8 @@ class _RootDrawerDatabaseCardWidgetState
                   ),
                 ),
                 PopupMenuButtonWidget(
-                  items: <PopupMenuItem>[
-                    PopupMenuItem(
+                  items: <PopupMenuItem<void>>[
+                    PopupMenuItem<void>(
                       onTap: _onToggleFavorite,
                       child: Row(
                         children: <Widget>[
@@ -142,29 +145,31 @@ class _RootDrawerDatabaseCardWidgetState
                             _isFavorite
                                 ? Icons.star_rounded
                                 : Icons.star_outline_rounded,
-                            size: 18.0,
+                            size: 18,
                             color: Colors.black,
                           ),
-                          const SizedBox(width: 12.0),
+                          const SizedBox(width: 12),
                           Text(_isFavorite ? l10n.unfavorite : l10n.favorite),
                         ],
                       ),
                     ),
-                    PopupMenuItem(
+                    PopupMenuItem<void>(
                       onTap: () {
-                        DatabaseDeleteDialogWidget.show(
-                          context,
-                          onDeleteDatabase: _onDeleteDatabase,
+                        unawaited(
+                          DatabaseDeleteDialogWidget.show(
+                            context,
+                            onDeleteDatabase: _onDeleteDatabase,
+                          ),
                         );
                       },
                       child: Row(
                         children: <Widget>[
                           const Icon(
                             Icons.delete_outline_rounded,
-                            size: 18.0,
+                            size: 18,
                             color: Color(0xFFFF3B30),
                           ),
-                          const SizedBox(width: 12.0),
+                          const SizedBox(width: 12),
                           Text(
                             l10n.delete,
                             style: const TextStyle(color: Color(0xFFFF3B30)),

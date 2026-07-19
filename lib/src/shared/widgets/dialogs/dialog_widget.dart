@@ -2,29 +2,40 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
+/// The app's base dialog chrome: title, scrollable content and
+/// action buttons.
 class DialogWidget extends StatelessWidget {
-  final String? title;
-  final Widget content;
-  final List<Widget>? actions;
-
+  /// Creates a dialog with the given [content] and optional [title]
+  /// and [actions].
   const DialogWidget({
+    required this.content,
     super.key,
     this.title,
-    required this.content,
     this.actions,
   });
 
+  /// Optional title displayed at the top of the dialog.
+  final String? title;
+
+  /// Main content displayed in the scrollable body.
+  final Widget content;
+
+  /// Optional row of action widgets displayed at the bottom.
+  final List<Widget>? actions;
+
+  /// Displays a [DialogWidget] and returns the result once it's
+  /// dismissed.
   static Future<T?> show<T>(
     BuildContext context, {
-    String? title,
     required Widget content,
+    String? title,
     List<Widget>? actions,
     bool barrierDismissible = true,
   }) async {
-    return await showDialog<T>(
+    return showDialog<T>(
       context: context,
       barrierDismissible: barrierDismissible,
-      builder: (BuildContext context) {
+      builder: (context) {
         return DialogWidget(title: title, content: content, actions: actions);
       },
     );
@@ -34,21 +45,21 @@ class DialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      elevation: 0,
       insetPadding: const EdgeInsets.symmetric(
-        horizontal: 24.0,
-        vertical: 24.0,
+        horizontal: 24,
+        vertical: 24,
       ),
       child: Container(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(32.0),
+          borderRadius: BorderRadius.circular(32),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black.withAlpha(15),
-              blurRadius: 40.0,
-              offset: const Offset(0.0, 20.0),
+              blurRadius: 40,
+              offset: const Offset(0, 20),
             ),
           ],
         ),
@@ -58,18 +69,17 @@ class DialogWidget extends StatelessWidget {
           children: <Widget>[
             if (title != null) ...<Widget>[
               Align(
-                alignment: AlignmentGeometry.center,
                 child: Text(
                   title!,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 24.0,
+                    fontSize: 24,
                     fontWeight: FontWeight.w900,
-                    letterSpacing: -1.0,
+                    letterSpacing: -1,
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16),
             ],
             Flexible(
               child: SingleChildScrollView(
@@ -77,7 +87,7 @@ class DialogWidget extends StatelessWidget {
                 child: DefaultTextStyle(
                   style: TextStyle(
                     color: Colors.black.withAlpha(140),
-                    fontSize: 16.0,
+                    fontSize: 16,
                     height: 1.5,
                     fontWeight: FontWeight.w400,
                   ),
@@ -86,9 +96,9 @@ class DialogWidget extends StatelessWidget {
               ),
             ),
             if (actions != null && actions!.isNotEmpty) ...<Widget>[
-              const SizedBox(height: 40.0),
+              const SizedBox(height: 40),
               Row(
-                spacing: 12.0,
+                spacing: 12,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: actions!.builder((action, index) {
                   return Expanded(child: action);

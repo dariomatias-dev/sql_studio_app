@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
+/// The application's home screen, hosting the SQL workspace.
 class HomeScreen extends StatefulWidget {
+  /// Creates the home screen.
   const HomeScreen({super.key});
 
   @override
@@ -19,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return ScaffoldWidget(showExitButton: false, body: SqlWorkspaceWidget());
+    return const ScaffoldWidget(
+      showExitButton: false,
+      body: SqlWorkspaceWidget(),
+    );
   }
 }

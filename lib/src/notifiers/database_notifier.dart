@@ -8,6 +8,7 @@ import 'package:sql_studio/src/services/database_service.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 
+/// Manages the list of known databases and their favorite state.
 class DatabaseNotifier extends ChangeNotifier {
   final _service = DatabaseService();
 
@@ -17,11 +18,16 @@ class DatabaseNotifier extends ChangeNotifier {
   bool _isLoading = false;
   String _filter = '';
 
+  /// Whether the databases are currently being loaded.
   bool get isLoading => _isLoading;
 
+  /// The favorite databases, filtered by the current search filter.
   List<DatabaseModel> get favorites => _applyFilter(_favorites);
+
+  /// The non-favorite databases, filtered by the current search filter.
   List<DatabaseModel> get others => _applyFilter(_others);
 
+  /// Loads all databases and splits them into favorites and others.
   Future<Result<void>> loadDatabases() async {
     if (_isLoading) return const SuccessResult(null);
 
@@ -57,6 +63,7 @@ class DatabaseNotifier extends ChangeNotifier {
     );
   }
 
+  /// Creates a new database from [model] and adds it to the proper list.
   Future<Result<void>> create(DatabaseModel model) async {
     final result = await _service.create(model);
 
@@ -77,6 +84,7 @@ class DatabaseNotifier extends ChangeNotifier {
     );
   }
 
+  /// Retrieves a database by its [name], or `null` if none is found.
   Future<Result<DatabaseModel?>> getByName(String name) async {
     final result = await _service.getByName(name);
 
@@ -91,6 +99,7 @@ class DatabaseNotifier extends ChangeNotifier {
     );
   }
 
+  /// Drops the underlying table and deletes [model] from the lists.
   Future<Result<void>> delete(DatabaseModel model) async {
     final dropResult = await _service.dropTable(model);
 
@@ -119,6 +128,7 @@ class DatabaseNotifier extends ChangeNotifier {
     );
   }
 
+  /// Toggles the favorite state of [model] and moves it between lists.
   Future<Result<void>> toggleFavorite(DatabaseModel model) async {
     final result = await _service.toggleFavorite(model);
 
@@ -143,6 +153,7 @@ class DatabaseNotifier extends ChangeNotifier {
     );
   }
 
+  /// Updates the search filter applied to the databases lists.
   void setFilter(String value) {
     if (_filter == value) return;
 

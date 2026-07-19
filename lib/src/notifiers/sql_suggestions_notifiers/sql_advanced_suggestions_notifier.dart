@@ -9,15 +9,20 @@ import 'package:sql_studio/src/services/sql_advanced_suggestions_service.dart';
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
+/// Manages the persisted list of advanced SQL autocomplete suggestions.
 class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
   final _logger = Logger();
   final _service = SqlAdvancedSuggestionsService();
 
   final _suggestions = <SqlAdvancedSuggestionModel>[];
+
+  /// Whether a suggestions operation is currently in progress.
   bool isLoading = false;
 
+  /// The currently known advanced suggestions.
   List<SqlAdvancedSuggestionModel> get suggestions => _suggestions;
 
+  /// Loads all advanced suggestions from storage.
   Future<Result<void>> load() async {
     isLoading = true;
     notifyListeners();
@@ -30,14 +35,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         ..addAll(List<SqlAdvancedSuggestionModel>.from(result));
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to load advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToLoadAdvancedSuggestions),
       );
     } finally {
@@ -47,6 +52,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Persists [suggestion] and adds it to the current list.
   Future<Result<void>> addSuggestion(
     SqlAdvancedSuggestionModel suggestion,
   ) async {
@@ -60,14 +66,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       _suggestions.add(suggestion);
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to add advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToAddAdvancedSuggestion),
       );
     } finally {
@@ -77,6 +83,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Persists changes to [suggestion] and updates it in the current list.
   Future<Result<void>> updateSuggestion(
     SqlAdvancedSuggestionModel suggestion,
   ) async {
@@ -91,14 +98,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       if (index != -1) _suggestions[index] = suggestion;
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to update advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToUpdateAdvancedSuggestion),
       );
     } finally {
@@ -108,6 +115,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Deletes the suggestion identified by [id] from storage and the list.
   Future<Result<void>> removeSuggestion(String id) async {
     isLoading = true;
 
@@ -119,14 +127,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       _suggestions.removeWhere((s) => s.id == id);
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to remove advanced suggestion',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToRemoveAdvancedSuggestion),
       );
     } finally {
@@ -136,6 +144,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Replaces all stored suggestions with [newSuggestions].
   Future<Result<void>> saveAllSuggestions(
     List<SqlAdvancedSuggestionModel> newSuggestions,
   ) async {
@@ -152,14 +161,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         ..addAll(newSuggestions);
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to save all advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToSaveAllAdvancedSuggestions),
       );
     } finally {
@@ -169,6 +178,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Persists a new ordering for the suggestions, given as [newOrder].
   Future<Result<void>> reorderSuggestions(
     List<SqlAdvancedSuggestionModel> newOrder,
   ) async {
@@ -179,7 +189,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     try {
       final updated = <SqlAdvancedSuggestionModel>[];
 
-      for (int i = 0; i < newOrder.length; i++) {
+      for (var i = 0; i < newOrder.length; i++) {
         final s = newOrder[i].copyWith(orderIndex: i);
 
         await _service.update(s);
@@ -192,14 +202,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
         ..addAll(updated);
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to reorder advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToReorderAdvancedSuggestions),
       );
     } finally {
@@ -209,6 +219,7 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Restores the default advanced suggestions, overwriting stored ones.
   Future<Result<void>> resetSuggestions() async {
     isLoading = true;
 
@@ -225,14 +236,14 @@ class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {
       await _service.addAll(_suggestions);
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to reset advanced suggestions',
         error: err,
         stackTrace: stackTrace,
       );
 
-      return FailureResult(
+      return const FailureResult(
         AppFailure(AppLocalizationsKey.failedToResetAdvancedSuggestions),
       );
     } finally {

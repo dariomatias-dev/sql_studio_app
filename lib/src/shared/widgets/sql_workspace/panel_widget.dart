@@ -2,22 +2,37 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+/// A common panel frame used by the SQL workspace widgets, providing a
+/// header with title, database name, action buttons, and a body area.
 class PanelWidget extends StatelessWidget {
+  /// Creates a panel wrapping [child] with an optional header.
   const PanelWidget({
+    required this.child,
     super.key,
     this.title,
     this.databaseName,
     this.isFullScreen,
     this.onFullScreen,
     this.actions = const <Widget>[],
-    required this.child,
   });
 
+  /// Title shown in the panel header, if any.
   final String? title;
+
+  /// Name of the active database shown beneath the title, if any.
   final String? databaseName;
+
+  /// Whether the panel is currently expanded to full screen.
   final bool? isFullScreen;
+
+  /// Called when the full screen toggle button is pressed. When null, the
+  /// toggle button is not shown.
   final VoidCallback? onFullScreen;
+
+  /// Extra action widgets shown at the end of the header row.
   final List<Widget> actions;
+
+  /// Content displayed in the panel body.
   final Widget child;
 
   @override
@@ -26,7 +41,7 @@ class PanelWidget extends StatelessWidget {
 
     final hasFullScreenButton = onFullScreen != null;
 
-    return Container(
+    return ColoredBox(
       color: Colors.grey.shade100,
       child: Column(
         children: <Widget>[

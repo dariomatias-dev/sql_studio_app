@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+/// Section title label used within the SQL suggestion settings screen.
 class SqlSuggestionSettingsTitleOptionWidget extends StatelessWidget {
+  /// Creates a section title displaying [title].
   const SqlSuggestionSettingsTitleOptionWidget({
-    super.key,
     required this.title,
+    super.key,
   });
 
+  /// Text displayed as the section title.
   final String title;
 
   @override
@@ -13,7 +16,7 @@ class SqlSuggestionSettingsTitleOptionWidget extends StatelessWidget {
     return Text(
       title,
       style: const TextStyle(
-        fontSize: 16.0,
+        fontSize: 16,
         fontWeight: FontWeight.bold,
         color: Colors.black87,
       ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +22,10 @@ import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 
+/// Initial screen shown while the app loads its persisted state, plays an
+/// entry animation, and then navigates to the main screen.
 class SplashScreen extends StatefulWidget {
+  /// Creates the splash screen.
   const SplashScreen({super.key});
 
   @override
@@ -118,38 +123,38 @@ class _SplashScreenState extends State<SplashScreen>
     _iconRotationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
-    )..repeat();
+    )..repeat().ignore();
 
     _entryAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
     );
 
-    _iconScaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+    _iconScaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
+        curve: const Interval(0, 0.7, curve: Curves.easeOutBack),
       ),
     );
 
-    _textOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _textOpacityAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
+        curve: const Interval(0.4, 1, curve: Curves.easeOut),
       ),
     );
 
-    _progressOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _progressOpacityAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0.7, 1.0, curve: Curves.easeOut),
+        curve: const Interval(0.7, 1, curve: Curves.easeOut),
       ),
     );
 
     _gradientAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 15),
-    )..repeat(reverse: true);
+    )..repeat(reverse: true).ignore();
 
     _gradientAlignmentAnimation = TweenSequence<AlignmentGeometry>([
       TweenSequenceItem(
@@ -176,9 +181,9 @@ class _SplashScreenState extends State<SplashScreen>
     ]).animate(_gradientAnimationController);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _entryAnimationController.forward().whenComplete(() {
-        _loadResources();
-      });
+      unawaited(
+        _entryAnimationController.forward().whenComplete(_loadResources),
+      );
     });
   }
 
@@ -211,7 +216,7 @@ class _SplashScreenState extends State<SplashScreen>
                 center: _gradientAlignmentAnimation.value,
                 radius: 1.5,
                 colors: const <Color>[Color(0xFF100030), Color(0xFF010103)],
-                stops: const <double>[0.0, 1.0],
+                stops: const <double>[0, 1],
               ),
             ),
             child: Center(
@@ -223,18 +228,18 @@ class _SplashScreenState extends State<SplashScreen>
                     child: FadeTransition(
                       opacity: _textOpacityAnimation,
                       child: SizedBox(
-                        width: 140.0,
-                        height: 140.0,
+                        width: 140,
+                        height: 140,
                         child: Stack(
                           alignment: Alignment.center,
                           children: <Widget>[
                             RotationTransition(
                               turns: _iconRotationController.drive(
-                                Tween(begin: 0.0, end: 0.5),
+                                Tween(begin: 0, end: 0.5),
                               ),
                               child: Container(
-                                width: 100.0,
-                                height: 100.0,
+                                width: 100,
+                                height: 100,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   boxShadow: <BoxShadow>[
@@ -242,8 +247,8 @@ class _SplashScreenState extends State<SplashScreen>
                                       color: const Color(
                                         0xFF00E5FF,
                                       ).withAlpha(80),
-                                      blurRadius: 88.0,
-                                      spreadRadius: -5.0,
+                                      blurRadius: 88,
+                                      spreadRadius: -5,
                                     ),
                                   ],
                                   gradient: RadialGradient(
@@ -258,11 +263,11 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                             RotationTransition(
                               turns: _iconRotationController.drive(
-                                Tween(begin: 0.0, end: 1.0),
+                                Tween(begin: 0, end: 1),
                               ),
                               child: Container(
-                                width: 130.0,
-                                height: 130.0,
+                                width: 130,
+                                height: 130,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
@@ -276,48 +281,47 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                             Image.asset(
                               'assets/icons/sql_studio_icon_transparent.png',
-                              width: 100.0,
-                              height: 100.0,
+                              width: 100,
+                              height: 100,
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40.0),
+                  const SizedBox(height: 40),
                   FadeTransition(
                     opacity: _textOpacityAnimation,
                     child: const Text(
                       'SQL Studio',
                       style: TextStyle(
-                        fontSize: 36.0,
+                        fontSize: 36,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                         letterSpacing: 2.5,
                         shadows: <Shadow>[
                           Shadow(
                             color: Color(0xFF00E5FF),
-                            blurRadius: 15.0,
-                            offset: Offset(0.0, 0.0),
+                            blurRadius: 15,
                           ),
                           Shadow(
                             color: Colors.white30,
-                            blurRadius: 5.0,
-                            offset: Offset(0.0, 1.0),
+                            blurRadius: 5,
+                            offset: Offset(0, 1),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 50),
                   FadeTransition(
                     opacity: _progressOpacityAnimation,
                     child: SizedBox(
-                      width: 250.0,
+                      width: 250,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                         child: LinearProgressIndicator(
-                          minHeight: 10.0,
+                          minHeight: 10,
                           backgroundColor: Colors.white.withAlpha(38),
                           valueColor: const AlwaysStoppedAnimation<Color>(
                             Color(0xFF00E5FF),
@@ -326,13 +330,13 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15.0),
+                  const SizedBox(height: 15),
                   FadeTransition(
                     opacity: _progressOpacityAnimation,
                     child: Text(
                       AppLocalizations.of(context)!.loading,
-                      style: TextStyle(
-                        fontSize: 18.0,
+                      style: const TextStyle(
+                        fontSize: 18,
                         color: Colors.white70,
                         letterSpacing: 0.8,
                       ),

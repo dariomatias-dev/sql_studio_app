@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -10,19 +12,24 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
+/// Dialog form for updating an existing advanced SQL suggestion.
 class UpdateSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
+  /// Creates the update-suggestion dialog, prefilled with [initialValue].
   const UpdateSqlAdvancedSuggestionDialogWidget({
-    super.key,
     required this.initialValue,
+    super.key,
   });
 
+  /// Suggestion being edited, used to prefill the form.
   final SqlAdvancedSuggestionModel initialValue;
 
+  /// Displays the update-suggestion dialog above [context], prefilled with
+  /// [initialValue].
   static Future<void> show(
     BuildContext context, {
     required SqlAdvancedSuggestionModel initialValue,
   }) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return UpdateSqlAdvancedSuggestionDialogWidget(
@@ -44,10 +51,12 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
         final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
         final result = await notifier.updateSuggestion(value);
 
-        Fluttertoast.showToast(
-          msg: result.isSuccess
-              ? appLocalizations.updateSuggestionSuccess
-              : appLocalizations.updateSuggestionFail,
+        unawaited(
+          Fluttertoast.showToast(
+            msg: result.isSuccess
+                ? appLocalizations.updateSuggestionSuccess
+                : appLocalizations.updateSuggestionFail,
+          ),
         );
 
         return result.isSuccess;

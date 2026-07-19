@@ -5,12 +5,17 @@ import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
+/// Horizontal bar of user-defined advanced SQL suggestions that insert a
+/// snippet of code, optionally selecting part of it, when tapped.
 class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
+  /// Creates an advanced suggestions bar.
   const SqlAdvancedSuggestionsBarWidget({
-    super.key,
     required this.onInsertCommand,
+    super.key,
   });
 
+  /// Called with the code snippet to insert, and the text to select
+  /// afterwards, when a suggestion is tapped.
   final void Function(String code, {String? selectText}) onInsertCommand;
 
   @override
@@ -29,7 +34,7 @@ class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
         );
       },
       itemCount: suggestions.length,
-      itemPadding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
+      itemPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       itemBuilder: (index) => suggestions[index].label,
     );
   }

@@ -10,19 +10,23 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
+/// Confirmation dialog for removing a single basic SQL suggestion.
 class RemoveSqlBasicSuggestionDialogWidget extends StatefulWidget {
+  /// Creates a confirmation dialog for removing [suggestion].
   const RemoveSqlBasicSuggestionDialogWidget({
-    super.key,
     required this.suggestion,
+    super.key,
   });
 
+  /// Suggestion that will be removed if the user confirms.
   final String suggestion;
 
+  /// Displays this dialog for the given [suggestion] on top of [context].
   static Future<void> show(
     BuildContext context, {
     required String suggestion,
   }) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return RemoveSqlBasicSuggestionDialogWidget(suggestion: suggestion);
@@ -53,7 +57,7 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
               .remove(widget.suggestion);
 
           if (result.isFailure) {
-            handleError(_getContext(), result);
+            await handleError(_getContext(), result);
 
             return;
           }

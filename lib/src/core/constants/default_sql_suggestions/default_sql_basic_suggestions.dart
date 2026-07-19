@@ -1,3 +1,4 @@
+/// Built-in basic SQL keyword suggestions shown in the editor.
 const defaultSqlBasicSuggestions = <String>[
   'SELECT * FROM ',
   'INSERT INTO ',

@@ -5,10 +5,13 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 
+/// Bottom navigation bar switching between the app's main pages.
 class RootNavBarWidget extends StatelessWidget {
-  final PageController pageController;
+  /// Creates the bottom navigation bar driven by [pageController].
+  const RootNavBarWidget({required this.pageController, super.key});
 
-  const RootNavBarWidget({super.key, required this.pageController});
+  /// Controller for the page view this nav bar drives.
+  final PageController pageController;
 
   void _onTab(BuildContext context, NavigationNotifier notifier, int index) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -17,21 +20,21 @@ class RootNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigationNotifier notifier = context.watch<NavigationNotifier>();
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    final notifier = context.watch<NavigationNotifier>();
+    final l10n = AppLocalizations.of(context)!;
 
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 12.0),
-        height: 72.0,
+        margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        height: 72,
         decoration: BoxDecoration(
           color: Colors.black,
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(24),
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.black.withAlpha(40),
-              blurRadius: 30.0,
-              offset: const Offset(0.0, 15.0),
+              blurRadius: 30,
+              offset: const Offset(0, 15),
             ),
           ],
         ),
@@ -40,14 +43,14 @@ class RootNavBarWidget extends StatelessWidget {
             AnimatedAlign(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutBack,
-              alignment: Alignment((notifier.index * 1.0 - 1.0), 0.0),
+              alignment: Alignment(notifier.index * 1.0 - 1.0, 0),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.24,
-                height: 48.0,
-                margin: const EdgeInsets.symmetric(horizontal: 14.0),
+                height: 48,
+                margin: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: Colors.white.withAlpha(25),
-                  borderRadius: BorderRadius.circular(18.0),
+                  borderRadius: BorderRadius.circular(18),
                 ),
               ),
             ),
@@ -84,12 +87,6 @@ class RootNavBarWidget extends StatelessWidget {
 }
 
 class _NavBarItem extends StatelessWidget {
-  final IconData icon;
-  final IconData activeIcon;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
   const _NavBarItem({
     required this.icon,
     required this.activeIcon,
@@ -97,6 +94,11 @@ class _NavBarItem extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -112,16 +114,16 @@ class _NavBarItem extends StatelessWidget {
               child: Icon(
                 isSelected ? activeIcon : icon,
                 key: ValueKey<IconData>(isSelected ? activeIcon : icon),
-                size: 24.0,
+                size: 24,
                 color: isSelected ? Colors.white : const Color(0xFF757575),
               ),
             ),
-            const SizedBox(height: 4.0),
+            const SizedBox(height: 4),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: TextStyle(
                 color: isSelected ? Colors.white : const Color(0xFF757575),
-                fontSize: 10.0,
+                fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
                 letterSpacing: 0.8,
               ),

@@ -2,14 +2,18 @@ import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 
+/// Helper logic for the SQL console widget.
 class ConsoleController {
+  /// Extracts the table name referenced by the last executed query in
+  /// [notifier], when the result was an empty `SELECT`. Returns an
+  /// empty string when it can't be determined.
   String extractTableName(SqlCommandsNotifier notifier) {
     if (notifier.result is SuccessResult &&
-        ((notifier.result as SuccessResult).value is DatabaseSuccess) &&
-        (((notifier.result as SuccessResult).value as DatabaseSuccess).result
+        ((notifier.result! as SuccessResult).value is DatabaseSuccess) &&
+        (((notifier.result! as SuccessResult).value as DatabaseSuccess).result
                 is List &&
-            (((notifier.result as SuccessResult).value as DatabaseSuccess)
-                        .result
+            (((notifier.result! as SuccessResult).value as DatabaseSuccess)
+                        .result!
                     as List)
                 .isEmpty)) {
       final sql = notifier.lastQuery;

@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+/// Manages the reorderable list of suggestion items shown in a suggestions
+/// settings screen, tracking unsaved changes and persisting the new order.
 class SuggestionsSettingsLayoutController<T> {
-  final BuildContext Function() getContext;
-  final Future<bool> Function(List<T>) _onSave;
-  final _initialItems = <T>[];
-
+  /// Creates a controller seeded with [initialItems], saving changes
+  /// through [onSave].
   SuggestionsSettingsLayoutController({
     required this.getContext,
     required Future<bool> Function(List<T> value) onSave,
@@ -15,39 +17,57 @@ class SuggestionsSettingsLayoutController<T> {
   }) : _onSave = onSave {
     _initialItems.addAll(List<T>.from(initialItems ?? <T>[]));
 
-    updateItemsNotifier(_initialItems);
+    items = _initialItems;
   }
 
-  final itemsNotifier = ValueNotifier(<T>[]);
+  /// Returns the current [BuildContext], used to look up localizations
+  /// when showing feedback toasts.
+  final BuildContext Function() getContext;
+  final Future<bool> Function(List<T>) _onSave;
+  final _initialItems = <T>[];
+
+  /// Current ordered list of suggestion items.
+  final ValueNotifier<List<T>> itemsNotifier = ValueNotifier(<T>[]);
+
+  /// Whether the current item order differs from the initial one.
   final ValueNotifier<bool> hasChangesNotifier = ValueNotifier(false);
 
-  void updateItemsNotifier(List<T> initialItems) {
-    itemsNotifier.value = initialItems;
+  /// Current ordered list of suggestion items.
+  List<T> get items => itemsNotifier.value;
+
+  /// Replaces the current item list.
+  set items(List<T> value) {
+    itemsNotifier.value = value;
   }
 
+  /// Moves the item at [oldIndex] to [newIndex], as reported by a
+  /// reorderable list view.
   void reorderItems(int oldIndex, int newIndex) {
     final updated = List<T>.from(itemsNotifier.value);
-
-    if (newIndex > oldIndex) newIndex--;
+    final targetIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
 
     final item = updated.removeAt(oldIndex);
 
-    updated.insert(newIndex, item);
+    updated.insert(targetIndex, item);
 
     itemsNotifier.value = updated;
 
     _checkForChanges();
   }
 
+  /// Persists the current item order via the `onSave` callback and shows a
+  /// success or failure toast with the result.
   Future<void> saveItems() async {
     final saved = await _onSave(itemsNotifier.value);
 
     final appLocalizations = AppLocalizations.of(getContext())!;
 
-    Fluttertoast.showToast(
-      msg: saved
-          ? appLocalizations.sortOrderSavedSuccessfully
-          : appLocalizations.failedToSaveSortOrder,
+    unawaited(
+      Fluttertoast.showToast(
+        msg: saved
+            ? appLocalizations.sortOrderSavedSuccessfully
+            : appLocalizations.failedToSaveSortOrder,
+      ),
     );
 
     hasChangesNotifier.value = !saved;
@@ -60,7 +80,7 @@ class SuggestionsSettingsLayoutController<T> {
       return;
     }
 
-    for (int i = 0; i < current.length; i++) {
+    for (var i = 0; i < current.length; i++) {
       if (current[i] != _initialItems[i]) {
         hasChangesNotifier.value = true;
         return;
@@ -70,6 +90,7 @@ class SuggestionsSettingsLayoutController<T> {
     hasChangesNotifier.value = false;
   }
 
+  /// Disposes the notifiers owned by this controller.
   void dispose() {
     itemsNotifier.dispose();
     hasChangesNotifier.dispose();

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
@@ -9,34 +11,52 @@ import 'package:sql_studio/src/services/database/default_database_service.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/services/sql_execution_service.dart';
 
+/// Runs SQL commands against the active database and tracks their state.
 class SqlCommandsNotifier extends ChangeNotifier {
   final _sqlService = SqlExecutionService();
 
   String? _activeDatabase;
-  Result? result;
+
+  /// The outcome of the most recently executed query.
+  Result<Object?>? result;
+
+  /// Whether a query or reset operation is currently in progress.
   bool isLoading = false;
+
+  /// The localization key describing the last error, if any.
   AppLocalizationsKey? error;
+
+  /// Arguments to interpolate into the [error] localization message.
   Map<String, Object?>? errorArgs;
+
+  /// The SQL text of the last query that was run.
   String? lastQuery;
+
+  /// Whether the active database is one of the built-in default databases.
   bool isDefaultDatabase = false;
 
+  /// The name of the database currently selected for query execution.
   String? get activeDatabase => _activeDatabase;
 
+  /// Selects [value] as the active database and persists the choice.
   set activeDatabase(String? value) {
     _activeDatabase = value;
 
     if (value != null) {
-      SharedPreferencesService.setString(
-        SharedPreferencesKeys.selectedDatabaseKey,
-        value,
+      unawaited(
+        SharedPreferencesService.setString(
+          SharedPreferencesKeys.selectedDatabaseKey,
+          value,
+        ),
       );
     }
 
-    _checkActiveDatabase();
+    unawaited(_checkActiveDatabase());
 
     notifyListeners();
   }
 
+  /// Executes [sql] against the active database and stores the result.
   Future<void> runQuery(String sql) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
       error = AppLocalizationsKey.noDatabaseSelected;
@@ -76,6 +96,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Retrieves the column names of [tableName] in the active database.
   Future<List<String>> getTableColumns(String tableName) async {
     if (activeDatabase == null || activeDatabase!.isEmpty) {
       error = AppLocalizationsKey.noDatabaseSelected;
@@ -92,7 +113,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
         tableName: tableName,
       );
       return columns;
-    } catch (e) {
+    } on Exception catch (e) {
       error = AppLocalizationsKey.sqlExecutionError;
       errorArgs = {'dbName': tableName, 'error': e.toString()};
 
@@ -102,6 +123,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
     }
   }
 
+  /// Restores the active default database to its original state.
   Future<void> resetDatabase() async {
     if (!isDefaultDatabase || _activeDatabase == null) return;
 
@@ -142,6 +164,7 @@ class SqlCommandsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Clears the stored query result and any pending error state.
   void clearResult() {
     result = null;
     error = null;

@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
 import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
-
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
+/// Shared form dialog used to create or update an advanced SQL suggestion,
+/// collecting its label, SQL code, and optional selectable text.
 class SqlAdvancedSuggestionFormDialogWidget extends StatefulWidget {
+  /// Creates the suggestion form dialog, prefilled with [initialValue] when
+  /// editing an existing suggestion.
   const SqlAdvancedSuggestionFormDialogWidget({
-    super.key,
     required this.onSubmit,
     required this.title,
-    this.initialValue,
     required this.submitText,
+    super.key,
+    this.initialValue,
   });
 
+  /// Called with the built suggestion when the form is submitted; returns
+  /// whether the operation succeeded.
   final Future<bool> Function(SqlAdvancedSuggestionModel value) onSubmit;
+
+  /// Dialog title.
   final String title;
+
+  /// Label of the submit button.
   final String submitText;
+
+  /// Existing suggestion to prefill the form with, when editing.
   final SqlAdvancedSuggestionModel? initialValue;
 
   @override
@@ -89,7 +98,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
                 return null;
               },
             ),
-            const SizedBox(height: 12.0),
+            const SizedBox(height: 12),
             InputWidget(
               controller: _codeController,
               labelText: appLocalizations.sqlCode,
@@ -101,7 +110,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
                 return null;
               },
             ),
-            const SizedBox(height: 12.0),
+            const SizedBox(height: 12),
             InputWidget(
               controller: _selectTextController,
               labelText: appLocalizations.selectableTextOptional,

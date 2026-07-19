@@ -8,16 +8,19 @@ import 'package:sql_studio/src/repositories/database_repository.dart';
 
 import 'package:sql_studio/src/shared/models/database_model.dart';
 
+/// Manages CRUD operations for [DatabaseModel] records.
 class DatabaseService {
-  final _logger = Logger();
-
-  final DatabaseRepository<DatabaseModel> _repository;
-
+  /// Creates a service backed by [repository], or a default
+  /// repository targeting the `databases` table if none is given.
   DatabaseService({DatabaseRepository<DatabaseModel>? repository})
     : _repository =
           repository ??
           DatabaseRepository<DatabaseModel>(tableName: 'databases');
+  final _logger = Logger();
 
+  final DatabaseRepository<DatabaseModel> _repository;
+
+  /// Persists a new database record.
   Future<Result<void>> create(DatabaseModel model) async {
     try {
       await _repository.insert(model.toMap());
@@ -25,7 +28,7 @@ class DatabaseService {
       _logger.i('Database created: ${model.name}');
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to create database',
         error: err,
@@ -40,6 +43,7 @@ class DatabaseService {
     }
   }
 
+  /// Fetches all database records ordered by name.
   Future<Result<List<DatabaseModel>>> getAll() async {
     try {
       final results = await _repository.getAll(orderBy: 'name ASC');
@@ -50,7 +54,7 @@ class DatabaseService {
       _logger.i('Fetched ${models.length} databases');
 
       return SuccessResult(models);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to fetch databases',
         error: err,
@@ -63,6 +67,7 @@ class DatabaseService {
     }
   }
 
+  /// Fetches the database record matching [name], if any.
   Future<Result<DatabaseModel?>> getByName(String name) async {
     try {
       final results = await _repository.getWhere(
@@ -81,7 +86,7 @@ class DatabaseService {
       _logger.w('No database found with name: $name');
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to retrieve database by name',
         error: err,
@@ -94,6 +99,7 @@ class DatabaseService {
     }
   }
 
+  /// Deletes the record for [model].
   Future<Result<void>> delete(DatabaseModel model) async {
     try {
       final deletedCount = await _repository.delete(model.toMap());
@@ -109,7 +115,7 @@ class DatabaseService {
       return const FailureResult(
         DatabaseFailure(AppLocalizationsKey.noRecordDeleted),
       );
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to delete database',
         error: err,
@@ -124,6 +130,7 @@ class DatabaseService {
     }
   }
 
+  /// Flips the favorite flag of [model] and persists the change.
   Future<Result<void>> toggleFavorite(DatabaseModel model) async {
     try {
       final updated = model.copyWith(
@@ -145,7 +152,7 @@ class DatabaseService {
           'databaseName': model.name,
         }),
       );
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e('Error toggling favorite', error: err, stackTrace: stackTrace);
 
       return FailureResult(
@@ -156,6 +163,7 @@ class DatabaseService {
     }
   }
 
+  /// Deletes the underlying database file for [model].
   Future<Result<void>> dropTable(DatabaseModel model) async {
     try {
       await _repository.dropDatabaseFile(model.name);
@@ -163,7 +171,7 @@ class DatabaseService {
       _logger.i('Complete drop executed for: ${model.name}');
 
       return const SuccessResult(null);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e(
         'Failed to perform complete drop for: ${model.name}',
         error: err,

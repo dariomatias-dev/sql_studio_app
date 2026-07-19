@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-
 import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
-import 'package:sql_studio/src/shared/widgets/input_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
+/// Dialog that lets the user create a new database by entering its label
+/// and name.
 class CreateDatabaseDialogWidget extends StatefulWidget {
+  /// Creates the create-database dialog.
   const CreateDatabaseDialogWidget({super.key});
 
+  /// Displays the create-database dialog on top of [context].
   static Future<void> show(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return const CreateDatabaseDialogWidget();
@@ -43,8 +44,8 @@ class _CreateDatabaseDialogWidgetState
   String _toSnakeCase(String input) {
     return input
         .trim()
-        .replaceAll(RegExp(r'[^a-zA-Z0-9]+'), '_')
-        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp('[^a-zA-Z0-9]+'), '_')
+        .replaceAll(RegExp('_+'), '_')
         .replaceAll(' ', '_')
         .toLowerCase();
   }
@@ -59,7 +60,7 @@ class _CreateDatabaseDialogWidgetState
       name,
     );
 
-    bool shouldStopFlow = false;
+    var shouldStopFlow = false;
 
     await getByNameResult.fold(
       onSuccess: (value) async {
@@ -182,7 +183,7 @@ class _CreateDatabaseDialogWidgetState
         ),
       ),
       actions: <Widget>[
-        CancelButtonWidget(),
+        const CancelButtonWidget(),
         ButtonWidget(
           text: appLocalizations.create,
           onPressed: _onCreate,

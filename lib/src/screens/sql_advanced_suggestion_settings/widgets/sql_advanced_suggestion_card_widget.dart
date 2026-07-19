@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
@@ -7,9 +9,13 @@ import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/
 
 import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
+/// Card that displays an advanced SQL suggestion with edit and delete
+/// actions.
 class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
-  const SqlAdvancedSuggestionCardWidget({super.key, required this.suggestion});
+  /// Creates a card for the given advanced [suggestion].
+  const SqlAdvancedSuggestionCardWidget({required this.suggestion, super.key});
 
+  /// Advanced suggestion displayed by this card.
   final SqlAdvancedSuggestionModel suggestion;
 
   @override
@@ -17,25 +23,25 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
     final appLocalizations = AppLocalizations.of(context)!;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.grey.withAlpha(25),
-            blurRadius: 8.0,
-            offset: const Offset(0.0, 2.0),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: ListTile(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(16),
         ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 6.0,
+          horizontal: 16,
+          vertical: 6,
         ),
         leading: const Icon(Icons.drag_handle, color: Colors.black54),
         title: Text(
@@ -43,7 +49,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w600,
-            fontSize: 14.0,
+            fontSize: 14,
           ),
         ),
         subtitle: Text(
@@ -51,7 +57,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
-            fontSize: 12.0,
+            fontSize: 12,
             color: Colors.black54,
             height: 1.3,
           ),
@@ -62,9 +68,11 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             IconButton(
               tooltip: appLocalizations.editSuggestion,
               onPressed: () {
-                UpdateSqlAdvancedSuggestionDialogWidget.show(
-                  context,
-                  initialValue: suggestion,
+                unawaited(
+                  UpdateSqlAdvancedSuggestionDialogWidget.show(
+                    context,
+                    initialValue: suggestion,
+                  ),
                 );
               },
               icon: Icon(Icons.edit_outlined, color: Colors.grey.shade600),
@@ -72,10 +80,12 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             IconButton(
               tooltip: appLocalizations.removeSuggestion,
               onPressed: () {
-                DeleteSqlAdvancedSuggestionDialogWidget.show(
-                  context,
-                  id: suggestion.id,
-                  label: suggestion.label,
+                unawaited(
+                  DeleteSqlAdvancedSuggestionDialogWidget.show(
+                    context,
+                    id: suggestion.id,
+                    label: suggestion.label,
+                  ),
                 );
               },
               icon: const Icon(Icons.delete_outline, color: Colors.redAccent),

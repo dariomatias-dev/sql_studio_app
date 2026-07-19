@@ -8,6 +8,8 @@ import 'package:sql_studio/src/core/result.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
+/// Shows an error dialog when [result] is a failure, or invokes
+/// [onSuccess] with the unwrapped value otherwise.
 Future<void> handleError<T>(
   BuildContext context,
   Result<T> result, {
@@ -20,7 +22,7 @@ Future<void> handleError<T>(
     onFailure: (error) async {
       switch (error) {
         default:
-          await DialogWidget.show(
+          await DialogWidget.show<void>(
             context,
             title: appLocalizations.error,
             content: Text(

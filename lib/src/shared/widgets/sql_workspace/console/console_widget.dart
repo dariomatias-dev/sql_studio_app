@@ -12,7 +12,10 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_cont
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 
+/// Displays the result of the last executed SQL command, showing a loading
+/// indicator, an error message, or the resulting data table as appropriate.
 class ConsoleWidget extends StatefulWidget {
+  /// Creates a console panel bound to the current [SqlCommandsNotifier].
   const ConsoleWidget({
     super.key,
     this.showTitle = true,
@@ -20,8 +23,13 @@ class ConsoleWidget extends StatefulWidget {
     this.onFullScreen,
   });
 
+  /// Whether the panel title should be displayed.
   final bool showTitle;
+
+  /// Whether the panel is currently expanded to full screen.
   final bool? isFullScreen;
+
+  /// Called when the full screen toggle button is pressed.
   final VoidCallback? onFullScreen;
 
   @override
@@ -41,11 +49,10 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
 
         if (notifier.isLoading) {
           content = Align(
-            alignment: Alignment.center,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: SizedBox(
-                height: 4.0,
+                height: 4,
                 child: LinearProgressIndicator(
                   backgroundColor: Colors.grey.shade300,
                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
@@ -55,7 +62,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
           );
         } else if (notifier.error != null) {
           content = SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Text(
               appLocalizations.key(notifier.error!, notifier.errorArgs ?? {}),
               style: const TextStyle(
@@ -67,11 +74,11 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
         } else if (notifier.result == null) {
           content = const SizedBox.shrink();
         } else {
-          final result = (notifier.result as SuccessResult).value;
+          final result = (notifier.result! as SuccessResult).value;
 
           if (result is DatabaseSuccess) {
             if (result.result is List) {
-              final rows = result.result as List<Map<String, dynamic>>;
+              final rows = result.result! as List<Map<String, dynamic>>;
 
               if (rows.isEmpty) {
                 content = FutureBuilder<List<String>>(
@@ -85,9 +92,8 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                     return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16),
                           child: StyledDataTableWidget(
                             columns: columns,
                             rows: const <Map<String, dynamic>>[],
@@ -101,16 +107,15 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                 final columns = rows.first.keys.toList();
 
                 content = Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          top: 16.0,
-                          right: 16.0,
-                          left: 16.0,
+                          top: 16,
+                          right: 16,
+                          left: 16,
                         ),
                         child: StyledDataTableWidget(
                           columns: columns,
@@ -127,7 +132,7 @@ class _ConsoleWidgetState extends State<ConsoleWidget> {
                   : '';
 
               content = Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Text(
                   text,
                   style: const TextStyle(fontWeight: FontWeight.w500),

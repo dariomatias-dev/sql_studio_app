@@ -8,15 +8,19 @@ import 'package:sql_studio/src/core/result.dart';
 
 import 'package:sql_studio/src/shared/models/table_info_model.dart';
 
+/// Executes raw SQL statements against a named SQLite database and
+/// inspects its structure.
 class SqlExecutionService {
   final _logger = Logger();
 
-  Future<Result> execute({
+  /// Runs one or more semicolon-separated [sql] statements against
+  /// [databaseName], returning the result of the last statement.
+  Future<Result<DatabaseSuccess?>> execute({
     required String sql,
     required String? databaseName,
   }) async {
     if (databaseName == null || databaseName.isEmpty) {
-      return FailureResult(
+      return const FailureResult(
         DatabaseFailure(AppLocalizationsKey.noDatabaseSelected),
       );
     }
@@ -73,7 +77,7 @@ class SqlExecutionService {
         } else {
           await db.execute(stmt);
 
-          lastResult = DatabaseSuccess(
+          lastResult = const DatabaseSuccess(
             type: AppLocalizationsKey.statementSuccess,
           );
 
@@ -82,13 +86,13 @@ class SqlExecutionService {
       }
 
       if (statements.length > 1) {
-        return SuccessResult(
+        return const SuccessResult(
           DatabaseSuccess(type: AppLocalizationsKey.statementSuccess),
         );
       }
 
       return SuccessResult(lastResult);
-    } catch (err, stackTrace) {
+    } on Exception catch (err, stackTrace) {
       _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
 
       return FailureResult(
@@ -97,17 +101,20 @@ class SqlExecutionService {
     }
   }
 
+  /// Returns the names of all user tables in [databaseName].
   Future<List<String>> getTables({required String databaseName}) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, '$databaseName.db');
     final db = await openDatabase(path);
     final result = await db.rawQuery(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';",
+      'SELECT name FROM sqlite_master '
+      "WHERE type='table' AND name NOT LIKE 'sqlite_%';",
     );
 
-    return result.builder((row, index) => row['name'] as String);
+    return result.builder((row, index) => row['name']! as String);
   }
 
+  /// Returns the column names of [tableName] in [databaseName].
   Future<List<String>> getTableColumns({
     required String databaseName,
     required String tableName,
@@ -117,9 +124,11 @@ class SqlExecutionService {
     final db = await openDatabase(path);
     final result = await db.rawQuery('PRAGMA table_info($tableName);');
 
-    return result.builder((col, index) => col['name'] as String);
+    return result.builder((col, index) => col['name']! as String);
   }
 
+  /// Returns the full table/column/foreign-key structure of
+  /// [databaseName].
   Future<List<TableInfoModel>> getDatabaseStructure({
     required String databaseName,
   }) async {
@@ -127,13 +136,15 @@ class SqlExecutionService {
     final db = await openDatabase(path);
 
     final tableResult = await db.rawQuery(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name != 'android_metadata';",
+      'SELECT name FROM sqlite_master '
+      "WHERE type='table' AND name NOT LIKE 'sqlite_%' "
+      "AND name != 'android_metadata';",
     );
 
     final tables = <TableInfoModel>[];
 
     for (final row in tableResult) {
-      final name = row['name'] as String;
+      final name = row['name']! as String;
       final columnsRaw = await db.rawQuery('PRAGMA table_info($name);');
       final fkRaw = await db.rawQuery('PRAGMA foreign_key_list($name);');
 
@@ -144,8 +155,8 @@ class SqlExecutionService {
         );
 
         return ColumnInfoModel(
-          name: col['name'] as String,
-          type: col['type'] as String,
+          name: col['name']! as String,
+          type: col['type']! as String,
           foreignTable: fk['table'] as String?,
           foreignColumn: fk['to'] as String?,
         );

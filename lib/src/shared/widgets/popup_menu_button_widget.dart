@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+/// A three-dot overflow menu button with the app's rounded styling.
 class PopupMenuButtonWidget extends StatelessWidget {
-  final List<PopupMenuEntry> items;
+  /// Creates a popup menu button showing the given [items].
+  const PopupMenuButtonWidget({required this.items, super.key});
 
-  const PopupMenuButtonWidget({super.key, required this.items});
+  /// Menu entries displayed when the button is tapped.
+  final List<PopupMenuEntry<void>> items;
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
+    return PopupMenuButton<void>(
       tooltip: AppLocalizations.of(context)!.options,
       color: Colors.white,
       icon: const Icon(Icons.more_vert, color: Colors.black87),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) => items,
     );
   }

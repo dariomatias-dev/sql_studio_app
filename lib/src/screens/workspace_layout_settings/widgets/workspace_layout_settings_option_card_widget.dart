@@ -4,20 +4,31 @@ import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
+/// Selectable card representing a single workspace layout option.
 class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
+  /// Creates a workspace layout option card.
   const WorkspaceLayoutSettingsOptionCardWidget({
-    super.key,
     required this.onTap,
     required this.icon,
     required this.title,
     required this.subtitle,
     required this.selected,
+    super.key,
   });
 
+  /// Called when the user taps this card.
   final VoidCallback onTap;
+
+  /// Icon representing the layout option.
   final IconData icon;
+
+  /// Title of the layout option.
   final String title;
+
+  /// Short description of the layout option.
   final String subtitle;
+
+  /// Whether this layout is the currently selected one.
   final bool selected;
 
   @override
@@ -29,14 +40,14 @@ class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
         title: Text(
           title,
           style: const TextStyle(
-            fontSize: 14.0,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: const TextStyle(fontSize: 12.0, color: Colors.black54),
+          style: const TextStyle(fontSize: 12, color: Colors.black54),
         ),
         trailing: selected
             ? const Icon(Icons.check, color: AppColors.aquaBlue)

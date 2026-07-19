@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,10 @@ import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
+/// Screen where the user enables or disables the available SQL suggestion
+/// modes.
 class SqlSuggestionSettingsScreen extends StatefulWidget {
+  /// Creates the SQL suggestion settings screen.
   const SqlSuggestionSettingsScreen({super.key});
 
   @override
@@ -45,25 +50,28 @@ class _SqlSuggestionSettingsScreenState
     final notifier = context.read<SqlSuggestionsNotifier>();
     final advancedNotifier = context.read<SqlAdvancedSuggestionsNotifier>();
 
-    final bool previousAdvancedEnabled = notifier.useAdvancedSuggestions;
+    final previousAdvancedEnabled = notifier.useAdvancedSuggestions;
 
     if (!previousAdvancedEnabled &&
         _useAdvancedSuggestions &&
         advancedNotifier.suggestions.isEmpty) {
       final result = await advancedNotifier.resetSuggestions();
 
-      Fluttertoast.showToast(
-        msg: result.isSuccess
-            ? l10n.advancedSuggestionsInitialized
-            : l10n.advancedSuggestionsFailed,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
+      unawaited(
+        Fluttertoast.showToast(
+          msg: result.isSuccess
+              ? l10n.advancedSuggestionsInitialized
+              : l10n.advancedSuggestionsFailed,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+        ),
       );
     }
 
-    notifier.setBasicSuggestions(_useBasicSuggestions);
-    notifier.setAdvancedSuggestions(_useAdvancedSuggestions);
-    notifier.setCharacterSuggestions(_useCharacterSuggestions);
+    notifier
+      ..setBasicSuggestions(value: _useBasicSuggestions)
+      ..setAdvancedSuggestions(value: _useAdvancedSuggestions)
+      ..setCharacterSuggestions(value: _useCharacterSuggestions);
 
     await notifier.saveSettings();
 
@@ -71,10 +79,12 @@ class _SqlSuggestionSettingsScreenState
 
     _hasChangesNotifier.value = _hasChanges;
 
-    Fluttertoast.showToast(
-      msg: l10n.settingsSavedSuccessfully,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
+    unawaited(
+      Fluttertoast.showToast(
+        msg: l10n.settingsSavedSuccessfully,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+      ),
     );
   }
 
@@ -98,35 +108,35 @@ class _SqlSuggestionSettingsScreenState
         title: Text(
           l10n.suggestionSettings.toUpperCase(),
           style: const TextStyle(
-            fontSize: 13.0,
+            fontSize: 13,
             fontWeight: FontWeight.w900,
             letterSpacing: 1.2,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0,
         shape: const Border(
-          bottom: BorderSide(color: Color(0xFFF5F5F5), width: 1.0),
+          bottom: BorderSide(color: Color(0xFFF5F5F5)),
         ),
       ),
       body: Consumer<SqlSuggestionsNotifier>(
         builder: (context, notifier, child) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 32.0),
+                const SizedBox(height: 32),
                 SqlSuggestionSettingsTitleOptionWidget(
                   title: l10n.suggestionModes,
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 16),
                 SqlSuggestionSettingsCardWidget(
                   title: l10n.basicSuggestions,
                   subtitle: l10n.basicSuggestionsDescription,
                   active: _useBasicSuggestions,
-                  onChanged: (bool value) {
+                  onChanged: (value) {
                     setState(() {
                       _useBasicSuggestions = value;
                       if (value) _useAdvancedSuggestions = false;
@@ -137,12 +147,12 @@ class _SqlSuggestionSettingsScreenState
                       ? () => AppRoutes.goToSqlBasicSettings(context)
                       : null,
                 ),
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 12),
                 SqlSuggestionSettingsCardWidget(
                   title: l10n.advancedSuggestions,
                   subtitle: l10n.advancedSuggestionsDescription,
                   active: _useAdvancedSuggestions,
-                  onChanged: (bool value) {
+                  onChanged: (value) {
                     setState(() {
                       _useAdvancedSuggestions = value;
                       if (value) _useBasicSuggestions = false;
@@ -153,16 +163,16 @@ class _SqlSuggestionSettingsScreenState
                       ? () => AppRoutes.goToSqlAdvancedSettings(context)
                       : null,
                 ),
-                const SizedBox(height: 32.0),
+                const SizedBox(height: 32),
                 SqlSuggestionSettingsTitleOptionWidget(
                   title: l10n.otherSuggestions,
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 16),
                 SqlSuggestionSettingsCardWidget(
                   title: l10n.characterSuggestions,
                   subtitle: l10n.characterSuggestionsDescription,
                   active: _useCharacterSuggestions,
-                  onChanged: (bool value) {
+                  onChanged: (value) {
                     setState(() {
                       _useCharacterSuggestions = value;
                       _hasChangesNotifier.value = _hasChanges;
@@ -173,7 +183,7 @@ class _SqlSuggestionSettingsScreenState
                 SafeArea(
                   child: SizedBox(
                     width: double.infinity,
-                    height: 48.0,
+                    height: 48,
                     child: ValueListenableBuilder(
                       valueListenable: _hasChangesNotifier,
                       builder: (context, value, child) {
@@ -186,7 +196,7 @@ class _SqlSuggestionSettingsScreenState
                     ),
                   ),
                 ),
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 12),
               ],
             ),
           );

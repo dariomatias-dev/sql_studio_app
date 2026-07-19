@@ -3,22 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
+/// A button that shows a spinner and disables itself while its
+/// asynchronous [onPressed] callback is running.
 class LoadingButtonWidget extends StatefulWidget {
+  /// Creates a loading button with the given [text] and [onPressed]
+  /// callback.
   const LoadingButtonWidget({
+    required this.text,
     super.key,
     this.onPressed,
-    required this.text,
     this.style = ButtonStyleType.custom,
     this.backgroundColor,
     this.foregroundColor,
     this.borderColor,
   });
 
+  /// Called when the button is tapped. While it resolves, the button
+  /// shows a spinner and further taps are ignored.
   final Future<void> Function()? onPressed;
+
+  /// Label displayed when not loading.
   final String text;
+
+  /// Visual style preset applied to the button.
   final ButtonStyleType style;
+
+  /// Overrides the background color when [style] is
+  /// [ButtonStyleType.custom].
   final Color? backgroundColor;
+
+  /// Overrides the foreground/text color when [style] is
+  /// [ButtonStyleType.custom].
   final Color? foregroundColor;
+
+  /// Overrides the border color when [style] is
+  /// [ButtonStyleType.custom].
   final Color? borderColor;
 
   @override
@@ -71,10 +90,10 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
       ),
       child: _loading
           ? SizedBox(
-              height: 18.0,
-              width: 18.0,
+              height: 18,
+              width: 18,
               child: CircularProgressIndicator(
-                strokeWidth: 2.0,
+                strokeWidth: 2,
                 color: textColor,
               ),
             )

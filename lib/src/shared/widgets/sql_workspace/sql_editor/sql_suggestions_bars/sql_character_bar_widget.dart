@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
-const characters = <String>['(', ')', ';', '!', '=', '*', '%', '\'', '"'];
+/// Special characters commonly used in SQL statements, shown as quick
+/// insertion buttons in [SqlCharacterBarWidget].
+const characters = <String>['(', ')', ';', '!', '=', '*', '%', "'", '"'];
 
+/// Horizontal bar of quick-insert buttons for common SQL punctuation
+/// characters.
 class SqlCharacterBarWidget extends StatelessWidget {
-  const SqlCharacterBarWidget({super.key, required this.onInsertCommand});
+  /// Creates a character insertion bar.
+  const SqlCharacterBarWidget({required this.onInsertCommand, super.key});
 
+  /// Called with the character to insert when a button is tapped.
   final void Function(String command, {String? selectText}) onInsertCommand;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       width: double.infinity,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -20,8 +26,8 @@ class SqlCharacterBarWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () => onInsertCommand(characters[i]),
                 child: Container(
-                  width: 44.0,
-                  height: 32.0,
+                  width: 44,
+                  height: 32,
                   color: Colors.transparent,
                   child: Center(
                     child: Text(
@@ -29,7 +35,7 @@ class SqlCharacterBarWidget extends StatelessWidget {
                       style: const TextStyle(
                         color: Colors.black87,
                         fontFamily: 'monospace',
-                        fontSize: 16.0,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -37,8 +43,8 @@ class SqlCharacterBarWidget extends StatelessWidget {
               ),
               if (i < characters.length - 1)
                 Container(
-                  height: 20.0,
-                  width: 1.0,
+                  height: 20,
+                  width: 1,
                   color: Colors.grey.shade400,
                 ),
             ],

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// A [Switch] styled with the app's black-and-white theme.
 class SwitchWidget extends StatelessWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
+  /// Creates a styled switch reflecting [value].
+  const SwitchWidget({required this.value, required this.onChanged, super.key});
 
-  const SwitchWidget({super.key, required this.value, required this.onChanged});
+  /// Current on/off state of the switch.
+  final bool value;
+
+  /// Called with the new value when the switch is toggled.
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,12 @@ class SwitchWidget extends StatelessWidget {
       trackOutlineColor: WidgetStateProperty.resolveWith(
         (states) => value ? Colors.black : const Color(0xFFE0E0E0),
       ),
-      trackOutlineWidth: const WidgetStatePropertyAll(1.0),
+      trackOutlineWidth: const WidgetStatePropertyAll(1),
       thumbIcon: WidgetStatePropertyAll(
         Icon(
           Icons.circle,
           color: value ? Colors.white : Colors.transparent,
-          size: 0.0,
+          size: 0,
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
@@ -18,7 +20,10 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_sugge
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
 
+/// Code editor panel where the user writes and runs SQL queries, including
+/// its toolbar actions and suggestion bars.
 class SqlEditorWidget extends StatefulWidget {
+  /// Creates the SQL editor panel.
   const SqlEditorWidget({
     super.key,
     this.showTitle = true,
@@ -27,9 +32,16 @@ class SqlEditorWidget extends StatefulWidget {
     this.onQueryRun,
   });
 
+  /// Whether the panel title should be displayed.
   final bool showTitle;
+
+  /// Whether the panel is currently expanded to full screen.
   final bool? isFullScreen;
+
+  /// Called when the full screen toggle button is pressed.
   final VoidCallback? onFullScreen;
+
+  /// Called after a query has been submitted for execution.
   final VoidCallback? onQueryRun;
 
   @override
@@ -75,11 +87,11 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
         ),
         Consumer<SqlCommandsNotifier>(
           builder: (context, notifier, child) {
-            final menuItems = <PopupMenuItem>[];
+            final menuItems = <PopupMenuItem<void>>[];
 
             if (notifier.activeDatabase != null) {
               menuItems.addAll([
-                PopupMenuItem(
+                PopupMenuItem<void>(
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
@@ -91,14 +103,14 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     },
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.remove_red_eye_outlined, size: 20.0),
-                        const SizedBox(width: 8.0),
+                        const Icon(Icons.remove_red_eye_outlined, size: 20),
+                        const SizedBox(width: 8),
                         Text(appLocalizations.viewVisualScheme),
                       ],
                     ),
                   ),
                 ),
-                PopupMenuItem(
+                PopupMenuItem<void>(
                   child: InkWell(
                     onTap: () async {
                       Navigator.pop(context);
@@ -107,14 +119,14 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     },
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.share, size: 20.0),
-                        const SizedBox(width: 8.0),
+                        const Icon(Icons.share, size: 20),
+                        const SizedBox(width: 8),
                         Text(appLocalizations.copySql),
                       ],
                     ),
                   ),
                 ),
-                PopupMenuItem(
+                PopupMenuItem<void>(
                   child: InkWell(
                     onTap: () async {
                       Navigator.pop(context);
@@ -123,22 +135,22 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                     },
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.share, size: 20.0),
-                        const SizedBox(width: 8.0),
+                        const Icon(Icons.share, size: 20),
+                        const SizedBox(width: 8),
                         Text(appLocalizations.shareSql),
                       ],
                     ),
                   ),
                 ),
-                PopupMenuItem(
+                PopupMenuItem<void>(
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.download, size: 20.0),
-                        const SizedBox(width: 8.0),
+                        const Icon(Icons.download, size: 20),
+                        const SizedBox(width: 8),
                         Text(appLocalizations.downloadSql),
                       ],
                     ),
@@ -149,16 +161,16 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
 
             if (notifier.isDefaultDatabase) {
               menuItems.add(
-                PopupMenuItem(
+                PopupMenuItem<void>(
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
-                      notifier.resetDatabase();
+                      unawaited(notifier.resetDatabase());
                     },
                     child: Row(
                       children: <Widget>[
-                        const Icon(Icons.refresh_outlined, size: 20.0),
-                        const SizedBox(width: 8.0),
+                        const Icon(Icons.refresh_outlined, size: 20),
+                        const SizedBox(width: 8),
                         Text(appLocalizations.resetDatabase),
                       ],
                     ),
@@ -185,9 +197,9 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
                 focusNode: editorNotifier.focusNode,
                 textStyle: const TextStyle(
                   fontFamily: 'monospace',
-                  fontSize: 14.0,
+                  fontSize: 14,
                 ),
-                gutterStyle: GutterStyle(width: 60.0, margin: 0.0),
+                gutterStyle: const GutterStyle(width: 60, margin: 0),
                 expands: true,
                 decoration: const BoxDecoration(color: Colors.white),
               ),

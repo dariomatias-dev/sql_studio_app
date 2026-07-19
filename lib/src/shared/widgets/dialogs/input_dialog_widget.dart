@@ -8,24 +8,41 @@ import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
+/// A dialog prompting the user for a single text input value.
 class InputDialogWidget extends StatefulWidget {
+  /// Creates an input dialog with the given [title], [controller],
+  /// [label] and [onSubmit] callback.
   const InputDialogWidget({
-    super.key,
     required this.title,
     required this.controller,
     required this.label,
     required this.onSubmit,
+    super.key,
     this.validator,
     this.submitText,
   });
 
+  /// Title displayed at the top of the dialog.
   final String title;
+
+  /// Controller backing the input field.
   final TextEditingController controller;
+
+  /// Label displayed on the input field.
   final String label;
+
+  /// Optional validation function returning an error message, or
+  /// `null` when the value is valid.
   final String? Function(String? value)? validator;
+
+  /// Called with the submitted value. Return `true` to close the
+  /// dialog, or `false` to keep it open.
   final Future<bool> Function(String value) onSubmit;
+
+  /// Overrides the default localized submit button label.
   final String? submitText;
 
+  /// Displays an [InputDialogWidget] with the given parameters.
   static Future<void> show(
     BuildContext context, {
     required String title,
@@ -35,7 +52,7 @@ class InputDialogWidget extends StatefulWidget {
     String? Function(String? value)? validator,
     String? submitText,
   }) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return InputDialogWidget(
