@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -11,7 +11,7 @@ import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 /// Confirmation dialog for removing a single basic SQL suggestion.
-class RemoveSqlBasicSuggestionDialogWidget extends StatefulWidget {
+class RemoveSqlBasicSuggestionDialogWidget extends ConsumerStatefulWidget {
   /// Creates a confirmation dialog for removing [suggestion].
   const RemoveSqlBasicSuggestionDialogWidget({
     required this.suggestion,
@@ -35,12 +35,12 @@ class RemoveSqlBasicSuggestionDialogWidget extends StatefulWidget {
   }
 
   @override
-  State<RemoveSqlBasicSuggestionDialogWidget> createState() =>
+  ConsumerState<RemoveSqlBasicSuggestionDialogWidget> createState() =>
       _RemoveSqlBasicSuggestionDialogWidgetState();
 }
 
 class _RemoveSqlBasicSuggestionDialogWidgetState
-    extends State<RemoveSqlBasicSuggestionDialogWidget> {
+    extends ConsumerState<RemoveSqlBasicSuggestionDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
@@ -52,8 +52,8 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
       description: appLocalizations.removeSuggestionDescription,
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          final result = await context
-              .read<SqlBasicSuggestionsNotifier>()
+          final result = await ref
+              .read(sqlBasicSuggestionsViewModelProvider.notifier)
               .remove(widget.suggestion);
 
           if (result.isFailure) {

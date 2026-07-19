@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
@@ -11,7 +11,7 @@ import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
 /// Shared form dialog used to create or update an advanced SQL suggestion,
 /// collecting its label, SQL code, and optional selectable text.
-class SqlAdvancedSuggestionFormDialogWidget extends StatefulWidget {
+class SqlAdvancedSuggestionFormDialogWidget extends ConsumerStatefulWidget {
   /// Creates the suggestion form dialog, prefilled with [initialValue] when
   /// editing an existing suggestion.
   const SqlAdvancedSuggestionFormDialogWidget({
@@ -36,12 +36,12 @@ class SqlAdvancedSuggestionFormDialogWidget extends StatefulWidget {
   final SqlAdvancedSuggestionModel? initialValue;
 
   @override
-  State<SqlAdvancedSuggestionFormDialogWidget> createState() =>
+  ConsumerState<SqlAdvancedSuggestionFormDialogWidget> createState() =>
       _SqlAdvancedSuggestionFormDialogWidgetState();
 }
 
 class _SqlAdvancedSuggestionFormDialogWidgetState
-    extends State<SqlAdvancedSuggestionFormDialogWidget> {
+    extends ConsumerState<SqlAdvancedSuggestionFormDialogWidget> {
   final _formKey = GlobalKey<FormState>();
 
   late final _labelController = TextEditingController(
@@ -66,7 +66,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
           : _selectTextController.text.trim(),
       orderIndex:
           widget.initialValue?.orderIndex ??
-          context.read<SqlAdvancedSuggestionsNotifier>().suggestions.length,
+          ref.read(sqlAdvancedSuggestionsViewModelProvider).suggestions.length,
     );
 
     final success = await widget.onSubmit(value);

@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
@@ -14,7 +14,7 @@ import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget
 
 /// Confirmation dialog for resetting all advanced SQL suggestions to their
 /// default set.
-class ResetSqlAdvancedSuggestionsDialogWidget extends StatelessWidget {
+class ResetSqlAdvancedSuggestionsDialogWidget extends ConsumerWidget {
   /// Creates the reset-confirmation dialog widget.
   const ResetSqlAdvancedSuggestionsDialogWidget({super.key});
 
@@ -29,7 +29,7 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
 
     return ConfirmationDialogWidget(
@@ -39,9 +39,11 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends StatelessWidget {
         onPressed: () async {
           Navigator.pop(context);
 
-          final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
+          final viewModel = ref.read(
+            sqlAdvancedSuggestionsViewModelProvider.notifier,
+          );
 
-          final result = await notifier.resetSuggestions();
+          final result = await viewModel.resetSuggestions();
 
           unawaited(
             Fluttertoast.showToast(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
 /// Horizontal bar of user-defined advanced SQL suggestions that insert a
 /// snippet of code, optionally selecting part of it, when tapped.
-class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
+class SqlAdvancedSuggestionsBarWidget extends ConsumerWidget {
   /// Creates an advanced suggestions bar.
   const SqlAdvancedSuggestionsBarWidget({
     required this.onInsertCommand,
@@ -19,9 +19,9 @@ class SqlAdvancedSuggestionsBarWidget extends StatelessWidget {
   final void Function(String code, {String? selectText}) onInsertCommand;
 
   @override
-  Widget build(BuildContext context) {
-    final suggestions = context
-        .watch<SqlAdvancedSuggestionsNotifier>()
+  Widget build(BuildContext context, WidgetRef ref) {
+    final suggestions = ref
+        .watch(sqlAdvancedSuggestionsViewModelProvider)
         .suggestions;
 
     return SqlSuggestionsBarBaseWidget(

@@ -1,23 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
+import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
-import 'package:sql_studio/src/notifiers/database_notifier.dart';
-import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
+import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 /// Drawer list item representing a single database, with actions to
 /// select, favorite, and delete it.
-class RootDrawerDatabaseCardWidget extends StatefulWidget {
+class RootDrawerDatabaseCardWidget extends ConsumerStatefulWidget {
   /// Creates a database card for the given [database].
   const RootDrawerDatabaseCardWidget({required this.database, super.key});
 
@@ -25,21 +24,21 @@ class RootDrawerDatabaseCardWidget extends StatefulWidget {
   final DatabaseModel database;
 
   @override
-  State<RootDrawerDatabaseCardWidget> createState() =>
+  ConsumerState<RootDrawerDatabaseCardWidget> createState() =>
       _RootDrawerDatabaseCardWidgetState();
 }
 
 class _RootDrawerDatabaseCardWidgetState
-    extends State<RootDrawerDatabaseCardWidget> {
+    extends ConsumerState<RootDrawerDatabaseCardWidget> {
   late bool _isFavorite = widget.database.isFavorite;
 
   void _selectDatabase() {
-    context.read<SqlCommandsNotifier>()
+    ref.read(sqlCommandsViewModelProvider.notifier)
       ..activeDatabase = widget.database.label
       ..clearResult();
 
-    context.read<NavigationNotifier>().setIndex(0);
-    context.read<SqlEditorNotifier>().focusNode.requestFocus();
+    ref.read(navigationViewModelProvider.notifier).index = 0;
+    ref.read(sqlEditorViewModelProvider.notifier).focusNode.requestFocus();
 
     Scaffold.of(context).closeDrawer();
   }
@@ -47,14 +46,14 @@ class _RootDrawerDatabaseCardWidgetState
   Future<void> _onDeleteDatabase() async {
     context.pop();
 
-    final result = await context.read<DatabaseNotifier>().delete(
-      widget.database,
-    );
+    final result = await ref
+        .read(databaseListViewModelProvider.notifier)
+        .delete(widget.database);
 
     if (!mounted) return;
 
     if (result.isSuccess) {
-      final commands = context.read<SqlCommandsNotifier>();
+      final commands = ref.read(sqlCommandsViewModelProvider.notifier);
       if (commands.activeDatabase == widget.database.name) {
         commands.activeDatabase = null;
 
@@ -70,9 +69,9 @@ class _RootDrawerDatabaseCardWidgetState
   Future<void> _onToggleFavorite() async {
     setState(() => _isFavorite = !_isFavorite);
 
-    final result = await context.read<DatabaseNotifier>().toggleFavorite(
-      widget.database,
-    );
+    final result = await ref
+        .read(databaseListViewModelProvider.notifier)
+        .toggleFavorite(widget.database);
 
     if (mounted) await handleError(context, result);
   }
@@ -80,8 +79,8 @@ class _RootDrawerDatabaseCardWidgetState
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final commands = context.watch<SqlCommandsNotifier>();
-    final isActive = commands.activeDatabase == widget.database.label;
+    final commandsState = ref.watch(sqlCommandsViewModelProvider);
+    final isActive = commandsState.activeDatabase == widget.database.label;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),

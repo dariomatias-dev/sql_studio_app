@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/sql_basic_suggestion_settings_controller.dart';
 import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/create_sql_basic_suggestion_dialog_widget.dart';
@@ -13,31 +13,27 @@ import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/sql
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_widget.dart';
 
 /// Screen that lets the user manage the list of basic SQL suggestions.
-class SqlBasicSuggestionsSettingsScreen extends StatefulWidget {
+class SqlBasicSuggestionsSettingsScreen extends ConsumerStatefulWidget {
   /// Creates the basic SQL suggestions settings screen.
   const SqlBasicSuggestionsSettingsScreen({super.key});
 
   @override
-  State<SqlBasicSuggestionsSettingsScreen> createState() =>
+  ConsumerState<SqlBasicSuggestionsSettingsScreen> createState() =>
       _SqlBasicSuggestionsSettingsScreenState();
 }
 
 class _SqlBasicSuggestionsSettingsScreenState
-    extends State<SqlBasicSuggestionsSettingsScreen> {
-  late final _controller = SqlBasicSuggestionsController(
-    getContext: _getContext,
-  );
-
-  BuildContext _getContext() => context;
+    extends ConsumerState<SqlBasicSuggestionsSettingsScreen> {
+  late final _controller = SqlBasicSuggestionsController(ref: ref);
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SqlBasicSuggestionsNotifier>();
+    final state = ref.watch(sqlBasicSuggestionsViewModelProvider);
 
     return SuggestionsSettingsLayoutWidget<String>(
       title: AppLocalizations.of(context)!.basicSuggestions,
-      isLoading: notifier.isLoading,
-      initialItems: notifier.suggestions,
+      isLoading: state.isLoading,
+      initialItems: state.suggestions,
       itemBuilder: (suggestion, index) {
         return SqlBasicSuggestionCardWidget(
           key: ValueKey(suggestion),

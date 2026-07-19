@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
+import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
 /// Bottom navigation bar switching between the app's main pages.
-class RootNavBarWidget extends StatelessWidget {
+class RootNavBarWidget extends ConsumerWidget {
   /// Creates the bottom navigation bar driven by [pageController].
   const RootNavBarWidget({required this.pageController, super.key});
 
   /// Controller for the page view this nav bar drives.
   final PageController pageController;
 
-  void _onTab(BuildContext context, NavigationNotifier notifier, int index) {
+  void _onTab(WidgetRef ref, int index) {
     FocusManager.instance.primaryFocus?.unfocus();
-    notifier.setIndex(index);
+    ref.read(navigationViewModelProvider.notifier).index = index;
   }
 
   @override
-  Widget build(BuildContext context) {
-    final notifier = context.watch<NavigationNotifier>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final index = ref.watch(navigationViewModelProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return SafeArea(
@@ -43,7 +43,7 @@ class RootNavBarWidget extends StatelessWidget {
             AnimatedAlign(
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeOutBack,
-              alignment: Alignment(notifier.index * 1.0 - 1.0, 0),
+              alignment: Alignment(index * 1.0 - 1.0, 0),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.24,
                 height: 48,
@@ -60,22 +60,22 @@ class RootNavBarWidget extends StatelessWidget {
                   icon: Icons.grid_view_outlined,
                   activeIcon: Icons.grid_view_rounded,
                   label: l10n.home,
-                  isSelected: notifier.index == 0,
-                  onTap: () => _onTab(context, notifier, 0),
+                  isSelected: index == 0,
+                  onTap: () => _onTab(ref, 0),
                 ),
                 _NavBarItem(
                   icon: Icons.dns_outlined,
                   activeIcon: Icons.dns_rounded,
                   label: l10n.databases,
-                  isSelected: notifier.index == 1,
-                  onTap: () => _onTab(context, notifier, 1),
+                  isSelected: index == 1,
+                  onTap: () => _onTab(ref, 1),
                 ),
                 _NavBarItem(
                   icon: Icons.tune_outlined,
                   activeIcon: Icons.tune_rounded,
                   label: l10n.settings,
-                  isSelected: notifier.index == 2,
-                  onTap: () => _onTab(context, notifier, 2),
+                  isSelected: index == 2,
+                  onTap: () => _onTab(ref, 2),
                 ),
               ],
             ),

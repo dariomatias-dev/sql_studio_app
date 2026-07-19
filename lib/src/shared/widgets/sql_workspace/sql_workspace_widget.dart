@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
-import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/divider_bar_widget.dart';
@@ -12,15 +12,15 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_edito
 /// Combines the SQL editor and console panels into a single workspace,
 /// arranged either as a resizable split view or as tabs depending on the
 /// selected layout.
-class SqlWorkspaceWidget extends StatefulWidget {
+class SqlWorkspaceWidget extends ConsumerStatefulWidget {
   /// Creates the SQL workspace.
   const SqlWorkspaceWidget({super.key});
 
   @override
-  State<SqlWorkspaceWidget> createState() => _SqlWorkspaceWidgetState();
+  ConsumerState<SqlWorkspaceWidget> createState() => _SqlWorkspaceWidgetState();
 }
 
-class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
+class _SqlWorkspaceWidgetState extends ConsumerState<SqlWorkspaceWidget>
     with TickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
 
@@ -46,7 +46,7 @@ class _SqlWorkspaceWidgetState extends State<SqlWorkspaceWidget>
 
   @override
   Widget build(BuildContext context) {
-    final layoutType = context.watch<WorkspaceLayoutNotifier>().selectedLayout;
+    final layoutType = ref.watch(workspaceLayoutViewModelProvider);
 
     if (layoutType == WorkspaceLayoutType.tabs) {
       return Column(

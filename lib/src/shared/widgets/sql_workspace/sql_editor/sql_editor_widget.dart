@@ -3,15 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
@@ -22,7 +21,7 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_sugge
 
 /// Code editor panel where the user writes and runs SQL queries, including
 /// its toolbar actions and suggestion bars.
-class SqlEditorWidget extends StatefulWidget {
+class SqlEditorWidget extends ConsumerStatefulWidget {
   /// Creates the SQL editor panel.
   const SqlEditorWidget({
     super.key,
@@ -45,24 +44,118 @@ class SqlEditorWidget extends StatefulWidget {
   final VoidCallback? onQueryRun;
 
   @override
-  State<SqlEditorWidget> createState() => _SqlEditorWidgetState();
+  ConsumerState<SqlEditorWidget> createState() => _SqlEditorWidgetState();
 }
 
-class _SqlEditorWidgetState extends State<SqlEditorWidget> {
+class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
   final _controller = SqlEditorController();
 
   void _onInsertCommand(String code, {String? selectText}) {
-    _controller.onInsertCommand(context, code, selectText: selectText);
+    _controller.onInsertCommand(ref, code, selectText: selectText);
   }
 
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
 
-    final sqlCommandsNotifier = context.watch<SqlCommandsNotifier>();
-    final suggestionsNotifier = context.watch<SqlSuggestionsNotifier>();
-    final editorNotifier = context.watch<SqlEditorNotifier>();
-    final databaseName = sqlCommandsNotifier.activeDatabase;
+    final commandsState = ref.watch(sqlCommandsViewModelProvider);
+    final suggestionsSettings = ref.watch(
+      sqlSuggestionSettingsViewModelProvider,
+    );
+    final editor = ref.watch(sqlEditorViewModelProvider.notifier);
+    final editorState = ref.watch(sqlEditorViewModelProvider);
+    final databaseName = commandsState.activeDatabase;
+
+    final menuItems = <PopupMenuItem<void>>[];
+
+    if (commandsState.activeDatabase != null) {
+      menuItems.addAll([
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+
+              AppRoutes.goToDatabaseVisualizer(context, dbName: databaseName!);
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.remove_red_eye_outlined, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.viewVisualScheme),
+              ],
+            ),
+          ),
+        ),
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () async {
+              Navigator.pop(context);
+
+              await _controller.onCopySql(context, ref);
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.share, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.copySql),
+              ],
+            ),
+          ),
+        ),
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () async {
+              Navigator.pop(context);
+
+              await _controller.onShareSql(context, ref);
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.share, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.shareSql),
+              ],
+            ),
+          ),
+        ),
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.download, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.downloadSql),
+              ],
+            ),
+          ),
+        ),
+      ]);
+    }
+
+    if (commandsState.isDefaultDatabase) {
+      menuItems.add(
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              unawaited(
+                ref.read(sqlCommandsViewModelProvider.notifier).resetDatabase(),
+              );
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.refresh_outlined, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.resetDatabase),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return PanelWidget(
       title: widget.showTitle ? appLocalizations.editor : null,
@@ -76,116 +169,17 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
           icon: const Icon(Icons.undo),
         ),
         IconButton(
-          onPressed: () => _controller.onRunQuery(context, widget.onQueryRun),
+          onPressed: () =>
+              _controller.onRunQuery(context, ref, widget.onQueryRun),
           tooltip: appLocalizations.runQuery,
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         IconButton(
-          onPressed: editorNotifier.clear,
+          onPressed: editor.clear,
           tooltip: appLocalizations.clearEditor,
           icon: const Icon(Icons.clear_rounded),
         ),
-        Consumer<SqlCommandsNotifier>(
-          builder: (context, notifier, child) {
-            final menuItems = <PopupMenuItem<void>>[];
-
-            if (notifier.activeDatabase != null) {
-              menuItems.addAll([
-                PopupMenuItem<void>(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-
-                      AppRoutes.goToDatabaseVisualizer(
-                        context,
-                        dbName: databaseName!,
-                      );
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.remove_red_eye_outlined, size: 20),
-                        const SizedBox(width: 8),
-                        Text(appLocalizations.viewVisualScheme),
-                      ],
-                    ),
-                  ),
-                ),
-                PopupMenuItem<void>(
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-
-                      await _controller.onCopySql(context);
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.share, size: 20),
-                        const SizedBox(width: 8),
-                        Text(appLocalizations.copySql),
-                      ],
-                    ),
-                  ),
-                ),
-                PopupMenuItem<void>(
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-
-                      await _controller.onShareSql(context);
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.share, size: 20),
-                        const SizedBox(width: 8),
-                        Text(appLocalizations.shareSql),
-                      ],
-                    ),
-                  ),
-                ),
-                PopupMenuItem<void>(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.download, size: 20),
-                        const SizedBox(width: 8),
-                        Text(appLocalizations.downloadSql),
-                      ],
-                    ),
-                  ),
-                ),
-              ]);
-            }
-
-            if (notifier.isDefaultDatabase) {
-              menuItems.add(
-                PopupMenuItem<void>(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      unawaited(notifier.resetDatabase());
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        const Icon(Icons.refresh_outlined, size: 20),
-                        const SizedBox(width: 8),
-                        Text(appLocalizations.resetDatabase),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            if (menuItems.isEmpty) {
-              return const SizedBox.shrink();
-            }
-
-            return PopupMenuButtonWidget(items: menuItems);
-          },
-        ),
+        if (menuItems.isNotEmpty) PopupMenuButtonWidget(items: menuItems),
       ],
       child: Column(
         children: <Widget>[
@@ -193,8 +187,8 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
             child: CodeTheme(
               data: CodeThemeData(styles: githubTheme),
               child: CodeField(
-                controller: editorNotifier.controller,
-                focusNode: editorNotifier.focusNode,
+                controller: editor.controller,
+                focusNode: editor.focusNode,
                 textStyle: const TextStyle(
                   fontFamily: 'monospace',
                   fontSize: 14,
@@ -205,14 +199,14 @@ class _SqlEditorWidgetState extends State<SqlEditorWidget> {
               ),
             ),
           ),
-          if (suggestionsNotifier.useBasicSuggestions)
+          if (suggestionsSettings.useBasicSuggestions)
             SqlBasicSuggestionsBarWidget(
               onInsertCommand: _onInsertCommand,
-              filterText: editorNotifier.lastWord,
+              filterText: editorState.lastWord,
             ),
-          if (suggestionsNotifier.useAdvancedSuggestions)
+          if (suggestionsSettings.useAdvancedSuggestions)
             SqlAdvancedSuggestionsBarWidget(onInsertCommand: _onInsertCommand),
-          if (suggestionsNotifier.useCharacterSuggestions)
+          if (suggestionsSettings.useCharacterSuggestions)
             SqlCharacterBarWidget(onInsertCommand: _onInsertCommand),
         ],
       ),

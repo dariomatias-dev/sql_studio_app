@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_title_option_widget.dart';
@@ -20,17 +19,17 @@ import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Screen where the user enables or disables the available SQL suggestion
 /// modes.
-class SqlSuggestionSettingsScreen extends StatefulWidget {
+class SqlSuggestionSettingsScreen extends ConsumerStatefulWidget {
   /// Creates the SQL suggestion settings screen.
   const SqlSuggestionSettingsScreen({super.key});
 
   @override
-  State<SqlSuggestionSettingsScreen> createState() =>
+  ConsumerState<SqlSuggestionSettingsScreen> createState() =>
       _SqlSuggestionSettingsScreenState();
 }
 
 class _SqlSuggestionSettingsScreenState
-    extends State<SqlSuggestionSettingsScreen> {
+    extends ConsumerState<SqlSuggestionSettingsScreen> {
   final _hasChangesNotifier = ValueNotifier<bool>(false);
 
   bool _useBasicSuggestions = true;
@@ -38,24 +37,30 @@ class _SqlSuggestionSettingsScreenState
   bool _useCharacterSuggestions = true;
 
   bool get _hasChanges {
-    final notifier = context.read<SqlSuggestionsNotifier>();
+    final settings = ref.read(sqlSuggestionSettingsViewModelProvider);
 
-    return _useBasicSuggestions != notifier.useBasicSuggestions ||
-        _useAdvancedSuggestions != notifier.useAdvancedSuggestions ||
-        _useCharacterSuggestions != notifier.useCharacterSuggestions;
+    return _useBasicSuggestions != settings.useBasicSuggestions ||
+        _useAdvancedSuggestions != settings.useAdvancedSuggestions ||
+        _useCharacterSuggestions != settings.useCharacterSuggestions;
   }
 
   Future<void> _onSave() async {
     final l10n = AppLocalizations.of(context)!;
-    final notifier = context.read<SqlSuggestionsNotifier>();
-    final advancedNotifier = context.read<SqlAdvancedSuggestionsNotifier>();
+    final settingsViewModel = ref.read(
+      sqlSuggestionSettingsViewModelProvider.notifier,
+    );
+    final advancedViewModel = ref.read(
+      sqlAdvancedSuggestionsViewModelProvider.notifier,
+    );
 
-    final previousAdvancedEnabled = notifier.useAdvancedSuggestions;
+    final previousAdvancedEnabled = ref
+        .read(sqlSuggestionSettingsViewModelProvider)
+        .useAdvancedSuggestions;
 
     if (!previousAdvancedEnabled &&
         _useAdvancedSuggestions &&
-        advancedNotifier.suggestions.isEmpty) {
-      final result = await advancedNotifier.resetSuggestions();
+        ref.read(sqlAdvancedSuggestionsViewModelProvider).suggestions.isEmpty) {
+      final result = await advancedViewModel.resetSuggestions();
 
       unawaited(
         Fluttertoast.showToast(
@@ -68,12 +73,12 @@ class _SqlSuggestionSettingsScreenState
       );
     }
 
-    notifier
+    settingsViewModel
       ..setBasicSuggestions(value: _useBasicSuggestions)
       ..setAdvancedSuggestions(value: _useAdvancedSuggestions)
       ..setCharacterSuggestions(value: _useCharacterSuggestions);
 
-    await notifier.saveSettings();
+    await settingsViewModel.saveSettings();
 
     if (!mounted) return;
 
@@ -92,11 +97,11 @@ class _SqlSuggestionSettingsScreenState
   void initState() {
     super.initState();
 
-    final notifier = context.read<SqlSuggestionsNotifier>();
+    final settings = ref.read(sqlSuggestionSettingsViewModelProvider);
 
-    _useBasicSuggestions = notifier.useBasicSuggestions;
-    _useAdvancedSuggestions = notifier.useAdvancedSuggestions;
-    _useCharacterSuggestions = notifier.useCharacterSuggestions;
+    _useBasicSuggestions = settings.useBasicSuggestions;
+    _useAdvancedSuggestions = settings.useAdvancedSuggestions;
+    _useCharacterSuggestions = settings.useCharacterSuggestions;
   }
 
   @override
@@ -120,87 +125,83 @@ class _SqlSuggestionSettingsScreenState
           bottom: BorderSide(color: Color(0xFFF5F5F5)),
         ),
       ),
-      body: Consumer<SqlSuggestionsNotifier>(
-        builder: (context, notifier, child) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: 32),
-                SqlSuggestionSettingsTitleOptionWidget(
-                  title: l10n.suggestionModes,
-                ),
-                const SizedBox(height: 16),
-                SqlSuggestionSettingsCardWidget(
-                  title: l10n.basicSuggestions,
-                  subtitle: l10n.basicSuggestionsDescription,
-                  active: _useBasicSuggestions,
-                  onChanged: (value) {
-                    setState(() {
-                      _useBasicSuggestions = value;
-                      if (value) _useAdvancedSuggestions = false;
-                      _hasChangesNotifier.value = _hasChanges;
-                    });
-                  },
-                  onConfigure: _useBasicSuggestions
-                      ? () => AppRoutes.goToSqlBasicSettings(context)
-                      : null,
-                ),
-                const SizedBox(height: 12),
-                SqlSuggestionSettingsCardWidget(
-                  title: l10n.advancedSuggestions,
-                  subtitle: l10n.advancedSuggestionsDescription,
-                  active: _useAdvancedSuggestions,
-                  onChanged: (value) {
-                    setState(() {
-                      _useAdvancedSuggestions = value;
-                      if (value) _useBasicSuggestions = false;
-                      _hasChangesNotifier.value = _hasChanges;
-                    });
-                  },
-                  onConfigure: _useAdvancedSuggestions
-                      ? () => AppRoutes.goToSqlAdvancedSettings(context)
-                      : null,
-                ),
-                const SizedBox(height: 32),
-                SqlSuggestionSettingsTitleOptionWidget(
-                  title: l10n.otherSuggestions,
-                ),
-                const SizedBox(height: 16),
-                SqlSuggestionSettingsCardWidget(
-                  title: l10n.characterSuggestions,
-                  subtitle: l10n.characterSuggestionsDescription,
-                  active: _useCharacterSuggestions,
-                  onChanged: (value) {
-                    setState(() {
-                      _useCharacterSuggestions = value;
-                      _hasChangesNotifier.value = _hasChanges;
-                    });
-                  },
-                ),
-                const Spacer(),
-                SafeArea(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ValueListenableBuilder(
-                      valueListenable: _hasChangesNotifier,
-                      builder: (context, value, child) {
-                        return LoadingButtonWidget(
-                          onPressed: _hasChanges ? _onSave : null,
-                          text: l10n.saveSettings,
-                          style: ButtonStyleType.black,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 32),
+            SqlSuggestionSettingsTitleOptionWidget(
+              title: l10n.suggestionModes,
             ),
-          );
-        },
+            const SizedBox(height: 16),
+            SqlSuggestionSettingsCardWidget(
+              title: l10n.basicSuggestions,
+              subtitle: l10n.basicSuggestionsDescription,
+              active: _useBasicSuggestions,
+              onChanged: (value) {
+                setState(() {
+                  _useBasicSuggestions = value;
+                  if (value) _useAdvancedSuggestions = false;
+                  _hasChangesNotifier.value = _hasChanges;
+                });
+              },
+              onConfigure: _useBasicSuggestions
+                  ? () => AppRoutes.goToSqlBasicSettings(context)
+                  : null,
+            ),
+            const SizedBox(height: 12),
+            SqlSuggestionSettingsCardWidget(
+              title: l10n.advancedSuggestions,
+              subtitle: l10n.advancedSuggestionsDescription,
+              active: _useAdvancedSuggestions,
+              onChanged: (value) {
+                setState(() {
+                  _useAdvancedSuggestions = value;
+                  if (value) _useBasicSuggestions = false;
+                  _hasChangesNotifier.value = _hasChanges;
+                });
+              },
+              onConfigure: _useAdvancedSuggestions
+                  ? () => AppRoutes.goToSqlAdvancedSettings(context)
+                  : null,
+            ),
+            const SizedBox(height: 32),
+            SqlSuggestionSettingsTitleOptionWidget(
+              title: l10n.otherSuggestions,
+            ),
+            const SizedBox(height: 16),
+            SqlSuggestionSettingsCardWidget(
+              title: l10n.characterSuggestions,
+              subtitle: l10n.characterSuggestionsDescription,
+              active: _useCharacterSuggestions,
+              onChanged: (value) {
+                setState(() {
+                  _useCharacterSuggestions = value;
+                  _hasChangesNotifier.value = _hasChanges;
+                });
+              },
+            ),
+            const Spacer(),
+            SafeArea(
+              child: SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ValueListenableBuilder(
+                  valueListenable: _hasChangesNotifier,
+                  builder: (context, value, child) {
+                    return LoadingButtonWidget(
+                      onPressed: _hasChanges ? _onSave : null,
+                      text: l10n.saveSettings,
+                      style: ButtonStyleType.black,
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
     );
   }

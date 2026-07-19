@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
 /// Horizontal bar of basic SQL keyword suggestions, filtered by the word
 /// currently being typed in the editor.
-class SqlBasicSuggestionsBarWidget extends StatelessWidget {
+class SqlBasicSuggestionsBarWidget extends ConsumerWidget {
   /// Creates a basic suggestions bar filtered by [filterText].
   const SqlBasicSuggestionsBarWidget({
     required this.onInsertCommand,
@@ -24,12 +24,12 @@ class SqlBasicSuggestionsBarWidget extends StatelessWidget {
   final String filterText;
 
   @override
-  Widget build(BuildContext context) {
-    final notifier = context.watch<SqlBasicSuggestionsNotifier>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(sqlBasicSuggestionsViewModelProvider);
 
-    final suggestions = notifier.suggestions.isEmpty
+    final suggestions = state.suggestions.isEmpty
         ? defaultSqlBasicSuggestions
-        : notifier.suggestions;
+        : state.suggestions;
 
     final filtered = filterText.isEmpty || filterText.endsWith(';')
         ? suggestions

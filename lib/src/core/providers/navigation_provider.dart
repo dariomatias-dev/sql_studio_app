@@ -5,8 +5,11 @@ class NavigationViewModel extends Notifier<int> {
   @override
   int build() => 0;
 
-  /// Updates the currently selected navigation index to [newIndex].
-  void setIndex(int newIndex) {
+  /// The currently selected navigation index.
+  int get index => state;
+
+  /// Updates the currently selected navigation index.
+  set index(int newIndex) {
     state = newIndex;
   }
 }

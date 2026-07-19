@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
 
 /// Dialog form for creating a new advanced SQL suggestion.
-class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
+class CreateSqlAdvancedSuggestionDialogWidget extends ConsumerStatefulWidget {
   /// Creates the create-suggestion dialog widget.
   const CreateSqlAdvancedSuggestionDialogWidget({super.key});
 
@@ -26,12 +26,12 @@ class CreateSqlAdvancedSuggestionDialogWidget extends StatefulWidget {
   }
 
   @override
-  State<CreateSqlAdvancedSuggestionDialogWidget> createState() =>
+  ConsumerState<CreateSqlAdvancedSuggestionDialogWidget> createState() =>
       _CreateSqlAdvancedSuggestionDialogWidgetState();
 }
 
 class _CreateSqlAdvancedSuggestionDialogWidgetState
-    extends State<CreateSqlAdvancedSuggestionDialogWidget> {
+    extends ConsumerState<CreateSqlAdvancedSuggestionDialogWidget> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -40,8 +40,10 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
       title: appLocalizations.createSuggestion,
       submitText: appLocalizations.create,
       onSubmit: (value) async {
-        final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-        final result = await notifier.addSuggestion(value);
+        final viewModel = ref.read(
+          sqlAdvancedSuggestionsViewModelProvider.notifier,
+        );
+        final result = await viewModel.addSuggestion(value);
 
         if (!mounted) return false;
 

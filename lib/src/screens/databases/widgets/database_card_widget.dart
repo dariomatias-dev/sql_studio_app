@@ -2,23 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
+import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/models/default_database_model.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
 /// Card that presents a default database and its available actions.
-class DatabaseCardWidget extends StatefulWidget {
+class DatabaseCardWidget extends ConsumerStatefulWidget {
   /// Creates a card for the given default database [db].
   const DatabaseCardWidget({required this.db, super.key});
 
@@ -26,10 +26,10 @@ class DatabaseCardWidget extends StatefulWidget {
   final DefaultDatabaseModel db;
 
   @override
-  State<DatabaseCardWidget> createState() => _DatabaseCardWidgetState();
+  ConsumerState<DatabaseCardWidget> createState() => _DatabaseCardWidgetState();
 }
 
-class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
+class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
   Future<void> _copyFile(List<String> paths, String message) async {
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -79,8 +79,9 @@ class _DatabaseCardWidgetState extends State<DatabaseCardWidget> {
       margin: const EdgeInsets.only(bottom: 24),
       child: CardWidget(
         onTap: () {
-          context.read<SqlCommandsNotifier>().activeDatabase = widget.db.name;
-          context.read<NavigationNotifier>().setIndex(0);
+          ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
+              widget.db.name;
+          ref.read(navigationViewModelProvider.notifier).index = 0;
         },
         child: Container(
           decoration: BoxDecoration(

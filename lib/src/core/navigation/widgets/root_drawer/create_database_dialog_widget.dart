@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
-import 'package:sql_studio/src/notifiers/database_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
+import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
@@ -13,7 +13,7 @@ import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 
 /// Dialog that lets the user create a new database by entering its label
 /// and name.
-class CreateDatabaseDialogWidget extends StatefulWidget {
+class CreateDatabaseDialogWidget extends ConsumerStatefulWidget {
   /// Creates the create-database dialog.
   const CreateDatabaseDialogWidget({super.key});
 
@@ -28,12 +28,12 @@ class CreateDatabaseDialogWidget extends StatefulWidget {
   }
 
   @override
-  State<CreateDatabaseDialogWidget> createState() =>
+  ConsumerState<CreateDatabaseDialogWidget> createState() =>
       _CreateDatabaseDialogWidgetState();
 }
 
 class _CreateDatabaseDialogWidgetState
-    extends State<CreateDatabaseDialogWidget> {
+    extends ConsumerState<CreateDatabaseDialogWidget> {
   final formKey = GlobalKey<FormState>();
 
   final labelController = TextEditingController();
@@ -56,9 +56,9 @@ class _CreateDatabaseDialogWidgetState
     final label = labelController.text.trim();
     final name = nameController.text.trim();
 
-    final getByNameResult = await context.read<DatabaseNotifier>().getByName(
-      name,
-    );
+    final getByNameResult = await ref
+        .read(databaseListViewModelProvider.notifier)
+        .getByName(name);
 
     var shouldStopFlow = false;
 
@@ -88,16 +88,16 @@ class _CreateDatabaseDialogWidgetState
 
     if (!mounted) return;
 
-    final result = await context.read<DatabaseNotifier>().create(
-      createDatabase,
-    );
+    final result = await ref
+        .read(databaseListViewModelProvider.notifier)
+        .create(createDatabase);
 
     if (!mounted) return;
 
     if (result.isSuccess) {
       Navigator.pop(context);
 
-      context.read<SqlCommandsNotifier>().activeDatabase = name;
+      ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase = name;
 
       Navigator.pop(context);
     } else {

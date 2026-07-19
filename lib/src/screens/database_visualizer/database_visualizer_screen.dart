@@ -2,15 +2,20 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
+
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
-import 'package:sql_studio/src/services/sql_execution_service.dart';
+
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Screen that renders an interactive diagram of a database's tables and
 /// their relations.
-class DatabaseVisualizerScreen extends StatefulWidget {
+class DatabaseVisualizerScreen extends ConsumerStatefulWidget {
   /// Creates the visualizer screen for the database named [databaseName].
   const DatabaseVisualizerScreen({required this.databaseName, super.key});
 
@@ -18,15 +23,13 @@ class DatabaseVisualizerScreen extends StatefulWidget {
   final String databaseName;
 
   @override
-  State<DatabaseVisualizerScreen> createState() =>
+  ConsumerState<DatabaseVisualizerScreen> createState() =>
       _DatabaseVisualizerScreenState();
 }
 
-class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
-  final _sqlExecutionService = SqlExecutionService();
+class _DatabaseVisualizerScreenState
+    extends ConsumerState<DatabaseVisualizerScreen> {
   final _tableRects = <String, Rect>{};
-
-  List<TableInfoModel>? tables;
 
   static const _tableWidgetWidth = 260.0;
   static const _tableHeaderHeight = 54.0;
@@ -35,19 +38,24 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
   static const _tablePadding = 100.0;
 
   Future<void> _loadDatabaseStructure() async {
-    final result = await _sqlExecutionService.getDatabaseStructure(
-      databaseName: widget.databaseName,
-    );
+    // Discards any structure left over from a previously visualized
+    // database, since this view model is a long-lived singleton.
+    ref.invalidate(databaseVisualizerViewModelProvider);
 
-    setState(() {
-      tables = result.isNotEmpty ? result : [];
-      _calculateTableRects();
-    });
+    await ref
+        .read(databaseVisualizerViewModelProvider.notifier)
+        .load(widget.databaseName);
+
+    if (!mounted) return;
+
+    setState(_calculateTableRects);
   }
 
   void _calculateTableRects() {
+    final tables = ref.read(databaseVisualizerViewModelProvider).tables;
+
     _tableRects.clear();
-    if (tables == null || tables!.isEmpty) return;
+    if (tables == null || tables.isEmpty) return;
 
     var currentX = _tablePadding;
     var currentY = _tablePadding;
@@ -55,8 +63,8 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
 
     const columnsInGrid = 3;
 
-    for (var i = 0; i < tables!.length; i++) {
-      final table = tables![i];
+    for (var i = 0; i < tables.length; i++) {
+      final table = tables[i];
 
       final height =
           _tableHeaderHeight +
@@ -92,6 +100,10 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tables = ref.watch(
+      databaseVisualizerViewModelProvider.select((s) => s.tables),
+    );
+
     return ScaffoldWidget(
       appBar: AppBar(
         title: Text(
@@ -112,7 +124,7 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
             ? const Center(
                 child: CircularProgressIndicator(color: Colors.black),
               )
-            : tables!.isEmpty
+            : tables.isEmpty
             ? Center(
                 child: Text(AppLocalizations.of(context)!.theDatabaseIsEmpty),
               )
@@ -155,13 +167,13 @@ class _DatabaseVisualizerScreenState extends State<DatabaseVisualizerScreen> {
                               CustomPaint(
                                 size: Size(contentWidth, contentHeight),
                                 painter: TableRelationPainter(
-                                  tables: tables!,
+                                  tables: tables,
                                   tableRects: _tableRects,
                                   tableHeaderHeight: _tableHeaderHeight,
                                   tableColumnRowHeight: _tableColumnRowHeight,
                                 ),
                               ),
-                              ...tables!.map((table) {
+                              ...tables.map((table) {
                                 final rect = _tableRects[table.name];
                                 if (rect == null) return const SizedBox();
 

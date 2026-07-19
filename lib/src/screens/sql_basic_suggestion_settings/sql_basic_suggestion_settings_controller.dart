@@ -1,27 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_basic_suggestions_view_model.dart';
 
 /// Coordinates saving reordered basic SQL suggestions from the settings
 /// screen.
 class SqlBasicSuggestionsController {
-  /// Creates a controller that resolves its [BuildContext] via
-  /// [getContext].
-  SqlBasicSuggestionsController({required this.getContext}) {
-    notifier = getContext().read<SqlBasicSuggestionsNotifier>();
-  }
+  /// Creates a controller that resolves its view model from [ref].
+  SqlBasicSuggestionsController({required WidgetRef ref})
+    : _viewModel = ref.read(sqlBasicSuggestionsViewModelProvider.notifier);
 
-  /// Function used to obtain the current [BuildContext] on demand.
-  final BuildContext Function() getContext;
-
-  /// Notifier holding and persisting the basic SQL suggestions.
-  late final SqlBasicSuggestionsNotifier notifier;
+  final SqlBasicSuggestionsViewModel _viewModel;
 
   /// Persists the given [suggestions] order and returns whether it
   /// succeeded.
   Future<bool> saveOrder(List<String> suggestions) async {
-    final result = await notifier.updateSuggestions(suggestions);
+    final result = await _viewModel.updateSuggestions(suggestions);
 
     return result.isSuccess;
   }

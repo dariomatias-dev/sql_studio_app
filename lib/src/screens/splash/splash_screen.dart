@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
@@ -9,13 +9,10 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
-import 'package:sql_studio/src/notifiers/database_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
-import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';
+import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/services/database/default_database_service.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
@@ -24,15 +21,15 @@ import 'package:sql_studio/src/shared/utils/handle_error.dart';
 
 /// Initial screen shown while the app loads its persisted state, plays an
 /// entry animation, and then navigates to the main screen.
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   /// Creates the splash screen.
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with TickerProviderStateMixin {
   late final AnimationController _iconRotationController;
   late final AnimationController _entryAnimationController;
@@ -44,7 +41,9 @@ class _SplashScreenState extends State<SplashScreen>
   late final Animation<AlignmentGeometry> _gradientAlignmentAnimation;
 
   Future<void> _loadResources() async {
-    final versionResult = await context.read<AppVersionNotifier>().load();
+    final versionResult = await ref
+        .read(appVersionViewModelProvider.notifier)
+        .load();
 
     if (!mounted) return;
 
@@ -54,8 +53,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    final suggestionsResult = await context
-        .read<SqlSuggestionsNotifier>()
+    final suggestionsResult = await ref
+        .read(sqlSuggestionSettingsViewModelProvider.notifier)
         .load();
 
     if (!mounted) return;
@@ -66,7 +65,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    final dbResult = await context.read<DatabaseNotifier>().loadDatabases();
+    final dbResult = await ref
+        .read(databaseListViewModelProvider.notifier)
+        .loadDatabases();
 
     if (!mounted) return;
 
@@ -76,8 +77,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    final sqlAdvancedSuggestionsResult = await context
-        .read<SqlAdvancedSuggestionsNotifier>()
+    final sqlAdvancedSuggestionsResult = await ref
+        .read(sqlAdvancedSuggestionsViewModelProvider.notifier)
         .load();
 
     if (!mounted) return;
@@ -88,8 +89,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    final sqlBasicSuggestionsResult = await context
-        .read<SqlBasicSuggestionsNotifier>()
+    final sqlBasicSuggestionsResult = await ref
+        .read(sqlBasicSuggestionsViewModelProvider.notifier)
         .load();
 
     if (!mounted) return;
@@ -108,13 +109,11 @@ class _SplashScreenState extends State<SplashScreen>
 
     if (!mounted) return;
 
-    context
-        .read<SqlCommandsNotifier>()
+    ref
+        .read(sqlCommandsViewModelProvider.notifier)
         .activeDatabase = SharedPreferencesService.getStringOrNull(
       SharedPreferencesKeys.selectedDatabaseKey,
     );
-
-    context.read<WorkspaceLayoutNotifier>().load();
 
     AppRoutes.goToMain(context);
   }

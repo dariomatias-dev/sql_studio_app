@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -15,7 +15,7 @@ import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget
 
 /// Confirmation dialog for resetting basic SQL suggestions back to the
 /// default list.
-class ResetSqlBasicSuggestionsDialogWidget extends StatefulWidget {
+class ResetSqlBasicSuggestionsDialogWidget extends ConsumerStatefulWidget {
   /// Creates the reset confirmation dialog.
   const ResetSqlBasicSuggestionsDialogWidget({super.key});
 
@@ -30,12 +30,12 @@ class ResetSqlBasicSuggestionsDialogWidget extends StatefulWidget {
   }
 
   @override
-  State<ResetSqlBasicSuggestionsDialogWidget> createState() =>
+  ConsumerState<ResetSqlBasicSuggestionsDialogWidget> createState() =>
       _ResetSqlBasicSuggestionsDialogWidgetState();
 }
 
 class _ResetSqlBasicSuggestionsDialogWidgetState
-    extends State<ResetSqlBasicSuggestionsDialogWidget> {
+    extends ConsumerState<ResetSqlBasicSuggestionsDialogWidget> {
   BuildContext _getContext() => context;
 
   @override
@@ -47,8 +47,8 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
       description: appLocalizations.resetSuggestionsDescription,
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          final result = await context
-              .read<SqlBasicSuggestionsNotifier>()
+          final result = await ref
+              .read(sqlBasicSuggestionsViewModelProvider.notifier)
               .updateSuggestions(List<String>.from(defaultSqlBasicSuggestions));
 
           if (result.isSuccess) {

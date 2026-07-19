@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_basic_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 /// Dialog for creating a new basic SQL suggestion.
-class CreateSqlBasicSuggestionDialogWidget extends StatefulWidget {
+class CreateSqlBasicSuggestionDialogWidget extends ConsumerStatefulWidget {
   /// Creates the dialog widget for adding a basic SQL suggestion.
   const CreateSqlBasicSuggestionDialogWidget({super.key});
 
@@ -24,12 +24,12 @@ class CreateSqlBasicSuggestionDialogWidget extends StatefulWidget {
   }
 
   @override
-  State<CreateSqlBasicSuggestionDialogWidget> createState() =>
+  ConsumerState<CreateSqlBasicSuggestionDialogWidget> createState() =>
       _CreateSqlBasicSuggestionDialogWidgetState();
 }
 
 class _CreateSqlBasicSuggestionDialogWidgetState
-    extends State<CreateSqlBasicSuggestionDialogWidget> {
+    extends ConsumerState<CreateSqlBasicSuggestionDialogWidget> {
   final _controller = TextEditingController();
 
   BuildContext _getContext() => context;
@@ -60,9 +60,9 @@ class _CreateSqlBasicSuggestionDialogWidgetState
         return null;
       },
       onSubmit: (value) async {
-        final result = await context.read<SqlBasicSuggestionsNotifier>().add(
-          value,
-        );
+        final result = await ref
+            .read(sqlBasicSuggestionsViewModelProvider.notifier)
+            .add(value);
 
         if (result.isSuccess) {
           _controller.text = '';

@@ -1,25 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_view_model.dart';
 
 /// Controller backing the advanced SQL suggestions settings screen,
-/// mediating between the UI and [SqlAdvancedSuggestionsNotifier].
+/// mediating between the UI and the advanced suggestions view model.
 class SqlAdvancedSuggestionsController {
-  /// Creates the controller, resolving its notifier from [getContext].
-  SqlAdvancedSuggestionsController({required this.getContext}) {
-    notifier = getContext().read<SqlAdvancedSuggestionsNotifier>();
-  }
+  /// Creates the controller, resolving its view model from [ref].
+  SqlAdvancedSuggestionsController({required WidgetRef ref})
+    : _viewModel = ref.read(sqlAdvancedSuggestionsViewModelProvider.notifier);
 
-  /// Provides the [BuildContext] used to read the notifier.
-  final BuildContext Function() getContext;
-
-  /// Notifier holding and persisting the advanced suggestions state.
-  late final SqlAdvancedSuggestionsNotifier notifier;
+  final SqlAdvancedSuggestionsViewModel _viewModel;
 
   /// Persists the new [suggestions] order, returning whether it succeeded.
   Future<bool> saveOrder(List<SqlAdvancedSuggestionModel> suggestions) async {
-    final result = await notifier.reorderSuggestions(suggestions);
+    final result = await _viewModel.reorderSuggestions(suggestions);
 
     return result.isSuccess;
   }

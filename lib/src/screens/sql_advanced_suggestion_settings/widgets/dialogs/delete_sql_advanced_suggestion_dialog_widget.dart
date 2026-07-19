@@ -1,18 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/notifiers/sql_suggestions_notifiers/sql_advanced_suggestions_notifier.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 /// Confirmation dialog for deleting an existing advanced SQL suggestion.
-class DeleteSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
+class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
   /// Creates the delete-confirmation dialog for the suggestion identified
   /// by [id] and displayed as [label].
   const DeleteSqlAdvancedSuggestionDialogWidget({
@@ -43,7 +43,7 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
 
     return ConfirmationDialogWidget(
@@ -51,8 +51,10 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends StatelessWidget {
       description: appLocalizations.deleteSuggestionConfirmation(label),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
-          final notifier = context.read<SqlAdvancedSuggestionsNotifier>();
-          final result = await notifier.removeSuggestion(id);
+          final viewModel = ref.read(
+            sqlAdvancedSuggestionsViewModelProvider.notifier,
+          );
+          final result = await viewModel.removeSuggestion(id);
 
           unawaited(
             Fluttertoast.showToast(

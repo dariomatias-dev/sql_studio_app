@@ -1,20 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_localization_notifier.dart';
+import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 
 /// A single selectable language option shown in the language selector sheet.
-class LanguageSelectorSheetOptionWidget extends StatefulWidget {
+class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
   /// Creates a language option for [lang] identified by its locale [code].
   const LanguageSelectorSheetOptionWidget({
     required this.lang,
     required this.code,
-    required this.onUpdate,
     super.key,
   });
 
@@ -24,32 +23,18 @@ class LanguageSelectorSheetOptionWidget extends StatefulWidget {
   /// Locale code associated with this language option.
   final String code;
 
-  /// Called after the locale has been changed.
-  final VoidCallback onUpdate;
+  Future<void> _changeLanguage(BuildContext context, WidgetRef ref) async {
+    await ref
+        .read(appLocalizationViewModelProvider.notifier)
+        .changeLocale(code);
 
-  @override
-  State<LanguageSelectorSheetOptionWidget> createState() =>
-      _LanguageSelectorSheetOptionWidgetState();
-}
-
-class _LanguageSelectorSheetOptionWidgetState
-    extends State<LanguageSelectorSheetOptionWidget> {
-  late bool _isSelected = _isSelectedLocale;
-
-  bool get _isSelectedLocale =>
-      widget.code ==
-      context.read<AppLocalizationNotifier>().locale.languageCode;
-
-  Future<void> _changeLanguage() async {
-    await context.read<AppLocalizationNotifier>().changeLocale(widget.code);
-
-    if (!mounted) return;
+    if (!context.mounted) return;
 
     Navigator.pop(context);
 
     unawaited(
       Fluttertoast.showToast(
-        msg: AppLocalizations.of(context)!.languageUpdated(widget.lang),
+        msg: AppLocalizations.of(context)!.languageUpdated(lang),
         backgroundColor: Colors.black,
         textColor: Colors.white,
         fontSize: 14,
@@ -58,19 +43,16 @@ class _LanguageSelectorSheetOptionWidgetState
   }
 
   @override
-  void didUpdateWidget(covariant LanguageSelectorSheetOptionWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _isSelected = _isSelectedLocale;
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isSelected =
+        code == ref.watch(appLocalizationViewModelProvider).languageCode;
 
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: _changeLanguage,
+          onTap: () => _changeLanguage(context, ref),
           borderRadius: BorderRadius.circular(16),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 250),
@@ -81,27 +63,27 @@ class _LanguageSelectorSheetOptionWidgetState
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: _isSelected ? Colors.black : const Color(0xFFF8F8F8),
+              color: isSelected ? Colors.black : const Color(0xFFF8F8F8),
               border: Border.all(
-                color: _isSelected ? Colors.black : const Color(0xFFEEEEEE),
+                color: isSelected ? Colors.black : const Color(0xFFEEEEEE),
               ),
             ),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    widget.lang,
+                    lang,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: _isSelected
+                      fontWeight: isSelected
                           ? FontWeight.w800
                           : FontWeight.w500,
-                      color: _isSelected ? Colors.white : Colors.black,
+                      color: isSelected ? Colors.white : Colors.black,
                       letterSpacing: -0.2,
                     ),
                   ),
                 ),
-                if (_isSelected)
+                if (isSelected)
                   const Icon(
                     Icons.check_circle_rounded,
                     color: Colors.white,

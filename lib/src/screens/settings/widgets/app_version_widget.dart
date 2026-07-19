@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/notifiers/app_version_notifier.dart';
+import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
 
 /// Small badge that displays the current app build version.
-class AppVersionWidget extends StatelessWidget {
+class AppVersionWidget extends ConsumerWidget {
   /// Creates the app version badge.
   const AppVersionWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final version = context.watch<AppVersionNotifier>().version;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final version = ref.watch(appVersionViewModelProvider).formattedVersion;
 
     return Container(
       margin: const EdgeInsets.only(top: 4),
