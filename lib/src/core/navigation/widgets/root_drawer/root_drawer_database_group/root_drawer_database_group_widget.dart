@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
-import 'package:sql_studio/src/shared/models/database_model.dart';
+import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 
 /// Titled section of the drawer listing a group of databases (e.g.
 /// favorites or all databases).

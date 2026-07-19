@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/shared/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Card that renders a single table's name and columns in the database
 /// visualizer diagram.

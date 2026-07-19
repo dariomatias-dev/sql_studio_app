@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
+import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/navigation_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_editor_notifier.dart';
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
-import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 

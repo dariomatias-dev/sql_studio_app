@@ -1,12 +1,9 @@
 import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
-import 'package:sql_studio/src/core/result.dart';
-
+import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/repositories/database_repository.dart';
-
-import 'package:sql_studio/src/shared/models/database_model.dart';
 
 /// Manages CRUD operations for [DatabaseModel] records.
 class DatabaseService {

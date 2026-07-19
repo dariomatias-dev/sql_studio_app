@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
-import 'package:sql_studio/src/core/result.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 
 /// Loads and exposes the current application version.
 class AppVersionNotifier extends ChangeNotifier {

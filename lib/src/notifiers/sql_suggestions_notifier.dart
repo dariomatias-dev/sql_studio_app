@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
-import 'package:sql_studio/src/core/result.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 
 import 'package:sql_studio/src/services/shared_preferences_service.dart';
 

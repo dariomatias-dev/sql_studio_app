@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
-
-import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 /// Card that displays an advanced SQL suggestion with edit and delete
 /// actions.

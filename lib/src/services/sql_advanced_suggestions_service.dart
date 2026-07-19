@@ -1,5 +1,5 @@
+import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/repositories/database_repository.dart';
-import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 /// Manages CRUD operations for saved advanced SQL suggestions.
 class SqlAdvancedSuggestionsService {

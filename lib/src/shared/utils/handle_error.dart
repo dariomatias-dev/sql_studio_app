@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-import 'package:sql_studio/src/core/result.dart';
-
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 

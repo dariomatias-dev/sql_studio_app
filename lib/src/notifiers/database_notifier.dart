@@ -1,12 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
-import 'package:sql_studio/src/core/result.dart';
-
+import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/services/database_service.dart';
-
-import 'package:sql_studio/src/shared/models/database_model.dart';
 
 /// Manages the list of known databases and their favorite state.
 class DatabaseNotifier extends ChangeNotifier {

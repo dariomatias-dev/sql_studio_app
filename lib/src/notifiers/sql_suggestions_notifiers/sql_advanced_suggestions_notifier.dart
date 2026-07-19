@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
-import 'package:sql_studio/src/core/result.dart';
-
+import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/services/sql_advanced_suggestions_service.dart';
-
-import 'package:sql_studio/src/shared/models/sql_advanced_suggestion_model.dart';
 
 /// Manages the persisted list of advanced SQL autocomplete suggestions.
 class SqlAdvancedSuggestionsNotifier extends ChangeNotifier {

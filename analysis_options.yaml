@@ -4,3 +4,10 @@ analyzer:
   exclude:
     - lib/l10n/**
     - "**/*.g.dart"
+
+linter:
+  rules:
+    # Conflicts with the Clean Architecture repository pattern (single-method
+    # abstract interfaces swapped via DI), which this codebase uses
+    # intentionally.
+    one_member_abstracts: false

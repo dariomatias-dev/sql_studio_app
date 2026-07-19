@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/result.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
 import 'package:sql_studio/src/notifiers/workspace_layout_notifier.dart';

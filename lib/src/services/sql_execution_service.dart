@@ -1,12 +1,10 @@
 import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
-import 'package:sql_studio/src/core/result.dart';
-
-import 'package:sql_studio/src/shared/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Executes raw SQL statements against a named SQLite database and
 /// inspects its structure.

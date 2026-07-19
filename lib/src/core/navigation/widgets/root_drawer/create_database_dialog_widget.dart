@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/notifiers/database_notifier.dart';
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-import 'package:sql_studio/src/shared/models/database_model.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-import 'package:sql_studio/src/core/result.dart';
-
 import 'package:sql_studio/src/notifiers/sql_commands_notifier.dart';
-
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';

@@ -2,14 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/screens/database_visualizer/widgets/database_visualizer_table_widget.dart';
-
 import 'package:sql_studio/src/services/sql_execution_service.dart';
-
-import 'package:sql_studio/src/shared/models/table_info_model.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Screen that renders an interactive diagram of a database's tables and
