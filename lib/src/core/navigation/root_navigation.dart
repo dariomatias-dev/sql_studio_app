@@ -8,9 +8,9 @@ import 'package:sql_studio/src/core/navigation/widgets/root_nav_bar_widget.dart'
 import 'package:sql_studio/src/core/navigation/widgets/root_swipe_wrapper_widget.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
-import 'package:sql_studio/src/screens/databases/databases_screen.dart';
-import 'package:sql_studio/src/screens/home/home_screen.dart';
-import 'package:sql_studio/src/screens/settings/settings_screen.dart';
+import 'package:sql_studio/src/core/views/home/home_screen.dart';
+import 'package:sql_studio/src/core/views/settings/settings_screen.dart';
+import 'package:sql_studio/src/features/database/presentation/views/databases_screen.dart';
 
 /// Root scaffold hosting the app's drawer, swipeable pages, and bottom
 /// navigation bar.

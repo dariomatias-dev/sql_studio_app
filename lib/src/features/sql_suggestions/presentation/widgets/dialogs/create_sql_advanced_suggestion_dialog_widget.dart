@@ -8,7 +8,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
-import 'package:sql_studio/src/screens/sql_advanced_suggestion_settings/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
 
 /// Dialog form for creating a new advanced SQL suggestion.
 class CreateSqlAdvancedSuggestionDialogWidget extends ConsumerStatefulWidget {

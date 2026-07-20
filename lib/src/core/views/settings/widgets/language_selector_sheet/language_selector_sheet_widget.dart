@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
-import 'package:sql_studio/src/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
+import 'package:sql_studio/src/core/views/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
 /// Bottom sheet that lists the languages supported by the app for selection.
 class LanguageSelectorSheetWidget extends ConsumerWidget {

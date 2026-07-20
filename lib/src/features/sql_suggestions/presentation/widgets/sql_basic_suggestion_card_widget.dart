@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/screens/sql_basic_suggestion_settings/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 
 /// Card that displays a basic SQL suggestion with a delete action.
 class SqlBasicSuggestionCardWidget extends StatefulWidget {

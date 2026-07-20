@@ -10,8 +10,8 @@ import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
-import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_card_widget.dart';
-import 'package:sql_studio/src/screens/sql_suggestion_settings/widgets/sql_suggestion_settings_title_option_widget.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_card_widget.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_title_option_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';

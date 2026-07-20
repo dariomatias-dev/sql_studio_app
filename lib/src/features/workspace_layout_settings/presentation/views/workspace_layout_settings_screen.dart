@@ -11,7 +11,7 @@ import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
 
-import 'package:sql_studio/src/screens/workspace_layout_settings/widgets/workspace_layout_settings_option_card_widget.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/presentation/widgets/workspace_layout_settings_option_card_widget.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
