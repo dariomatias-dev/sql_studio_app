@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
 /// Tracks the app's active locale and persists changes to it.
 class AppLocalizationViewModel extends Notifier<Locale> {

@@ -1,7 +1,7 @@
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/services/default_database_service.dart';
+import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/services/database/default_database_service.dart';
-import 'package:sql_studio/src/services/sql_execution_service.dart';
 
 /// [SqlCommandsRepository] backed by [SqlExecutionService] and
 /// [DefaultDatabaseService].

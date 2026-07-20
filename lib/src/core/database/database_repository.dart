@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sql_studio/src/repositories/migrations.dart';
+import 'package:sql_studio/src/core/database/migrations.dart';
 
 /// Manages a singleton connection to the application's local SQLite
 /// database.

@@ -8,8 +8,8 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 
-import 'package:sql_studio/src/services/shared_preferences_service.dart';
-import 'package:sql_studio/src/services/sql_execution_service.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 
 /// Seeds and upgrades the bundled default (sample) databases.
 class DefaultDatabaseService {

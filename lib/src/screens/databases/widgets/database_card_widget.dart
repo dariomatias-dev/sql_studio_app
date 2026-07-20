@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
-
-import 'package:sql_studio/src/shared/models/default_database_model.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 

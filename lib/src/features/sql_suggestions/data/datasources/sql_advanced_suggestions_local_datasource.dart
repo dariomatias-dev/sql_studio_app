@@ -1,5 +1,5 @@
+import 'package:sql_studio/src/core/database/database_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
-import 'package:sql_studio/src/repositories/database_repository.dart';
 
 /// Reads and writes advanced SQL suggestions rows in sqflite.
 class SqlAdvancedSuggestionsLocalDatasource {

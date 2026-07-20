@@ -1,5 +1,5 @@
+import 'package:sql_studio/src/core/database/database_repository.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
-import 'package:sql_studio/src/repositories/database_repository.dart';
 
 /// Reads and writes database rows in sqflite, and manages the underlying
 /// per-database SQLite files.

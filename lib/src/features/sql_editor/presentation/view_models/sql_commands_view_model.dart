@@ -1,17 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_state.dart';
-import 'package:sql_studio/src/services/shared_preferences_service.dart';
 
 /// Runs SQL commands against the active database and tracks their state.
 class SqlCommandsViewModel extends Notifier<SqlCommandsState> {

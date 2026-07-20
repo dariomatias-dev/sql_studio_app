@@ -1,5 +1,5 @@
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
 /// Reads and writes the raw persisted suggestion-toggle preferences.
 class SqlSuggestionSettingsLocalDatasource {

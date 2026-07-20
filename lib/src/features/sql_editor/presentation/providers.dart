@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/sql_editor/data/repositories/sql_commands_repository_impl.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
@@ -9,7 +9,6 @@ import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_view_model.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_editor_state.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_editor_view_model.dart';
-import 'package:sql_studio/src/services/sql_execution_service.dart';
 
 /// Provides the raw SQL execution service.
 final Provider<SqlExecutionService> sqlExecutionServiceProvider = Provider(

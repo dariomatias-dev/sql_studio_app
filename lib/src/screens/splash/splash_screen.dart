@@ -2,21 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-
+import 'package:sql_studio/src/core/services/default_database_service.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
-
-import 'package:sql_studio/src/services/database/default_database_service.dart';
-import 'package:sql_studio/src/services/shared_preferences_service.dart';
-
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 
 /// Initial screen shown while the app loads its persisted state, plays an
