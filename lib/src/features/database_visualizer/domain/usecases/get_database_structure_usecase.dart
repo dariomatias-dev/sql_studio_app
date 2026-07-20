@@ -3,12 +3,12 @@ import 'package:sql_studio/src/features/database_visualizer/domain/repositories/
 
 /// Fetches the full structure of a database.
 class GetDatabaseStructureUseCase {
-  /// Creates the use case backed by [_repository].
-  const GetDatabaseStructureUseCase(this._repository);
+  /// Creates the use case backed by [_getStructure].
+  const GetDatabaseStructureUseCase(this._getStructure);
 
-  final DatabaseStructureRepository _repository;
+  final GetStructure _getStructure;
 
   /// Runs the use case for [databaseName].
   Future<List<TableInfoModel>> call(String databaseName) =>
-      _repository.getStructure(databaseName);
+      _getStructure(databaseName);
 }

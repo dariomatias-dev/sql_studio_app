@@ -4,11 +4,11 @@ import 'package:sql_studio/src/features/app_version/domain/repositories/app_vers
 
 /// Reads the application's current build version.
 class GetAppVersionUseCase {
-  /// Creates the use case backed by [_repository].
-  const GetAppVersionUseCase(this._repository);
+  /// Creates the use case backed by [_getVersion].
+  const GetAppVersionUseCase(this._getVersion);
 
-  final AppVersionRepository _repository;
+  final GetVersion _getVersion;
 
   /// Runs the use case.
-  Future<Result<AppVersionEntity>> call() => _repository.getVersion();
+  Future<Result<AppVersionEntity>> call() => _getVersion();
 }
