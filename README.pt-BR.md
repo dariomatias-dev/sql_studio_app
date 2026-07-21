@@ -103,13 +103,9 @@ Scripts utilitários ficam em `scripts/`.
 
 ## Contribuindo
 
-Contribuições tornam a comunidade open-source um lugar incrível para aprender e criar. Qualquer contribuição que você fizer é muito bem-vinda.
+Contribuições tornam a comunidade de código aberto um lugar excelente para aprender e criar. Toda contribuição é bem-vinda.
 
-1. Faça um fork do projeto
-2. Crie sua branch de funcionalidade (`git checkout -b feature/minha-funcionalidade`)
-3. Faça commit das suas alterações seguindo a convenção [Conventional Commits](https://www.conventionalcommits.org/)
-4. Envie para a branch (`git push origin feature/minha-funcionalidade`)
-5. Abra um pull request
+Antes de abrir um pull request, consulte o [CONTRIBUTING.md](CONTRIBUTING.md) para o setup local, a convenção de mensagens de commit (Conventional Commits) e as regras de branching deste projeto.
 
 ## Licença
 

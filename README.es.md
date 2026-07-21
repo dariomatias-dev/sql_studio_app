@@ -103,13 +103,9 @@ Los scripts de utilidad están en `scripts/`.
 
 ## Contribuir
 
-Las contribuciones hacen de la comunidad open-source un lugar increíble para aprender y crear. Cualquier contribución que hagas es muy apreciada.
+Las contribuciones hacen de la comunidad de código abierto un lugar excelente para aprender y crear. Toda contribución es bienvenida.
 
-1. Haz un fork del proyecto
-2. Crea tu rama de funcionalidad (`git checkout -b feature/mi-funcionalidad`)
-3. Haz commit de tus cambios siguiendo la convención [Conventional Commits](https://www.conventionalcommits.org/)
-4. Sube la rama (`git push origin feature/mi-funcionalidad`)
-5. Abre un pull request
+Antes de abrir un pull request, consulta [CONTRIBUTING.md](CONTRIBUTING.md) para la configuración local, la convención de mensajes de commit (Conventional Commits) y las reglas de branching de este proyecto.
 
 ## Licencia
 

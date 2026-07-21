@@ -105,11 +105,7 @@ Utility scripts live under `scripts/`.
 
 Contributions make the open-source community an amazing place to learn and create. Any contributions you make are greatly appreciated.
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes following the [Conventional Commits](https://www.conventionalcommits.org/) convention
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a pull request
+Before opening a pull request, see [CONTRIBUTING.md](CONTRIBUTING.md) for the local setup, commit message convention (Conventional Commits), and branching rules this project follows.
 
 ## License
 
