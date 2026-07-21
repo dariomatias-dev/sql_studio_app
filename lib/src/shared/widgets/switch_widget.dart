@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+
 /// A [Switch] styled with the app's black-and-white theme.
 class SwitchWidget extends StatelessWidget {
   /// Creates a styled switch reflecting [value].
@@ -18,10 +20,10 @@ class SwitchWidget extends StatelessWidget {
       onChanged: onChanged,
       activeThumbColor: Colors.white,
       activeTrackColor: Colors.black,
-      inactiveThumbColor: const Color(0xFFADADAD),
-      inactiveTrackColor: const Color(0xFFF0F0F0),
+      inactiveThumbColor: AppColors.controlInactive,
+      inactiveTrackColor: AppColors.background,
       trackOutlineColor: WidgetStateProperty.resolveWith(
-        (states) => value ? Colors.black : const Color(0xFFE0E0E0),
+        (states) => value ? Colors.black : AppColors.border,
       ),
       trackOutlineWidth: const WidgetStatePropertyAll(1),
       thumbIcon: WidgetStatePropertyAll(

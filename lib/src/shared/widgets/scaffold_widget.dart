@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 /// The app's base [Scaffold] wrapper with a consistent app bar and
 /// back button.
@@ -38,7 +39,7 @@ class ScaffoldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: AppColors.background,
       appBar: appBar != null
           ? AppBar(
               backgroundColor: Colors.white,

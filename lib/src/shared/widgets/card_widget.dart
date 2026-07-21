@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_shadows.dart';
+
 /// A rounded, elevated surface that optionally responds to taps.
 class CardWidget extends StatelessWidget {
   /// Creates a card wrapping [child].
@@ -19,7 +21,7 @@ class CardWidget extends StatelessWidget {
   /// Content displayed inside the card.
   final Widget child;
 
-  BorderRadius get _borderRadius => borderRadius ?? BorderRadius.circular(12);
+  BorderRadius get _borderRadius => borderRadius ?? BorderRadius.circular(16);
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,7 @@ class CardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: _borderRadius,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black.withAlpha(13),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: InkWell(borderRadius: _borderRadius, onTap: onTap, child: child),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
@@ -57,7 +58,7 @@ class _SqlWorkspaceWidgetState extends ConsumerState<SqlWorkspaceWidget>
               controller: _tabController,
               indicatorColor: Colors.black,
               labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey.shade600,
+              unselectedLabelColor: AppColors.textMuted,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               unselectedLabelStyle: const TextStyle(
                 fontWeight: FontWeight.normal,

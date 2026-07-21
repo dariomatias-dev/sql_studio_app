@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
@@ -24,13 +26,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey.withAlpha(25),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: ListTile(
         shape: RoundedRectangleBorder(
@@ -72,7 +68,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(Icons.edit_outlined, color: Colors.grey.shade600),
+              icon: const Icon(Icons.edit_outlined, color: AppColors.textMuted),
             ),
             IconButton(
               tooltip: appLocalizations.removeSuggestion,
@@ -85,7 +81,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+              icon: const Icon(Icons.delete_outline, color: AppColors.error),
             ),
           ],
         ),

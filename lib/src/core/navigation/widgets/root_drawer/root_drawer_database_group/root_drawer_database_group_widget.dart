@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 
@@ -42,7 +43,7 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: Container(height: 1, color: const Color(0xFFF0F0F0)),
+                child: Container(height: 1, color: AppColors.border),
               ),
             ],
           ),

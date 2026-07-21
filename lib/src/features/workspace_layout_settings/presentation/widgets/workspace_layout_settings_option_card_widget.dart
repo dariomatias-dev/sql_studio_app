@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
-
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
 /// Selectable card representing a single workspace layout option.
@@ -50,7 +48,7 @@ class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 12, color: Colors.black54),
         ),
         trailing: selected
-            ? const Icon(Icons.check, color: AppColors.aquaBlue)
+            ? const Icon(Icons.check, color: Colors.black)
             : null,
       ),
     );

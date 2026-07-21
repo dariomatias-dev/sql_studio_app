@@ -1,100 +1,69 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/shared/widgets/card_widget.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
-/// A tappable card used to present a single settings entry, with an
-/// optional leading icon and subtitle.
+/// A tappable row used to present a single settings entry, with a
+/// leading icon, title, and trailing chevron.
 class SettingsCardWidget extends StatelessWidget {
-  /// Creates a settings card with the given [title].
+  /// Creates a settings row with the given [title] and [icon].
   const SettingsCardWidget({
     required this.title,
+    required this.icon,
     super.key,
     this.onTap,
-    this.subtitle,
-    this.icon,
+    this.value,
   });
 
-  /// Called when the card is tapped.
+  /// Called when the row is tapped.
   final VoidCallback? onTap;
 
   /// Main label describing the setting.
   final String title;
 
-  /// Optional secondary text shown below the title.
-  final String? subtitle;
+  /// Leading icon representing the setting.
+  final IconData icon;
 
-  /// Optional leading icon shown before the title.
-  final IconData? icon;
+  /// Optional current value shown before the chevron (e.g. the selected
+  /// language).
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
-    return CardWidget(
+    return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0xFFF2F2F2), width: 1.5),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withAlpha(8),
-              blurRadius: 15,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(
           children: <Widget>[
-            if (icon != null) ...<Widget>[
-              Container(
-                height: 42,
-                width: 42,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF9F9F9),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: const Color(0xFFEEEEEE),
-                  ),
-                ),
-                child: Icon(icon, size: 20, color: Colors.black),
-              ),
-              const SizedBox(width: 16),
-            ],
+            Icon(icon, size: 22, color: Colors.black),
+            const SizedBox(width: 16),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black,
-                      letterSpacing: -0.3,
-                    ),
-                  ),
-                  if (subtitle != null) ...<Widget>[
-                    const SizedBox(height: 2),
-                    Text(
-                      subtitle!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black.withAlpha(100),
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                  ],
-                ],
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
               ),
             ),
-            Icon(
+            if (value != null) ...<Widget>[
+              Text(
+                value!,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textMuted,
+                ),
+              ),
+              const SizedBox(width: 8),
+            ],
+            const Icon(
               Icons.chevron_right_rounded,
-              size: 20,
-              color: Colors.black.withAlpha(40),
+              size: 22,
+              color: AppColors.textMuted,
             ),
           ],
         ),

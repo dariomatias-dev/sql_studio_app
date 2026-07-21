@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Card that renders a single table's name and columns in the database
@@ -18,14 +20,7 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black.withAlpha(15),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -45,7 +40,7 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
                 const Icon(
                   Icons.table_chart_rounded,
                   color: Colors.white,
-                  size: 18,
+                  size: 16,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -70,7 +65,7 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: Color(0xFFF5F5F5)),
+                  bottom: BorderSide(color: AppColors.border),
                 ),
               ),
               child: Row(
@@ -81,7 +76,7 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
                       child: Icon(
                         Icons.link_rounded,
                         size: 16,
-                        color: Color(0xFF757575),
+                        color: AppColors.textMuted,
                       ),
                     ),
                   Expanded(

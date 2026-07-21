@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
@@ -98,7 +99,7 @@ class _RootDrawerDatabaseCardWidgetState
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: isActive ? Colors.black : const Color(0xFFF0F0F0),
+                color: isActive ? Colors.black : AppColors.border,
               ),
             ),
             child: Row(

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
 /// Bottom navigation bar switching between the app's main pages.
@@ -28,15 +30,10 @@ class RootNavBarWidget extends ConsumerWidget {
         margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
         height: 72,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withAlpha(40),
-              blurRadius: 30,
-              offset: const Offset(0, 15),
-            ),
-          ],
+          border: Border.all(color: AppColors.border),
+          boxShadow: AppShadows.elevated,
         ),
         child: Stack(
           children: <Widget>[
@@ -49,7 +46,7 @@ class RootNavBarWidget extends ConsumerWidget {
                 height: 48,
                 margin: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(25),
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
@@ -115,14 +112,14 @@ class _NavBarItem extends StatelessWidget {
                 isSelected ? activeIcon : icon,
                 key: ValueKey<IconData>(isSelected ? activeIcon : icon),
                 size: 24,
-                color: isSelected ? Colors.white : const Color(0xFF757575),
+                color: isSelected ? Colors.black : AppColors.textMuted,
               ),
             ),
             const SizedBox(height: 4),
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF757575),
+                color: isSelected ? Colors.black : AppColors.textMuted,
                 fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
                 letterSpacing: 0.8,

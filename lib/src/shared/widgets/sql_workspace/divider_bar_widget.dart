@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+
 /// A draggable horizontal bar used to resize the panels above and below it
 /// in a workspace split view.
 class DividerBarWidget extends StatelessWidget {
@@ -16,13 +18,13 @@ class DividerBarWidget extends StatelessWidget {
       onVerticalDragUpdate: onDragUpdate,
       child: Container(
         height: 12,
-        color: Colors.grey.shade300,
+        color: AppColors.border,
         child: Center(
           child: Container(
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade500,
+              color: AppColors.controlInactive,
               borderRadius: BorderRadius.circular(2),
             ),
           ),

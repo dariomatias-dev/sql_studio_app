@@ -25,7 +25,7 @@ class NotFoundScreen extends StatelessWidget {
               const Icon(
                 Icons.error_outline,
                 size: 80,
-                color: Colors.redAccent,
+                color: Colors.black87,
               ),
               const SizedBox(height: 20),
               Text(
@@ -45,7 +45,7 @@ class NotFoundScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ButtonWidget(
                 onPressed: () => context.go('/'),
-                style: ButtonStyleType.red,
+                style: ButtonStyleType.black,
                 text: appLocalizations.goHome,
               ),
             ],

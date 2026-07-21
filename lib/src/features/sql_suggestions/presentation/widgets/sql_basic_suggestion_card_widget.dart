@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 
 /// Card that displays a basic SQL suggestion with a delete action.
@@ -28,13 +30,7 @@ class _SqlBasicSuggestionCardWidgetState
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey.withAlpha(25),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: AppShadows.card,
       ),
       child: ListTile(
         shape: RoundedRectangleBorder(
@@ -63,7 +59,7 @@ class _SqlBasicSuggestionCardWidgetState
             );
           },
           tooltip: AppLocalizations.of(context)!.deleteSuggestion,
-          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+          icon: const Icon(Icons.delete_outline, color: AppColors.error),
         ),
       ),
     );

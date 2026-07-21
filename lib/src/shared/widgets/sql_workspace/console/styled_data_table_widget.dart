@@ -21,14 +21,14 @@ class StyledDataTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataTable(
-      headingRowColor: WidgetStateProperty.all(Colors.blueGrey.shade50),
+      headingRowColor: WidgetStateProperty.all(const Color(0xFFF8F8F8)),
       headingTextStyle: const TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.black87,
       ),
       dataRowColor: WidgetStateProperty.resolveWith((states) {
         return states.contains(WidgetState.selected)
-            ? Colors.blue.withAlpha(25)
+            ? Colors.black.withAlpha(15)
             : Colors.white;
       }),
       columns: columns.builder((col, index) => DataColumn(label: Text(col))),

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/urls.dart';
+import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/core/views/settings/widgets/app_version_widget.dart';
 import 'package:sql_studio/src/core/views/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
@@ -12,19 +14,32 @@ import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// Display names for each supported locale, in the same order as
+/// [AppLocalizations.supportedLocales].
+const _languageNames = <String>['English', 'Español', 'Português'];
+
 /// Screen that exposes general, language and information settings.
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   /// Creates the settings screen.
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen>
+class _SettingsScreenState extends ConsumerState<SettingsScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  String _currentLanguageName() {
+    final code = ref.watch(appLocalizationViewModelProvider).languageCode;
+    final index = AppLocalizations.supportedLocales.indexWhere(
+      (locale) => locale.languageCode == code,
+    );
+
+    return index == -1 ? '' : _languageNames[index];
+  }
 
   Future<void> _openUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
@@ -64,50 +79,14 @@ class _SettingsScreenState extends State<SettingsScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  height: 68,
-                  width: 68,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(22),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: Colors.black.withAlpha(40),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.tune_rounded,
-                    color: Colors.white,
-                    size: 32,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        l10n.settings,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -1,
-                          height: 1.1,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      const AppVersionWidget(),
-                    ],
-                  ),
-                ),
-              ],
+            Text(
+              l10n.settings,
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.8,
+              ),
             ),
-            const SizedBox(height: 12),
             SettingsSectionWidget(
               title: l10n.general,
               children: <Widget>[
@@ -115,6 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   onTap: _openLanguageSelector,
                   title: l10n.language,
                   icon: Icons.language_rounded,
+                  value: _currentLanguageName(),
                 ),
                 SettingsCardWidget(
                   onTap: () => AppRoutes.goToSqlSuggestionSettings(context),
@@ -148,6 +128,8 @@ class _SettingsScreenState extends State<SettingsScreen>
                 ),
               ],
             ),
+            const SizedBox(height: 28),
+            const Center(child: AppVersionWidget()),
           ],
         ),
       ),

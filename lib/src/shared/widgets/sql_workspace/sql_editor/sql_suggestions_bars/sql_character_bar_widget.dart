@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+
 /// Special characters commonly used in SQL statements, shown as quick
 /// insertion buttons in [SqlCharacterBarWidget].
 const characters = <String>['(', ')', ';', '!', '=', '*', '%', "'", '"'];
@@ -45,7 +47,7 @@ class SqlCharacterBarWidget extends StatelessWidget {
                 Container(
                   height: 20,
                   width: 1,
-                  color: Colors.grey.shade400,
+                  color: AppColors.controlInactive,
                 ),
             ],
           ],

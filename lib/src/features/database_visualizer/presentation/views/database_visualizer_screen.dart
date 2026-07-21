@@ -117,7 +117,7 @@ class _DatabaseVisualizerScreenState
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        shape: const Border(bottom: BorderSide(color: Color(0xFFF0F0F0))),
+        shape: const Border(bottom: BorderSide(color: Color(0xFFF2F2F2))),
       ),
       body: SafeArea(
         child: tables == null

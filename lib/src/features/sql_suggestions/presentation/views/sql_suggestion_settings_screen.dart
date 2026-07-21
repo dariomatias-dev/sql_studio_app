@@ -122,7 +122,7 @@ class _SqlSuggestionSettingsScreenState
         backgroundColor: Colors.white,
         elevation: 0,
         shape: const Border(
-          bottom: BorderSide(color: Color(0xFFF5F5F5)),
+          bottom: BorderSide(color: Color(0xFFF2F2F2)),
         ),
       ),
       body: Padding(

@@ -209,7 +209,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
               gradient: RadialGradient(
                 center: _gradientAlignmentAnimation.value,
                 radius: 1.5,
-                colors: const <Color>[Color(0xFF100030), Color(0xFF010103)],
+                colors: const <Color>[Color(0xFF0A0A0A), Colors.black],
                 stops: const <double>[0, 1],
               ),
             ),
@@ -238,17 +238,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: <BoxShadow>[
                                     BoxShadow(
-                                      color: const Color(
-                                        0xFF00E5FF,
-                                      ).withAlpha(80),
+                                      color: Colors.white.withAlpha(80),
                                       blurRadius: 88,
                                       spreadRadius: -5,
                                     ),
                                   ],
                                   gradient: RadialGradient(
                                     colors: <Color>[
-                                      const Color(0xFF00E5FF).withAlpha(50),
-                                      const Color(0xFF00E5FF).withAlpha(0),
+                                      Colors.white.withAlpha(50),
+                                      Colors.white.withAlpha(0),
                                     ],
                                     stops: const [0.0, 1.0],
                                   ),
@@ -265,9 +263,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: const Color(
-                                      0xFF00B0FF,
-                                    ).withAlpha(178),
+                                    color: Colors.white.withAlpha(178),
                                     width: 2.5,
                                   ),
                                 ),
@@ -295,7 +291,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         letterSpacing: 2.5,
                         shadows: <Shadow>[
                           Shadow(
-                            color: Color(0xFF00E5FF),
+                            color: Colors.white54,
                             blurRadius: 15,
                           ),
                           Shadow(
@@ -318,7 +314,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                           minHeight: 10,
                           backgroundColor: Colors.white.withAlpha(38),
                           valueColor: const AlwaysStoppedAnimation<Color>(
-                            Color(0xFF00E5FF),
+                            Colors.white,
                           ),
                         ),
                       ),

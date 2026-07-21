@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/switch_widget.dart';
@@ -43,13 +44,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: active ? const Color(0xFFFBFBFB) : Colors.white,
           borderRadius: BorderRadius.circular(24),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withAlpha(active ? 15 : 8),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: AppShadows.card,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

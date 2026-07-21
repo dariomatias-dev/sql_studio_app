@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/views/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
@@ -30,7 +31,7 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
             height: 4,
             margin: const EdgeInsets.only(bottom: 18),
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: AppColors.controlInactive,
               borderRadius: BorderRadius.circular(20),
             ),
           ),

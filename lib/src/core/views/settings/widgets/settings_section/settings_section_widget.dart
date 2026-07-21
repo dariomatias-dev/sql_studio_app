@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Groups related settings entries under a titled section header.
+import 'package:sql_studio/src/core/app_colors.dart';
+
+/// Groups related settings entries under a titled section header, each
+/// entry rendered directly on the page background and separated from
+/// the next by a hairline divider.
 class SettingsSectionWidget extends StatelessWidget {
   /// Creates a settings section labeled with [title], wrapping [children].
   const SettingsSectionWidget({
@@ -21,38 +25,22 @@ class SettingsSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(4, 28, 0, 20),
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 4,
-                height: 14,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                title.toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.black,
-                  letterSpacing: 1.5,
-                ),
-              ),
-            ],
+          padding: const EdgeInsets.fromLTRB(0, 32, 0, 10),
+          child: Text(
+            title.toUpperCase(),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textMuted,
+              letterSpacing: 0.8,
+            ),
           ),
         ),
-        Column(
-          children: children.map((child) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: child,
-            );
-          }).toList(),
-        ),
+        for (var i = 0; i < children.length; i++) ...<Widget>[
+          if (i > 0)
+            const Divider(height: 1, thickness: 1, color: AppColors.border),
+          children[i],
+        ],
       ],
     );
   }

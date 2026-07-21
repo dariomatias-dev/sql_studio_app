@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
+
 /// Base layout for a horizontally scrollable row of tappable suggestion
 /// chips, shared by the SQL suggestions bar variants.
 class SqlSuggestionsBarBaseWidget extends StatelessWidget {
@@ -30,9 +33,9 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       height: 48,
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
-        borderRadius: const BorderRadius.vertical(
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.border)),
+        borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(10),
         ),
       ),
@@ -54,15 +57,9 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: AppColors.border),
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    blurRadius: 2,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
+                boxShadow: AppShadows.chip,
               ),
               child: Text(
                 suggestion,

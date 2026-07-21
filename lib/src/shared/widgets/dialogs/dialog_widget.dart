@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
 /// The app's base dialog chrome: title, scrollable content and
@@ -55,13 +56,7 @@ class DialogWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(32),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withAlpha(15),
-              blurRadius: 40,
-              offset: const Offset(0, 20),
-            ),
-          ],
+          boxShadow: AppShadows.overlay,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

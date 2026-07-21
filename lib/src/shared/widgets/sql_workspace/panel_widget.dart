@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 /// A common panel frame used by the SQL workspace widgets, providing a
 /// header with title, database name, action buttons, and a body area.
@@ -42,60 +43,66 @@ class PanelWidget extends StatelessWidget {
     final hasFullScreenButton = onFullScreen != null;
 
     return ColoredBox(
-      color: Colors.grey.shade100,
+      color: AppColors.background,
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              if (hasFullScreenButton)
-                IconButton(
-                  onPressed: onFullScreen,
-                  tooltip: isFullScreen ?? false
-                      ? appLocalizations.exitFullscreen
-                      : appLocalizations.enterFullscreen,
-                  icon: Icon(
-                    isFullScreen ?? false
-                        ? Icons.fullscreen_exit
-                        : Icons.fullscreen,
+          ColoredBox(
+            color: AppColors.background,
+            child: Row(
+              children: <Widget>[
+                if (hasFullScreenButton)
+                  IconButton(
+                    onPressed: onFullScreen,
+                    tooltip: isFullScreen ?? false
+                        ? appLocalizations.exitFullscreen
+                        : appLocalizations.enterFullscreen,
+                    icon: Icon(
+                      isFullScreen ?? false
+                          ? Icons.fullscreen_exit
+                          : Icons.fullscreen,
+                    ),
                   ),
-                ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: hasFullScreenButton ? 0 : 26.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      if (title != null)
-                        Text(
-                          title!,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      if (databaseName != null)
-                        Text(
-                          databaseName!,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: hasFullScreenButton ? 0 : 14.0,
+                    ).copyWith(left: hasFullScreenButton ? 0 : 26.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        if (title != null)
+                          Text(
+                            title!,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                    ],
+                        if (databaseName != null)
+                          Text(
+                            databaseName!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textMuted,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              ...actions,
-            ],
+                ...actions,
+              ],
+            ),
           ),
           Expanded(
             child: ClipRect(
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
+                decoration: const BoxDecoration(
+                  color: AppColors.surface,
                   border: Border.symmetric(
-                    vertical: BorderSide(color: Colors.grey.shade100),
+                    vertical: BorderSide(color: AppColors.border),
                   ),
                 ),
                 width: double.infinity,

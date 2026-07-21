@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
+
 /// A styled text form field used throughout the app's forms.
 class InputWidget extends StatelessWidget {
   /// Creates an input field.
@@ -61,16 +63,16 @@ class InputWidget extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
         suffixIconColor: Colors.black,
-        enabledBorder: _border(const Color(0xFFEEEEEE)),
+        enabledBorder: _border(AppColors.border),
         focusedBorder: _border(Colors.black, width: 1.5),
-        errorBorder: _border(const Color(0xFFFF3B30)),
-        focusedErrorBorder: _border(const Color(0xFFFF3B30), width: 1.5),
+        errorBorder: _border(AppColors.error),
+        focusedErrorBorder: _border(AppColors.error, width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 18,
         ),
-        fillColor: const Color(0xFFF8F8F8),
+        fillColor: AppColors.background,
         filled: true,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         alignLabelWithHint: true,

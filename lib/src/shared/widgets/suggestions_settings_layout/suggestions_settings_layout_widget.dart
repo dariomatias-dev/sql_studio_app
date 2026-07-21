@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -139,7 +140,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                           const SizedBox(width: 12),
                           FloatingActionButton(
                             onPressed: widget.onAdd,
-                            backgroundColor: Colors.grey.shade100,
+                            backgroundColor: AppColors.background,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),

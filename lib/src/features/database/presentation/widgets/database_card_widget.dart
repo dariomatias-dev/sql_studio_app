@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
@@ -74,198 +75,185 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: CardWidget(
+        borderRadius: BorderRadius.circular(24),
         onTap: () {
           ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
               widget.db.name;
           ref.read(navigationViewModelProvider.notifier).index = 0;
         },
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: Colors.black.withAlpha(12),
-                blurRadius: 30,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 24, 12, 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: 54,
-                        width: 54,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: const Icon(
-                          Icons.dns_rounded,
-                          color: Colors.white,
-                          size: 26,
-                        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 12, 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: 44,
+                      width: 44,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(14),
                       ),
-                      const SizedBox(width: 18),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              l10n.key(widget.db.labelKey),
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                                letterSpacing: -0.8,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'root/${widget.db.name.toLowerCase()}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black.withAlpha(100),
-                                fontFamily: 'monospace',
-                              ),
-                            ),
-                          ],
-                        ),
+                      child: const Icon(
+                        Icons.dns_rounded,
+                        color: Colors.white,
+                        size: 22,
                       ),
-                      PopupMenuButtonWidget(
-                        items: <PopupMenuItem<void>>[
-                          PopupMenuItem<void>(
-                            onTap: () => AppRoutes.goToDatabaseVisualizer(
-                              context,
-                              dbName: widget.db.name,
-                            ),
-                            child: _MenuAction(
-                              icon: Icons.account_tree_outlined,
-                              label: l10n.viewStructure,
-                            ),
-                          ),
-                          PopupMenuItem<void>(
-                            onTap: _copySchema,
-                            child: _MenuAction(
-                              icon: Icons.terminal_rounded,
-                              label: l10n.copySchema,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            l10n.key(widget.db.labelKey),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black,
+                              letterSpacing: -0.4,
                             ),
                           ),
-                          PopupMenuItem<void>(
-                            onTap: _copySeed,
-                            child: _MenuAction(
-                              icon: Icons.data_object_outlined,
-                              label: l10n.copySeed,
-                            ),
-                          ),
-                          PopupMenuItem<void>(
-                            onTap: _copyAll,
-                            child: _MenuAction(
-                              icon: Icons.auto_awesome_rounded,
-                              label: l10n.copyAll,
-                              isBold: true,
+                          const SizedBox(height: 4),
+                          Text(
+                            'root/${widget.db.name.toLowerCase()}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black.withAlpha(100),
+                              fontFamily: 'monospace',
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    l10n.key(widget.db.descriptionKey),
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black.withAlpha(180),
-                      height: 1.5,
-                      fontWeight: FontWeight.w500,
                     ),
-                  ),
-                ),
-                const SizedBox(height: 28),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFAFAFA),
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.black.withAlpha(15),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          '$tableCount',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w900,
+                    PopupMenuButtonWidget(
+                      items: <PopupMenuItem<void>>[
+                        PopupMenuItem<void>(
+                          onTap: () => AppRoutes.goToDatabaseVisualizer(
+                            context,
+                            dbName: widget.db.name,
+                          ),
+                          child: _MenuAction(
+                            icon: Icons.account_tree_outlined,
+                            label: l10n.viewStructure,
                           ),
                         ),
+                        PopupMenuItem<void>(
+                          onTap: _copySchema,
+                          child: _MenuAction(
+                            icon: Icons.terminal_rounded,
+                            label: l10n.copySchema,
+                          ),
+                        ),
+                        PopupMenuItem<void>(
+                          onTap: _copySeed,
+                          child: _MenuAction(
+                            icon: Icons.data_object_outlined,
+                            label: l10n.copySeed,
+                          ),
+                        ),
+                        PopupMenuItem<void>(
+                          onTap: _copyAll,
+                          child: _MenuAction(
+                            icon: Icons.auto_awesome_rounded,
+                            label: l10n.copyAll,
+                            isBold: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  l10n.key(widget.db.descriptionKey),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black.withAlpha(180),
+                    height: 1.5,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 28),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: AppColors.background,
+                  border: Border(
+                    top: BorderSide(color: AppColors.border),
+                  ),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        l10n.tables.toUpperCase(),
+                      decoration: BoxDecoration(
+                        color: AppColors.background,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: AppColors.border),
+                      ),
+                      child: Text(
+                        '$tableCount',
                         style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1,
                           color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Text(
-                          '|',
-                          style: TextStyle(color: Color(0xFFE0E0E0)),
-                        ),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      l10n.tables.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 1,
+                        color: Colors.black,
                       ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: widget.db.tables.map((table) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: Text(
-                                  table,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black.withAlpha(120),
-                                    fontFamily: 'monospace',
-                                  ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        '|',
+                        style: TextStyle(color: AppColors.border),
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: widget.db.tables.map((table) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: Text(
+                                table,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black.withAlpha(120),
+                                  fontFamily: 'monospace',
                                 ),
-                              );
-                            }).toList(),
-                          ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
