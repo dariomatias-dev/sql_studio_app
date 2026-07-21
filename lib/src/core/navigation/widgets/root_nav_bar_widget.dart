@@ -54,6 +54,7 @@ class RootNavBarWidget extends ConsumerWidget {
             Row(
               children: <Widget>[
                 _NavBarItem(
+                  key: const Key('rootNavBar_home'),
                   icon: Icons.grid_view_outlined,
                   activeIcon: Icons.grid_view_rounded,
                   label: l10n.home,
@@ -61,6 +62,7 @@ class RootNavBarWidget extends ConsumerWidget {
                   onTap: () => _onTab(ref, 0),
                 ),
                 _NavBarItem(
+                  key: const Key('rootNavBar_databases'),
                   icon: Icons.dns_outlined,
                   activeIcon: Icons.dns_rounded,
                   label: l10n.databases,
@@ -68,6 +70,7 @@ class RootNavBarWidget extends ConsumerWidget {
                   onTap: () => _onTab(ref, 1),
                 ),
                 _NavBarItem(
+                  key: const Key('rootNavBar_settings'),
                   icon: Icons.tune_outlined,
                   activeIcon: Icons.tune_rounded,
                   label: l10n.settings,
@@ -90,6 +93,7 @@ class _NavBarItem extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onTap,
+    super.key,
   });
   final IconData icon;
   final IconData activeIcon;
