@@ -46,55 +46,52 @@ class PanelWidget extends StatelessWidget {
       color: AppColors.background,
       child: Column(
         children: <Widget>[
-          ColoredBox(
-            color: AppColors.background,
-            child: Row(
-              children: <Widget>[
-                if (hasFullScreenButton)
-                  IconButton(
-                    onPressed: onFullScreen,
-                    tooltip: isFullScreen ?? false
-                        ? appLocalizations.exitFullscreen
-                        : appLocalizations.enterFullscreen,
-                    icon: Icon(
-                      isFullScreen ?? false
-                          ? Icons.fullscreen_exit
-                          : Icons.fullscreen,
-                    ),
-                  ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: hasFullScreenButton ? 0 : 14.0,
-                    ).copyWith(left: hasFullScreenButton ? 0 : 26.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        if (title != null)
-                          Text(
-                            title!,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        if (databaseName != null)
-                          Text(
-                            databaseName!,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.textMuted,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                      ],
-                    ),
+          Row(
+            children: <Widget>[
+              if (hasFullScreenButton)
+                IconButton(
+                  onPressed: onFullScreen,
+                  tooltip: isFullScreen ?? false
+                      ? appLocalizations.exitFullscreen
+                      : appLocalizations.enterFullscreen,
+                  icon: Icon(
+                    isFullScreen ?? false
+                        ? Icons.fullscreen_exit
+                        : Icons.fullscreen,
                   ),
                 ),
-                ...actions,
-              ],
-            ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: hasFullScreenButton ? 0 : 14.0,
+                  ).copyWith(left: hasFullScreenButton ? 0 : 26.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      if (title != null)
+                        Text(
+                          title!,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      if (databaseName != null)
+                        Text(
+                          databaseName!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textMuted,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              ...actions,
+            ],
           ),
           Expanded(
             child: ClipRect(

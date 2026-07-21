@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
 /// A [DataTable] with a consistent black-and-white style used to render
@@ -21,7 +22,7 @@ class StyledDataTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataTable(
-      headingRowColor: WidgetStateProperty.all(const Color(0xFFF8F8F8)),
+      headingRowColor: WidgetStateProperty.all(AppColors.background),
       headingTextStyle: const TextStyle(
         fontWeight: FontWeight.bold,
         color: Colors.black87,

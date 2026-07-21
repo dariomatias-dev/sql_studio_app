@@ -14,10 +14,6 @@ import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Display names for each supported locale, in the same order as
-/// [AppLocalizations.supportedLocales].
-const _languageNames = <String>['English', 'Español', 'Português'];
-
 /// Screen that exposes general, language and information settings.
 class SettingsScreen extends ConsumerStatefulWidget {
   /// Creates the settings screen.
@@ -38,7 +34,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
       (locale) => locale.languageCode == code,
     );
 
-    return index == -1 ? '' : _languageNames[index];
+    return index == -1 ? '' : languageNames[index];
   }
 
   Future<void> _openUrl(String url) async {

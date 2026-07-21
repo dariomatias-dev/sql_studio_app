@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
@@ -122,7 +123,7 @@ class _SqlSuggestionSettingsScreenState
         backgroundColor: Colors.white,
         elevation: 0,
         shape: const Border(
-          bottom: BorderSide(color: Color(0xFFF2F2F2)),
+          bottom: BorderSide(color: AppColors.background),
         ),
       ),
       body: Padding(

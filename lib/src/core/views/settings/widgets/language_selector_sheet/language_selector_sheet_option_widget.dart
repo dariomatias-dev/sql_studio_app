@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 
 /// A single selectable language option shown in the language selector sheet.
@@ -63,9 +64,9 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: isSelected ? Colors.black : const Color(0xFFF8F8F8),
+              color: isSelected ? Colors.black : AppColors.background,
               border: Border.all(
-                color: isSelected ? Colors.black : const Color(0xFFEEEEEE),
+                color: isSelected ? Colors.black : AppColors.border,
               ),
             ),
             child: Row(
@@ -96,7 +97,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xFFD1D1D1),
+                        color: AppColors.controlInactive,
                         width: 1.5,
                       ),
                     ),
