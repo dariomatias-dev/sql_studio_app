@@ -28,8 +28,10 @@ Um app Android para praticar SQL em bancos SQLite locais, editáveis e totalment
 
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Funcionalidades](#funcionalidades)
+- [Screenshots](#screenshots)
 - [Construído Com](#construído-com)
 - [Como Começar](#como-começar)
+- [Scripts](#scripts)
 - [Contribuindo](#contribuindo)
 - [Licença](#licença)
 - [Autor](#autor)
@@ -50,6 +52,20 @@ Cada banco de dados vem com um schema e dados de seed predefinidos. Você escrev
 - **Sugestões de SQL**: Snippets de SQL básicos e avançados para agilizar a escrita de queries comuns, ativados em Configurações.
 - **Layout de Workspace Configurável**: Escolha como o editor, console e visualizador são organizados na tela.
 - **Múltiplos Idiomas**: Interface completa em Inglês, Português (Brasil) e Espanhol.
+
+## Screenshots
+
+<div align="center">
+<img src="assets/screenshots/01_home.png" width="200" alt="Home / editor SQL">
+<img src="assets/screenshots/02_databases.png" width="200" alt="Bancos de dados">
+<img src="assets/screenshots/03_editor.png" width="200" alt="Editor SQL com banco de dados ativo">
+<img src="assets/screenshots/04_drawer.png" width="200" alt="Menu de navegação">
+<img src="assets/screenshots/05_visualizer.png" width="200" alt="Visualizador de banco de dados">
+<img src="assets/screenshots/06_settings.png" width="200" alt="Configurações">
+<img src="assets/screenshots/07_language_selector.png" width="200" alt="Seletor de idioma">
+<img src="assets/screenshots/08_sql_suggestions_settings.png" width="200" alt="Configurações de sugestões de SQL">
+<img src="assets/screenshots/09_workspace_layout_settings.png" width="200" alt="Configurações de layout do workspace">
+</div>
 
 ## Construído Com
 
@@ -76,6 +92,14 @@ Depois, rode o app em um dispositivo ou emulador conectado:
 ```sh
 fvm flutter run
 ```
+
+## Scripts
+
+Scripts utilitários ficam em `scripts/`.
+
+| Script       | Comando                             | Descrição                                                                                                                                                 |
+| ------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `screenshot` | `scripts/screenshot.sh [device-id]` | Navega o app sozinho pelas telas principais em um dispositivo ou emulador conectado e salva um screenshot de cada uma em `assets/screenshots/`, usado no README, na listagem da Play Store e no site oficial. |
 
 ## Contribuindo
 

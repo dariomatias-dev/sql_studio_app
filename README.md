@@ -28,8 +28,10 @@ An Android app to practice SQL on local, editable, fully offline SQLite database
 
 - [About The Project](#about-the-project)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Built With](#built-with)
 - [Getting Started](#getting-started)
+- [Scripts](#scripts)
 - [Contributing](#contributing)
 - [License](#license)
 - [Author](#author)
@@ -50,6 +52,20 @@ Each database ships with a predefined schema and seed data. You write and run re
 - **SQL Suggestions**: Basic and advanced SQL snippets to speed up writing common queries, toggled from Settings.
 - **Configurable Workspace Layout**: Choose how the editor, console, and visualizer are arranged on screen.
 - **Multiple Languages**: Full app UI in English, Portuguese (Brazil), and Spanish.
+
+## Screenshots
+
+<div align="center">
+<img src="assets/screenshots/01_home.png" width="200" alt="Home / SQL editor">
+<img src="assets/screenshots/02_databases.png" width="200" alt="Databases">
+<img src="assets/screenshots/03_editor.png" width="200" alt="SQL editor with an active database">
+<img src="assets/screenshots/04_drawer.png" width="200" alt="Navigation drawer">
+<img src="assets/screenshots/05_visualizer.png" width="200" alt="Database visualizer">
+<img src="assets/screenshots/06_settings.png" width="200" alt="Settings">
+<img src="assets/screenshots/07_language_selector.png" width="200" alt="Language selector">
+<img src="assets/screenshots/08_sql_suggestions_settings.png" width="200" alt="SQL suggestions settings">
+<img src="assets/screenshots/09_workspace_layout_settings.png" width="200" alt="Workspace layout settings">
+</div>
 
 ## Built With
 
@@ -76,6 +92,14 @@ Then run the app on a connected device or emulator:
 ```sh
 fvm flutter run
 ```
+
+## Scripts
+
+Utility scripts live under `scripts/`.
+
+| Script       | Command                             | Description                                                                                                                                                    |
+| ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `screenshot` | `scripts/screenshot.sh [device-id]` | Drives the app through its main screens on a connected device or emulator and saves a screenshot of each one into `assets/screenshots/`, used for the README, Play Store listing, and official website. |
 
 ## Contributing
 
