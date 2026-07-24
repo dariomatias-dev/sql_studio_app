@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/painters/grid_background_painter.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/painters/table_relation_painter.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/utils/table_layout_calculator.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/database_visualizer_table_widget.dart';
+
+/// Pannable, zoomable canvas that renders a database's tables and their
+/// foreign-key relations, laid out in a grid.
+class DatabaseVisualizerCanvasWidget extends StatefulWidget {
+  /// Creates the visualizer canvas for [tables].
+  const DatabaseVisualizerCanvasWidget({
+    required this.tables,
+    required this.transformationController,
+    required this.selectedTable,
+    required this.onSelectTable,
+    super.key,
+  });
+
+  /// The tables to render.
+  final List<TableInfoModel> tables;
+
+  /// Controller shared with the zoom controls, driving pan/zoom.
+  final TransformationController transformationController;
+
+  /// The name of the table currently focused for relation tracing, if any.
+  final String? selectedTable;
+
+  /// Called with a table's name when it's tapped, or `null` when the
+  /// background is tapped to clear the selection.
+  final ValueChanged<String?> onSelectTable;
+
+  @override
+  State<DatabaseVisualizerCanvasWidget> createState() =>
+      _DatabaseVisualizerCanvasWidgetState();
+}
+
+class _DatabaseVisualizerCanvasWidgetState
+    extends State<DatabaseVisualizerCanvasWidget> {
+  bool _linesVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scheduleLines();
+  }
+
+  @override
+  void didUpdateWidget(covariant DatabaseVisualizerCanvasWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (!identical(oldWidget.tables, widget.tables)) {
+      _linesVisible = false;
+      _scheduleLines();
+    }
+  }
+
+  void _scheduleLines() {
+    // Relations only make sense once their tables are visible, so lines
+    // fade in after the last staggered table card has settled instead of
+    // popping in fully drawn before the diagram exists.
+    final lastCardDelay = 40 * (widget.tables.length - 1).clamp(0, 1 << 30);
+    final delay = Duration(milliseconds: lastCardDelay + 200);
+
+    Future.delayed(delay, () {
+      if (mounted) setState(() => _linesVisible = true);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tables = widget.tables;
+    final transformationController = widget.transformationController;
+    final selectedTable = widget.selectedTable;
+    final onSelectTable = widget.onSelectTable;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final layout = TableLayoutCalculator.layout(
+          tables,
+          Size(constraints.maxWidth, constraints.maxHeight),
+        );
+        final tableRects = layout.tableRects;
+        final canvasSize = layout.canvasSize;
+
+        return Stack(
+          children: [
+            const Positioned.fill(
+              child: CustomPaint(painter: GridBackgroundPainter()),
+            ),
+            InteractiveViewer(
+              transformationController: transformationController,
+              constrained: false,
+              scaleFactor: 1000,
+              minScale: 0.2,
+              maxScale: 2,
+              boundaryMargin: const EdgeInsets.all(5000),
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onSelectTable(null),
+                child: SizedBox(
+                  width: canvasSize.width,
+                  height: canvasSize.height,
+                  child: Stack(
+                    children: [
+                      AnimatedOpacity(
+                        opacity: _linesVisible ? 1 : 0,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeOut,
+                        child: CustomPaint(
+                          size: canvasSize,
+                          painter: TableRelationPainter(
+                            tables: tables,
+                            tableRects: tableRects,
+                            tableHeaderHeight:
+                                TableLayoutCalculator.headerHeight,
+                            tableColumnRowHeight:
+                                TableLayoutCalculator.columnRowHeight,
+                            selectedTable: selectedTable,
+                          ),
+                        ),
+                      ),
+                      ...tables.indexed.map((entry) {
+                        final (index, table) = entry;
+                        final rect = tableRects[table.name];
+                        if (rect == null) return const SizedBox();
+
+                        final hasSelection = selectedTable != null;
+                        final isSelected = table.name == selectedTable;
+                        final isRelated =
+                            hasSelection &&
+                            !isSelected &&
+                            _isRelated(table, selectedTable);
+
+                        return Positioned(
+                          left: rect.left,
+                          top: rect.top,
+                          width: rect.width,
+                          height: rect.height,
+                          child: DatabaseVisualizerTableWidget(
+                            table: table,
+                            entryIndex: index,
+                            isSelected: isSelected,
+                            isDimmed: hasSelection && !isSelected && !isRelated,
+                            onTap: () =>
+                                onSelectTable(isSelected ? null : table.name),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  bool _isRelated(TableInfoModel table, String selectedTable) {
+    if (table.name == selectedTable) return true;
+
+    for (final column in table.columns) {
+      if (column.foreignTable == selectedTable) return true;
+    }
+
+    final selected = widget.tables
+        .where((t) => t.name == selectedTable)
+        .firstOrNull;
+    if (selected == null) return false;
+
+    return selected.columns.any((column) => column.foreignTable == table.name);
+  }
+}

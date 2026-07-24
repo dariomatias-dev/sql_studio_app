@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
@@ -11,10 +10,15 @@ class DatabaseVisualizerTableWidget extends StatefulWidget {
   /// Creates a card representing [table].
   ///
   /// [entryIndex] staggers this card's entrance animation relative to
-  /// other cards appearing at the same time.
+  /// other cards appearing at the same time. [isSelected] highlights the
+  /// card as the focus of a relation trace, while [isDimmed] fades it out
+  /// when another table's relations are being traced.
   const DatabaseVisualizerTableWidget({
     required this.table,
     this.entryIndex = 0,
+    this.isSelected = false,
+    this.isDimmed = false,
+    this.onTap,
     super.key,
   });
 
@@ -24,6 +28,15 @@ class DatabaseVisualizerTableWidget extends StatefulWidget {
   /// The position of this card among the tables appearing together, used to
   /// stagger its entrance animation.
   final int entryIndex;
+
+  /// Whether this card is the currently selected relation-trace focus.
+  final bool isSelected;
+
+  /// Whether this card should fade out because another table is selected.
+  final bool isDimmed;
+
+  /// Called when the card is tapped.
+  final VoidCallback? onTap;
 
   @override
   State<DatabaseVisualizerTableWidget> createState() =>
@@ -46,112 +59,121 @@ class _DatabaseVisualizerTableWidgetState
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: _visible ? 1 : 0,
+      opacity: _visible ? (widget.isDimmed ? 0.35 : 1) : 0,
       duration: const Duration(milliseconds: 250),
       curve: Curves.easeOut,
       child: AnimatedScale(
         scale: _visible ? 1 : 0.92,
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOut,
-        child: _buildCard(),
+        child: GestureDetector(onTap: widget.onTap, child: _buildCard()),
       ),
     );
   }
 
+  static const double _borderWidth = 2;
+
   Widget _buildCard() {
     final table = widget.table;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       width: 260,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppRadii.md),
+        border: Border.all(
+          color: widget.isSelected ? Colors.black : Colors.transparent,
+          width: _borderWidth,
+        ),
         boxShadow: AppShadows.card,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              vertical: 14,
-              horizontal: 16,
-            ),
-            decoration: const BoxDecoration(
+      // The single source of truth for corner rounding: children below are
+      // plain rectangles, and are inset by the border width so their clip
+      // radius nests exactly under the outer border's curve instead of
+      // fighting it for the same pixels (which produced a visible seam).
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadii.md - _borderWidth),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                vertical: 14,
+                horizontal: 16,
+              ),
               color: Colors.black,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(AppRadii.md),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                const Icon(
-                  Icons.table_chart_rounded,
-                  color: Colors.white,
-                  size: 16,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    table.name.toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 13,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ...table.columns.map((column) {
-            final isFk = column.foreignTable != null;
-
-            return Container(
-              height: 44,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: AppColors.border),
-                ),
-              ),
               child: Row(
                 children: <Widget>[
-                  if (isFk)
-                    const Padding(
-                      padding: EdgeInsets.only(right: 8),
-                      child: Icon(
-                        Icons.link_rounded,
-                        size: 16,
-                        color: AppColors.textMuted,
-                      ),
-                    ),
+                  const Icon(
+                    Icons.table_chart_rounded,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      column.name,
+                      table.name.toUpperCase(),
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
                         fontSize: 13,
-                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.5,
                       ),
-                    ),
-                  ),
-                  Text(
-                    column.type.toLowerCase(),
-                    style: TextStyle(
-                      color: Colors.black.withAlpha(100),
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'monospace',
                     ),
                   ),
                 ],
               ),
-            );
-          }),
-          const SizedBox(height: 12),
-        ],
+            ),
+            ...table.columns.map((column) {
+              final isFk = column.foreignTable != null;
+
+              return Container(
+                height: 44,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: AppColors.border),
+                  ),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    if (isFk)
+                      const Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Icon(
+                          Icons.link_rounded,
+                          size: 16,
+                          color: AppColors.textMuted,
+                        ),
+                      ),
+                    Expanded(
+                      child: Text(
+                        column.name,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      column.type.toLowerCase(),
+                      style: TextStyle(
+                        color: Colors.black.withAlpha(100),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
     );
   }
