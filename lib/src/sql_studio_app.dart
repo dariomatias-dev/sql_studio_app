@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/routes/app_router.dart';
 
@@ -19,6 +18,7 @@ class SqlStudioApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'SQL Studio',
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
       routerConfig: AppRouter.router,
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
