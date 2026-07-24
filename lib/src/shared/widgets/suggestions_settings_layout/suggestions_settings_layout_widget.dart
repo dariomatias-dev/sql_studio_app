@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -103,6 +104,19 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                       ),
                       itemCount: items.length,
                       onReorder: _controller.reorderItems,
+                      proxyDecorator: (child, index, animation) {
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppRadii.md),
+                            boxShadow: AppShadows.card,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(AppRadii.md),
+                            child: child,
+                          ),
+                        );
+                      },
                       itemBuilder: (context, index) {
                         return widget.itemBuilder(items[index], index);
                       },
@@ -140,12 +154,14 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                           const SizedBox(width: 12),
                           FloatingActionButton(
                             onPressed: widget.onAdd,
-                            backgroundColor: AppColors.background,
+                            backgroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(
+                                AppRadii.full,
+                              ),
                             ),
                             tooltip: appLocalizations.createSuggestion,
-                            child: const Icon(Icons.add, color: Colors.black),
+                            child: const Icon(Icons.add, color: Colors.white),
                           ),
                         ],
                       ),

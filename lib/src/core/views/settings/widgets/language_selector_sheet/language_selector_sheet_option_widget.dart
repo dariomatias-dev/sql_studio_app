@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 
 /// A single selectable language option shown in the language selector sheet.
@@ -54,7 +55,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () => _changeLanguage(context, ref),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppRadii.md),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOut,
@@ -63,7 +64,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
               horizontal: 20,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(AppRadii.md),
               color: isSelected ? Colors.black : AppColors.background,
               border: Border.all(
                 color: isSelected ? Colors.black : AppColors.border,

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
@@ -75,14 +76,15 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: CardWidget(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(color: AppColors.border),
         onTap: () {
           ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
               widget.db.name;
           ref.read(navigationViewModelProvider.notifier).index = 0;
         },
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(AppRadii.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -96,7 +98,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       width: 44,
                       decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(AppRadii.sm),
                       ),
                       child: const Icon(
                         Icons.dns_rounded,
@@ -186,10 +188,8 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: AppColors.background,
-                  border: Border(
-                    top: BorderSide(color: AppColors.border),
-                  ),
+                  color: Colors.white,
+                  border: Border(top: BorderSide(color: AppColors.border)),
                 ),
                 child: Row(
                   children: <Widget>[
@@ -200,7 +200,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.background,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(AppRadii.xs),
                         border: Border.all(color: AppColors.border),
                       ),
                       child: Text(

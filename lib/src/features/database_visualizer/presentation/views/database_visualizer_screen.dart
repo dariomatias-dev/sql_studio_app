@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
 
@@ -116,9 +115,6 @@ class _DatabaseVisualizerScreenState
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        shape: const Border(bottom: BorderSide(color: AppColors.background)),
       ),
       body: SafeArea(
         child: tables == null

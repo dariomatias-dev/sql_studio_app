@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 
 /// A styled text form field used throughout the app's forms.
 class InputWidget extends StatelessWidget {
@@ -36,7 +37,7 @@ class InputWidget extends StatelessWidget {
 
   OutlineInputBorder _border(Color color, {double width = 1.0}) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(AppRadii.md),
       borderSide: BorderSide(color: color, width: width),
     );
   }

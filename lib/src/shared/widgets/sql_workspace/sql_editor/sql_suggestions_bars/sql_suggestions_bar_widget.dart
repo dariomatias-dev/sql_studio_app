@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 
 /// Base layout for a horizontally scrollable row of tappable suggestion
@@ -36,7 +37,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: AppColors.border)),
         borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(10),
+          bottom: Radius.circular(AppRadii.xs),
         ),
       ),
       child: ListView.separated(
@@ -48,7 +49,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
           final suggestion = itemBuilder(index);
 
           return InkWell(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(AppRadii.full),
             onTap: () => onTap(index),
             child: Container(
               alignment: Alignment.center,
@@ -58,7 +59,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: AppColors.border),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(AppRadii.full),
                 boxShadow: AppShadows.chip,
               ),
               child: Text(

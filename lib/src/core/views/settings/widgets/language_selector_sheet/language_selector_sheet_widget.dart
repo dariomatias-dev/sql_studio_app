@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/views/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
@@ -20,7 +21,9 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(26)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppRadii.xl),
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -31,7 +34,7 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
             margin: const EdgeInsets.only(bottom: 18),
             decoration: BoxDecoration(
               color: AppColors.controlInactive,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(AppRadii.full),
             ),
           ),
           Text(

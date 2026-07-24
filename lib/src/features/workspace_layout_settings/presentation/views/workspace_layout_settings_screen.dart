@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
@@ -81,23 +82,28 @@ class _WorkspaceLayoutConfigurationScreenState
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                appLocalizations.preview,
+                appLocalizations.preview.toUpperCase(),
                 style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  color: AppColors.textMuted,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
                 ),
               ),
             ),
             const SizedBox(height: 8),
             Expanded(
               child: SafeArea(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: AppColors.border),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadii.md),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(AppRadii.md),
+                      border: Border.all(color: AppColors.border),
+                    ),
+                    child: const SqlWorkspaceWidget(),
                   ),
-                  child: const SqlWorkspaceWidget(),
                 ),
               ),
             ),

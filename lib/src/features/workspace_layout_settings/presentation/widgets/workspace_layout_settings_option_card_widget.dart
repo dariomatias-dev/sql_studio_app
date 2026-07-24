@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
 /// Selectable card representing a single workspace layout option.
@@ -33,6 +34,9 @@ class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardWidget(
       onTap: onTap,
+      border: selected
+          ? Border.all(color: Colors.black.withAlpha(140))
+          : Border.all(color: AppColors.border),
       child: ListTile(
         leading: Icon(icon, color: Colors.black87),
         title: Text(

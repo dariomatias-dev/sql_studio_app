@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
@@ -23,7 +24,7 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
       child: CardWidget(
         child: ListTile(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppRadii.md),
           ),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

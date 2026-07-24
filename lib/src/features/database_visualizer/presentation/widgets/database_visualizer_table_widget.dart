@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
@@ -19,7 +20,7 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
       width: 260,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(AppRadii.md),
         boxShadow: AppShadows.card,
       ),
       child: Column(
@@ -33,7 +34,9 @@ class DatabaseVisualizerTableWidget extends StatelessWidget {
             ),
             decoration: const BoxDecoration(
               color: Colors.black,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppRadii.md),
+              ),
             ),
             child: Row(
               children: <Widget>[

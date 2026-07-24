@@ -78,16 +78,12 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
 
     final textColor = buttonStyle.text;
 
-    return ElevatedButton(
+    return ButtonWidget(
       onPressed: isDisabled ? null : _handlePress,
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(background),
-        foregroundColor: WidgetStateProperty.all<Color>(textColor),
-        overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
-        side: WidgetStateProperty.all<BorderSide>(
-          BorderSide(color: borderColor),
-        ),
-      ),
+      text: widget.text,
+      backgroundColor: background,
+      foregroundColor: textColor,
+      borderColor: borderColor,
       child: _loading
           ? SizedBox(
               height: 18,
@@ -97,7 +93,7 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
                 color: textColor,
               ),
             )
-          : Text(widget.text, style: TextStyle(color: textColor)),
+          : null,
     );
   }
 }

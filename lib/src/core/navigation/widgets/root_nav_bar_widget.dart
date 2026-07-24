@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
@@ -31,7 +32,7 @@ class RootNavBarWidget extends ConsumerWidget {
         height: 72,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(AppRadii.full),
           border: Border.all(color: AppColors.border),
           boxShadow: AppShadows.elevated,
         ),
@@ -47,7 +48,7 @@ class RootNavBarWidget extends ConsumerWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: AppColors.background,
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
               ),
             ),
@@ -86,7 +87,7 @@ class RootNavBarWidget extends ConsumerWidget {
   }
 }
 
-class _NavBarItem extends StatelessWidget {
+class _NavBarItem extends StatefulWidget {
   const _NavBarItem({
     required this.icon,
     required this.activeIcon,
@@ -102,10 +103,28 @@ class _NavBarItem extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_NavBarItem> createState() => _NavBarItemState();
+}
+
+class _NavBarItemState extends State<_NavBarItem> {
+  int _generation = 0;
+
+  @override
+  void didUpdateWidget(covariant _NavBarItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.isSelected != widget.isSelected) {
+      _generation++;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final isSelected = widget.isSelected;
+
     return Expanded(
       child: GestureDetector(
-        onTap: onTap,
+        onTap: widget.onTap,
         behavior: HitTestBehavior.opaque,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,8 +132,8 @@ class _NavBarItem extends StatelessWidget {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               child: Icon(
-                isSelected ? activeIcon : icon,
-                key: ValueKey<IconData>(isSelected ? activeIcon : icon),
+                isSelected ? widget.activeIcon : widget.icon,
+                key: ValueKey<String>('$_generation-$isSelected'),
                 size: 24,
                 color: isSelected ? Colors.black : AppColors.textMuted,
               ),
@@ -128,7 +147,7 @@ class _NavBarItem extends StatelessWidget {
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
                 letterSpacing: 0.8,
               ),
-              child: Text(label.toUpperCase()),
+              child: Text(widget.label.toUpperCase()),
             ),
           ],
         ),

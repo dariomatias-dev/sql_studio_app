@@ -16,6 +16,7 @@ class ScaffoldWidget extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
+    this.backgroundColor = Colors.white,
   });
 
   /// App bar configuration. When `null`, no app bar is shown.
@@ -36,13 +37,21 @@ class ScaffoldWidget extends StatelessWidget {
   /// Optional bottom navigation bar.
   final Widget? bottomNavigationBar;
 
+  /// Scaffold body background. Defaults to white.
+  final Color backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: backgroundColor,
       appBar: appBar != null
           ? AppBar(
               backgroundColor: Colors.white,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              shape: const Border(
+                bottom: BorderSide(color: AppColors.border),
+              ),
               leading: showExitButton
                   ? IconButton(
                       onPressed: context.pop,

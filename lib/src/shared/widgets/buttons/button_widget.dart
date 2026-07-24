@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 
 /// Visual style presets shared by the button widgets.
@@ -28,13 +29,18 @@ class ButtonWidget extends StatelessWidget {
     this.padding,
     this.width,
     this.height = 52.0,
+    this.child,
   });
 
-  /// Called when the button is tapped.
-  final VoidCallback onPressed;
+  /// Called when the button is tapped. When `null`, the button is
+  /// disabled.
+  final VoidCallback? onPressed;
 
   /// Label displayed inside the button.
   final String text;
+
+  /// Overrides the default [Text] label, e.g. to show a loading spinner.
+  final Widget? child;
 
   /// Visual style preset applied to the button.
   final ButtonStyleType style;
@@ -74,28 +80,30 @@ class ButtonWidget extends StatelessWidget {
       height: height,
       child: Material(
         color: buttonStyle.background,
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(AppRadii.full),
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(AppRadii.full),
           highlightColor: Colors.white.withAlpha(20),
           splashColor: Colors.white.withAlpha(20),
           child: Container(
             padding: padding ?? const EdgeInsets.symmetric(horizontal: 32),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
+              borderRadius: BorderRadius.circular(AppRadii.full),
               border: Border.all(color: buttonStyle.border),
             ),
             child: Center(
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: buttonStyle.text,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.2,
-                ),
-              ),
+              child:
+                  child ??
+                  Text(
+                    text,
+                    style: TextStyle(
+                      color: buttonStyle.text,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.2,
+                    ),
+                  ),
             ),
           ),
         ),

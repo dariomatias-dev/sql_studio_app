@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/switch_widget.dart';
@@ -39,13 +41,14 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => onChanged(!active),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(AppRadii.lg),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: active ? const Color(0xFFFBFBFB) : Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(AppRadii.lg),
+            border: Border.all(color: AppColors.border),
             boxShadow: AppShadows.card,
           ),
           child: Column(
@@ -86,7 +89,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
               if (active && onConfigure != null) ...<Widget>[
                 const SizedBox(height: 20),
                 ButtonWidget(
-                  onPressed: onConfigure!,
+                  onPressed: onConfigure,
                   text: AppLocalizations.of(context)!.configure,
                   width: double.infinity,
                   height: 42,
