@@ -162,6 +162,8 @@
   "languageUpdated": "Language updated to {lang}.",
   "loading": "Loading...",
   "theDatabaseIsEmpty": "The database is empty",
+  "noDatabasesYet": "No databases yet",
+  "noSuggestionsYet": "No suggestions yet",
   "toggleTheme": "Toggle Theme",
   "screenNotFound": "Screen Not Found",
   "screenNotFoundDescription": "The screen you are looking for does not exist or has been moved.",

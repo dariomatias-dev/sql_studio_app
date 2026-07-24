@@ -162,6 +162,8 @@
   "languageUpdated": "Idioma actualizado a {lang}.",
   "loading": "Cargando...",
   "theDatabaseIsEmpty": "La base de datos está vacía",
+  "noDatabasesYet": "Aún no hay bases de datos",
+  "noSuggestionsYet": "Aún no hay sugerencias",
   "toggleTheme": "Cambiar tema",
   "screenNotFound": "Pantalla no encontrada",
   "screenNotFoundDescription": "La pantalla que buscas no existe o ha sido movida.",

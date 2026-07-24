@@ -3,15 +3,13 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
-
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/database_visualizer_table_widget.dart';
-
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 /// Screen that renders an interactive diagram of a database's tables and
 /// their relations.
@@ -118,12 +116,11 @@ class _DatabaseVisualizerScreenState
       ),
       body: SafeArea(
         child: tables == null
-            ? const Center(
-                child: CircularProgressIndicator(color: Colors.black),
-              )
+            ? const LoadingStateWidget()
             : tables.isEmpty
-            ? Center(
-                child: Text(AppLocalizations.of(context)!.theDatabaseIsEmpty),
+            ? EmptyStateWidget(
+                message: AppLocalizations.of(context)!.theDatabaseIsEmpty,
+                icon: Icons.table_chart_outlined,
               )
             : LayoutBuilder(
                 builder: (context, constraints) {

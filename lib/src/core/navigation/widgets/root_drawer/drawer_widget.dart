@@ -6,6 +6,8 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_d
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 /// App-wide navigation drawer listing favorite and other databases, with
 /// search and database creation entry points.
@@ -86,11 +88,13 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
             const SizedBox(height: 24),
             Expanded(
               child: state.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.black,
-                        strokeWidth: 2,
-                      ),
+                  ? const LoadingStateWidget(size: 24)
+                  : state.favorites.isEmpty &&
+                        state.others.isEmpty &&
+                        _searchController.text.isEmpty
+                  ? EmptyStateWidget(
+                      message: l10n.noDatabasesYet,
+                      icon: Icons.dns_outlined,
                     )
                   : ListView(
                       physics: const BouncingScrollPhysics(),

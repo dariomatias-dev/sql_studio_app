@@ -128,7 +128,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get attention => 'Attention';
 
   @override
-  String get deleteDatabaseConfirmation => 'Are you sure you want to permanently delete this database? This action cannot be undone.';
+  String get deleteDatabaseConfirmation =>
+      'Are you sure you want to permanently delete this database? This action cannot be undone.';
 
   @override
   String get toDoListLabel => 'To-Do List';
@@ -164,55 +165,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restaurantLabel => 'Restaurant';
 
   @override
-  String get restaurantDescription => 'Restaurant orders and menu items database';
+  String get restaurantDescription =>
+      'Restaurant orders and menu items database';
 
   @override
   String get hrPayrollLabel => 'HR Payroll';
 
   @override
-  String get hrPayrollDescription => 'Company departments, job positions, employees, and salary history';
+  String get hrPayrollDescription =>
+      'Company departments, job positions, employees, and salary history';
 
   @override
   String get logisticsLabel => 'Logistics';
 
   @override
-  String get logisticsDescription => 'Packages, drivers, deliveries, and status history database';
+  String get logisticsDescription =>
+      'Packages, drivers, deliveries, and status history database';
 
   @override
   String get pharmacyLabel => 'Pharmacy';
 
   @override
-  String get pharmacyDescription => 'Pharmacy inventory, suppliers, customers, and sales database';
+  String get pharmacyDescription =>
+      'Pharmacy inventory, suppliers, customers, and sales database';
 
   @override
   String get schoolLabel => 'School';
 
   @override
-  String get schoolDescription => 'School management with students, teachers, classes, enrollments, and grades';
+  String get schoolDescription =>
+      'School management with students, teachers, classes, enrollments, and grades';
 
   @override
   String get socialNetworkLabel => 'Social Network';
 
   @override
-  String get socialNetworkDescription => 'Social media with users, posts, likes, comments, and followers';
+  String get socialNetworkDescription =>
+      'Social media with users, posts, likes, comments, and followers';
 
   @override
   String get hotelLabel => 'Hotel';
 
   @override
-  String get hotelDescription => 'Hotel reservations, rooms, payments, employees, and services database';
+  String get hotelDescription =>
+      'Hotel reservations, rooms, payments, employees, and services database';
 
   @override
   String get bankingLabel => 'Banking';
 
   @override
-  String get bankingDescription => 'Banking system with accounts, transactions, loans, and employees';
+  String get bankingDescription =>
+      'Banking system with accounts, transactions, loans, and employees';
 
   @override
   String get eCommerceLabel => 'E-Commerce';
 
   @override
-  String get eCommerceDescription => 'Online store with products, orders, carts, and reviews';
+  String get eCommerceDescription =>
+      'Online store with products, orders, carts, and reviews';
 
   @override
   String get openFullscreen => 'Open Fullscreen';
@@ -254,13 +264,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get basicSuggestions => 'Basic Suggestions';
 
   @override
-  String get basicSuggestionsDescription => 'Displays full SQL examples like \"SELECT * FROM\". Ideal for quick queries.';
+  String get basicSuggestionsDescription =>
+      'Displays full SQL examples like \"SELECT * FROM\". Ideal for quick queries.';
 
   @override
   String get advancedSuggestions => 'Advanced Suggestions';
 
   @override
-  String get advancedSuggestionsDescription => 'Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.';
+  String get advancedSuggestionsDescription =>
+      'Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.';
 
   @override
   String get otherSuggestions => 'Other Suggestions';
@@ -269,16 +281,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get characterSuggestions => 'Character Suggestions';
 
   @override
-  String get characterSuggestionsDescription => 'Adds quick buttons to >, =, !, %, ; and more.';
+  String get characterSuggestionsDescription =>
+      'Adds quick buttons to >, =, !, %, ; and more.';
 
   @override
   String get saveSettings => 'Save Settings';
 
   @override
-  String get advancedSuggestionsInitialized => 'Advanced suggestions have been initialized successfully.';
+  String get advancedSuggestionsInitialized =>
+      'Advanced suggestions have been initialized successfully.';
 
   @override
-  String get advancedSuggestionsFailed => 'Failed to initialize advanced suggestions.';
+  String get advancedSuggestionsFailed =>
+      'Failed to initialize advanced suggestions.';
 
   @override
   String get settingsSavedSuccessfully => 'Settings saved successfully!';
@@ -305,7 +320,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removeSuggestion => 'Remove Suggestion';
 
   @override
-  String get removeSuggestionDescription => 'Are you sure you want to remove this suggestion?';
+  String get removeSuggestionDescription =>
+      'Are you sure you want to remove this suggestion?';
 
   @override
   String get remove => 'Remove';
@@ -314,7 +330,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetSuggestions => 'Reset Suggestions';
 
   @override
-  String get resetSuggestionsDescription => 'Are you sure you want to reset the suggestion list?';
+  String get resetSuggestionsDescription =>
+      'Are you sure you want to reset the suggestion list?';
 
   @override
   String get reset => 'Reset';
@@ -337,13 +354,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suggestionDeleteFailed => 'Failed to delete suggestion.';
 
   @override
-  String get resetSuggestionsConfirm => 'Are you sure you want to reset the suggestions?';
+  String get resetSuggestionsConfirm =>
+      'Are you sure you want to reset the suggestions?';
 
   @override
-  String get suggestionsResetSuccess => 'All suggestions have been reset successfully.';
+  String get suggestionsResetSuccess =>
+      'All suggestions have been reset successfully.';
 
   @override
-  String get suggestionsResetFailed => 'Failed to reset suggestions. Please try again.';
+  String get suggestionsResetFailed =>
+      'Failed to reset suggestions. Please try again.';
 
   @override
   String get label => 'Label';
@@ -355,7 +375,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectableTextOptional => 'Selectable Text (optional)';
 
   @override
-  String get selectableTextHint => 'Part of SQL to auto-select for user replacement';
+  String get selectableTextHint =>
+      'Part of SQL to auto-select for user replacement';
 
   @override
   String get fieldRequired => 'This field is required';
@@ -388,7 +409,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error => 'Error';
 
   @override
-  String get failedToSaveWorkspaceLayout => 'Failed to save workspace layout. Please try again.';
+  String get failedToSaveWorkspaceLayout =>
+      'Failed to save workspace layout. Please try again.';
 
   @override
   String databaseCreationError(Object databaseName) {
@@ -399,7 +421,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fetchDatabasesError => 'Could not fetch the created databases.';
 
   @override
-  String get checkDatabaseExistsError => 'Unable to check if the database already exists.';
+  String get checkDatabaseExistsError =>
+      'Unable to check if the database already exists.';
 
   @override
   String deleteDatabaseError(Object databaseName) {
@@ -432,28 +455,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToLoadSqlSuggestions => 'Failed to load SQL suggestions';
 
   @override
-  String get failedToSaveSqlSuggestionsSettings => 'Failed to save SQL suggestions settings';
+  String get failedToSaveSqlSuggestionsSettings =>
+      'Failed to save SQL suggestions settings';
 
   @override
-  String get failedToLoadAdvancedSuggestions => 'Failed to load advanced suggestions';
+  String get failedToLoadAdvancedSuggestions =>
+      'Failed to load advanced suggestions';
 
   @override
-  String get failedToAddAdvancedSuggestion => 'Failed to add advanced suggestion';
+  String get failedToAddAdvancedSuggestion =>
+      'Failed to add advanced suggestion';
 
   @override
-  String get failedToUpdateAdvancedSuggestion => 'Failed to update advanced suggestion';
+  String get failedToUpdateAdvancedSuggestion =>
+      'Failed to update advanced suggestion';
 
   @override
-  String get failedToRemoveAdvancedSuggestion => 'Failed to remove advanced suggestion';
+  String get failedToRemoveAdvancedSuggestion =>
+      'Failed to remove advanced suggestion';
 
   @override
-  String get failedToSaveAllAdvancedSuggestions => 'Failed to save all advanced suggestions';
+  String get failedToSaveAllAdvancedSuggestions =>
+      'Failed to save all advanced suggestions';
 
   @override
-  String get failedToReorderAdvancedSuggestions => 'Failed to reorder advanced suggestions';
+  String get failedToReorderAdvancedSuggestions =>
+      'Failed to reorder advanced suggestions';
 
   @override
-  String get failedToResetAdvancedSuggestions => 'Failed to reset advanced suggestions';
+  String get failedToResetAdvancedSuggestions =>
+      'Failed to reset advanced suggestions';
 
   @override
   String get failedToLoadBasicSuggestions => 'Failed to load basic suggestions';
@@ -462,13 +493,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToAddBasicSuggestion => 'Failed to add basic suggestion';
 
   @override
-  String get failedToUpdateBasicSuggestions => 'Failed to update basic suggestions';
+  String get failedToUpdateBasicSuggestions =>
+      'Failed to update basic suggestions';
 
   @override
-  String get failedToRemoveBasicSuggestion => 'Failed to remove basic suggestion';
+  String get failedToRemoveBasicSuggestion =>
+      'Failed to remove basic suggestion';
 
   @override
-  String get failedToResetBasicSuggestions => 'Failed to reset basic suggestions';
+  String get failedToResetBasicSuggestions =>
+      'Failed to reset basic suggestions';
 
   @override
   String failedToLoadSqlFiles(Object error) {
@@ -518,13 +552,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theDatabaseIsEmpty => 'The database is empty';
 
   @override
+  String get noDatabasesYet => 'No databases yet';
+
+  @override
+  String get noSuggestionsYet => 'No suggestions yet';
+
+  @override
   String get toggleTheme => 'Toggle Theme';
 
   @override
   String get screenNotFound => 'Screen Not Found';
 
   @override
-  String get screenNotFoundDescription => 'The screen you are looking for does not exist or has been moved.';
+  String get screenNotFoundDescription =>
+      'The screen you are looking for does not exist or has been moved.';
 
   @override
   String get goHome => 'Go Home';

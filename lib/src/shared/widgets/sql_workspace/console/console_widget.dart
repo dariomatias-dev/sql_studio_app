@@ -8,6 +8,7 @@ import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/error_state_widget.dart';
 
 /// Displays the result of the last executed SQL command, showing a loading
 /// indicator, an error message, or the resulting data table as appropriate.
@@ -58,15 +59,8 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
         ),
       );
     } else if (state.error != null) {
-      content = SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          appLocalizations.key(state.error!, state.errorArgs ?? {}),
-          style: const TextStyle(
-            color: AppColors.error,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      content = ErrorStateWidget(
+        message: appLocalizations.key(state.error!, state.errorArgs ?? {}),
       );
     } else if (state.result == null) {
       content = const SizedBox.shrink();
