@@ -17,6 +17,7 @@ class ScaffoldWidget extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.backgroundColor = Colors.white,
+    this.resizeToAvoidBottomInset = true,
   });
 
   /// App bar configuration. When `null`, no app bar is shown.
@@ -40,9 +41,15 @@ class ScaffoldWidget extends StatelessWidget {
   /// Scaffold body background. Defaults to white.
   final Color backgroundColor;
 
+  /// Whether the body resizes to avoid the keyboard. Defaults to `true`;
+  /// set `false` when the body already manages its own scroll-into-view
+  /// (e.g. a code editor), so its layout doesn't reflow with the keyboard.
+  final bool resizeToAvoidBottomInset;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: backgroundColor,
       appBar: appBar != null
           ? AppBar(

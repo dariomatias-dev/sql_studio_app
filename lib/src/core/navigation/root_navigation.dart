@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_nav_bar_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_swipe_wrapper_widget.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
-
 import 'package:sql_studio/src/core/views/home/home_screen.dart';
 import 'package:sql_studio/src/core/views/settings/settings_screen.dart';
 import 'package:sql_studio/src/features/database/presentation/views/databases_screen.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 
 /// Root scaffold hosting the app's drawer, swipeable pages, and bottom
 /// navigation bar.
@@ -25,12 +24,37 @@ class RootNavigation extends ConsumerStatefulWidget {
 class _RootNavigationState extends ConsumerState<RootNavigation> {
   late final PageController _pageController;
   late final ProviderSubscription<int> _indexSubscription;
+  late final FocusNode _editorFocusNode;
 
-  List<Widget> get _screens => <Widget>[
-    const HomeScreen(),
-    const DatabasesScreen(),
-    const SettingsScreen(),
+  bool _isEditorFocused = false;
+
+  void _onEditorFocusChanged() {
+    setState(() => _isEditorFocused = _editorFocusNode.hasFocus);
+  }
+
+  List<Widget> _screens(double bottomInset) => <Widget>[
+    HomeScreen(navBarInset: bottomInset),
+    _withBottomInset(bottomInset, const DatabasesScreen()),
+    _withBottomInset(bottomInset, const SettingsScreen()),
   ];
+
+  /// Patches the ancestor [MediaQuery] bottom padding so screens with
+  /// scrollable content (via their [SafeArea]) inset around the floating
+  /// nav bar instead of being covered by it.
+  Widget _withBottomInset(double bottomInset, Widget child) {
+    return Builder(
+      builder: (context) {
+        final mediaQuery = MediaQuery.of(context);
+
+        return MediaQuery(
+          data: mediaQuery.copyWith(
+            padding: mediaQuery.padding.copyWith(bottom: bottomInset),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
 
   void _onIndexChanged(int? previous, int page) {
     if (!_pageController.hasClients) return;
@@ -55,15 +79,21 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
       navigationViewModelProvider,
       _onIndexChanged,
     );
+
+    _editorFocusNode = ref.read(sqlEditorViewModelProvider.notifier).focusNode
+      ..addListener(_onEditorFocusChanged);
   }
 
   @override
   void dispose() {
     _indexSubscription.close();
     _pageController.dispose();
+    _editorFocusNode.removeListener(_onEditorFocusChanged);
 
     super.dispose();
   }
+
+  static const double _navBarHeight = 64;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +102,7 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -84,26 +115,52 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
           ),
         ),
         drawer: const RootDrawerWidget(),
-        body: Stack(
-          children: <Widget>[
-            RootSwipeWrapperWidget(
-              pageController: _pageController,
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (page) => notifier.index = page,
-                children: _screens,
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: RootSwipeWrapperWidget(
-                pageController: _pageController,
-                child: RootNavBarWidget(pageController: _pageController),
-              ),
-            ),
-          ],
+        body: Builder(
+          builder: (bodyContext) {
+            final isKeyboardOpen =
+                MediaQuery.viewInsetsOf(bodyContext).bottom > 0;
+            final hideNavBar = _isEditorFocused && isKeyboardOpen;
+            final bottomInset = hideNavBar
+                ? 0.0
+                : _navBarHeight + MediaQuery.of(bodyContext).padding.bottom;
+
+            return Stack(
+              children: <Widget>[
+                RootSwipeWrapperWidget(
+                  pageController: _pageController,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (page) => notifier.index = page,
+                    children: _screens(bottomInset),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: IgnorePointer(
+                    ignoring: hideNavBar,
+                    child: AnimatedSlide(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOut,
+                      offset: hideNavBar ? const Offset(0, 1) : Offset.zero,
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOut,
+                        opacity: hideNavBar ? 0 : 1,
+                        child: RootSwipeWrapperWidget(
+                          pageController: _pageController,
+                          child: RootNavBarWidget(
+                            pageController: _pageController,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

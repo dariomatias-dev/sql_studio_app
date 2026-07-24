@@ -26,6 +26,8 @@ class SqlEditorController {
 
     if (sql.isEmpty) return;
 
+    FocusManager.instance.primaryFocus?.unfocus();
+
     unawaited(commands.runQuery(sql));
 
     if (onQueryRun != null) onQueryRun();

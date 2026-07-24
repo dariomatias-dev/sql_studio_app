@@ -6,7 +6,11 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget
 /// The application's home screen, hosting the SQL workspace.
 class HomeScreen extends StatefulWidget {
   /// Creates the home screen.
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.navBarInset = 0});
+
+  /// Space taken by the floating bottom nav bar, so the workspace's
+  /// scrollable content (not its background) can clear it.
+  final double navBarInset;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,9 +25,12 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return const ScaffoldWidget(
+    return ScaffoldWidget(
       showExitButton: false,
-      body: SqlWorkspaceWidget(),
+      body: Padding(
+        padding: EdgeInsets.only(bottom: widget.navBarInset),
+        child: const SqlWorkspaceWidget(),
+      ),
     );
   }
 }
