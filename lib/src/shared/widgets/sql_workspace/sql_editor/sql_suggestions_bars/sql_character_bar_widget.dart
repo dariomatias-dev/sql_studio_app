@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
 /// Special characters commonly used in SQL statements, shown as quick
 /// insertion buttons in [SqlCharacterBarWidget].
@@ -17,42 +16,11 @@ class SqlCharacterBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      width: double.infinity,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: <Widget>[
-            for (int i = 0; i < characters.length; i++) ...<Widget>[
-              GestureDetector(
-                onTap: () => onInsertCommand(characters[i]),
-                child: Container(
-                  width: 44,
-                  height: 32,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text(
-                      characters[i],
-                      style: const TextStyle(
-                        color: Colors.black87,
-                        fontFamily: 'monospace',
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              if (i < characters.length - 1)
-                Container(
-                  height: 20,
-                  width: 1,
-                  color: AppColors.controlInactive,
-                ),
-            ],
-          ],
-        ),
-      ),
+    return SqlSuggestionsBarBaseWidget(
+      onTap: (index) => onInsertCommand(characters[index]),
+      itemCount: characters.length,
+      itemPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      itemBuilder: (index) => characters[index],
     );
   }
 }

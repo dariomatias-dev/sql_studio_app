@@ -93,7 +93,7 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
     super.dispose();
   }
 
-  static const double _navBarHeight = 64;
+  static const double _navBarHeight = 68;
 
   @override
   Widget build(BuildContext context) {

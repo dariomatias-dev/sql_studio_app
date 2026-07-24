@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 
@@ -19,7 +18,10 @@ class DividerBarWidget extends StatelessWidget {
       onVerticalDragUpdate: onDragUpdate,
       child: Container(
         height: 12,
-        color: AppColors.surface,
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          border: Border(top: BorderSide(color: AppColors.border)),
+        ),
         child: Center(
           child: Container(
             width: 40,
