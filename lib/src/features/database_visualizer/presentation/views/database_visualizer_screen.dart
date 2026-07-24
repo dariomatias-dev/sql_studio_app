@@ -167,7 +167,8 @@ class _DatabaseVisualizerScreenState
                                   tableColumnRowHeight: _tableColumnRowHeight,
                                 ),
                               ),
-                              ...tables.map((table) {
+                              ...tables.indexed.map((entry) {
+                                final (index, table) = entry;
                                 final rect = _tableRects[table.name];
                                 if (rect == null) return const SizedBox();
 
@@ -178,6 +179,7 @@ class _DatabaseVisualizerScreenState
                                   height: rect.height,
                                   child: DatabaseVisualizerTableWidget(
                                     table: table,
+                                    entryIndex: index,
                                   ),
                                 );
                               }),

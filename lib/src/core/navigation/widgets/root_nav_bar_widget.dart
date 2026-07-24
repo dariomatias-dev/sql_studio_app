@@ -108,6 +108,7 @@ class _NavBarItem extends StatefulWidget {
 
 class _NavBarItemState extends State<_NavBarItem> {
   int _generation = 0;
+  bool _pressed = false;
 
   @override
   void didUpdateWidget(covariant _NavBarItem oldWidget) {
@@ -125,31 +126,39 @@ class _NavBarItemState extends State<_NavBarItem> {
     return Expanded(
       child: GestureDetector(
         onTap: widget.onTap,
+        onTapDown: (_) => setState(() => _pressed = true),
+        onTapUp: (_) => setState(() => _pressed = false),
+        onTapCancel: () => setState(() => _pressed = false),
         behavior: HitTestBehavior.opaque,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: Icon(
-                isSelected ? widget.activeIcon : widget.icon,
-                key: ValueKey<String>('$_generation-$isSelected'),
-                size: 24,
-                color: isSelected ? Colors.black : AppColors.textMuted,
+        child: AnimatedScale(
+          scale: _pressed ? 0.92 : 1,
+          duration: const Duration(milliseconds: 120),
+          curve: Curves.easeOut,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Icon(
+                  isSelected ? widget.activeIcon : widget.icon,
+                  key: ValueKey<String>('$_generation-$isSelected'),
+                  size: 24,
+                  color: isSelected ? Colors.black : AppColors.textMuted,
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 200),
-              style: TextStyle(
-                color: isSelected ? Colors.black : AppColors.textMuted,
-                fontSize: 10,
-                fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
-                letterSpacing: 0.8,
+              const SizedBox(height: 4),
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 200),
+                style: TextStyle(
+                  color: isSelected ? Colors.black : AppColors.textMuted,
+                  fontSize: 10,
+                  fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
+                  letterSpacing: 0.8,
+                ),
+                child: Text(widget.label.toUpperCase()),
               ),
-              child: Text(widget.label.toUpperCase()),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

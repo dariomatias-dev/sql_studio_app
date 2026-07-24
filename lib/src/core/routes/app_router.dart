@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
@@ -10,6 +11,48 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_a
 import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_basic_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_suggestion_settings_screen.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/views/workspace_layout_settings_screen.dart';
+
+/// Builds a [CustomTransitionPage] with a lateral slide transition used
+/// across the app's routes for a consistent feel: the incoming screen
+/// slides in from the right while the outgoing one shifts slightly to the
+/// left, mirroring a standard directional push navigation.
+CustomTransitionPage<void> _buildPage({
+  required LocalKey key,
+  required Widget child,
+}) {
+  return CustomTransitionPage<void>(
+    key: key,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 280),
+    reverseTransitionDuration: const Duration(milliseconds: 280),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final incoming = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      final outgoing = CurvedAnimation(
+        parent: secondaryAnimation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).animate(incoming),
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: Offset.zero,
+            end: const Offset(-0.25, 0),
+          ).animate(outgoing),
+          child: child,
+        ),
+      );
+    },
+  );
+}
 
 /// Configures and exposes the application's [GoRouter] instance.
 class AppRouter {
@@ -31,15 +74,21 @@ class AppRouter {
           GoRoute(
             name: RouteNames.database,
             path: RoutePaths.database,
-            builder: (context, state) => const DatabaseScreen(),
+            pageBuilder: (context, state) => _buildPage(
+              key: state.pageKey,
+              child: const DatabaseScreen(),
+            ),
           ),
           GoRoute(
             name: RouteNames.databaseVisualizer,
             path: RoutePaths.databaseVisualizer,
-            builder: (context, state) {
+            pageBuilder: (context, state) {
               final databaseName = state.pathParameters['dbName']!;
 
-              return DatabaseVisualizerScreen(databaseName: databaseName);
+              return _buildPage(
+                key: state.pageKey,
+                child: DatabaseVisualizerScreen(databaseName: databaseName),
+              );
             },
           ),
         ],
@@ -47,23 +96,34 @@ class AppRouter {
       GoRoute(
         name: RouteNames.sqlBasicSuggestionSettings,
         path: RoutePaths.sqlBasicSuggestionSettings,
-        builder: (context, state) => const SqlBasicSuggestionsSettingsScreen(),
+        pageBuilder: (context, state) => _buildPage(
+          key: state.pageKey,
+          child: const SqlBasicSuggestionsSettingsScreen(),
+        ),
       ),
       GoRoute(
         name: RouteNames.sqlAdvancedSuggestionSettings,
         path: RoutePaths.sqlAdvancedSuggestionSettings,
-        builder: (context, state) =>
-            const SqlAdvancedSuggestionSettingsScreen(),
+        pageBuilder: (context, state) => _buildPage(
+          key: state.pageKey,
+          child: const SqlAdvancedSuggestionSettingsScreen(),
+        ),
       ),
       GoRoute(
         name: RouteNames.workspaceLayoutSettings,
         path: RoutePaths.workspaceLayoutSettings,
-        builder: (context, state) => const WorkspaceLayoutSettingsScreen(),
+        pageBuilder: (context, state) => _buildPage(
+          key: state.pageKey,
+          child: const WorkspaceLayoutSettingsScreen(),
+        ),
       ),
       GoRoute(
         name: RouteNames.sqlSuggestionSettings,
         path: RoutePaths.sqlSuggestionSettings,
-        builder: (context, state) => const SqlSuggestionSettingsScreen(),
+        pageBuilder: (context, state) => _buildPage(
+          key: state.pageKey,
+          child: const SqlSuggestionSettingsScreen(),
+        ),
       ),
     ],
   );

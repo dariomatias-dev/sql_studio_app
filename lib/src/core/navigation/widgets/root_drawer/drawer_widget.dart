@@ -87,30 +87,38 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
             ),
             const SizedBox(height: 24),
             Expanded(
-              child: state.isLoading
-                  ? const LoadingStateWidget(size: 24)
-                  : state.favorites.isEmpty &&
-                        state.others.isEmpty &&
-                        _searchController.text.isEmpty
-                  ? EmptyStateWidget(
-                      message: l10n.noDatabasesYet,
-                      icon: Icons.dns_outlined,
-                    )
-                  : ListView(
-                      physics: const BouncingScrollPhysics(),
-                      children: <Widget>[
-                        RootDrawerDatabaseGroupWidget(
-                          title: l10n.favorites,
-                          databases: state.favorites,
-                        ),
-                        const SizedBox(height: 12),
-                        RootDrawerDatabaseGroupWidget(
-                          title: l10n.allDatabases,
-                          databases: state.others,
-                        ),
-                        const SizedBox(height: 100),
-                      ],
-                    ),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: state.isLoading
+                    ? const LoadingStateWidget(
+                        key: ValueKey('drawer_loading'),
+                        size: 24,
+                      )
+                    : state.favorites.isEmpty &&
+                          state.others.isEmpty &&
+                          _searchController.text.isEmpty
+                    ? EmptyStateWidget(
+                        key: const ValueKey('drawer_empty'),
+                        message: l10n.noDatabasesYet,
+                        icon: Icons.dns_outlined,
+                      )
+                    : ListView(
+                        key: const ValueKey('drawer_list'),
+                        physics: const BouncingScrollPhysics(),
+                        children: <Widget>[
+                          RootDrawerDatabaseGroupWidget(
+                            title: l10n.favorites,
+                            databases: state.favorites,
+                          ),
+                          const SizedBox(height: 12),
+                          RootDrawerDatabaseGroupWidget(
+                            title: l10n.allDatabases,
+                            databases: state.others,
+                          ),
+                          const SizedBox(height: 100),
+                        ],
+                      ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),

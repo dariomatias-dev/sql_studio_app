@@ -44,8 +44,10 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
     final commands = ref.read(sqlCommandsViewModelProvider.notifier);
 
     Widget content;
+    var contentKind = 'empty';
 
     if (state.isLoading) {
+      contentKind = 'loading';
       content = const Align(
         child: Padding(
           padding: EdgeInsets.all(16),
@@ -59,6 +61,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
         ),
       );
     } else if (state.error != null) {
+      contentKind = 'error';
       content = ErrorStateWidget(
         message: appLocalizations.key(state.error!, state.errorArgs ?? {}),
       );
@@ -72,6 +75,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
           final rows = result.result! as List<Map<String, dynamic>>;
 
           if (rows.isEmpty) {
+            contentKind = 'columns';
             content = FutureBuilder<List<String>>(
               future: commands.getTableColumns(
                 _controller.extractTableName(state),
@@ -97,6 +101,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
           } else {
             final columns = rows.first.keys.toList();
 
+            contentKind = 'rows';
             content = Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: SingleChildScrollView(
@@ -119,6 +124,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
               ? appLocalizations.key(result.type!, result.args)
               : '';
 
+          contentKind = 'message';
           content = Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
@@ -143,7 +149,10 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
           icon: const Icon(Icons.clear_rounded),
         ),
       ],
-      child: content,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        child: KeyedSubtree(key: ValueKey(contentKind), child: content),
+      ),
     );
   }
 }

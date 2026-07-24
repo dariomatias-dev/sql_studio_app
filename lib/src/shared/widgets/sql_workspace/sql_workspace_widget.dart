@@ -49,6 +49,24 @@ class _SqlWorkspaceWidgetState extends ConsumerState<SqlWorkspaceWidget>
   Widget build(BuildContext context) {
     final layoutType = ref.watch(workspaceLayoutViewModelProvider);
 
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 220),
+      child: KeyedSubtree(
+        key: ValueKey(
+          layoutType == WorkspaceLayoutType.tabs
+              ? 'tabs'
+              : _editorMaximized
+              ? 'editor_maximized'
+              : _consoleMaximized
+              ? 'console_maximized'
+              : 'split',
+        ),
+        child: _buildContent(layoutType),
+      ),
+    );
+  }
+
+  Widget _buildContent(WorkspaceLayoutType layoutType) {
     if (layoutType == WorkspaceLayoutType.tabs) {
       return Column(
         children: <Widget>[
