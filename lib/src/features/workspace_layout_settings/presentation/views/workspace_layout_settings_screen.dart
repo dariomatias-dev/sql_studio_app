@@ -3,18 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
 import 'package:sql_studio/src/core/app_colors.dart';
-import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
-
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
-
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/widgets/workspace_layout_settings_option_card_widget.dart';
-
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
@@ -94,16 +88,14 @@ class _WorkspaceLayoutConfigurationScreenState
             const SizedBox(height: 8),
             Expanded(
               child: SafeArea(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadii.md),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      border: Border.all(color: AppColors.border),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border.fromBorderSide(
+                      BorderSide(color: AppColors.border),
                     ),
-                    child: const SqlWorkspaceWidget(),
                   ),
+                  child: const SqlWorkspaceWidget(),
                 ),
               ),
             ),
