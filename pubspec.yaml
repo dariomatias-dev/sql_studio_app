@@ -45,9 +45,3 @@ flutter:
     - assets/icons/
     - assets/sql/schemas/
     - assets/sql/seeds/
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/sql_studio_icon.png"
-  min_sdk_android: 21
