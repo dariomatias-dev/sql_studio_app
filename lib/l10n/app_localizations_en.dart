@@ -629,4 +629,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get databaseSection => 'Database';
+
+  @override
+  String get nothingToDownload => 'There is nothing to download';
+
+  @override
+  String get sqlDownloaded => 'Query saved as a .sql file';
+
+  @override
+  String get nothingToLoad => 'No previous query to load';
+
+  @override
+  String get lastSqlLoaded => 'Last query loaded';
 }

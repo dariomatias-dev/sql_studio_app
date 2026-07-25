@@ -185,5 +185,9 @@
   "nothingToCopy": "There is nothing to copy",
   "sqlCopied": "SQL copied to clipboard",
   "currentQuerySection": "Current query",
-  "databaseSection": "Database"
+  "databaseSection": "Database",
+  "nothingToDownload": "There is nothing to download",
+  "sqlDownloaded": "Query saved as a .sql file",
+  "nothingToLoad": "No previous query to load",
+  "lastSqlLoaded": "Last query loaded"
 }

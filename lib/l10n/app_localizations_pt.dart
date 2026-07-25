@@ -636,4 +636,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get databaseSection => 'Banco de dados';
+
+  @override
+  String get nothingToDownload => 'Não há nada para baixar';
+
+  @override
+  String get sqlDownloaded => 'Consulta salva como arquivo .sql';
+
+  @override
+  String get nothingToLoad => 'Não há consulta anterior para carregar';
+
+  @override
+  String get lastSqlLoaded => 'Última consulta carregada';
 }

@@ -185,5 +185,9 @@
   "nothingToCopy": "Não há nada para copiar",
   "sqlCopied": "SQL copiado para a área de transferência",
   "currentQuerySection": "Consulta atual",
-  "databaseSection": "Banco de dados"
+  "databaseSection": "Banco de dados",
+  "nothingToDownload": "Não há nada para baixar",
+  "sqlDownloaded": "Consulta salva como arquivo .sql",
+  "nothingToLoad": "Não há consulta anterior para carregar",
+  "lastSqlLoaded": "Última consulta carregada"
 }

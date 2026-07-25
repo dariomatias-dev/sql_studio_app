@@ -118,8 +118,10 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
         ),
         PopupMenuItem<void>(
           child: InkWell(
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);
+
+              await _controller.onDownloadSql(context, ref);
             },
             child: Row(
               children: <Widget>[
@@ -193,7 +195,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
       isFullScreen: widget.isFullScreen,
       actions: <Widget>[
         IconButton(
-          onPressed: () {},
+          onPressed: () => _controller.onLoadLastSql(context, ref),
           tooltip: appLocalizations.loadLastSql,
           icon: const Icon(Icons.undo),
         ),

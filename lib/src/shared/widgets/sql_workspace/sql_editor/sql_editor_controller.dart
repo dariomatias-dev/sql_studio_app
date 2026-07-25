@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -96,5 +97,60 @@ class SqlEditorController {
     unawaited(Fluttertoast.showToast(msg: appLocalizations.sqlCopied));
 
     FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  /// Saves the current editor content as a `.sql` file through the
+  /// platform's save/share sheet, showing a toast if there is nothing to
+  /// download.
+  Future<void> onDownloadSql(BuildContext context, WidgetRef ref) async {
+    final appLocalizations = AppLocalizations.of(context)!;
+
+    final sql = ref
+        .read(sqlEditorViewModelProvider.notifier)
+        .controller
+        .text
+        .trim();
+
+    if (sql.isEmpty) {
+      unawaited(
+        Fluttertoast.showToast(msg: appLocalizations.nothingToDownload),
+      );
+
+      return;
+    }
+
+    final file = XFile.fromData(
+      Uint8List.fromList(utf8.encode(sql)),
+      name: 'query.sql',
+      mimeType: 'text/plain',
+    );
+
+    final result = await SharePlus.instance.share(
+      ShareParams(files: [file]),
+    );
+
+    if (result.status == ShareResultStatus.success) {
+      unawaited(Fluttertoast.showToast(msg: appLocalizations.sqlDownloaded));
+    }
+
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  /// Restores the text of the last executed query into the editor, showing
+  /// a toast if there is no previous query to load.
+  void onLoadLastSql(BuildContext context, WidgetRef ref) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
+    final lastQuery = ref.read(sqlCommandsViewModelProvider).lastQuery;
+
+    if (lastQuery == null || lastQuery.isEmpty) {
+      unawaited(Fluttertoast.showToast(msg: appLocalizations.nothingToLoad));
+
+      return;
+    }
+
+    ref.read(sqlEditorViewModelProvider.notifier).controller.text = lastQuery;
+
+    unawaited(Fluttertoast.showToast(msg: appLocalizations.lastSqlLoaded));
   }
 }

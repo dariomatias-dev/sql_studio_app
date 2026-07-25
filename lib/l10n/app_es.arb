@@ -185,5 +185,9 @@
   "nothingToCopy": "No hay nada para copiar",
   "sqlCopied": "SQL copiado al portapapeles",
   "currentQuerySection": "Consulta actual",
-  "databaseSection": "Base de datos"
+  "databaseSection": "Base de datos",
+  "nothingToDownload": "No hay nada para descargar",
+  "sqlDownloaded": "Consulta guardada como archivo .sql",
+  "nothingToLoad": "No hay consulta anterior para cargar",
+  "lastSqlLoaded": "Última consulta cargada"
 }

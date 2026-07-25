@@ -1221,6 +1221,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Database'**
   String get databaseSection;
+
+  /// No description provided for @nothingToDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'There is nothing to download'**
+  String get nothingToDownload;
+
+  /// No description provided for @sqlDownloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Query saved as a .sql file'**
+  String get sqlDownloaded;
+
+  /// No description provided for @nothingToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous query to load'**
+  String get nothingToLoad;
+
+  /// No description provided for @lastSqlLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Last query loaded'**
+  String get lastSqlLoaded;
 }
 
 class _AppLocalizationsDelegate
