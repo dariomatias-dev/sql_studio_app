@@ -210,7 +210,11 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
           tooltip: appLocalizations.clearEditor,
           icon: const Icon(Icons.clear_rounded),
         ),
-        if (menuItems.isNotEmpty) PopupMenuButtonWidget(items: menuItems),
+        if (menuItems.isNotEmpty)
+          PopupMenuButtonWidget(
+            items: menuItems,
+            onOpened: editor.focusNode.unfocus,
+          ),
       ],
       child: Column(
         children: <Widget>[

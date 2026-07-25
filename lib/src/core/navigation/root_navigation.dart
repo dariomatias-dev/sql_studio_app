@@ -27,6 +27,7 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
   late final FocusNode _editorFocusNode;
 
   bool _isEditorFocused = false;
+  bool _wasKeyboardOpen = false;
 
   void _onEditorFocusChanged() {
     setState(() => _isEditorFocused = _editorFocusNode.hasFocus);
@@ -114,11 +115,22 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
             bottom: BorderSide(color: Color(0xFFF2F2F2)),
           ),
         ),
+        onDrawerChanged: (isOpened) {
+          if (isOpened) _editorFocusNode.unfocus();
+        },
         drawer: const RootDrawerWidget(),
         body: Builder(
           builder: (bodyContext) {
             final isKeyboardOpen =
                 MediaQuery.viewInsetsOf(bodyContext).bottom > 0;
+
+            if (_wasKeyboardOpen && !isKeyboardOpen && _isEditorFocused) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) => _editorFocusNode.unfocus(),
+              );
+            }
+            _wasKeyboardOpen = isKeyboardOpen;
+
             final hideNavBar = _isEditorFocused && isKeyboardOpen;
             final bottomInset = hideNavBar
                 ? 0.0
