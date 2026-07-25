@@ -3,14 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/core/routes/route_paths.dart';
-import 'package:sql_studio/src/core/views/not_found/not_found_screen.dart';
-import 'package:sql_studio/src/core/views/splash/splash_screen.dart';
-import 'package:sql_studio/src/features/database/presentation/views/database_screen.dart';
-import 'package:sql_studio/src/features/database_visualizer/presentation/views/database_visualizer_screen.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_advanced_suggestion_settings_screen.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_basic_suggestion_settings_screen.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/views/sql_suggestion_settings_screen.dart';
-import 'package:sql_studio/src/features/workspace_layout_settings/presentation/views/workspace_layout_settings_screen.dart';
+import 'package:sql_studio/src/core/screens/not_found/not_found_screen.dart';
+import 'package:sql_studio/src/core/screens/splash/splash_screen.dart';
+import 'package:sql_studio/src/features/database/presentation/screens/database_screen.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/screens/database_visualizer_screen.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/screens/sql_advanced_suggestion_settings_screen.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/screens/sql_basic_suggestion_settings_screen.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/screens/sql_suggestion_settings_screen.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/presentation/screens/workspace_layout_settings_screen.dart';
 
 /// Builds a [CustomTransitionPage] with a lateral slide transition used
 /// across the app's routes for a consistent feel: the incoming screen

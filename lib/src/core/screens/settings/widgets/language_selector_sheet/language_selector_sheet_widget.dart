@@ -4,7 +4,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
-import 'package:sql_studio/src/core/views/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
+import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
 /// Display names for each supported language, in the same order as
 /// [AppLocalizations.supportedLocales].
