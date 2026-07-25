@@ -7,6 +7,9 @@ class AppColors {
   /// Page/scaffold background and neutral fills.
   static const Color background = Color(0xFFF2F2F2);
 
+  /// Primary near-black text and iconography.
+  static const Color textPrimary = Color(0xFF111111);
+
   /// Card/panel surface, sits on top of [background].
   static const Color surface = Colors.white;
 

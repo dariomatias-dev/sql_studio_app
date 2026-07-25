@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
@@ -26,14 +27,11 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen>
     with TickerProviderStateMixin {
-  late final AnimationController _iconRotationController;
   late final AnimationController _entryAnimationController;
-  late final AnimationController _gradientAnimationController;
 
   late final Animation<double> _iconScaleAnimation;
   late final Animation<double> _textOpacityAnimation;
   late final Animation<double> _progressOpacityAnimation;
-  late final Animation<AlignmentGeometry> _gradientAlignmentAnimation;
 
   Future<void> _loadResources() async {
     final versionResult = await ref
@@ -114,65 +112,31 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 
   void _init() {
-    _iconRotationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat().ignore();
-
     _entryAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 1400),
     );
 
-    _iconScaleAnimation = Tween<double>(begin: 0.5, end: 1).animate(
+    _iconScaleAnimation = Tween<double>(begin: 0.4, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0, 0.7, curve: Curves.easeOutBack),
+        curve: const Interval(0, 0.75, curve: Curves.elasticOut),
       ),
     );
 
     _textOpacityAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0.4, 1, curve: Curves.easeOut),
+        curve: const Interval(0.35, 0.9, curve: Curves.easeOut),
       ),
     );
 
     _progressOpacityAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _entryAnimationController,
-        curve: const Interval(0.7, 1, curve: Curves.easeOut),
+        curve: const Interval(0.65, 1, curve: Curves.easeOut),
       ),
     );
-
-    _gradientAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 15),
-    )..repeat(reverse: true).ignore();
-
-    _gradientAlignmentAnimation = TweenSequence<AlignmentGeometry>([
-      TweenSequenceItem(
-        tween: Tween<AlignmentGeometry>(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ).chain(CurveTween(curve: Curves.easeOutCubic)),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween<AlignmentGeometry>(
-          begin: Alignment.bottomRight,
-          end: Alignment.topCenter,
-        ).chain(CurveTween(curve: Curves.easeInCubic)),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween<AlignmentGeometry>(
-          begin: Alignment.topCenter,
-          end: Alignment.topLeft,
-        ).chain(CurveTween(curve: Curves.easeInOutCubic)),
-        weight: 1,
-      ),
-    ]).animate(_gradientAnimationController);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       unawaited(
@@ -190,9 +154,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   void dispose() {
-    _iconRotationController.dispose();
     _entryAnimationController.dispose();
-    _gradientAnimationController.dispose();
 
     super.dispose();
   }
@@ -200,144 +162,96 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: AnimatedBuilder(
-        animation: _gradientAlignmentAnimation,
-        builder: (context, child) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: _gradientAlignmentAnimation.value,
-                radius: 1.5,
-                colors: const <Color>[Color(0xFF0A0A0A), Colors.black],
-                stops: const <double>[0, 1],
-              ),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ScaleTransition(
-                    scale: _iconScaleAnimation,
-                    child: FadeTransition(
-                      opacity: _textOpacityAnimation,
-                      child: SizedBox(
-                        width: 140,
-                        height: 140,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            RotationTransition(
-                              turns: _iconRotationController.drive(
-                                Tween(begin: 0, end: 0.5),
-                              ),
-                              child: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: <BoxShadow>[
-                                    BoxShadow(
-                                      color: Colors.white.withAlpha(80),
-                                      blurRadius: 88,
-                                      spreadRadius: -5,
-                                    ),
-                                  ],
-                                  gradient: RadialGradient(
-                                    colors: <Color>[
-                                      Colors.white.withAlpha(50),
-                                      Colors.white.withAlpha(0),
-                                    ],
-                                    stops: const [0.0, 1.0],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            RotationTransition(
-                              turns: _iconRotationController.drive(
-                                Tween(begin: 0, end: 1),
-                              ),
-                              child: Container(
-                                width: 130,
-                                height: 130,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white.withAlpha(178),
-                                    width: 2.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Image.asset(
-                              'assets/icons/sql_studio_icon_transparent.png',
-                              width: 100,
-                              height: 100,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  FadeTransition(
+      backgroundColor: AppColors.background,
+      body: Stack(
+        children: <Widget>[
+          const Positioned.fill(
+            child: CustomPaint(painter: _DotGridPainter()),
+          ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ScaleTransition(
+                  scale: _iconScaleAnimation,
+                  child: FadeTransition(
                     opacity: _textOpacityAnimation,
-                    child: const Text(
-                      'SQL Studio',
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: 2.5,
-                        shadows: <Shadow>[
-                          Shadow(
-                            color: Colors.white54,
-                            blurRadius: 15,
-                          ),
-                          Shadow(
-                            color: Colors.white30,
-                            blurRadius: 5,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
-                      ),
+                    child: Image.asset(
+                      'assets/icons/sql_studio_icon_transparent.png',
+                      width: 132,
+                      height: 132,
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  FadeTransition(
-                    opacity: _progressOpacityAnimation,
-                    child: SizedBox(
-                      width: 250,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: LinearProgressIndicator(
-                          minHeight: 10,
-                          backgroundColor: Colors.white.withAlpha(38),
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
+                ),
+                const SizedBox(height: 36),
+                FadeTransition(
+                  opacity: _textOpacityAnimation,
+                  child: const Text(
+                    'SQL Studio',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 56),
+                FadeTransition(
+                  opacity: _progressOpacityAnimation,
+                  child: SizedBox(
+                    width: 160,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: const LinearProgressIndicator(
+                        minHeight: 4,
+                        backgroundColor: AppColors.border,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.textPrimary,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  FadeTransition(
-                    opacity: _progressOpacityAnimation,
-                    child: Text(
-                      AppLocalizations.of(context)!.loading,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white70,
-                        letterSpacing: 0.8,
-                      ),
+                ),
+                const SizedBox(height: 16),
+                FadeTransition(
+                  opacity: _progressOpacityAnimation,
+                  child: Text(
+                    AppLocalizations.of(context)!.loading,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textMuted,
+                      letterSpacing: 0.3,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
+}
+
+/// Faint dotted grid backdrop evoking a database/table structure.
+class _DotGridPainter extends CustomPainter {
+  const _DotGridPainter();
+
+  static const double _spacing = 28;
+  static const double _dotRadius = 1.1;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = AppColors.border;
+
+    for (var y = _spacing / 2; y < size.height; y += _spacing) {
+      for (var x = _spacing / 2; x < size.width; x += _spacing) {
+        canvas.drawCircle(Offset(x, y), _dotRadius, paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DotGridPainter oldDelegate) => false;
 }
