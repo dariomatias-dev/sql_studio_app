@@ -41,8 +41,8 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
       unawaited(
         Fluttertoast.showToast(
           msg: message,
-          backgroundColor: const Color(0xFF111111),
-          textColor: Colors.white,
+          backgroundColor: AppColors.textPrimary,
+          textColor: AppColors.white,
           fontSize: 14,
         ),
       );
@@ -97,12 +97,12 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: AppColors.black,
                         borderRadius: BorderRadius.circular(AppRadii.sm),
                       ),
                       child: const Icon(
                         Icons.dns_rounded,
-                        color: Colors.white,
+                        color: AppColors.white,
                         size: 22,
                       ),
                     ),
@@ -116,7 +116,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: Colors.black,
+                              color: AppColors.black,
                               letterSpacing: -0.4,
                             ),
                           ),
@@ -126,7 +126,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black.withAlpha(100),
+                              color: AppColors.black.withAlpha(100),
                               fontFamily: 'monospace',
                             ),
                           ),
@@ -178,7 +178,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                   l10n.key(widget.db.descriptionKey),
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.black.withAlpha(180),
+                    color: AppColors.black.withAlpha(180),
                     height: 1.5,
                     fontWeight: FontWeight.w500,
                   ),
@@ -188,7 +188,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   border: Border(top: BorderSide(color: AppColors.border)),
                 ),
                 child: Row(
@@ -206,7 +206,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       child: Text(
                         '$tableCount',
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: AppColors.black,
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
                         ),
@@ -219,7 +219,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 1,
-                        color: Colors.black,
+                        color: AppColors.black,
                       ),
                     ),
                     const Padding(
@@ -241,7 +241,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black.withAlpha(120),
+                                  color: AppColors.black.withAlpha(120),
                                   fontFamily: 'monospace',
                                 ),
                               ),
@@ -275,14 +275,14 @@ class _MenuAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(icon, size: 20, color: Colors.black),
+        Icon(icon, size: 20, color: AppColors.black),
         const SizedBox(width: 12),
         Text(
           label,
           style: TextStyle(
             fontSize: 14,
             fontWeight: isBold ? FontWeight.w900 : FontWeight.w600,
-            color: Colors.black,
+            color: AppColors.black,
           ),
         ),
       ],

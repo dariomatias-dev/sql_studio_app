@@ -72,7 +72,7 @@ class PanelWidget extends StatelessWidget {
                         Text(
                           title!,
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: AppColors.black,
                             fontWeight: FontWeight.bold,
                           ),
                           overflow: TextOverflow.ellipsis,

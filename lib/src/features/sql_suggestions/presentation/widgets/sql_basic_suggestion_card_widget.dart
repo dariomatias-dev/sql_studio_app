@@ -30,11 +30,11 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
             horizontal: 16,
             vertical: 6,
           ),
-          leading: const Icon(Icons.drag_handle, color: Colors.black54),
+          leading: const Icon(Icons.drag_handle, color: AppColors.black54),
           title: Text(
             suggestion.trim(),
             style: const TextStyle(
-              color: Colors.black87,
+              color: AppColors.black87,
               fontWeight: FontWeight.w500,
               fontSize: 14,
             ),

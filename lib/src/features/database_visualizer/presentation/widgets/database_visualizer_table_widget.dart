@@ -80,10 +80,10 @@ class _DatabaseVisualizerTableWidgetState
       duration: const Duration(milliseconds: 200),
       width: 260,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(AppRadii.md),
         border: Border.all(
-          color: widget.isSelected ? Colors.black : Colors.transparent,
+          color: widget.isSelected ? AppColors.black : AppColors.transparent,
           width: _borderWidth,
         ),
         boxShadow: AppShadows.card,
@@ -103,12 +103,12 @@ class _DatabaseVisualizerTableWidgetState
                 vertical: 14,
                 horizontal: 16,
               ),
-              color: Colors.black,
+              color: AppColors.black,
               child: Row(
                 children: <Widget>[
                   const Icon(
                     Icons.table_chart_rounded,
-                    color: Colors.white,
+                    color: AppColors.white,
                     size: 16,
                   ),
                   const SizedBox(width: 10),
@@ -116,7 +116,7 @@ class _DatabaseVisualizerTableWidgetState
                     child: Text(
                       table.name.toUpperCase(),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.white,
                         fontWeight: FontWeight.w900,
                         fontSize: 13,
                         letterSpacing: 0.5,
@@ -152,7 +152,7 @@ class _DatabaseVisualizerTableWidgetState
                       child: Text(
                         column.name,
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: AppColors.black,
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                         ),
@@ -161,7 +161,7 @@ class _DatabaseVisualizerTableWidgetState
                     Text(
                       column.type.toLowerCase(),
                       style: TextStyle(
-                        color: Colors.black.withAlpha(100),
+                        color: AppColors.black.withAlpha(100),
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'monospace',

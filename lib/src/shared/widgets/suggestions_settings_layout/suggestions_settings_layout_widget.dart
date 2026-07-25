@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
@@ -83,7 +84,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
           IconButton(
             onPressed: widget.onReset,
             tooltip: appLocalizations.resetSuggestions,
-            icon: const Icon(Icons.refresh, color: Colors.black87),
+            icon: const Icon(Icons.refresh, color: AppColors.black87),
           ),
         ],
       ),
@@ -102,7 +103,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     Theme(
                       data: Theme.of(
                         context,
-                      ).copyWith(canvasColor: Colors.white),
+                      ).copyWith(canvasColor: AppColors.white),
                       child: ReorderableListView.builder(
                         padding: const EdgeInsets.only(
                           top: 8,
@@ -121,7 +122,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                               boxShadow: AppShadows.card,
                             ),
                             child: Material(
-                              color: Colors.transparent,
+                              color: AppColors.transparent,
                               borderRadius: BorderRadius.circular(
                                 AppRadii.md,
                               ),
@@ -139,7 +140,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      color: Colors.transparent,
+                      color: AppColors.transparent,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
@@ -166,14 +167,17 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                           const SizedBox(width: 12),
                           FloatingActionButton(
                             onPressed: widget.onAdd,
-                            backgroundColor: Colors.black,
+                            backgroundColor: AppColors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(
                                 AppRadii.full,
                               ),
                             ),
                             tooltip: appLocalizations.createSuggestion,
-                            child: const Icon(Icons.add, color: Colors.white),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColors.white,
+                            ),
                           ),
                         ],
                       ),

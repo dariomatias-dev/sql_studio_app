@@ -16,7 +16,7 @@ class ScaffoldWidget extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = AppColors.white,
     this.resizeToAvoidBottomInset = true,
   });
 
@@ -53,7 +53,7 @@ class ScaffoldWidget extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: appBar != null
           ? AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: AppColors.white,
               elevation: 0,
               scrolledUnderElevation: 0,
               shape: const Border(
@@ -65,7 +65,7 @@ class ScaffoldWidget extends StatelessWidget {
                       tooltip: AppLocalizations.of(context)!.exitScreen,
                       icon: const Icon(
                         Icons.arrow_back_ios_new,
-                        color: Colors.black54,
+                        color: AppColors.black54,
                         size: 20,
                       ),
                     )
@@ -74,7 +74,7 @@ class ScaffoldWidget extends StatelessWidget {
                   ? Text(
                       (appBar!.title! as Text).data!,
                       style: const TextStyle(
-                        color: Colors.black87,
+                        color: AppColors.black87,
                         fontSize: 20,
                       ),
                     )

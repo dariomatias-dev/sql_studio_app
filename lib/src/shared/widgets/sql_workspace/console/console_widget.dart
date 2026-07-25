@@ -55,7 +55,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
             height: 4,
             child: LinearProgressIndicator(
               backgroundColor: AppColors.border,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.black),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Paints the foreign-key relation arrows between visualized tables.
@@ -39,8 +40,8 @@ class TableRelationPainter extends CustomPainter {
     // Opaque (non-alpha) colors: overlapping relation curves are common in
     // dense diagrams, and translucent strokes darken cumulatively wherever
     // they cross, making some segments read as heavier than others.
-    const dimmedColor = Color(0xFFDADADA);
-    const normalColor = Color(0xFF757575);
+    const dimmedColor = AppColors.disabled;
+    const normalColor = AppColors.textMuted;
 
     final dimmedPaint = Paint()
       ..color = dimmedColor
@@ -61,12 +62,12 @@ class TableRelationPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final highlightPaint = Paint()
-      ..color = Colors.black
+      ..color = AppColors.black
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
     final highlightMarkPaint = Paint()
-      ..color = Colors.black
+      ..color = AppColors.black
       ..style = PaintingStyle.fill;
 
     for (final source in tables) {

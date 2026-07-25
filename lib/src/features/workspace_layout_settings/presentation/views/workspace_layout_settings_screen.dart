@@ -90,7 +90,7 @@ class _WorkspaceLayoutConfigurationScreenState
               child: SafeArea(
                 child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     border: Border.fromBorderSide(
                       BorderSide(color: AppColors.border),
                     ),

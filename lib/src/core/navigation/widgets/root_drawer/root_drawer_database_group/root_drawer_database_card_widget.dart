@@ -87,7 +87,7 @@ class _RootDrawerDatabaseCardWidgetState
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Material(
-        color: isActive ? Colors.black : Colors.transparent,
+        color: isActive ? AppColors.black : AppColors.transparent,
         borderRadius: BorderRadius.circular(AppRadii.sm),
         child: InkWell(
           onTap: _selectDatabase,
@@ -100,7 +100,7 @@ class _RootDrawerDatabaseCardWidgetState
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadii.sm),
               border: Border.all(
-                color: isActive ? Colors.black : AppColors.border,
+                color: isActive ? AppColors.black : AppColors.border,
               ),
             ),
             child: Row(
@@ -108,7 +108,7 @@ class _RootDrawerDatabaseCardWidgetState
                 Icon(
                   Icons.dns_rounded,
                   size: 20,
-                  color: isActive ? Colors.white : const Color(0xFF757575),
+                  color: isActive ? AppColors.white : AppColors.textMuted,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -120,7 +120,7 @@ class _RootDrawerDatabaseCardWidgetState
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: isActive ? Colors.white : Colors.black,
+                          color: isActive ? AppColors.white : AppColors.black,
                         ),
                       ),
                       Text(
@@ -129,8 +129,8 @@ class _RootDrawerDatabaseCardWidgetState
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                           color: isActive
-                              ? Colors.white.withAlpha(160)
-                              : const Color(0xFFADADAD),
+                              ? AppColors.white.withAlpha(160)
+                              : AppColors.controlInactive,
                         ),
                       ),
                     ],
@@ -147,7 +147,7 @@ class _RootDrawerDatabaseCardWidgetState
                                 ? Icons.star_rounded
                                 : Icons.star_outline_rounded,
                             size: 18,
-                            color: Colors.black,
+                            color: AppColors.black,
                           ),
                           const SizedBox(width: 12),
                           Text(_isFavorite ? l10n.unfavorite : l10n.favorite),
@@ -168,12 +168,12 @@ class _RootDrawerDatabaseCardWidgetState
                           const Icon(
                             Icons.delete_outline_rounded,
                             size: 18,
-                            color: Color(0xFFFF3B30),
+                            color: AppColors.error,
                           ),
                           const SizedBox(width: 12),
                           Text(
                             l10n.delete,
-                            style: const TextStyle(color: Color(0xFFFF3B30)),
+                            style: const TextStyle(color: AppColors.error),
                           ),
                         ],
                       ),

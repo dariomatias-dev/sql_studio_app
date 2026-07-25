@@ -53,7 +53,7 @@ class ErrorStateWidget extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.black87,
+                color: AppColors.black87,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 1.4,

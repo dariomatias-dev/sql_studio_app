@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
@@ -33,7 +34,7 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: _borderRadius,
         border: border,
         boxShadow: AppShadows.card,

@@ -18,18 +18,18 @@ class SwitchWidget extends StatelessWidget {
     return Switch(
       value: value,
       onChanged: onChanged,
-      activeThumbColor: Colors.white,
-      activeTrackColor: Colors.black,
+      activeThumbColor: AppColors.white,
+      activeTrackColor: AppColors.black,
       inactiveThumbColor: AppColors.controlInactive,
       inactiveTrackColor: AppColors.background,
       trackOutlineColor: WidgetStateProperty.resolveWith(
-        (states) => value ? Colors.black : AppColors.border,
+        (states) => value ? AppColors.black : AppColors.border,
       ),
       trackOutlineWidth: const WidgetStatePropertyAll(1),
       thumbIcon: WidgetStatePropertyAll(
         Icon(
           Icons.circle,
-          color: value ? Colors.white : Colors.transparent,
+          color: value ? AppColors.white : AppColors.transparent,
           size: 0,
         ),
       ),

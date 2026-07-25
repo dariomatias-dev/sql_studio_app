@@ -12,21 +12,21 @@ class AppTheme {
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.background,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.black,
-    ).copyWith(primary: Colors.black, secondary: Colors.black),
+      seedColor: AppColors.black,
+    ).copyWith(primary: AppColors.black, secondary: AppColors.black),
     textSelectionTheme: const TextSelectionThemeData(
-      cursorColor: Colors.black,
-      selectionColor: Color(0x334D4D4D),
-      selectionHandleColor: Colors.black,
+      cursorColor: AppColors.black,
+      selectionColor: AppColors.selection,
+      selectionHandleColor: AppColors.black,
     ),
     tabBarTheme: const TabBarThemeData(
-      indicatorColor: Colors.black,
-      labelColor: Colors.black,
+      indicatorColor: AppColors.black,
+      labelColor: AppColors.black,
       unselectedLabelColor: AppColors.textMuted,
       dividerColor: AppColors.border,
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: Colors.black,
+      color: AppColors.black,
     ),
   );
 }

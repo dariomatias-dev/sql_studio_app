@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
@@ -84,8 +85,8 @@ class ButtonWidget extends StatelessWidget {
         child: InkWell(
           onTap: onPressed,
           borderRadius: BorderRadius.circular(AppRadii.full),
-          highlightColor: Colors.white.withAlpha(20),
-          splashColor: Colors.white.withAlpha(20),
+          highlightColor: AppColors.white.withAlpha(20),
+          splashColor: AppColors.white.withAlpha(20),
           child: Container(
             padding: padding ?? const EdgeInsets.symmetric(horizontal: 32),
             decoration: BoxDecoration(

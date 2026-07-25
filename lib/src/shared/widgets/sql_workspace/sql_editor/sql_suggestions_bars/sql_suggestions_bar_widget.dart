@@ -63,7 +63,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
                 suggestion,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Colors.black87,
+                  color: AppColors.black87,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'monospace',

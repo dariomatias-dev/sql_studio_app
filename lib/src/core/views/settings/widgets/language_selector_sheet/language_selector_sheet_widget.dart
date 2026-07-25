@@ -20,7 +20,7 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppRadii.xl),
         ),

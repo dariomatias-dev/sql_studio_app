@@ -37,8 +37,8 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
     unawaited(
       Fluttertoast.showToast(
         msg: AppLocalizations.of(context)!.languageUpdated(lang),
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
+        backgroundColor: AppColors.black,
+        textColor: AppColors.white,
         fontSize: 14,
       ),
     );
@@ -52,7 +52,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Material(
-        color: Colors.transparent,
+        color: AppColors.transparent,
         child: InkWell(
           onTap: () => _changeLanguage(context, ref),
           borderRadius: BorderRadius.circular(AppRadii.md),
@@ -65,9 +65,9 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadii.md),
-              color: isSelected ? Colors.black : AppColors.background,
+              color: isSelected ? AppColors.black : AppColors.background,
               border: Border.all(
-                color: isSelected ? Colors.black : AppColors.border,
+                color: isSelected ? AppColors.black : AppColors.border,
               ),
             ),
             child: Row(
@@ -80,7 +80,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
                       fontWeight: isSelected
                           ? FontWeight.w800
                           : FontWeight.w500,
-                      color: isSelected ? Colors.white : Colors.black,
+                      color: isSelected ? AppColors.white : AppColors.black,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -88,7 +88,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
                 if (isSelected)
                   const Icon(
                     Icons.check_circle_rounded,
-                    color: Colors.white,
+                    color: AppColors.white,
                     size: 20,
                   )
                 else

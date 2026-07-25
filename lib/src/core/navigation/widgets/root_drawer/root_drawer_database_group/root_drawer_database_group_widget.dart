@@ -37,7 +37,7 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFFADADAD),
+                  color: AppColors.controlInactive,
                   letterSpacing: 1.2,
                 ),
               ),

@@ -38,7 +38,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: AppColors.transparent,
       child: InkWell(
         onTap: () => onChanged(!active),
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -46,7 +46,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: active ? const Color(0xFFFBFBFB) : Colors.white,
+            color: active ? AppColors.surfaceMuted : AppColors.white,
             borderRadius: BorderRadius.circular(AppRadii.lg),
             border: Border.all(color: AppColors.border),
             boxShadow: AppShadows.card,
@@ -65,7 +65,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: Colors.black,
+                            color: AppColors.black,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -74,7 +74,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                           subtitle,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.black.withAlpha(140),
+                            color: AppColors.black.withAlpha(140),
                             height: 1.4,
                             fontWeight: FontWeight.w500,
                           ),
@@ -93,8 +93,8 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                   text: AppLocalizations.of(context)!.configure,
                   width: double.infinity,
                   height: 42,
-                  backgroundColor: Colors.white,
-                  borderColor: Colors.black.withAlpha(20),
+                  backgroundColor: AppColors.white,
+                  borderColor: AppColors.black.withAlpha(20),
                 ),
               ],
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
@@ -37,24 +38,24 @@ ButtonStyleData resolveButtonStyle({
   switch (style) {
     case ButtonStyleType.black:
       return ButtonStyleData(
-        background: Colors.black,
-        foreground: Colors.white,
-        border: Colors.black.withAlpha(20),
-        text: Colors.white,
+        background: AppColors.black,
+        foreground: AppColors.white,
+        border: AppColors.black.withAlpha(20),
+        text: AppColors.white,
       );
     case ButtonStyleType.red:
       return ButtonStyleData(
-        background: const Color(0xFFFF3B30),
-        foreground: Colors.white,
-        border: const Color(0xFFFF3B30).withAlpha(30),
-        text: Colors.white,
+        background: AppColors.error,
+        foreground: AppColors.white,
+        border: AppColors.error.withAlpha(30),
+        text: AppColors.white,
       );
     case ButtonStyleType.custom:
       return ButtonStyleData(
-        background: backgroundColor ?? Colors.white,
-        foreground: foregroundColor ?? Colors.black,
-        border: borderColor ?? Colors.black.withAlpha(25),
-        text: foregroundColor ?? Colors.black,
+        background: backgroundColor ?? AppColors.white,
+        foreground: foregroundColor ?? AppColors.black,
+        border: borderColor ?? AppColors.black.withAlpha(25),
+        text: foregroundColor ?? AppColors.black,
       );
   }
 }

@@ -33,11 +33,11 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             horizontal: 16,
             vertical: 6,
           ),
-          leading: const Icon(Icons.drag_handle, color: Colors.black54),
+          leading: const Icon(Icons.drag_handle, color: AppColors.black54),
           title: Text(
             suggestion.label,
             style: const TextStyle(
-              color: Colors.black87,
+              color: AppColors.black87,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
@@ -48,7 +48,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 12,
-              color: Colors.black54,
+              color: AppColors.black54,
               height: 1.3,
             ),
           ),

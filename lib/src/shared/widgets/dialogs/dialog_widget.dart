@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
@@ -46,7 +47,7 @@ class DialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       elevation: 0,
       insetPadding: const EdgeInsets.symmetric(
         horizontal: 24,
@@ -55,7 +56,7 @@ class DialogWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(AppRadii.xl),
           boxShadow: AppShadows.overlay,
         ),
@@ -68,7 +69,7 @@ class DialogWidget extends StatelessWidget {
                 child: Text(
                   title!,
                   style: const TextStyle(
-                    color: Colors.black,
+                    color: AppColors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.w900,
                     letterSpacing: -1,
@@ -82,7 +83,7 @@ class DialogWidget extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: DefaultTextStyle(
                   style: TextStyle(
-                    color: Colors.black.withAlpha(140),
+                    color: AppColors.black.withAlpha(140),
                     fontSize: 16,
                     height: 1.5,
                     fontWeight: FontWeight.w400,

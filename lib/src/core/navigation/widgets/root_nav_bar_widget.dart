@@ -31,7 +31,7 @@ class RootNavBarWidget extends ConsumerWidget {
         margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
         height: 72,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(AppRadii.full),
           border: Border.all(color: AppColors.border),
           boxShadow: AppShadows.elevated,
@@ -143,14 +143,14 @@ class _NavBarItemState extends State<_NavBarItem> {
                   isSelected ? widget.activeIcon : widget.icon,
                   key: ValueKey<String>('$_generation-$isSelected'),
                   size: 24,
-                  color: isSelected ? Colors.black : AppColors.textMuted,
+                  color: isSelected ? AppColors.black : AppColors.textMuted,
                 ),
               ),
               const SizedBox(height: 4),
               AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 200),
                 style: TextStyle(
-                  color: isSelected ? Colors.black : AppColors.textMuted,
+                  color: isSelected ? AppColors.black : AppColors.textMuted,
                   fontSize: 10,
                   fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
                   letterSpacing: 0.8,

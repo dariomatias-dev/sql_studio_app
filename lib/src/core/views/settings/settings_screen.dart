@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/constants/urls.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
@@ -55,7 +56,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     unawaited(
       showModalBottomSheet<void>(
         context: context,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.transparent,
         builder: (context) => const LanguageSelectorSheetWidget(),
       ),
     );

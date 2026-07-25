@@ -71,11 +71,11 @@ class _SqlWorkspaceWidgetState extends ConsumerState<SqlWorkspaceWidget>
       return Column(
         children: <Widget>[
           ColoredBox(
-            color: Colors.white,
+            color: AppColors.white,
             child: TabBar(
               controller: _tabController,
-              indicatorColor: Colors.black,
-              labelColor: Colors.black,
+              indicatorColor: AppColors.black,
+              labelColor: AppColors.black,
               unselectedLabelColor: AppColors.textMuted,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               unselectedLabelStyle: const TextStyle(

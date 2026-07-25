@@ -46,26 +46,26 @@ class InputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor: Colors.black,
+      cursorColor: AppColors.black,
       cursorWidth: 1,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: Colors.black.withAlpha(80),
+          color: AppColors.black.withAlpha(80),
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
         labelStyle: const TextStyle(
-          color: Colors.black,
+          color: AppColors.black,
           fontSize: 14,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
         suffixIcon: suffixIcon,
-        suffixIconColor: Colors.black,
+        suffixIconColor: AppColors.black,
         enabledBorder: _border(AppColors.border),
-        focusedBorder: _border(Colors.black, width: 1.5),
+        focusedBorder: _border(AppColors.black, width: 1.5),
         errorBorder: _border(AppColors.error),
         focusedErrorBorder: _border(AppColors.error, width: 1.5),
         isDense: true,
@@ -79,7 +79,7 @@ class InputWidget extends StatelessWidget {
         alignLabelWithHint: true,
       ),
       style: const TextStyle(
-        color: Colors.black,
+        color: AppColors.black,
         fontSize: 15,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.1,

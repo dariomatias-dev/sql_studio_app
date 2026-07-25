@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_nav_bar_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_swipe_wrapper_widget.dart';
@@ -104,15 +105,15 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.white,
           elevation: 0,
           scrolledUnderElevation: 0,
           centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.black, size: 22),
+          iconTheme: const IconThemeData(color: AppColors.black, size: 22),
           shape: const Border(
-            bottom: BorderSide(color: Color(0xFFF2F2F2)),
+            bottom: BorderSide(color: AppColors.background),
           ),
         ),
         onDrawerChanged: (isOpened) {

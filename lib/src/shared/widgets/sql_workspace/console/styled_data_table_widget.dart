@@ -25,12 +25,12 @@ class StyledDataTableWidget extends StatelessWidget {
       headingRowColor: WidgetStateProperty.all(AppColors.background),
       headingTextStyle: const TextStyle(
         fontWeight: FontWeight.bold,
-        color: Colors.black87,
+        color: AppColors.black87,
       ),
       dataRowColor: WidgetStateProperty.resolveWith((states) {
         return states.contains(WidgetState.selected)
-            ? Colors.black.withAlpha(15)
-            : Colors.white;
+            ? AppColors.black.withAlpha(15)
+            : AppColors.white;
       }),
       columns: columns.builder((col, index) => DataColumn(label: Text(col))),
       rows: rows.builder(

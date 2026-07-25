@@ -230,7 +230,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
                 ),
                 gutterStyle: const GutterStyle(width: 60, margin: 0),
                 expands: true,
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: const BoxDecoration(color: AppColors.white),
               ),
             ),
           ),

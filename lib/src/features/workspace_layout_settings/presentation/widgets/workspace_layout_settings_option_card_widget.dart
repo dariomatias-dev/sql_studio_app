@@ -35,24 +35,24 @@ class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
     return CardWidget(
       onTap: onTap,
       border: selected
-          ? Border.all(color: Colors.black.withAlpha(140))
+          ? Border.all(color: AppColors.black.withAlpha(140))
           : Border.all(color: AppColors.border),
       child: ListTile(
-        leading: Icon(icon, color: Colors.black87),
+        leading: Icon(icon, color: AppColors.black87),
         title: Text(
           title,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: AppColors.black87,
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: const TextStyle(fontSize: 12, color: Colors.black54),
+          style: const TextStyle(fontSize: 12, color: AppColors.black54),
         ),
         trailing: selected
-            ? const Icon(Icons.check, color: Colors.black)
+            ? const Icon(Icons.check, color: AppColors.black)
             : null,
       ),
     );

@@ -35,7 +35,7 @@ class SettingsCardWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(
           children: <Widget>[
-            Icon(icon, size: 22, color: Colors.black),
+            Icon(icon, size: 22, color: AppColors.black),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
@@ -45,7 +45,7 @@ class SettingsCardWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: AppColors.black,
                 ),
               ),
             ),

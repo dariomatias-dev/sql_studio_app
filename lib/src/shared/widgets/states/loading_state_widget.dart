@@ -22,7 +22,7 @@ class LoadingStateWidget extends StatelessWidget {
             width: size,
             height: size,
             child: const CircularProgressIndicator(
-              color: Colors.black,
+              color: AppColors.black,
               strokeWidth: 2.5,
             ),
           ),
