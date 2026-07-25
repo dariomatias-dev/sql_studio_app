@@ -177,11 +177,13 @@
   "insertSuccess": "Inserción ejecutada correctamente. {count} filas afectadas.",
   "statementSuccess": "Sentencia ejecutada correctamente.",
   "loadLastSql": "Cargar último SQL",
-  "shareSql": "Compartir SQL",
-  "downloadSql": "Descargar SQL",
+  "shareSql": "Compartir consulta",
+  "downloadSql": "Descargar consulta",
   "nothingToShare": "No hay nada para compartir",
   "sqlSharedSuccess": "SQL compartido con éxito",
-  "copySql": "Copiar SQL",
+  "copySql": "Copiar consulta",
   "nothingToCopy": "No hay nada para copiar",
-  "sqlCopied": "SQL copiado al portapapeles"
+  "sqlCopied": "SQL copiado al portapapeles",
+  "currentQuerySection": "Consulta actual",
+  "databaseSection": "Base de datos"
 }

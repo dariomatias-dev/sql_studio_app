@@ -615,10 +615,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get loadLastSql => 'Cargar último SQL';
 
   @override
-  String get shareSql => 'Compartir SQL';
+  String get shareSql => 'Compartir consulta';
 
   @override
-  String get downloadSql => 'Descargar SQL';
+  String get downloadSql => 'Descargar consulta';
 
   @override
   String get nothingToShare => 'No hay nada para compartir';
@@ -627,11 +627,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sqlSharedSuccess => 'SQL compartido con éxito';
 
   @override
-  String get copySql => 'Copiar SQL';
+  String get copySql => 'Copiar consulta';
 
   @override
   String get nothingToCopy => 'No hay nada para copiar';
 
   @override
   String get sqlCopied => 'SQL copiado al portapapeles';
+
+  @override
+  String get currentQuerySection => 'Consulta actual';
+
+  @override
+  String get databaseSection => 'Base de datos';
 }

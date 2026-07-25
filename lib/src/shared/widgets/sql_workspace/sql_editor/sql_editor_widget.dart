@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
-
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_controller.dart';
@@ -54,6 +51,22 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
     _controller.onInsertCommand(ref, code, selectText: selectText);
   }
 
+  PopupMenuItem<void> _sectionHeader(String label) {
+    return PopupMenuItem<void>(
+      enabled: false,
+      height: 28,
+      child: Text(
+        label.toUpperCase(),
+        style: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5,
+          color: AppColors.textMuted,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -66,26 +79,11 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
     final editorState = ref.watch(sqlEditorViewModelProvider);
     final databaseName = commandsState.activeDatabase;
 
-    final menuItems = <PopupMenuItem<void>>[];
+    final currentQueryItems = <PopupMenuItem<void>>[];
+    final databaseItems = <PopupMenuItem<void>>[];
 
     if (commandsState.activeDatabase != null) {
-      menuItems.addAll([
-        PopupMenuItem<void>(
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-
-              AppRoutes.goToDatabaseVisualizer(context, dbName: databaseName!);
-            },
-            child: Row(
-              children: <Widget>[
-                const Icon(Icons.remove_red_eye_outlined, size: 20),
-                const SizedBox(width: 8),
-                Text(appLocalizations.viewVisualScheme),
-              ],
-            ),
-          ),
-        ),
+      currentQueryItems.addAll([
         PopupMenuItem<void>(
           child: InkWell(
             onTap: () async {
@@ -95,7 +93,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
             },
             child: Row(
               children: <Widget>[
-                const Icon(Icons.share, size: 20),
+                const Icon(Icons.copy_rounded, size: 20),
                 const SizedBox(width: 8),
                 Text(appLocalizations.copySql),
               ],
@@ -133,10 +131,29 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
           ),
         ),
       ]);
+
+      databaseItems.add(
+        PopupMenuItem<void>(
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+
+              AppRoutes.goToDatabaseVisualizer(context, dbName: databaseName!);
+            },
+            child: Row(
+              children: <Widget>[
+                const Icon(Icons.remove_red_eye_outlined, size: 20),
+                const SizedBox(width: 8),
+                Text(appLocalizations.viewVisualScheme),
+              ],
+            ),
+          ),
+        ),
+      );
     }
 
     if (commandsState.isDefaultDatabase) {
-      menuItems.add(
+      databaseItems.add(
         PopupMenuItem<void>(
           child: InkWell(
             onTap: () {
@@ -156,6 +173,18 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
         ),
       );
     }
+
+    final menuItems = <PopupMenuEntry<void>>[
+      if (currentQueryItems.isNotEmpty) ...[
+        _sectionHeader(appLocalizations.currentQuerySection),
+        ...currentQueryItems,
+      ],
+      if (databaseItems.isNotEmpty) ...[
+        if (currentQueryItems.isNotEmpty) const PopupMenuDivider(),
+        _sectionHeader(appLocalizations.databaseSection),
+        ...databaseItems,
+      ],
+    ];
 
     return PanelWidget(
       title: widget.showTitle ? appLocalizations.editor : null,

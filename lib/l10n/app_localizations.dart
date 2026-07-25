@@ -1171,13 +1171,13 @@ abstract class AppLocalizations {
   /// No description provided for @shareSql.
   ///
   /// In en, this message translates to:
-  /// **'Share SQL'**
+  /// **'Share query'**
   String get shareSql;
 
   /// No description provided for @downloadSql.
   ///
   /// In en, this message translates to:
-  /// **'Download SQL'**
+  /// **'Download query'**
   String get downloadSql;
 
   /// No description provided for @nothingToShare.
@@ -1195,7 +1195,7 @@ abstract class AppLocalizations {
   /// No description provided for @copySql.
   ///
   /// In en, this message translates to:
-  /// **'Copy SQL'**
+  /// **'Copy query'**
   String get copySql;
 
   /// No description provided for @nothingToCopy.
@@ -1209,6 +1209,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SQL copied to clipboard'**
   String get sqlCopied;
+
+  /// No description provided for @currentQuerySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Current query'**
+  String get currentQuerySection;
+
+  /// No description provided for @databaseSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Database'**
+  String get databaseSection;
 }
 
 class _AppLocalizationsDelegate

@@ -177,11 +177,13 @@
   "insertSuccess": "Insert executed successfully. {count} rows affected.",
   "statementSuccess": "Statement executed successfully.",
   "loadLastSql": "Load Last SQL",
-  "shareSql": "Share SQL",
-  "downloadSql": "Download SQL",
+  "shareSql": "Share query",
+  "downloadSql": "Download query",
   "nothingToShare": "There is nothing to share",
   "sqlSharedSuccess": "SQL shared successfully",
-  "copySql": "Copy SQL",
+  "copySql": "Copy query",
   "nothingToCopy": "There is nothing to copy",
-  "sqlCopied": "SQL copied to clipboard"
+  "sqlCopied": "SQL copied to clipboard",
+  "currentQuerySection": "Current query",
+  "databaseSection": "Database"
 }

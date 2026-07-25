@@ -604,10 +604,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadLastSql => 'Load Last SQL';
 
   @override
-  String get shareSql => 'Share SQL';
+  String get shareSql => 'Share query';
 
   @override
-  String get downloadSql => 'Download SQL';
+  String get downloadSql => 'Download query';
 
   @override
   String get nothingToShare => 'There is nothing to share';
@@ -616,11 +616,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sqlSharedSuccess => 'SQL shared successfully';
 
   @override
-  String get copySql => 'Copy SQL';
+  String get copySql => 'Copy query';
 
   @override
   String get nothingToCopy => 'There is nothing to copy';
 
   @override
   String get sqlCopied => 'SQL copied to clipboard';
+
+  @override
+  String get currentQuerySection => 'Current query';
+
+  @override
+  String get databaseSection => 'Database';
 }
