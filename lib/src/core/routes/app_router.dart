@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/core/routes/route_paths.dart';
+import 'package:sql_studio/src/core/screens/about/about_screen.dart';
 import 'package:sql_studio/src/core/screens/not_found/not_found_screen.dart';
 import 'package:sql_studio/src/core/screens/splash/splash_screen.dart';
 import 'package:sql_studio/src/features/database/presentation/screens/database_screen.dart';
@@ -123,6 +124,14 @@ class AppRouter {
         pageBuilder: (context, state) => _buildPage(
           key: state.pageKey,
           child: const SqlSuggestionSettingsScreen(),
+        ),
+      ),
+      GoRoute(
+        name: RouteNames.about,
+        path: RoutePaths.about,
+        pageBuilder: (context, state) => _buildPage(
+          key: state.pageKey,
+          child: const AboutScreen(),
         ),
       ),
     ],

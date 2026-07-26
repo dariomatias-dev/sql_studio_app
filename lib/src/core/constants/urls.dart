@@ -8,4 +8,7 @@ class Urls {
 
   /// URL of the official website's contact page.
   static const officialWebsiteContact = '$officialWebsite/contact';
+
+  /// URL of the developer's GitHub profile.
+  static const developerGithub = 'https://github.com/dariomatias-dev';
 }

@@ -25,4 +25,7 @@ class RouteNames {
 
   /// Name of the workspace layout settings route.
   static const workspaceLayoutSettings = '/settings/workspace-layout-settings';
+
+  /// Name of the about route.
+  static const about = '/settings/about';
 }

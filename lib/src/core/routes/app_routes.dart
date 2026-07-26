@@ -51,4 +51,9 @@ class AppRoutes {
   static void goToWorkspaceLayoutSettings(BuildContext context) {
     unawaited(context.push(RoutePaths.workspaceLayoutSettings));
   }
+
+  /// Pushes the about screen.
+  static void goToAbout(BuildContext context) {
+    unawaited(context.push(RoutePaths.about));
+  }
 }

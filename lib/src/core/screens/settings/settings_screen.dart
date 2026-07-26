@@ -123,6 +123,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                   title: l10n.contact,
                   icon: Icons.alternate_email_rounded,
                 ),
+                SettingsCardWidget(
+                  onTap: () => AppRoutes.goToAbout(context),
+                  title: l10n.about,
+                  icon: Icons.info_outline_rounded,
+                ),
               ],
             ),
             const SizedBox(height: 28),

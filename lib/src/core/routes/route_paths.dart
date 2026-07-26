@@ -25,4 +25,7 @@ class RoutePaths {
 
   /// Path of the workspace layout settings screen.
   static const workspaceLayoutSettings = '/settings/workspace-layout-settings';
+
+  /// Path of the about screen.
+  static const about = '/settings/about';
 }

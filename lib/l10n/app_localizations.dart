@@ -154,6 +154,42 @@ abstract class AppLocalizations {
   /// **'App Version'**
   String get appVersion;
 
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @appDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice SQL on your phone with local, editable, fully offline SQLite databases.'**
+  String get appDescription;
+
+  /// No description provided for @versionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String versionLabel(Object version);
+
+  /// No description provided for @licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
+
+  /// No description provided for @developedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Developed by {name}'**
+  String developedBy(Object name);
+
+  /// No description provided for @packagesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} open-source packages'**
+  String packagesCount(Object count);
+
   /// No description provided for @officialWebsite.
   ///
   /// In en, this message translates to:

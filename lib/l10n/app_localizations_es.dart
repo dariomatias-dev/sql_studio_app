@@ -36,6 +36,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appVersion => 'Versión de la App';
 
   @override
+  String get about => 'Acerca de';
+
+  @override
+  String get appDescription =>
+      'Practica SQL en tu teléfono con bases de datos SQLite locales, editables y totalmente offline.';
+
+  @override
+  String versionLabel(Object version) {
+    return 'Versión $version';
+  }
+
+  @override
+  String get licenses => 'Licencias';
+
+  @override
+  String developedBy(Object name) {
+    return 'Desarrollado por $name';
+  }
+
+  @override
+  String packagesCount(Object count) {
+    return '$count paquetes de código abierto';
+  }
+
+  @override
   String get officialWebsite => 'Sitio oficial';
 
   @override
