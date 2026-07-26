@@ -1,3 +1,4 @@
+import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_advanced_suggestions_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
@@ -14,6 +15,16 @@ class SqlAdvancedSuggestionsRepositoryImpl
   @override
   Future<List<SqlAdvancedSuggestionModel>> getAll() async {
     final maps = await _datasource.getAll();
+
+    if (maps.isEmpty) {
+      final defaults = List<SqlAdvancedSuggestionModel>.from(
+        defaultSqlAdvancedSuggestions,
+      );
+
+      await _datasource.insertAll(defaults.map((m) => m.toMap()).toList());
+
+      return defaults;
+    }
 
     return maps.map(SqlAdvancedSuggestionModel.fromMap).toList();
   }

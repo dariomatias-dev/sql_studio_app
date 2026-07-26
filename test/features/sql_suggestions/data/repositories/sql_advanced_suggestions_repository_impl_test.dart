@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_advanced_suggestions_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/repositories/sql_advanced_suggestions_repository_impl.dart';
@@ -36,6 +37,31 @@ void main() {
 
     expect(result.single.label, 'A');
   });
+
+  test(
+    'getAll seeds and persists the defaults when the store is empty',
+    () async {
+      when(() => datasource.getAll()).thenAnswer((_) async => []);
+      when(
+        () => datasource.insertAll(any()),
+      ).thenAnswer(
+        (_) async => List.filled(defaultSqlAdvancedSuggestions.length, 1),
+      );
+
+      final result = await repository.getAll();
+
+      expect(result.length, defaultSqlAdvancedSuggestions.length);
+      expect(
+        result.map((s) => s.label),
+        defaultSqlAdvancedSuggestions.map((s) => s.label),
+      );
+      verify(
+        () => datasource.insertAll(
+          defaultSqlAdvancedSuggestions.map((s) => s.toMap()).toList(),
+        ),
+      ).called(1);
+    },
+  );
 
   test('create forwards the model as a map', () async {
     when(() => datasource.insert(any())).thenAnswer((_) async => 1);
