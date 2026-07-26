@@ -10,6 +10,7 @@ import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/popup_menu_section_header_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
@@ -49,22 +50,6 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
 
   void _onInsertCommand(String code, {String? selectText}) {
     _controller.onInsertCommand(ref, code, selectText: selectText);
-  }
-
-  PopupMenuItem<void> _sectionHeader(String label) {
-    return PopupMenuItem<void>(
-      enabled: false,
-      height: 28,
-      child: Text(
-        label.toUpperCase(),
-        style: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0.5,
-          color: AppColors.textMuted,
-        ),
-      ),
-    );
   }
 
   @override
@@ -178,12 +163,14 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
 
     final menuItems = <PopupMenuEntry<void>>[
       if (currentQueryItems.isNotEmpty) ...[
-        _sectionHeader(appLocalizations.currentQuerySection),
+        PopupMenuSectionHeaderWidget(
+          label: appLocalizations.currentQuerySection,
+        ),
         ...currentQueryItems,
       ],
       if (databaseItems.isNotEmpty) ...[
         if (currentQueryItems.isNotEmpty) const PopupMenuDivider(),
-        _sectionHeader(appLocalizations.databaseSection),
+        PopupMenuSectionHeaderWidget(label: appLocalizations.databaseSection),
         ...databaseItems,
       ],
     ];

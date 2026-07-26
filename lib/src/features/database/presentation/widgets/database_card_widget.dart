@@ -14,6 +14,7 @@ import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/popup_menu_section_header_widget.dart';
 
 /// Card that presents a default database and its available actions.
 class DatabaseCardWidget extends ConsumerStatefulWidget {
@@ -134,7 +135,10 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       ),
                     ),
                     PopupMenuButtonWidget(
-                      items: <PopupMenuItem<void>>[
+                      items: <PopupMenuEntry<void>>[
+                        PopupMenuSectionHeaderWidget(
+                          label: l10n.structureSection,
+                        ),
                         PopupMenuItem<void>(
                           onTap: () => AppRoutes.goToDatabaseVisualizer(
                             context,
@@ -144,6 +148,10 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                             icon: Icons.account_tree_outlined,
                             label: l10n.viewStructure,
                           ),
+                        ),
+                        const PopupMenuDivider(),
+                        PopupMenuSectionHeaderWidget(
+                          label: l10n.sqlFilesSection,
                         ),
                         PopupMenuItem<void>(
                           onTap: _copySchema,

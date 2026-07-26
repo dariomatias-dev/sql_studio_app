@@ -29,6 +29,8 @@
   "copySchema": "Copy Schema",
   "copySeed": "Copy Seed",
   "copyAll": "Copy All",
+  "structureSection": "Structure",
+  "sqlFilesSection": "SQL files",
   "searchDatabases": "Search databases",
   "newDatabase": "New Database",
   "favorites": "Favorites",

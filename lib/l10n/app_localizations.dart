@@ -280,6 +280,18 @@ abstract class AppLocalizations {
   /// **'Copy All'**
   String get copyAll;
 
+  /// No description provided for @structureSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Structure'**
+  String get structureSection;
+
+  /// No description provided for @sqlFilesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'SQL files'**
+  String get sqlFilesSection;
+
   /// No description provided for @searchDatabases.
   ///
   /// In en, this message translates to:

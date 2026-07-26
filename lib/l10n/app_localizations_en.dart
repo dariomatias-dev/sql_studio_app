@@ -101,6 +101,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyAll => 'Copy All';
 
   @override
+  String get structureSection => 'Structure';
+
+  @override
+  String get sqlFilesSection => 'SQL files';
+
+  @override
   String get searchDatabases => 'Search databases';
 
   @override
