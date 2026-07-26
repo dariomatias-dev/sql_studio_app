@@ -165,18 +165,19 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                             ),
                           ),
                           const SizedBox(width: 12),
-                          FloatingActionButton(
-                            onPressed: widget.onAdd,
-                            backgroundColor: AppColors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                AppRadii.full,
+                          Tooltip(
+                            message: appLocalizations.createSuggestion,
+                            child: ButtonWidget(
+                              onPressed: widget.onAdd,
+                              text: appLocalizations.createSuggestion,
+                              style: ButtonStyleType.black,
+                              width: 48,
+                              height: 48,
+                              padding: EdgeInsets.zero,
+                              child: const Icon(
+                                Icons.add,
+                                color: AppColors.white,
                               ),
-                            ),
-                            tooltip: appLocalizations.createSuggestion,
-                            child: const Icon(
-                              Icons.add,
-                              color: AppColors.white,
                             ),
                           ),
                         ],
