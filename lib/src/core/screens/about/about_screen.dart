@@ -126,7 +126,7 @@ class AboutScreen extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         const Icon(
-                          Icons.code_rounded,
+                          Icons.open_in_new_rounded,
                           size: 15,
                           color: AppColors.textMuted,
                         ),
@@ -137,6 +137,8 @@ class AboutScreen extends ConsumerWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textMuted,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.textMuted,
                           ),
                         ),
                       ],

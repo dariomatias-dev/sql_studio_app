@@ -12,6 +12,7 @@ class SettingsCardWidget extends StatelessWidget {
     super.key,
     this.onTap,
     this.value,
+    this.isExternal = false,
   });
 
   /// Called when the row is tapped.
@@ -26,6 +27,10 @@ class SettingsCardWidget extends StatelessWidget {
   /// Optional current value shown before the chevron (e.g. the selected
   /// language).
   final String? value;
+
+  /// Whether tapping this row leaves the app (e.g. opens a browser link),
+  /// shown with an "open in new" icon instead of the usual chevron.
+  final bool isExternal;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +65,10 @@ class SettingsCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 8),
             ],
-            const Icon(
-              Icons.chevron_right_rounded,
+            Icon(
+              isExternal
+                  ? Icons.open_in_new_rounded
+                  : Icons.chevron_right_rounded,
               size: 22,
               color: AppColors.textMuted,
             ),

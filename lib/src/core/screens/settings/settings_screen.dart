@@ -112,16 +112,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
                   onTap: () => _openUrl(Urls.officialWebsite),
                   title: l10n.officialWebsite,
                   icon: Icons.public_rounded,
+                  isExternal: true,
                 ),
                 SettingsCardWidget(
                   onTap: () => _openUrl(Urls.officialWebsitePrivacyPolicy),
                   title: l10n.privacyPolicy,
                   icon: Icons.verified_user_rounded,
+                  isExternal: true,
                 ),
                 SettingsCardWidget(
                   onTap: () => _openUrl(Urls.officialWebsiteContact),
                   title: l10n.contact,
                   icon: Icons.alternate_email_rounded,
+                  isExternal: true,
                 ),
                 SettingsCardWidget(
                   onTap: () => AppRoutes.goToAbout(context),
