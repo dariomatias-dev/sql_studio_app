@@ -72,7 +72,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
       showExitButton: false,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(24, 28, 24, 140),
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
