@@ -18,6 +18,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settings => 'Configurações';
 
   @override
+  String get navHome => 'Início';
+
+  @override
+  String get navDatabases => 'Bancos';
+
+  @override
+  String get navSettings => 'Ajustes';
+
+  @override
   String get general => 'Geral';
 
   @override

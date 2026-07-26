@@ -18,6 +18,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
+  String get navHome => 'Home';
+
+  @override
+  String get navDatabases => 'Databases';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
   String get general => 'General';
 
   @override

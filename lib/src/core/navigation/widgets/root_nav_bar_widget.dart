@@ -25,6 +25,7 @@ class RootNavBarWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(navigationViewModelProvider);
     final l10n = AppLocalizations.of(context)!;
+    final pillWidth = MediaQuery.of(context).size.width * 0.24;
 
     return SafeArea(
       child: Container(
@@ -43,7 +44,7 @@ class RootNavBarWidget extends ConsumerWidget {
               curve: Curves.easeOutBack,
               alignment: Alignment(index * 1.0 - 1.0, 0),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.24,
+                width: pillWidth,
                 height: 48,
                 margin: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
@@ -58,24 +59,27 @@ class RootNavBarWidget extends ConsumerWidget {
                   key: const Key('rootNavBar_home'),
                   icon: Icons.grid_view_outlined,
                   activeIcon: Icons.grid_view_rounded,
-                  label: l10n.home,
+                  label: l10n.navHome,
                   isSelected: index == 0,
+                  labelMaxWidth: pillWidth,
                   onTap: () => _onTab(ref, 0),
                 ),
                 _NavBarItem(
                   key: const Key('rootNavBar_databases'),
                   icon: Icons.dns_outlined,
                   activeIcon: Icons.dns_rounded,
-                  label: l10n.databases,
+                  label: l10n.navDatabases,
                   isSelected: index == 1,
+                  labelMaxWidth: pillWidth,
                   onTap: () => _onTab(ref, 1),
                 ),
                 _NavBarItem(
                   key: const Key('rootNavBar_settings'),
                   icon: Icons.tune_outlined,
                   activeIcon: Icons.tune_rounded,
-                  label: l10n.settings,
+                  label: l10n.navSettings,
                   isSelected: index == 2,
+                  labelMaxWidth: pillWidth,
                   onTap: () => _onTab(ref, 2),
                 ),
               ],
@@ -93,6 +97,7 @@ class _NavBarItem extends StatefulWidget {
     required this.activeIcon,
     required this.label,
     required this.isSelected,
+    required this.labelMaxWidth,
     required this.onTap,
     super.key,
   });
@@ -100,6 +105,11 @@ class _NavBarItem extends StatefulWidget {
   final IconData activeIcon;
   final String label;
   final bool isSelected;
+
+  /// Maximum width the label may occupy, matching the sliding selection
+  /// pill's width so long labels shrink to fit inside it instead of
+  /// spilling past its edges.
+  final double labelMaxWidth;
   final VoidCallback onTap;
 
   @override
@@ -147,15 +157,27 @@ class _NavBarItemState extends State<_NavBarItem> {
                 ),
               ),
               const SizedBox(height: 4),
-              AnimatedDefaultTextStyle(
-                duration: const Duration(milliseconds: 200),
-                style: TextStyle(
-                  color: isSelected ? AppColors.black : AppColors.textMuted,
-                  fontSize: 10,
-                  fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
-                  letterSpacing: 0.8,
+              SizedBox(
+                width: widget.labelMaxWidth - 16,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 200),
+                    style: TextStyle(
+                      color: isSelected ? AppColors.black : AppColors.textMuted,
+                      fontSize: 10,
+                      fontWeight: isSelected
+                          ? FontWeight.w900
+                          : FontWeight.w500,
+                      letterSpacing: 0.8,
+                    ),
+                    child: Text(
+                      widget.label.toUpperCase(),
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
                 ),
-                child: Text(widget.label.toUpperCase()),
               ),
             ],
           ),
