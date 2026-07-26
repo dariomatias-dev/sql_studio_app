@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_shadows.dart';
 
-/// A [Switch] styled with the app's black-and-white theme.
+/// A compact pill switch matching the app's own design system instead of
+/// Material's stock [Switch] shape.
 class SwitchWidget extends StatelessWidget {
   /// Creates a styled switch reflecting [value].
   const SwitchWidget({required this.value, required this.onChanged, super.key});
@@ -13,24 +16,44 @@ class SwitchWidget extends StatelessWidget {
   /// Called with the new value when the switch is toggled.
   final ValueChanged<bool> onChanged;
 
+  static const double _width = 44;
+  static const double _height = 26;
+  static const double _thumbSize = 20;
+  static const Duration _duration = Duration(milliseconds: 180);
+
   @override
   Widget build(BuildContext context) {
-    return Switch(
-      value: value,
-      onChanged: onChanged,
-      activeThumbColor: AppColors.white,
-      activeTrackColor: AppColors.black,
-      inactiveThumbColor: AppColors.controlInactive,
-      inactiveTrackColor: AppColors.background,
-      trackOutlineColor: WidgetStateProperty.resolveWith(
-        (states) => value ? AppColors.black : AppColors.border,
-      ),
-      trackOutlineWidth: const WidgetStatePropertyAll(1),
-      thumbIcon: WidgetStatePropertyAll(
-        Icon(
-          Icons.circle,
-          color: value ? AppColors.white : AppColors.transparent,
-          size: 0,
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: _duration,
+        curve: Curves.easeOut,
+        width: _width,
+        height: _height,
+        padding: const EdgeInsets.symmetric(horizontal: 3),
+        decoration: BoxDecoration(
+          color: value ? AppColors.black : AppColors.background,
+          borderRadius: BorderRadius.circular(AppRadii.full),
+          border: Border.all(
+            color: value ? AppColors.black : AppColors.border,
+          ),
+        ),
+        child: AnimatedAlign(
+          duration: _duration,
+          curve: Curves.easeOut,
+          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+          child: AnimatedContainer(
+            duration: _duration,
+            curve: Curves.easeOut,
+            width: _thumbSize,
+            height: _thumbSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: value ? AppColors.white : AppColors.controlInactive,
+              boxShadow: AppShadows.chip,
+            ),
+          ),
         ),
       ),
     );
