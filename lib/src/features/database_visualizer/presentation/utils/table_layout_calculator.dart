@@ -6,13 +6,22 @@ import 'package:sql_studio/src/features/database_visualizer/data/models/table_in
 /// Result of laying out a set of tables on the visualizer canvas.
 class TableLayoutResult {
   /// Creates a layout result.
-  const TableLayoutResult({required this.tableRects, required this.canvasSize});
+  const TableLayoutResult({
+    required this.tableRects,
+    required this.canvasSize,
+    required this.contentSize,
+  });
 
   /// The on-screen bounds of each table, keyed by table name.
   final Map<String, Rect> tableRects;
 
   /// The total size the canvas must have to fit every table plus padding.
   final Size canvasSize;
+
+  /// The actual bounding size of the laid-out tables, ignoring any padding
+  /// added to make [canvasSize] at least as large as the viewport. Used to
+  /// fit the diagram to the viewport when the visualizer first opens.
+  final Size contentSize;
 }
 
 /// Arranges [TableInfoModel]s into a grid for the database visualizer
@@ -73,6 +82,7 @@ class TableLayoutCalculator {
         math.max(contentWidth, minSize.width),
         math.max(contentHeight, minSize.height),
       ),
+      contentSize: Size(contentWidth, contentHeight),
     );
   }
 

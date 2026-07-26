@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/grid_background_painter.dart';
@@ -37,7 +39,11 @@ class DatabaseVisualizerCanvasWidget extends StatefulWidget {
 
 class _DatabaseVisualizerCanvasWidgetState
     extends State<DatabaseVisualizerCanvasWidget> {
+  static const double _minFitScale = 0.2;
+  static const double _maxFitScale = 1;
+
   bool _linesVisible = false;
+  bool _didFitToView = false;
 
   @override
   void initState() {
@@ -51,8 +57,29 @@ class _DatabaseVisualizerCanvasWidgetState
 
     if (!identical(oldWidget.tables, widget.tables)) {
       _linesVisible = false;
+      _didFitToView = false;
       _scheduleLines();
     }
+  }
+
+  /// Centers and scales the diagram so every table fits within [viewport]
+  /// the first time it's laid out, instead of opening at the top-left
+  /// corner of the grid.
+  void _fitToView(Size content, Size viewport) {
+    if (content.width == 0 || content.height == 0) return;
+
+    final scale = math
+        .min(viewport.width / content.width, viewport.height / content.height)
+        .clamp(_minFitScale, _maxFitScale);
+    final dx = (viewport.width - content.width * scale) / 2;
+    final dy = (viewport.height - content.height * scale) / 2;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      widget.transformationController.value = Matrix4.identity()
+        ..translateByDouble(dx, dy, 0, 1)
+        ..scaleByDouble(scale, scale, scale, 1);
+    });
   }
 
   void _scheduleLines() {
@@ -82,6 +109,14 @@ class _DatabaseVisualizerCanvasWidgetState
         );
         final tableRects = layout.tableRects;
         final canvasSize = layout.canvasSize;
+
+        if (!_didFitToView) {
+          _didFitToView = true;
+          _fitToView(
+            layout.contentSize,
+            Size(constraints.maxWidth, constraints.maxHeight),
+          );
+        }
 
         return Stack(
           children: [
