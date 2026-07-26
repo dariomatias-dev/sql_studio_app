@@ -318,10 +318,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Muestra pistas cortas como \"ALL\" o \"COUNT\" que se expanden en sentencias SQL completas al hacer clic.';
 
   @override
-  String get otherSuggestions => 'Otras Sugerencias';
+  String get otherSuggestions => 'Atajos del Editor';
 
   @override
-  String get characterSuggestions => 'Sugerencias de Caracteres';
+  String get characterSuggestions => 'Símbolos Rápidos';
 
   @override
   String get characterSuggestionsDescription =>

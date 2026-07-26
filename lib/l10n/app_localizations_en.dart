@@ -315,10 +315,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.';
 
   @override
-  String get otherSuggestions => 'Other Suggestions';
+  String get otherSuggestions => 'Editor Shortcuts';
 
   @override
-  String get characterSuggestions => 'Character Suggestions';
+  String get characterSuggestions => 'Quick Symbols';
 
   @override
   String get characterSuggestionsDescription =>

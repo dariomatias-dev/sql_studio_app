@@ -319,10 +319,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Mostra dicas curtas como \"ALL\" ou \"COUNT\" que se expandem para instruções SQL completas ao clicar.';
 
   @override
-  String get otherSuggestions => 'Outras Sugestões';
+  String get otherSuggestions => 'Atalhos do Editor';
 
   @override
-  String get characterSuggestions => 'Sugestões de Caracteres';
+  String get characterSuggestions => 'Símbolos Rápidos';
 
   @override
   String get characterSuggestionsDescription =>

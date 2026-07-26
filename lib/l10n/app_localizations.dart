@@ -673,13 +673,13 @@ abstract class AppLocalizations {
   /// No description provided for @otherSuggestions.
   ///
   /// In en, this message translates to:
-  /// **'Other Suggestions'**
+  /// **'Editor Shortcuts'**
   String get otherSuggestions;
 
   /// No description provided for @characterSuggestions.
   ///
   /// In en, this message translates to:
-  /// **'Character Suggestions'**
+  /// **'Quick Symbols'**
   String get characterSuggestions;
 
   /// No description provided for @characterSuggestionsDescription.

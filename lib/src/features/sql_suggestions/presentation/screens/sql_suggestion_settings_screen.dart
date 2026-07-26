@@ -101,17 +101,7 @@ class _SqlSuggestionSettingsScreenState
     final l10n = AppLocalizations.of(context)!;
 
     return ScaffoldWidget(
-      appBar: AppBar(
-        title: Text(
-          l10n.suggestionSettings.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1.2,
-          ),
-        ),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(l10n.suggestionSettings)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
