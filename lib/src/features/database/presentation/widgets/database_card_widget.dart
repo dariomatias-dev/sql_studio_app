@@ -231,23 +231,15 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       ),
                     ),
                     Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: widget.db.tables.map((table) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 12),
-                              child: Text(
-                                table,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.black.withAlpha(120),
-                                  fontFamily: 'monospace',
-                                ),
-                              ),
-                            );
-                          }).toList(),
+                      child: Text(
+                        widget.db.tables.join(', '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.black.withAlpha(120),
+                          fontFamily: 'monospace',
                         ),
                       ),
                     ),
