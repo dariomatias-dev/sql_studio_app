@@ -88,10 +88,6 @@ class _DatabaseVisualizerTableWidgetState
         ),
         boxShadow: AppShadows.card,
       ),
-      // The single source of truth for corner rounding: children below are
-      // plain rectangles, and are inset by the border width so their clip
-      // radius nests exactly under the outer border's curve instead of
-      // fighting it for the same pixels (which produced a visible seam).
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppRadii.md - _borderWidth),
         child: Column(
@@ -114,7 +110,7 @@ class _DatabaseVisualizerTableWidgetState
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      table.name.toUpperCase(),
+                      table.name,
                       style: const TextStyle(
                         color: AppColors.white,
                         fontWeight: FontWeight.w900,
