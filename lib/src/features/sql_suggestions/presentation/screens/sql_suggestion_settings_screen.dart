@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
@@ -14,6 +12,7 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.d
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_title_option_widget.dart';
 
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -64,12 +63,10 @@ class _SqlSuggestionSettingsScreenState
       final result = await advancedViewModel.resetSuggestions();
 
       unawaited(
-        Fluttertoast.showToast(
-          msg: result.isSuccess
+        AppToast.show(
+          result.isSuccess
               ? l10n.advancedSuggestionsInitialized
               : l10n.advancedSuggestionsFailed,
-          backgroundColor: AppColors.black,
-          textColor: AppColors.white,
         ),
       );
     }
@@ -85,13 +82,7 @@ class _SqlSuggestionSettingsScreenState
 
     _hasChangesNotifier.value = _hasChanges;
 
-    unawaited(
-      Fluttertoast.showToast(
-        msg: l10n.settingsSavedSuccessfully,
-        backgroundColor: AppColors.black,
-        textColor: AppColors.white,
-      ),
-    );
+    unawaited(AppToast.show(l10n.settingsSavedSuccessfully));
   }
 
   @override

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
@@ -10,6 +9,7 @@ import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
 /// Dialog form for updating an existing advanced SQL suggestion.
 class UpdateSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
@@ -53,8 +53,8 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
         final result = await viewModel.updateSuggestion(value);
 
         unawaited(
-          Fluttertoast.showToast(
-            msg: result.isSuccess
+          AppToast.show(
+            result.isSuccess
                 ? appLocalizations.updateSuggestionSuccess
                 : appLocalizations.updateSuggestionFail,
           ),

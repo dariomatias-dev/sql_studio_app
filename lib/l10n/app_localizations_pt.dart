@@ -114,13 +114,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get clearConsole => 'Limpar Console';
 
   @override
-  String get schemaCopied => 'Schema copiado!';
+  String get schemaCopied => 'Schema copiado';
 
   @override
-  String get seedCopied => 'Seed copiada!';
+  String get seedCopied => 'Seed copiada';
 
   @override
-  String get schemaAndSeedCopied => 'Schema e Seed copiados!';
+  String get schemaAndSeedCopied => 'Schema e Seed copiados';
 
   @override
   String get viewStructure => 'Ver Estrutura';
@@ -333,14 +333,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get advancedSuggestionsInitialized =>
-      'As sugestões avançadas foram inicializadas com sucesso.';
+      'As sugestões avançadas foram inicializadas com sucesso';
 
   @override
   String get advancedSuggestionsFailed =>
-      'Falha ao inicializar as sugestões avançadas.';
+      'Falha ao inicializar as sugestões avançadas';
 
   @override
-  String get settingsSavedSuccessfully => 'Configurações salvas com sucesso!';
+  String get settingsSavedSuccessfully => 'Configurações salvas com sucesso';
 
   @override
   String get configure => 'Configurar';
@@ -381,10 +381,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get reset => 'Redefinir';
 
   @override
-  String get advancedSuggestionAdded => 'Sugestão adicionada com sucesso.';
+  String get advancedSuggestionAdded => 'Sugestão adicionada com sucesso';
 
   @override
-  String get advancedSuggestionFailed => 'Falha ao adicionar sugestão.';
+  String get advancedSuggestionFailed => 'Falha ao adicionar sugestão';
 
   @override
   String deleteSuggestionConfirmation(Object label) {
@@ -392,10 +392,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get suggestionDeleted => 'Sugestão excluída com sucesso.';
+  String get suggestionDeleted => 'Sugestão excluída com sucesso';
 
   @override
-  String get suggestionDeleteFailed => 'Falha ao excluir sugestão.';
+  String get suggestionDeleteFailed => 'Falha ao excluir sugestão';
 
   @override
   String get resetSuggestionsConfirm =>
@@ -403,11 +403,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get suggestionsResetSuccess =>
-      'Todas as sugestões foram redefinidas com sucesso.';
+      'Todas as sugestões foram redefinidas com sucesso';
 
   @override
   String get suggestionsResetFailed =>
-      'Não foi possível redefinir as sugestões. Tente novamente.';
+      'Não foi possível redefinir as sugestões. Tente novamente';
 
   @override
   String get label => 'Rótulo';
@@ -432,10 +432,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get update => 'Atualizar';
 
   @override
-  String get updateSuggestionSuccess => 'Sugestão atualizada com sucesso.';
+  String get updateSuggestionSuccess => 'Sugestão atualizada com sucesso';
 
   @override
-  String get updateSuggestionFail => 'Falha ao atualizar sugestão.';
+  String get updateSuggestionFail => 'Falha ao atualizar sugestão';
 
   @override
   String get editSuggestion => 'Editar sugestão';
@@ -589,7 +589,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String languageUpdated(Object lang) {
-    return 'Idioma atualizado para $lang.';
+    return 'Idioma atualizado para $lang';
   }
 
   @override
@@ -624,10 +624,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get thisFieldIsRequired => 'Este campo é obrigatório';
 
   @override
-  String get sortOrderSavedSuccessfully => 'Ordenação salva com sucesso.';
+  String get sortOrderSavedSuccessfully => 'Ordenação salva com sucesso';
 
   @override
-  String get failedToSaveSortOrder => 'Falha ao salvar a ordenação.';
+  String get failedToSaveSortOrder => 'Falha ao salvar a ordenação';
 
   @override
   String deleteSuccess(Object count) {

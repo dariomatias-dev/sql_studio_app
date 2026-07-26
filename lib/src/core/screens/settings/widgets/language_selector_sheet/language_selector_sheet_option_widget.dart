@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
 /// A single selectable language option shown in the language selector sheet.
 class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
@@ -35,12 +35,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
     Navigator.pop(context);
 
     unawaited(
-      Fluttertoast.showToast(
-        msg: AppLocalizations.of(context)!.languageUpdated(lang),
-        backgroundColor: AppColors.black,
-        textColor: AppColors.white,
-        fontSize: 14,
-      ),
+      AppToast.show(AppLocalizations.of(context)!.languageUpdated(lang)),
     );
   }
 

@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
 /// Handles user actions triggered from the SQL editor toolbar, such as
 /// running, sharing, and copying the current query text.
@@ -62,7 +62,7 @@ class SqlEditorController {
         .trim();
 
     if (sql.isEmpty) {
-      unawaited(Fluttertoast.showToast(msg: appLocalizations.nothingToShare));
+      unawaited(AppToast.show(appLocalizations.nothingToShare));
 
       return;
     }
@@ -70,7 +70,7 @@ class SqlEditorController {
     final result = await SharePlus.instance.share(ShareParams(text: sql));
 
     if (result.status == ShareResultStatus.success) {
-      unawaited(Fluttertoast.showToast(msg: appLocalizations.sqlSharedSuccess));
+      unawaited(AppToast.show(appLocalizations.sqlSharedSuccess));
     }
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -88,13 +88,13 @@ class SqlEditorController {
         .trim();
 
     if (sql.isEmpty) {
-      unawaited(Fluttertoast.showToast(msg: appLocalizations.nothingToCopy));
+      unawaited(AppToast.show(appLocalizations.nothingToCopy));
       return;
     }
 
     await Clipboard.setData(ClipboardData(text: sql));
 
-    unawaited(Fluttertoast.showToast(msg: appLocalizations.sqlCopied));
+    unawaited(AppToast.show(appLocalizations.sqlCopied));
 
     FocusManager.instance.primaryFocus?.unfocus();
   }
@@ -113,7 +113,7 @@ class SqlEditorController {
 
     if (sql.isEmpty) {
       unawaited(
-        Fluttertoast.showToast(msg: appLocalizations.nothingToDownload),
+        AppToast.show(appLocalizations.nothingToDownload),
       );
 
       return;
@@ -130,7 +130,7 @@ class SqlEditorController {
     );
 
     if (result.status == ShareResultStatus.success) {
-      unawaited(Fluttertoast.showToast(msg: appLocalizations.sqlDownloaded));
+      unawaited(AppToast.show(appLocalizations.sqlDownloaded));
     }
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -144,13 +144,13 @@ class SqlEditorController {
     final lastQuery = ref.read(sqlCommandsViewModelProvider).lastQuery;
 
     if (lastQuery == null || lastQuery.isEmpty) {
-      unawaited(Fluttertoast.showToast(msg: appLocalizations.nothingToLoad));
+      unawaited(AppToast.show(appLocalizations.nothingToLoad));
 
       return;
     }
 
     ref.read(sqlEditorViewModelProvider.notifier).controller.text = lastQuery;
 
-    unawaited(Fluttertoast.showToast(msg: appLocalizations.lastSqlLoaded));
+    unawaited(AppToast.show(appLocalizations.lastSqlLoaded));
   }
 }

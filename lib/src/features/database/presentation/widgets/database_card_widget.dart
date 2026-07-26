@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
@@ -12,6 +11,7 @@ import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_section_header_widget.dart';
@@ -39,14 +39,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
     await Clipboard.setData(ClipboardData(text: contents.join('\n')));
 
     if (mounted) {
-      unawaited(
-        Fluttertoast.showToast(
-          msg: message,
-          backgroundColor: AppColors.textPrimary,
-          textColor: AppColors.white,
-          fontSize: 14,
-        ),
-      );
+      unawaited(AppToast.show(message));
     }
   }
 

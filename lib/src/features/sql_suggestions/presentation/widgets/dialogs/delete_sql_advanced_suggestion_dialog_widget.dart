@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
@@ -57,8 +57,8 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
           final result = await viewModel.removeSuggestion(id);
 
           unawaited(
-            Fluttertoast.showToast(
-              msg: result.isSuccess
+            AppToast.show(
+              result.isSuccess
                   ? appLocalizations.suggestionDeleted
                   : appLocalizations.suggestionDeleteFailed,
             ),

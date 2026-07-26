@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
 /// Manages the reorderable list of suggestion items shown in a suggestions
 /// settings screen, tracking unsaved changes and persisting the new order.
@@ -63,8 +63,8 @@ class SuggestionsSettingsLayoutController<T> {
     final appLocalizations = AppLocalizations.of(getContext())!;
 
     unawaited(
-      Fluttertoast.showToast(
-        msg: saved
+      AppToast.show(
+        saved
             ? appLocalizations.sortOrderSavedSuccessfully
             : appLocalizations.failedToSaveSortOrder,
       ),

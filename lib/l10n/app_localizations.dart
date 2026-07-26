@@ -295,19 +295,19 @@ abstract class AppLocalizations {
   /// No description provided for @schemaCopied.
   ///
   /// In en, this message translates to:
-  /// **'Schema copied!'**
+  /// **'Schema copied'**
   String get schemaCopied;
 
   /// No description provided for @seedCopied.
   ///
   /// In en, this message translates to:
-  /// **'Seed copied!'**
+  /// **'Seed copied'**
   String get seedCopied;
 
   /// No description provided for @schemaAndSeedCopied.
   ///
   /// In en, this message translates to:
-  /// **'Schema and Seed copied!'**
+  /// **'Schema and Seed copied'**
   String get schemaAndSeedCopied;
 
   /// No description provided for @viewStructure.
@@ -697,19 +697,19 @@ abstract class AppLocalizations {
   /// No description provided for @advancedSuggestionsInitialized.
   ///
   /// In en, this message translates to:
-  /// **'Advanced suggestions have been initialized successfully.'**
+  /// **'Advanced suggestions have been initialized successfully'**
   String get advancedSuggestionsInitialized;
 
   /// No description provided for @advancedSuggestionsFailed.
   ///
   /// In en, this message translates to:
-  /// **'Failed to initialize advanced suggestions.'**
+  /// **'Failed to initialize advanced suggestions'**
   String get advancedSuggestionsFailed;
 
   /// No description provided for @settingsSavedSuccessfully.
   ///
   /// In en, this message translates to:
-  /// **'Settings saved successfully!'**
+  /// **'Settings saved successfully'**
   String get settingsSavedSuccessfully;
 
   /// No description provided for @configure.
@@ -787,13 +787,13 @@ abstract class AppLocalizations {
   /// No description provided for @advancedSuggestionAdded.
   ///
   /// In en, this message translates to:
-  /// **'Suggestion added successfully.'**
+  /// **'Suggestion added successfully'**
   String get advancedSuggestionAdded;
 
   /// No description provided for @advancedSuggestionFailed.
   ///
   /// In en, this message translates to:
-  /// **'Failed to add suggestion.'**
+  /// **'Failed to add suggestion'**
   String get advancedSuggestionFailed;
 
   /// No description provided for @deleteSuggestionConfirmation.
@@ -805,13 +805,13 @@ abstract class AppLocalizations {
   /// No description provided for @suggestionDeleted.
   ///
   /// In en, this message translates to:
-  /// **'Suggestion deleted successfully.'**
+  /// **'Suggestion deleted successfully'**
   String get suggestionDeleted;
 
   /// No description provided for @suggestionDeleteFailed.
   ///
   /// In en, this message translates to:
-  /// **'Failed to delete suggestion.'**
+  /// **'Failed to delete suggestion'**
   String get suggestionDeleteFailed;
 
   /// No description provided for @resetSuggestionsConfirm.
@@ -823,13 +823,13 @@ abstract class AppLocalizations {
   /// No description provided for @suggestionsResetSuccess.
   ///
   /// In en, this message translates to:
-  /// **'All suggestions have been reset successfully.'**
+  /// **'All suggestions have been reset successfully'**
   String get suggestionsResetSuccess;
 
   /// No description provided for @suggestionsResetFailed.
   ///
   /// In en, this message translates to:
-  /// **'Failed to reset suggestions. Please try again.'**
+  /// **'Failed to reset suggestions. Please try again'**
   String get suggestionsResetFailed;
 
   /// No description provided for @label.
@@ -877,13 +877,13 @@ abstract class AppLocalizations {
   /// No description provided for @updateSuggestionSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Suggestion updated successfully.'**
+  /// **'Suggestion updated successfully'**
   String get updateSuggestionSuccess;
 
   /// No description provided for @updateSuggestionFail.
   ///
   /// In en, this message translates to:
-  /// **'Failed to update suggestion.'**
+  /// **'Failed to update suggestion'**
   String get updateSuggestionFail;
 
   /// No description provided for @editSuggestion.
@@ -1129,7 +1129,7 @@ abstract class AppLocalizations {
   /// No description provided for @languageUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Language updated to {lang}.'**
+  /// **'Language updated to {lang}'**
   String languageUpdated(Object lang);
 
   /// No description provided for @loading.
@@ -1195,13 +1195,13 @@ abstract class AppLocalizations {
   /// No description provided for @sortOrderSavedSuccessfully.
   ///
   /// In en, this message translates to:
-  /// **'Sort order saved successfully.'**
+  /// **'Sort order saved successfully'**
   String get sortOrderSavedSuccessfully;
 
   /// No description provided for @failedToSaveSortOrder.
   ///
   /// In en, this message translates to:
-  /// **'Failed to save sort order.'**
+  /// **'Failed to save sort order'**
   String get failedToSaveSortOrder;
 
   /// No description provided for @deleteSuccess.

@@ -114,13 +114,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearConsole => 'Limpiar Consola';
 
   @override
-  String get schemaCopied => 'Esquema copiado!';
+  String get schemaCopied => 'Esquema copiado';
 
   @override
-  String get seedCopied => 'Seed copiada!';
+  String get seedCopied => 'Seed copiada';
 
   @override
-  String get schemaAndSeedCopied => 'Esquema y Seed copiados!';
+  String get schemaAndSeedCopied => 'Esquema y Seed copiados';
 
   @override
   String get viewStructure => 'Ver Estructura';
@@ -332,14 +332,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get advancedSuggestionsInitialized =>
-      'Las sugerencias avanzadas se han inicializado correctamente.';
+      'Las sugerencias avanzadas se han inicializado correctamente';
 
   @override
   String get advancedSuggestionsFailed =>
-      'Error al inicializar las sugerencias avanzadas.';
+      'Error al inicializar las sugerencias avanzadas';
 
   @override
-  String get settingsSavedSuccessfully => '¡Configuración guardada con éxito!';
+  String get settingsSavedSuccessfully => '¡Configuración guardada con éxito';
 
   @override
   String get configure => 'Configurar';
@@ -380,10 +380,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reset => 'Restablecer';
 
   @override
-  String get advancedSuggestionAdded => 'Sugerencia agregada con éxito.';
+  String get advancedSuggestionAdded => 'Sugerencia agregada con éxito';
 
   @override
-  String get advancedSuggestionFailed => 'Error al agregar la sugerencia.';
+  String get advancedSuggestionFailed => 'Error al agregar la sugerencia';
 
   @override
   String deleteSuggestionConfirmation(Object label) {
@@ -391,10 +391,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get suggestionDeleted => 'Sugerencia eliminada con éxito.';
+  String get suggestionDeleted => 'Sugerencia eliminada con éxito';
 
   @override
-  String get suggestionDeleteFailed => 'Error al eliminar la sugerencia.';
+  String get suggestionDeleteFailed => 'Error al eliminar la sugerencia';
 
   @override
   String get resetSuggestionsConfirm =>
@@ -402,11 +402,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get suggestionsResetSuccess =>
-      'Todas las sugerencias se han restablecido con éxito.';
+      'Todas las sugerencias se han restablecido con éxito';
 
   @override
   String get suggestionsResetFailed =>
-      'No se pudieron restablecer las sugerencias. Inténtalo de nuevo.';
+      'No se pudieron restablecer las sugerencias. Inténtalo de nuevo';
 
   @override
   String get label => 'Etiqueta';
@@ -431,10 +431,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get update => 'Actualizar';
 
   @override
-  String get updateSuggestionSuccess => 'Sugerencia actualizada con éxito.';
+  String get updateSuggestionSuccess => 'Sugerencia actualizada con éxito';
 
   @override
-  String get updateSuggestionFail => 'No se pudo actualizar la sugerencia.';
+  String get updateSuggestionFail => 'No se pudo actualizar la sugerencia';
 
   @override
   String get editSuggestion => 'Editar sugerencia';
@@ -591,7 +591,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String languageUpdated(Object lang) {
-    return 'Idioma actualizado a $lang.';
+    return 'Idioma actualizado a $lang';
   }
 
   @override
@@ -627,11 +627,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sortOrderSavedSuccessfully =>
-      'El orden de clasificación se guardó correctamente.';
+      'El orden de clasificación se guardó correctamente';
 
   @override
   String get failedToSaveSortOrder =>
-      'No se pudo guardar el orden de clasificación.';
+      'No se pudo guardar el orden de clasificación';
 
   @override
   String deleteSuccess(Object count) {
