@@ -56,15 +56,15 @@ Each database ships with a predefined schema and seed data. You write and run re
 ## Screenshots
 
 <div align="center">
-<img src="assets/screenshots/01_home.png" width="200" alt="Home / SQL editor">
-<img src="assets/screenshots/02_databases.png" width="200" alt="Databases">
-<img src="assets/screenshots/03_editor.png" width="200" alt="SQL editor with an active database">
-<img src="assets/screenshots/04_drawer.png" width="200" alt="Navigation drawer">
-<img src="assets/screenshots/05_visualizer.png" width="200" alt="Database visualizer">
-<img src="assets/screenshots/06_settings.png" width="200" alt="Settings">
-<img src="assets/screenshots/07_language_selector.png" width="200" alt="Language selector">
-<img src="assets/screenshots/08_sql_suggestions_settings.png" width="200" alt="SQL suggestions settings">
-<img src="assets/screenshots/09_workspace_layout_settings.png" width="200" alt="Workspace layout settings">
+<img src="screenshots/01_home.png" width="200" alt="Home / SQL editor">
+<img src="screenshots/02_databases.png" width="200" alt="Databases">
+<img src="screenshots/03_editor.png" width="200" alt="SQL editor with an active database">
+<img src="screenshots/04_drawer.png" width="200" alt="Navigation drawer">
+<img src="screenshots/05_visualizer.png" width="200" alt="Database visualizer">
+<img src="screenshots/06_settings.png" width="200" alt="Settings">
+<img src="screenshots/07_language_selector.png" width="200" alt="Language selector">
+<img src="screenshots/08_sql_suggestions_settings.png" width="200" alt="SQL suggestions settings">
+<img src="screenshots/09_workspace_layout_settings.png" width="200" alt="Workspace layout settings">
 </div>
 
 ## Built With
@@ -99,7 +99,7 @@ Utility scripts live under `scripts/`.
 
 | Script       | Command                             | Description                                                                                                                                                    |
 | ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `screenshot` | `scripts/screenshot.sh [device-id]` | Drives the app through its main screens on a connected device or emulator and saves a screenshot of each one into `assets/screenshots/`, used for the README, Play Store listing, and official website. |
+| `screenshot` | `scripts/screenshot.sh [device-id]` | Drives the app through its main screens on a connected device or emulator and saves a screenshot of each one into `screenshots/`, used for the README, Play Store listing, and official website. |
 
 ## Contributing
 

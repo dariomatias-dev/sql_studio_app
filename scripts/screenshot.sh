@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Automatically drives the app through its main screens and saves a
-# screenshot of each into assets/screenshots/, for use in the README,
+# screenshot of each into screenshots/, for use in the README,
 # Play Store listing, official website, etc.
 #
 # Usage:
@@ -18,12 +18,12 @@ if [[ "${1:-}" != "" ]]; then
   DEVICE_ARGS=(-d "$1")
 fi
 
-rm -rf assets/screenshots
-mkdir -p assets/screenshots
+rm -rf screenshots
+mkdir -p screenshots
 
 flutter drive \
   --driver=test_driver/integration_test.dart \
   --target=integration_test/screenshot_test.dart \
   "${DEVICE_ARGS[@]}"
 
-echo "Screenshots saved in assets/screenshots/"
+echo "Screenshots saved in screenshots/"

@@ -56,15 +56,15 @@ Cada banco de dados vem com um schema e dados de seed predefinidos. Você escrev
 ## Screenshots
 
 <div align="center">
-<img src="assets/screenshots/01_home.png" width="200" alt="Home / editor SQL">
-<img src="assets/screenshots/02_databases.png" width="200" alt="Bancos de dados">
-<img src="assets/screenshots/03_editor.png" width="200" alt="Editor SQL com banco de dados ativo">
-<img src="assets/screenshots/04_drawer.png" width="200" alt="Menu de navegação">
-<img src="assets/screenshots/05_visualizer.png" width="200" alt="Visualizador de banco de dados">
-<img src="assets/screenshots/06_settings.png" width="200" alt="Configurações">
-<img src="assets/screenshots/07_language_selector.png" width="200" alt="Seletor de idioma">
-<img src="assets/screenshots/08_sql_suggestions_settings.png" width="200" alt="Configurações de sugestões de SQL">
-<img src="assets/screenshots/09_workspace_layout_settings.png" width="200" alt="Configurações de layout do workspace">
+<img src="screenshots/01_home.png" width="200" alt="Home / editor SQL">
+<img src="screenshots/02_databases.png" width="200" alt="Bancos de dados">
+<img src="screenshots/03_editor.png" width="200" alt="Editor SQL com banco de dados ativo">
+<img src="screenshots/04_drawer.png" width="200" alt="Menu de navegação">
+<img src="screenshots/05_visualizer.png" width="200" alt="Visualizador de banco de dados">
+<img src="screenshots/06_settings.png" width="200" alt="Configurações">
+<img src="screenshots/07_language_selector.png" width="200" alt="Seletor de idioma">
+<img src="screenshots/08_sql_suggestions_settings.png" width="200" alt="Configurações de sugestões de SQL">
+<img src="screenshots/09_workspace_layout_settings.png" width="200" alt="Configurações de layout do workspace">
 </div>
 
 ## Construído Com
@@ -99,7 +99,7 @@ Scripts utilitários ficam em `scripts/`.
 
 | Script       | Comando                             | Descrição                                                                                                                                                 |
 | ------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `screenshot` | `scripts/screenshot.sh [device-id]` | Navega o app sozinho pelas telas principais em um dispositivo ou emulador conectado e salva um screenshot de cada uma em `assets/screenshots/`, usado no README, na listagem da Play Store e no site oficial. |
+| `screenshot` | `scripts/screenshot.sh [device-id]` | Navega o app sozinho pelas telas principais em um dispositivo ou emulador conectado e salva um screenshot de cada uma em `screenshots/`, usado no README, na listagem da Play Store e no site oficial. |
 
 ## Contribuindo
 
