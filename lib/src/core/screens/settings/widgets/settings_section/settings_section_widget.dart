@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Groups related settings entries under a titled section header, each
 /// entry rendered directly on the page background and separated from
@@ -28,17 +28,17 @@ class SettingsSectionWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(0, 32, 0, 10),
           child: Text(
             title.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: AppColors.textMuted,
+              color: context.colors.textMuted,
               letterSpacing: 0.8,
             ),
           ),
         ),
         for (var i = 0; i < children.length; i++) ...<Widget>[
           if (i > 0)
-            const Divider(height: 1, thickness: 1, color: AppColors.border),
+            Divider(height: 1, thickness: 1, color: context.colors.border),
           children[i],
         ],
       ],

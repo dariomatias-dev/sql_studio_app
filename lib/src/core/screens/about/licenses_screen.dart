@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/screens/about/license_detail_screen.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
@@ -59,18 +59,21 @@ class _LicensesScreenState extends State<LicensesScreen> {
           return ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: packages.length + 1,
-            separatorBuilder: (context, index) =>
-                const Divider(height: 1, thickness: 1, color: AppColors.border),
+            separatorBuilder: (context, index) => Divider(
+              height: 1,
+              thickness: 1,
+              color: context.colors.border,
+            ),
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                   child: Text(
                     l10n.packagesCount(packages.length),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textMuted,
+                      color: context.colors.textMuted,
                     ),
                   ),
                 );
@@ -81,15 +84,15 @@ class _LicensesScreenState extends State<LicensesScreen> {
               return ListTile(
                 title: Text(
                   package.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.black,
+                    color: context.colors.black,
                   ),
                 ),
-                trailing: const Icon(
+                trailing: Icon(
                   Icons.chevron_right_rounded,
-                  color: AppColors.textMuted,
+                  color: context.colors.textMuted,
                 ),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute<void>(

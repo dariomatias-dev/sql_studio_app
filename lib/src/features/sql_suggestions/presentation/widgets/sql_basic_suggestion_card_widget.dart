@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
@@ -30,11 +30,11 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
             horizontal: 16,
             vertical: 6,
           ),
-          leading: const Icon(Icons.drag_handle, color: AppColors.black54),
+          leading: Icon(Icons.drag_handle, color: context.colors.black54),
           title: Text(
             suggestion.trim(),
-            style: const TextStyle(
-              color: AppColors.black87,
+            style: TextStyle(
+              color: context.colors.black87,
               fontWeight: FontWeight.w500,
               fontSize: 14,
             ),
@@ -49,7 +49,7 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
               );
             },
             tooltip: AppLocalizations.of(context)!.deleteSuggestion,
-            icon: const Icon(Icons.delete_outline, color: AppColors.error),
+            icon: Icon(Icons.delete_outline, color: context.colors.error),
           ),
         ),
       ),

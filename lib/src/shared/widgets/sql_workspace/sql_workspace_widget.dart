@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
@@ -71,12 +71,12 @@ class _SqlWorkspaceWidgetState extends ConsumerState<SqlWorkspaceWidget>
       return Column(
         children: <Widget>[
           ColoredBox(
-            color: AppColors.white,
+            color: context.colors.white,
             child: TabBar(
               controller: _tabController,
-              indicatorColor: AppColors.black,
-              labelColor: AppColors.black,
-              unselectedLabelColor: AppColors.textMuted,
+              indicatorColor: context.colors.black,
+              labelColor: context.colors.black,
+              unselectedLabelColor: context.colors.textMuted,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               unselectedLabelStyle: const TextStyle(
                 fontWeight: FontWeight.normal,

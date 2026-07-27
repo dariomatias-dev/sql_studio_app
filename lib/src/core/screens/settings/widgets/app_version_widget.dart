@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
 
 /// Small caption that displays the current app build version.
@@ -15,10 +15,10 @@ class AppVersionWidget extends ConsumerWidget {
 
     return Text(
       'Build v$version',
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w600,
-        color: AppColors.textMuted,
+        color: context.colors.textMuted,
         letterSpacing: 0.2,
       ),
     );

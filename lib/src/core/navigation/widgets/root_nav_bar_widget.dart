@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
 /// Bottom navigation bar switching between the app's main pages.
@@ -32,9 +32,9 @@ class RootNavBarWidget extends ConsumerWidget {
         margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
         height: 72,
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.colors.white,
           borderRadius: BorderRadius.circular(AppRadii.full),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: context.colors.border),
           boxShadow: AppShadows.elevated,
         ),
         child: Stack(
@@ -48,7 +48,7 @@ class RootNavBarWidget extends ConsumerWidget {
                 height: 48,
                 margin: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: context.colors.background,
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
               ),
@@ -153,7 +153,9 @@ class _NavBarItemState extends State<_NavBarItem> {
                   isSelected ? widget.activeIcon : widget.icon,
                   key: ValueKey<String>('$_generation-$isSelected'),
                   size: 24,
-                  color: isSelected ? AppColors.black : AppColors.textMuted,
+                  color: isSelected
+                      ? context.colors.black
+                      : context.colors.textMuted,
                 ),
               ),
               const SizedBox(height: 4),
@@ -164,7 +166,9 @@ class _NavBarItemState extends State<_NavBarItem> {
                   child: AnimatedDefaultTextStyle(
                     duration: const Duration(milliseconds: 200),
                     style: TextStyle(
-                      color: isSelected ? AppColors.black : AppColors.textMuted,
+                      color: isSelected
+                          ? context.colors.black
+                          : context.colors.textMuted,
                       fontSize: 10,
                       fontWeight: isSelected
                           ? FontWeight.w900

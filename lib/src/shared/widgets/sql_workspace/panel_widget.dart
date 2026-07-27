@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A common panel frame used by the SQL workspace widgets, providing a
 /// header with title, database name, action buttons, and a body area.
@@ -43,7 +43,7 @@ class PanelWidget extends StatelessWidget {
     final hasFullScreenButton = onFullScreen != null;
 
     return ColoredBox(
-      color: AppColors.background,
+      color: context.colors.background,
       child: Column(
         children: <Widget>[
           Row(
@@ -71,8 +71,8 @@ class PanelWidget extends StatelessWidget {
                       if (title != null)
                         Text(
                           title!,
-                          style: const TextStyle(
-                            color: AppColors.black,
+                          style: TextStyle(
+                            color: context.colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -80,9 +80,9 @@ class PanelWidget extends StatelessWidget {
                       if (databaseName != null)
                         Text(
                           databaseName!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.textMuted,
+                            color: context.colors.textMuted,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -96,10 +96,10 @@ class PanelWidget extends StatelessWidget {
           Expanded(
             child: ClipRect(
               child: Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.surface,
+                decoration: BoxDecoration(
+                  color: context.colors.surface,
                   border: Border.symmetric(
-                    vertical: BorderSide(color: AppColors.border),
+                    vertical: BorderSide(color: context.colors.border),
                   ),
                 ),
                 width: double.infinity,

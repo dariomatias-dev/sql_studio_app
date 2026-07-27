@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Section title label used within the SQL suggestion settings screen.
 class SqlSuggestionSettingsTitleOptionWidget extends StatelessWidget {
@@ -16,10 +16,10 @@ class SqlSuggestionSettingsTitleOptionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: AppColors.black87,
+        color: context.colors.black87,
       ),
     );
   }

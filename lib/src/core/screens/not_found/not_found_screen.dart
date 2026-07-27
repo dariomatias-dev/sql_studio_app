@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
@@ -16,32 +16,32 @@ class NotFoundScreen extends StatelessWidget {
     final appLocalizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Icon(
+              Icon(
                 Icons.error_outline,
                 size: 80,
-                color: AppColors.black87,
+                color: context.colors.black87,
               ),
               const SizedBox(height: 20),
               Text(
                 appLocalizations.screenNotFound,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.black87,
+                  color: context.colors.black87,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 appLocalizations.screenNotFoundDescription,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14, color: AppColors.black54),
+                style: TextStyle(fontSize: 14, color: context.colors.black54),
               ),
               const SizedBox(height: 20),
               ButtonWidget(

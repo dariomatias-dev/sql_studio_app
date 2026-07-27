@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A compact pill switch matching the app's own design system instead of
 /// Material's stock [Switch] shape.
@@ -33,10 +33,10 @@ class SwitchWidget extends StatelessWidget {
         height: _height,
         padding: const EdgeInsets.symmetric(horizontal: 3),
         decoration: BoxDecoration(
-          color: value ? AppColors.black : AppColors.background,
+          color: value ? context.colors.black : context.colors.background,
           borderRadius: BorderRadius.circular(AppRadii.full),
           border: Border.all(
-            color: value ? AppColors.black : AppColors.border,
+            color: value ? context.colors.black : context.colors.border,
           ),
         ),
         child: AnimatedAlign(
@@ -50,7 +50,9 @@ class SwitchWidget extends StatelessWidget {
             height: _thumbSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: value ? AppColors.white : AppColors.controlInactive,
+              color: value
+                  ? context.colors.white
+                  : context.colors.controlInactive,
               boxShadow: AppShadows.chip,
             ),
           ),

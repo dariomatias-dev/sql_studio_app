@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
@@ -47,7 +47,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Material(
-        color: AppColors.transparent,
+        color: context.colors.transparent,
         child: InkWell(
           onTap: () => _changeLanguage(context, ref),
           borderRadius: BorderRadius.circular(AppRadii.md),
@@ -60,9 +60,13 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadii.md),
-              color: isSelected ? AppColors.black : AppColors.background,
+              color: isSelected
+                  ? context.colors.black
+                  : context.colors.background,
               border: Border.all(
-                color: isSelected ? AppColors.black : AppColors.border,
+                color: isSelected
+                    ? context.colors.black
+                    : context.colors.border,
               ),
             ),
             child: Row(
@@ -75,15 +79,17 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
                       fontWeight: isSelected
                           ? FontWeight.w800
                           : FontWeight.w500,
-                      color: isSelected ? AppColors.white : AppColors.black,
+                      color: isSelected
+                          ? context.colors.white
+                          : context.colors.black,
                       letterSpacing: -0.2,
                     ),
                   ),
                 ),
                 if (isSelected)
-                  const Icon(
+                  Icon(
                     Icons.check_circle_rounded,
-                    color: AppColors.white,
+                    color: context.colors.white,
                     size: 20,
                   )
                 else
@@ -93,7 +99,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.controlInactive,
+                        color: context.colors.controlInactive,
                         width: 1.5,
                       ),
                     ),

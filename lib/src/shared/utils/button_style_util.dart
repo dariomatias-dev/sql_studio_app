@@ -31,6 +31,7 @@ class ButtonStyleData {
 /// [ButtonStyleType.custom].
 ButtonStyleData resolveButtonStyle({
   required ButtonStyleType style,
+  required AppColors colors,
   Color? backgroundColor,
   Color? foregroundColor,
   Color? borderColor,
@@ -38,24 +39,24 @@ ButtonStyleData resolveButtonStyle({
   switch (style) {
     case ButtonStyleType.black:
       return ButtonStyleData(
-        background: AppColors.black,
-        foreground: AppColors.white,
-        border: AppColors.black.withAlpha(20),
-        text: AppColors.white,
+        background: colors.black,
+        foreground: colors.white,
+        border: colors.black.withAlpha(20),
+        text: colors.white,
       );
     case ButtonStyleType.red:
       return ButtonStyleData(
-        background: AppColors.error,
-        foreground: AppColors.white,
-        border: AppColors.error.withAlpha(30),
-        text: AppColors.white,
+        background: colors.error,
+        foreground: colors.white,
+        border: colors.error.withAlpha(30),
+        text: colors.white,
       );
     case ButtonStyleType.custom:
       return ButtonStyleData(
-        background: backgroundColor ?? AppColors.white,
-        foreground: foregroundColor ?? AppColors.black,
-        border: borderColor ?? AppColors.black.withAlpha(25),
-        text: foregroundColor ?? AppColors.black,
+        background: backgroundColor ?? colors.white,
+        foreground: foregroundColor ?? colors.black,
+        border: borderColor ?? colors.border,
+        text: foregroundColor ?? colors.black,
       );
   }
 }

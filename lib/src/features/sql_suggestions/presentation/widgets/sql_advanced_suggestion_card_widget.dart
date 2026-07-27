@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
@@ -33,11 +33,11 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             horizontal: 16,
             vertical: 6,
           ),
-          leading: const Icon(Icons.drag_handle, color: AppColors.black54),
+          leading: Icon(Icons.drag_handle, color: context.colors.black54),
           title: Text(
             suggestion.label,
-            style: const TextStyle(
-              color: AppColors.black87,
+            style: TextStyle(
+              color: context.colors.black87,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
@@ -46,9 +46,9 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             suggestion.code,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: AppColors.black54,
+              color: context.colors.black54,
               height: 1.3,
             ),
           ),
@@ -65,9 +65,9 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.edit_outlined,
-                  color: AppColors.textMuted,
+                  color: context.colors.textMuted,
                 ),
               ),
               IconButton(
@@ -81,7 +81,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.delete_outline, color: AppColors.error),
+                icon: Icon(Icons.delete_outline, color: context.colors.error),
               ),
             ],
           ),

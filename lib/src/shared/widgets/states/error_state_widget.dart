@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
@@ -43,17 +43,17 @@ class ErrorStateWidget extends StatelessWidget {
               width: 72,
               height: 72,
               decoration: BoxDecoration(
-                color: AppColors.error.withAlpha(20),
+                color: context.colors.error.withAlpha(20),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 32, color: AppColors.error),
+              child: Icon(icon, size: 32, color: context.colors.error),
             ),
             const SizedBox(height: 20),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.black87,
+              style: TextStyle(
+                color: context.colors.black87,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 1.4,

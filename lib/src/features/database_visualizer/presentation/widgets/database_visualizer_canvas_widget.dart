@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/grid_background_painter.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/table_relation_painter.dart';
@@ -120,8 +121,10 @@ class _DatabaseVisualizerCanvasWidgetState
 
         return Stack(
           children: [
-            const Positioned.fill(
-              child: CustomPaint(painter: GridBackgroundPainter()),
+            Positioned.fill(
+              child: CustomPaint(
+                painter: GridBackgroundPainter(colors: context.colors),
+              ),
             ),
             InteractiveViewer(
               transformationController: transformationController,
@@ -152,6 +155,7 @@ class _DatabaseVisualizerCanvasWidgetState
                             tableColumnRowHeight:
                                 TableLayoutCalculator.columnRowHeight,
                             selectedTable: selectedTable,
+                            colors: context.colors,
                           ),
                         ),
                       ),

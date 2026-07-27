@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -84,7 +84,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
           IconButton(
             onPressed: widget.onReset,
             tooltip: appLocalizations.resetSuggestions,
-            icon: const Icon(Icons.refresh, color: AppColors.black87),
+            icon: Icon(Icons.refresh, color: context.colors.black87),
           ),
         ],
       ),
@@ -103,7 +103,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     Theme(
                       data: Theme.of(
                         context,
-                      ).copyWith(canvasColor: AppColors.white),
+                      ).copyWith(canvasColor: context.colors.white),
                       child: ReorderableListView.builder(
                         padding: const EdgeInsets.only(
                           top: 8,
@@ -122,7 +122,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                               boxShadow: AppShadows.card,
                             ),
                             child: Material(
-                              color: AppColors.transparent,
+                              color: context.colors.transparent,
                               borderRadius: BorderRadius.circular(
                                 AppRadii.md,
                               ),
@@ -140,7 +140,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     right: 0,
                     bottom: 0,
                     child: Container(
-                      color: AppColors.transparent,
+                      color: context.colors.transparent,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
@@ -174,9 +174,9 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                               width: 48,
                               height: 48,
                               padding: EdgeInsets.zero,
-                              child: const Icon(
+                              child: Icon(
                                 Icons.add,
-                                color: AppColors.white,
+                                color: context.colors.white,
                               ),
                             ),
                           ),

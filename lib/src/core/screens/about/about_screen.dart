@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/constants/urls.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_section_widget.dart';
@@ -68,10 +68,10 @@ class AboutScreen extends ConsumerWidget {
                   const SizedBox(height: 4),
                   Text(
                     l10n.versionLabel(version),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textMuted,
+                      color: context.colors.textMuted,
                     ),
                   ),
                 ],
@@ -83,11 +83,11 @@ class AboutScreen extends ConsumerWidget {
               child: Text(
                 l10n.appDescription,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   height: 1.5,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.black,
+                  color: context.colors.black,
                 ),
               ),
             ),
@@ -113,7 +113,7 @@ class AboutScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             Center(
               child: Material(
-                color: AppColors.transparent,
+                color: context.colors.transparent,
                 child: InkWell(
                   onTap: () => _openUrl(context, Urls.developerGithub),
                   borderRadius: BorderRadius.circular(AppRadii.full),
@@ -125,20 +125,20 @@ class AboutScreen extends ConsumerWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        const Icon(
+                        Icon(
                           Icons.open_in_new_rounded,
                           size: 15,
-                          color: AppColors.textMuted,
+                          color: context.colors.textMuted,
                         ),
                         const SizedBox(width: 6),
                         Text(
                           l10n.developedBy('Dario Matias'),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.textMuted,
+                            color: context.colors.textMuted,
                             decoration: TextDecoration.underline,
-                            decorationColor: AppColors.textMuted,
+                            decorationColor: context.colors.textMuted,
                           ),
                         ),
                       ],

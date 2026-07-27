@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A tappable row used to present a single settings entry, with a
 /// leading icon, title, and trailing chevron.
@@ -40,27 +40,27 @@ class SettingsCardWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(
           children: <Widget>[
-            Icon(icon, size: 22, color: AppColors.black),
+            Icon(icon, size: 22, color: context.colors.black),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.black,
+                  color: context.colors.black,
                 ),
               ),
             ),
             if (value != null) ...<Widget>[
               Text(
                 value!,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.textMuted,
+                  color: context.colors.textMuted,
                 ),
               ),
               const SizedBox(width: 8),
@@ -70,7 +70,7 @@ class SettingsCardWidget extends StatelessWidget {
                   ? Icons.open_in_new_rounded
                   : Icons.chevron_right_rounded,
               size: 22,
-              color: AppColors.textMuted,
+              color: context.colors.textMuted,
             ),
           ],
         ),

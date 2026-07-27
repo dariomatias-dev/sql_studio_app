@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
@@ -48,14 +48,14 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
 
     if (state.isLoading) {
       contentKind = 'loading';
-      content = const Align(
+      content = Align(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: SizedBox(
             height: 4,
             child: LinearProgressIndicator(
-              backgroundColor: AppColors.border,
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.black),
+              backgroundColor: context.colors.border,
+              valueColor: AlwaysStoppedAnimation<Color>(context.colors.black),
             ),
           ),
         ),

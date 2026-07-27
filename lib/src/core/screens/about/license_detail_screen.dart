@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Shows the full license text of a single package, respecting each
@@ -46,10 +46,10 @@ class LicenseDetailScreen extends StatelessWidget {
                         paragraph.indent == LicenseParagraph.centeredIndent
                         ? TextAlign.center
                         : TextAlign.start,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       height: 1.6,
-                      color: AppColors.black,
+                      color: context.colors.black,
                     ),
                   ),
                 ),

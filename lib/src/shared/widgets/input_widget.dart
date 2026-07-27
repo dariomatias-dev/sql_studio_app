@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A styled text form field used throughout the app's forms.
 class InputWidget extends StatelessWidget {
@@ -46,40 +46,40 @@ class InputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor: AppColors.black,
+      cursorColor: context.colors.black,
       cursorWidth: 1,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: AppColors.black.withAlpha(80),
+          color: context.colors.black.withAlpha(80),
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
-        labelStyle: const TextStyle(
-          color: AppColors.black,
+        labelStyle: TextStyle(
+          color: context.colors.black,
           fontSize: 14,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
         ),
         suffixIcon: suffixIcon,
-        suffixIconColor: AppColors.black,
-        enabledBorder: _border(AppColors.border),
-        focusedBorder: _border(AppColors.black, width: 1.5),
-        errorBorder: _border(AppColors.error),
-        focusedErrorBorder: _border(AppColors.error, width: 1.5),
+        suffixIconColor: context.colors.black,
+        enabledBorder: _border(context.colors.border),
+        focusedBorder: _border(context.colors.black, width: 1.5),
+        errorBorder: _border(context.colors.error),
+        focusedErrorBorder: _border(context.colors.error, width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 18,
         ),
-        fillColor: AppColors.background,
+        fillColor: context.colors.background,
         filled: true,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         alignLabelWithHint: true,
       ),
-      style: const TextStyle(
-        color: AppColors.black,
+      style: TextStyle(
+        color: context.colors.black,
         fontSize: 15,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.1,

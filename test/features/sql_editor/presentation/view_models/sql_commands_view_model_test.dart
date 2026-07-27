@@ -160,14 +160,12 @@ void main() {
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'to_do_list';
 
-      await notifier.resetDatabase();
+      final result = await notifier.resetDatabase();
 
       final state = container.read(sqlCommandsViewModelProvider);
       expect(state.isLoading, isFalse);
-      expect(
-        (state.result! as SuccessResult).value,
-        AppLocalizationsKey.databaseResetSuccessfully,
-      );
+      expect(state.result, isNull);
+      expect(result.isSuccess, isTrue);
     });
   });
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 
@@ -34,16 +34,16 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
             children: <Widget>[
               Text(
                 title.toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.controlInactive,
+                  color: context.colors.controlInactive,
                   letterSpacing: 1.2,
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: Container(height: 1, color: AppColors.border),
+                child: Container(height: 1, color: context.colors.border),
               ),
             ],
           ),

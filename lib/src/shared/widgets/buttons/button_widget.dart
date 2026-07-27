@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 
 /// Visual style presets shared by the button widgets.
@@ -71,6 +71,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final buttonStyle = resolveButtonStyle(
       style: style,
+      colors: context.colors,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       borderColor: borderColor,
@@ -85,8 +86,8 @@ class ButtonWidget extends StatelessWidget {
         child: InkWell(
           onTap: onPressed,
           borderRadius: BorderRadius.circular(AppRadii.full),
-          highlightColor: AppColors.white.withAlpha(20),
-          splashColor: AppColors.white.withAlpha(20),
+          highlightColor: context.colors.white.withAlpha(20),
+          splashColor: context.colors.white.withAlpha(20),
           child: Container(
             padding: padding ?? const EdgeInsets.symmetric(horizontal: 32),
             decoration: BoxDecoration(

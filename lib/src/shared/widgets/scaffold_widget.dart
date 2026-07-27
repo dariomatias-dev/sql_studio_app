@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// The app's base [Scaffold] wrapper with a consistent app bar and
 /// back button.
@@ -16,7 +16,7 @@ class ScaffoldWidget extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.bottomNavigationBar,
-    this.backgroundColor = AppColors.white,
+    this.backgroundColor,
     this.resizeToAvoidBottomInset = true,
   });
 
@@ -39,7 +39,7 @@ class ScaffoldWidget extends StatelessWidget {
   final Widget? bottomNavigationBar;
 
   /// Scaffold body background. Defaults to white.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Whether the body resizes to avoid the keyboard. Defaults to `true`;
   /// set `false` when the body already manages its own scroll-into-view
@@ -50,22 +50,22 @@ class ScaffoldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? context.colors.white,
       appBar: appBar != null
           ? AppBar(
-              backgroundColor: AppColors.white,
+              backgroundColor: context.colors.white,
               elevation: 0,
               scrolledUnderElevation: 0,
-              shape: const Border(
-                bottom: BorderSide(color: AppColors.border),
+              shape: Border(
+                bottom: BorderSide(color: context.colors.border),
               ),
               leading: showExitButton
                   ? IconButton(
                       onPressed: context.pop,
                       tooltip: AppLocalizations.of(context)!.exitScreen,
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_back_ios_new,
-                        color: AppColors.black54,
+                        color: context.colors.black54,
                         size: 20,
                       ),
                     )
@@ -73,8 +73,8 @@ class ScaffoldWidget extends StatelessWidget {
               title: appBar?.title != null
                   ? Text(
                       (appBar!.title! as Text).data!,
-                      style: const TextStyle(
-                        color: AppColors.black87,
+                      style: TextStyle(
+                        color: context.colors.black87,
                         fontSize: 20,
                       ),
                     )

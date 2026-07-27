@@ -5,34 +5,46 @@ import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 void main() {
+  const colors = AppColors.light;
+
   group('resolveButtonStyle', () {
     test('black style uses the black/white palette', () {
-      final style = resolveButtonStyle(style: ButtonStyleType.black);
+      final style = resolveButtonStyle(
+        style: ButtonStyleType.black,
+        colors: colors,
+      );
 
-      expect(style.background, AppColors.black);
-      expect(style.foreground, AppColors.white);
-      expect(style.text, AppColors.white);
+      expect(style.background, colors.black);
+      expect(style.foreground, colors.white);
+      expect(style.text, colors.white);
     });
 
     test('red style uses the error/white palette', () {
-      final style = resolveButtonStyle(style: ButtonStyleType.red);
+      final style = resolveButtonStyle(
+        style: ButtonStyleType.red,
+        colors: colors,
+      );
 
-      expect(style.background, AppColors.error);
-      expect(style.foreground, AppColors.white);
-      expect(style.text, AppColors.white);
+      expect(style.background, colors.error);
+      expect(style.foreground, colors.white);
+      expect(style.text, colors.white);
     });
 
     test('custom style falls back to black/white when no colors given', () {
-      final style = resolveButtonStyle(style: ButtonStyleType.custom);
+      final style = resolveButtonStyle(
+        style: ButtonStyleType.custom,
+        colors: colors,
+      );
 
-      expect(style.background, AppColors.white);
-      expect(style.foreground, AppColors.black);
-      expect(style.text, AppColors.black);
+      expect(style.background, colors.white);
+      expect(style.foreground, colors.black);
+      expect(style.text, colors.black);
     });
 
     test('custom style uses the provided colors when given', () {
       final style = resolveButtonStyle(
         style: ButtonStyleType.custom,
+        colors: colors,
         backgroundColor: Colors.blue,
         foregroundColor: Colors.orange,
         borderColor: Colors.green,
@@ -47,10 +59,11 @@ void main() {
     test('black and red styles ignore any custom colors passed in', () {
       final style = resolveButtonStyle(
         style: ButtonStyleType.black,
+        colors: colors,
         backgroundColor: Colors.blue,
       );
 
-      expect(style.background, AppColors.black);
+      expect(style.background, colors.black);
     });
   });
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Standardized full-area loading indicator, optionally labeled.
 class LoadingStateWidget extends StatelessWidget {
@@ -21,8 +21,8 @@ class LoadingStateWidget extends StatelessWidget {
           SizedBox(
             width: size,
             height: size,
-            child: const CircularProgressIndicator(
-              color: AppColors.black,
+            child: CircularProgressIndicator(
+              color: context.colors.black,
               strokeWidth: 2.5,
             ),
           ),
@@ -31,8 +31,8 @@ class LoadingStateWidget extends StatelessWidget {
             Text(
               message!,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.textMuted,
+              style: TextStyle(
+                color: context.colors.textMuted,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Standardized "no data" placeholder, with an optional action slot.
 class EmptyStateWidget extends StatelessWidget {
@@ -33,18 +33,22 @@ class EmptyStateWidget extends StatelessWidget {
             Container(
               width: 72,
               height: 72,
-              decoration: const BoxDecoration(
-                color: AppColors.background,
+              decoration: BoxDecoration(
+                color: context.colors.background,
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 32, color: AppColors.controlInactive),
+              child: Icon(
+                icon,
+                size: 32,
+                color: context.colors.controlInactive,
+              ),
             ),
             const SizedBox(height: 20),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppColors.textMuted,
+              style: TextStyle(
+                color: context.colors.textMuted,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 1.4,

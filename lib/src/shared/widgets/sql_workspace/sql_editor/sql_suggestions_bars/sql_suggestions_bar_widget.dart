@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Base layout for a horizontally scrollable row of tappable suggestion
 /// chips, shared by the SQL suggestions bar variants.
@@ -32,9 +32,9 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       height: 48,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.border)),
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: context.colors.border)),
+        borderRadius: const BorderRadius.vertical(
           bottom: Radius.circular(AppRadii.xs),
         ),
       ),
@@ -55,15 +55,15 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
                   itemPadding ??
                   const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
               decoration: BoxDecoration(
-                color: AppColors.background,
-                border: Border.all(color: AppColors.border),
+                color: context.colors.background,
+                border: Border.all(color: context.colors.border),
                 borderRadius: BorderRadius.circular(AppRadii.full),
               ),
               child: Text(
                 suggestion,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.black87,
+                style: TextStyle(
+                  color: context.colors.black87,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'monospace',

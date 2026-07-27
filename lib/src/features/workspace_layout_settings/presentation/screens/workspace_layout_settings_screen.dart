@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/widgets/workspace_layout_settings_option_card_widget.dart';
@@ -77,8 +77,8 @@ class _WorkspaceLayoutConfigurationScreenState
               alignment: Alignment.centerLeft,
               child: Text(
                 appLocalizations.preview.toUpperCase(),
-                style: const TextStyle(
-                  color: AppColors.textMuted,
+                style: TextStyle(
+                  color: context.colors.textMuted,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
@@ -89,10 +89,10 @@ class _WorkspaceLayoutConfigurationScreenState
             Expanded(
               child: SafeArea(
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.white,
+                  decoration: BoxDecoration(
+                    color: context.colors.white,
                     border: Border.fromBorderSide(
-                      BorderSide(color: AppColors.border),
+                      BorderSide(color: context.colors.border),
                     ),
                   ),
                   child: const SqlWorkspaceWidget(),

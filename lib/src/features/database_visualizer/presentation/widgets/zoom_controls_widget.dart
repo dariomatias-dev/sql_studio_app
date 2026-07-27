@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Floating zoom in/out/reset controls for the database visualizer canvas.
 class ZoomControlsWidget extends StatelessWidget {
@@ -32,9 +32,9 @@ class ZoomControlsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: BorderRadius.circular(AppRadii.full),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.elevated,
       ),
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -45,17 +45,17 @@ class ZoomControlsWidget extends StatelessWidget {
             icon: Icons.add_rounded,
             onTap: () => _zoom(_step),
           ),
-          const SizedBox(
+          SizedBox(
             width: 28,
-            child: Divider(height: 1, color: AppColors.border),
+            child: Divider(height: 1, color: context.colors.border),
           ),
           _ZoomButton(
             icon: Icons.remove_rounded,
             onTap: () => _zoom(1 / _step),
           ),
-          const SizedBox(
+          SizedBox(
             width: 28,
-            child: Divider(height: 1, color: AppColors.border),
+            child: Divider(height: 1, color: context.colors.border),
           ),
           _ZoomButton(
             icon: Icons.center_focus_strong_rounded,
@@ -76,7 +76,7 @@ class _ZoomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.transparent,
+      color: context.colors.transparent,
       child: InkWell(
         onTap: onTap,
         customBorder: const CircleBorder(),

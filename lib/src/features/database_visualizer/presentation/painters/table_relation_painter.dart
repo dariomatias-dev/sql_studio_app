@@ -15,6 +15,7 @@ class TableRelationPainter extends CustomPainter {
     required this.tableRects,
     required this.tableHeaderHeight,
     required this.tableColumnRowHeight,
+    required this.colors,
     this.selectedTable,
   });
 
@@ -33,6 +34,9 @@ class TableRelationPainter extends CustomPainter {
   /// The name of the currently selected table, if any.
   final String? selectedTable;
 
+  /// The theme's color palette, used to tint relation lines and markers.
+  final AppColors colors;
+
   @override
   void paint(Canvas canvas, Size size) {
     final hasSelection = selectedTable != null;
@@ -40,8 +44,8 @@ class TableRelationPainter extends CustomPainter {
     // Opaque (non-alpha) colors: overlapping relation curves are common in
     // dense diagrams, and translucent strokes darken cumulatively wherever
     // they cross, making some segments read as heavier than others.
-    const dimmedColor = AppColors.disabled;
-    const normalColor = AppColors.textMuted;
+    final dimmedColor = colors.disabled;
+    final normalColor = colors.textMuted;
 
     final dimmedPaint = Paint()
       ..color = dimmedColor
@@ -62,12 +66,12 @@ class TableRelationPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final highlightPaint = Paint()
-      ..color = AppColors.black
+      ..color = colors.black
       ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
     final highlightMarkPaint = Paint()
-      ..color = AppColors.black
+      ..color = colors.black
       ..style = PaintingStyle.fill;
 
     for (final source in tables) {
@@ -173,5 +177,6 @@ class TableRelationPainter extends CustomPainter {
   bool shouldRepaint(covariant TableRelationPainter oldDelegate) =>
       oldDelegate.tables != tables ||
       oldDelegate.tableRects != tableRects ||
-      oldDelegate.selectedTable != selectedTable;
+      oldDelegate.selectedTable != selectedTable ||
+      oldDelegate.colors != colors;
 }

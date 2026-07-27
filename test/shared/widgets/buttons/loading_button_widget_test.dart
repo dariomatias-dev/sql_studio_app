@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(home: Scaffold(body: child));
+  Widget wrap(Widget child) => MaterialApp(
+    theme: AppTheme.light,
+    home: Scaffold(body: child),
+  );
 
   group('LoadingButtonWidget', () {
     testWidgets('renders the text and calls onPressed when tapped', (
