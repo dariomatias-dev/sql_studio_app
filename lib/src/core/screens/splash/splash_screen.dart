@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
@@ -161,13 +161,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: isDark ? Colors.black : context.colors.background,
       body: Stack(
         children: <Widget>[
-          const Positioned.fill(
-            child: CustomPaint(painter: _DotGridPainter()),
-          ),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -176,22 +175,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   scale: _iconScaleAnimation,
                   child: FadeTransition(
                     opacity: _textOpacityAnimation,
-                    child: Image.asset(
-                      'assets/icons/sql_studio_icon_transparent.png',
-                      width: 132,
-                      height: 132,
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        context.colors.black,
+                        BlendMode.srcIn,
+                      ),
+                      child: Image.asset(
+                        'assets/icons/sql_studio_icon_transparent.png',
+                        width: 132,
+                        height: 132,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 36),
                 FadeTransition(
                   opacity: _textOpacityAnimation,
-                  child: const Text(
+                  child: Text(
                     'SQL Studio',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: context.colors.textPrimary,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -203,11 +208,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     width: 160,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: const LinearProgressIndicator(
+                      child: LinearProgressIndicator(
                         minHeight: 4,
-                        backgroundColor: AppColors.border,
+                        backgroundColor: context.colors.border,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.textPrimary,
+                          context.colors.textPrimary,
                         ),
                       ),
                     ),
@@ -218,9 +223,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   opacity: _progressOpacityAnimation,
                   child: Text(
                     AppLocalizations.of(context)!.loading,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.textMuted,
+                      color: context.colors.textMuted,
                       letterSpacing: 0.3,
                     ),
                   ),
@@ -232,26 +237,4 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       ),
     );
   }
-}
-
-/// Faint dotted grid backdrop evoking a database/table structure.
-class _DotGridPainter extends CustomPainter {
-  const _DotGridPainter();
-
-  static const double _spacing = 28;
-  static const double _dotRadius = 1.1;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = AppColors.border;
-
-    for (var y = _spacing / 2; y < size.height; y += _spacing) {
-      for (var x = _spacing / 2; x < size.width; x += _spacing) {
-        canvas.drawCircle(Offset(x, y), _dotRadius, paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _DotGridPainter oldDelegate) => false;
 }

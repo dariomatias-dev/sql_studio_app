@@ -3,6 +3,9 @@ class SharedPreferencesKeys {
   /// Key for the persisted app locale.
   static const localeKey = 'locale';
 
+  /// Key for the persisted app theme mode.
+  static const themeModeKey = 'theme_mode';
+
   /// Key for the persisted SQL command history.
   static const sqlCommandsKey = 'sql_commands';
 

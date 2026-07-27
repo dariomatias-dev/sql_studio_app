@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_group_widget.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
@@ -36,8 +36,10 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
     final notifier = ref.read(databaseListViewModelProvider.notifier);
 
     return Drawer(
-      backgroundColor: AppColors.white,
-      shape: const RoundedRectangleBorder(),
+      backgroundColor: context.colors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: context.colors.border),
+      ),
       child: SafeArea(
         child: Column(
           children: <Widget>[

@@ -3,20 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
-import 'package:sql_studio/src/core/extensions/list_extension.dart';
-import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
+import 'package:sql_studio/src/core/screens/settings/widgets/theme_selector_sheet/theme_selector_sheet_option_widget.dart';
 
-/// Display names for each supported language, in the same order as
-/// [AppLocalizations.supportedLocales].
-const languageNames = <String>['English', 'Español', 'Português'];
-
-/// Bottom sheet that lists the languages supported by the app for selection.
-class LanguageSelectorSheetWidget extends ConsumerWidget {
-  /// Creates the language selector sheet.
-  const LanguageSelectorSheetWidget({super.key});
+/// Bottom sheet that lists the theme modes supported by the app for
+/// selection.
+class ThemeSelectorSheetWidget extends ConsumerWidget {
+  /// Creates the theme selector sheet.
+  const ThemeSelectorSheetWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       decoration: BoxDecoration(
@@ -43,7 +41,7 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
             ),
           ),
           Text(
-            AppLocalizations.of(context)!.language,
+            l10n.theme,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -53,15 +51,23 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
           const SizedBox(height: 20),
           Column(
             spacing: 4,
-            children: languageNames.builder((
-              lang,
-              index,
-            ) {
-              return LanguageSelectorSheetOptionWidget(
-                lang: lang,
-                code: AppLocalizations.supportedLocales[index].languageCode,
-              );
-            }),
+            children: <Widget>[
+              ThemeSelectorSheetOptionWidget(
+                mode: ThemeMode.system,
+                label: l10n.themeSystem,
+                icon: Icons.brightness_auto_rounded,
+              ),
+              ThemeSelectorSheetOptionWidget(
+                mode: ThemeMode.light,
+                label: l10n.themeLight,
+                icon: Icons.light_mode_rounded,
+              ),
+              ThemeSelectorSheetOptionWidget(
+                mode: ThemeMode.dark,
+                label: l10n.themeDark,
+                icon: Icons.dark_mode_rounded,
+              ),
+            ],
           ),
           const SizedBox(height: 6),
         ],

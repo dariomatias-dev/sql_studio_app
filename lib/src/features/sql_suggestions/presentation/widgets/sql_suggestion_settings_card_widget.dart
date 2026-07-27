@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/switch_widget.dart';
 
@@ -38,7 +38,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.transparent,
+      color: context.colors.transparent,
       child: InkWell(
         onTap: () => onChanged(!active),
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -46,9 +46,9 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
           duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: active ? AppColors.surfaceMuted : AppColors.white,
+            color: context.colors.white,
             borderRadius: BorderRadius.circular(AppRadii.lg),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: context.colors.border),
             boxShadow: AppShadows.card,
           ),
           child: Column(
@@ -62,10 +62,10 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: AppColors.black,
+                            color: context.colors.black,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -74,7 +74,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                           subtitle,
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.black.withAlpha(140),
+                            color: context.colors.black.withAlpha(140),
                             height: 1.4,
                             fontWeight: FontWeight.w500,
                           ),
@@ -93,8 +93,8 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                   text: AppLocalizations.of(context)!.configure,
                   width: double.infinity,
                   height: 42,
-                  backgroundColor: AppColors.white,
-                  borderColor: AppColors.black.withAlpha(20),
+                  backgroundColor: context.colors.white,
+                  borderColor: context.colors.border,
                 ),
               ],
             ],

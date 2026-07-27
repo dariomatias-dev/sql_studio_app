@@ -33,6 +33,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get language => 'Language';
 
   @override
+  String get theme => 'Theme';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String themeUpdated(Object theme) {
+    return 'Theme updated to $theme';
+  }
+
+  @override
   String get sqlSuggestions => 'SQL Suggestions';
 
   @override

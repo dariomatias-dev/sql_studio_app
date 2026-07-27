@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
@@ -92,7 +92,7 @@ class _RootDrawerDatabaseCardWidgetState
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Material(
-        color: isActive ? AppColors.black : AppColors.transparent,
+        color: isActive ? context.colors.black : context.colors.transparent,
         borderRadius: BorderRadius.circular(AppRadii.sm),
         child: InkWell(
           onTap: _selectDatabase,
@@ -105,7 +105,7 @@ class _RootDrawerDatabaseCardWidgetState
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadii.sm),
               border: Border.all(
-                color: isActive ? AppColors.black : AppColors.border,
+                color: isActive ? context.colors.black : context.colors.border,
               ),
             ),
             child: Row(
@@ -113,7 +113,9 @@ class _RootDrawerDatabaseCardWidgetState
                 Icon(
                   Icons.dns_rounded,
                   size: 20,
-                  color: isActive ? AppColors.white : AppColors.textMuted,
+                  color: isActive
+                      ? context.colors.white
+                      : context.colors.textMuted,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -125,7 +127,9 @@ class _RootDrawerDatabaseCardWidgetState
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: isActive ? AppColors.white : AppColors.black,
+                          color: isActive
+                              ? context.colors.white
+                              : context.colors.black,
                         ),
                       ),
                       Text(
@@ -134,14 +138,17 @@ class _RootDrawerDatabaseCardWidgetState
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                           color: isActive
-                              ? AppColors.white.withAlpha(160)
-                              : AppColors.controlInactive,
+                              ? context.colors.white.withAlpha(160)
+                              : context.colors.controlInactive,
                         ),
                       ),
                     ],
                   ),
                 ),
                 PopupMenuButtonWidget(
+                  iconColor: isActive
+                      ? context.colors.white
+                      : context.colors.black87,
                   items: <PopupMenuItem<void>>[
                     PopupMenuItem<void>(
                       onTap: _onToggleFavorite,
@@ -152,7 +159,7 @@ class _RootDrawerDatabaseCardWidgetState
                                 ? Icons.star_rounded
                                 : Icons.star_outline_rounded,
                             size: 18,
-                            color: AppColors.black,
+                            color: context.colors.black,
                           ),
                           const SizedBox(width: 12),
                           Text(_isFavorite ? l10n.unfavorite : l10n.favorite),
@@ -170,15 +177,15 @@ class _RootDrawerDatabaseCardWidgetState
                       },
                       child: Row(
                         children: <Widget>[
-                          const Icon(
+                          Icon(
                             Icons.delete_outline_rounded,
                             size: 18,
-                            color: AppColors.error,
+                            color: context.colors.error,
                           ),
                           const SizedBox(width: 12),
                           Text(
                             l10n.delete,
-                            style: const TextStyle(color: AppColors.error),
+                            style: TextStyle(color: context.colors.error),
                           ),
                         ],
                       ),

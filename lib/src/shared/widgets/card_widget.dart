@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A rounded, elevated surface that optionally responds to taps.
 class CardWidget extends StatelessWidget {
@@ -34,9 +34,9 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.colors.white,
         borderRadius: _borderRadius,
-        border: border,
+        border: border ?? Border.all(color: context.colors.border),
         boxShadow: AppShadows.card,
       ),
       child: InkWell(borderRadius: _borderRadius, onTap: onTap, child: child),

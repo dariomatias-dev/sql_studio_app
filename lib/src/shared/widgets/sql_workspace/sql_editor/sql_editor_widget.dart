@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
+import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
@@ -176,13 +177,17 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
     final menuItems = <PopupMenuEntry<void>>[
       if (currentQueryItems.isNotEmpty) ...[
         PopupMenuSectionHeaderWidget(
+          context: context,
           label: appLocalizations.currentQuerySection,
         ),
         ...currentQueryItems,
       ],
       if (databaseItems.isNotEmpty) ...[
         if (currentQueryItems.isNotEmpty) const PopupMenuDivider(),
-        PopupMenuSectionHeaderWidget(label: appLocalizations.databaseSection),
+        PopupMenuSectionHeaderWidget(
+          context: context,
+          label: appLocalizations.databaseSection,
+        ),
         ...databaseItems,
       ],
     ];
@@ -219,7 +224,11 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
         children: <Widget>[
           Expanded(
             child: CodeTheme(
-              data: CodeThemeData(styles: githubTheme),
+              data: CodeThemeData(
+                styles: Theme.of(context).brightness == Brightness.dark
+                    ? atomOneDarkTheme
+                    : githubTheme,
+              ),
               child: CodeField(
                 controller: editor.controller,
                 focusNode: editor.focusNode,
@@ -229,7 +238,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
                 ),
                 gutterStyle: const GutterStyle(width: 60, margin: 0),
                 expands: true,
-                decoration: const BoxDecoration(color: AppColors.white),
+                decoration: BoxDecoration(color: context.colors.white),
               ),
             ),
           ),

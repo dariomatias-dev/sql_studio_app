@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
@@ -61,39 +62,34 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
   Widget build(BuildContext context) {
     final buttonStyle = resolveButtonStyle(
       style: widget.style,
+      colors: context.colors,
       backgroundColor: widget.backgroundColor,
       foregroundColor: widget.foregroundColor,
       borderColor: widget.borderColor,
     );
 
     final isDisabled = widget.onPressed == null || _loading;
-
-    final background = isDisabled
-        ? buttonStyle.background.withAlpha(30)
-        : buttonStyle.background;
-
-    final borderColor = isDisabled
-        ? buttonStyle.border.withAlpha(0)
-        : buttonStyle.border;
-
     final textColor = buttonStyle.text;
 
-    return ButtonWidget(
-      onPressed: isDisabled ? null : _handlePress,
-      text: widget.text,
-      backgroundColor: background,
-      foregroundColor: textColor,
-      borderColor: borderColor,
-      child: _loading
-          ? SizedBox(
-              height: 18,
-              width: 18,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: textColor,
-              ),
-            )
-          : null,
+    return Opacity(
+      opacity: isDisabled ? 0.4 : 1,
+      child: ButtonWidget(
+        onPressed: isDisabled ? null : _handlePress,
+        text: widget.text,
+        backgroundColor: buttonStyle.background,
+        foregroundColor: textColor,
+        borderColor: buttonStyle.border,
+        child: _loading
+            ? SizedBox(
+                height: 18,
+                width: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: textColor,
+                ),
+              )
+            : null,
+      ),
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
 /// The app's base dialog chrome: title, scrollable content and
@@ -47,7 +47,7 @@ class DialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: context.colors.transparent,
       elevation: 0,
       insetPadding: const EdgeInsets.symmetric(
         horizontal: 24,
@@ -56,8 +56,9 @@ class DialogWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.colors.white,
           borderRadius: BorderRadius.circular(AppRadii.xl),
+          border: Border.all(color: context.colors.border),
           boxShadow: AppShadows.overlay,
         ),
         child: Column(
@@ -68,8 +69,8 @@ class DialogWidget extends StatelessWidget {
               Align(
                 child: Text(
                   title!,
-                  style: const TextStyle(
-                    color: AppColors.black,
+                  style: TextStyle(
+                    color: context.colors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.w900,
                     letterSpacing: -1,
@@ -83,7 +84,7 @@ class DialogWidget extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 child: DefaultTextStyle(
                   style: TextStyle(
-                    color: AppColors.black.withAlpha(140),
+                    color: context.colors.black.withAlpha(140),
                     fontSize: 16,
                     height: 1.5,
                     fontWeight: FontWeight.w400,

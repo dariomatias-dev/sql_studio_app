@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/database/default_database_model.dart';
+import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
@@ -71,7 +71,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
       margin: const EdgeInsets.only(bottom: 24),
       child: CardWidget(
         borderRadius: BorderRadius.circular(AppRadii.lg),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: context.colors.border),
         onTap: () {
           ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
               widget.db.name;
@@ -91,12 +91,12 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       height: 44,
                       width: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.black,
+                        color: context.colors.black,
                         borderRadius: BorderRadius.circular(AppRadii.sm),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.dns_rounded,
-                        color: AppColors.white,
+                        color: context.colors.white,
                         size: 22,
                       ),
                     ),
@@ -107,10 +107,10 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                         children: <Widget>[
                           Text(
                             l10n.key(widget.db.labelKey),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: AppColors.black,
+                              color: context.colors.black,
                               letterSpacing: -0.4,
                             ),
                           ),
@@ -120,7 +120,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.black.withAlpha(100),
+                              color: context.colors.black.withAlpha(100),
                               fontFamily: 'monospace',
                             ),
                           ),
@@ -130,6 +130,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                     PopupMenuButtonWidget(
                       items: <PopupMenuEntry<void>>[
                         PopupMenuSectionHeaderWidget(
+                          context: context,
                           label: l10n.structureSection,
                         ),
                         PopupMenuItem<void>(
@@ -144,6 +145,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                         ),
                         const PopupMenuDivider(),
                         PopupMenuSectionHeaderWidget(
+                          context: context,
                           label: l10n.sqlFilesSection,
                         ),
                         PopupMenuItem<void>(
@@ -179,7 +181,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                   l10n.key(widget.db.descriptionKey),
                   style: TextStyle(
                     fontSize: 15,
-                    color: AppColors.black.withAlpha(180),
+                    color: context.colors.black.withAlpha(180),
                     height: 1.5,
                     fontWeight: FontWeight.w500,
                   ),
@@ -188,9 +190,11 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
               const SizedBox(height: 28),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: AppColors.white,
-                  border: Border(top: BorderSide(color: AppColors.border)),
+                decoration: BoxDecoration(
+                  color: context.colors.white,
+                  border: Border(
+                    top: BorderSide(color: context.colors.border),
+                  ),
                 ),
                 child: Row(
                   children: <Widget>[
@@ -200,14 +204,14 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.background,
+                        color: context.colors.background,
                         borderRadius: BorderRadius.circular(AppRadii.xs),
-                        border: Border.all(color: AppColors.border),
+                        border: Border.all(color: context.colors.border),
                       ),
                       child: Text(
                         '$tableCount',
-                        style: const TextStyle(
-                          color: AppColors.black,
+                        style: TextStyle(
+                          color: context.colors.black,
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
                         ),
@@ -216,18 +220,18 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                     const SizedBox(width: 12),
                     Text(
                       l10n.tables.toUpperCase(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 1,
-                        color: AppColors.black,
+                        color: context.colors.black,
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         '|',
-                        style: TextStyle(color: AppColors.border),
+                        style: TextStyle(color: context.colors.border),
                       ),
                     ),
                     Expanded(
@@ -238,7 +242,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.black.withAlpha(120),
+                          color: context.colors.black.withAlpha(120),
                           fontFamily: 'monospace',
                         ),
                       ),
@@ -268,14 +272,14 @@ class _MenuAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(icon, size: 20, color: AppColors.black),
+        Icon(icon, size: 20, color: context.colors.black),
         const SizedBox(width: 12),
         Text(
           label,
           style: TextStyle(
             fontSize: 14,
             fontWeight: isBold ? FontWeight.w900 : FontWeight.w600,
-            color: AppColors.black,
+            color: context.colors.black,
           ),
         ),
       ],
