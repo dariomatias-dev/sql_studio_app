@@ -163,6 +163,8 @@
   "failedToLoadSqlFiles": "Error al cargar los archivos SQL: {error}",
   "failedToExecuteSql": "Error al ejecutar SQL para \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Base de datos restablecida correctamente",
+  "databaseCreatedSuccessfully": "Base de datos creada correctamente",
+  "databaseDeletedSuccessfully": "Base de datos eliminada correctamente",
   "unknownError": "Error desconocido",
   "createDatabase": "Crear Base de Datos",
   "name": "Nombre",

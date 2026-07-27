@@ -112,10 +112,14 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
   }
 
   /// Restores the active default database to its original state.
-  Future<void> resetDatabase() async {
+  Future<Result<void>> resetDatabase() async {
     final databaseName = state.activeDatabase;
 
-    if (!state.isDefaultDatabase || databaseName == null) return;
+    if (!state.isDefaultDatabase || databaseName == null) {
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.noDatabaseSelected),
+      );
+    }
 
     state = state.copyWith(isLoading: true, clearError: true);
 
@@ -124,10 +128,8 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
     if (result is SuccessResult<void>) {
       state = state.copyWith(
         isLoading: false,
-        result: const SuccessResult(
-          AppLocalizationsKey.databaseResetSuccessfully,
-        ),
         clearError: true,
+        clearResult: true,
       );
     } else if (result is FailureResult<void>) {
       final failure = result.error;
@@ -141,6 +143,8 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
         clearResult: true,
       );
     }
+
+    return result;
   }
 
   /// Clears the stored query result and any pending error state.

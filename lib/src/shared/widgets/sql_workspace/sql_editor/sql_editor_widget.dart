@@ -9,6 +9,8 @@ import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_section_header_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
@@ -145,9 +147,19 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
           child: InkWell(
             onTap: () {
               Navigator.pop(context);
-              unawaited(
-                ref.read(sqlCommandsViewModelProvider.notifier).resetDatabase(),
-              );
+              unawaited(() async {
+                final result = await ref
+                    .read(sqlCommandsViewModelProvider.notifier)
+                    .resetDatabase();
+
+                if (result.isSuccess) {
+                  await AppToast.show(
+                    appLocalizations.databaseResetSuccessfully,
+                  );
+                } else if (context.mounted) {
+                  await handleError(context, result);
+                }
+              }());
             },
             child: Row(
               children: <Widget>[

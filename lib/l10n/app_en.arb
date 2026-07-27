@@ -163,6 +163,8 @@
   "failedToLoadSqlFiles": "Failed to load SQL files: {error}",
   "failedToExecuteSql": "Failed to execute SQL for \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Database reset successfully",
+  "databaseCreatedSuccessfully": "Database created successfully",
+  "databaseDeletedSuccessfully": "Database deleted successfully",
   "unknownError": "Unknown error",
   "createDatabase": "Create Database",
   "name": "Name",

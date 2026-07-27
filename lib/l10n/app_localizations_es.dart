@@ -567,6 +567,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Base de datos restablecida correctamente';
 
   @override
+  String get databaseCreatedSuccessfully =>
+      'Base de datos creada correctamente';
+
+  @override
+  String get databaseDeletedSuccessfully =>
+      'Base de datos eliminada correctamente';
+
+  @override
   String get unknownError => 'Error desconocido';
 
   @override

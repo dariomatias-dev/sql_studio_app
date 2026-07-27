@@ -13,6 +13,7 @@ import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
 
@@ -46,6 +47,8 @@ class _RootDrawerDatabaseCardWidgetState
   }
 
   Future<void> _onDeleteDatabase() async {
+    final l10n = AppLocalizations.of(context)!;
+
     context.pop();
 
     final result = await ref
@@ -63,6 +66,8 @@ class _RootDrawerDatabaseCardWidgetState
           SharedPreferencesKeys.selectedDatabaseKey,
         );
       }
+
+      unawaited(AppToast.show(l10n.databaseDeletedSuccessfully));
     } else {
       await handleError(context, result);
     }

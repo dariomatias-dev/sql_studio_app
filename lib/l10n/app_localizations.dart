@@ -1084,6 +1084,18 @@ abstract class AppLocalizations {
   /// **'Database reset successfully'**
   String get databaseResetSuccessfully;
 
+  /// No description provided for @databaseCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Database created successfully'**
+  String get databaseCreatedSuccessfully;
+
+  /// No description provided for @databaseDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Database deleted successfully'**
+  String get databaseDeletedSuccessfully;
+
   /// No description provided for @unknownError.
   ///
   /// In en, this message translates to:

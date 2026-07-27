@@ -558,6 +558,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get databaseResetSuccessfully => 'Database reset successfully';
 
   @override
+  String get databaseCreatedSuccessfully => 'Database created successfully';
+
+  @override
+  String get databaseDeletedSuccessfully => 'Database deleted successfully';
+
+  @override
   String get unknownError => 'Unknown error';
 
   @override

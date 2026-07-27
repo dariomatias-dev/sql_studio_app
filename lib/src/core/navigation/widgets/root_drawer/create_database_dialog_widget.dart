@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
@@ -53,6 +56,7 @@ class _CreateDatabaseDialogWidgetState
   Future<void> _onCreate() async {
     if (!formKey.currentState!.validate()) return;
 
+    final appLocalizations = AppLocalizations.of(context)!;
     final label = labelController.text.trim();
     final name = nameController.text.trim();
 
@@ -66,8 +70,6 @@ class _CreateDatabaseDialogWidgetState
       onSuccess: (value) async {
         if (value != null) {
           shouldStopFlow = true;
-
-          final appLocalizations = AppLocalizations.of(context)!;
 
           await ErrorDialogWidget.show(
             context,
@@ -100,6 +102,8 @@ class _CreateDatabaseDialogWidgetState
       ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase = name;
 
       Navigator.pop(context);
+
+      unawaited(AppToast.show(appLocalizations.databaseCreatedSuccessfully));
     } else {
       await handleError(context, result);
     }

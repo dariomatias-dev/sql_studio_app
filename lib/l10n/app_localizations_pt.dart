@@ -565,6 +565,13 @@ class AppLocalizationsPt extends AppLocalizations {
       'Banco de dados reiniciado com sucesso';
 
   @override
+  String get databaseCreatedSuccessfully => 'Banco de dados criado com sucesso';
+
+  @override
+  String get databaseDeletedSuccessfully =>
+      'Banco de dados excluído com sucesso';
+
+  @override
   String get unknownError => 'Erro desconhecido';
 
   @override
