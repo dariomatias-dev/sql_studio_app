@@ -36,6 +36,8 @@
   "clearEditor": "Limpiar Editor",
   "console": "Consola",
   "clearConsole": "Limpiar Consola",
+  "noQueryRunYet": "Ejecuta una consulta para ver los resultados aquí",
+  "queryExecutedNoResult": "Consulta ejecutada, sin datos para mostrar",
   "schemaCopied": "Esquema copiado",
   "seedCopied": "Seed copiada",
   "schemaAndSeedCopied": "Esquema y Seed copiados",

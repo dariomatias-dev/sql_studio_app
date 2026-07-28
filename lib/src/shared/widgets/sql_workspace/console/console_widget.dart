@@ -8,6 +8,7 @@ import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
+import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/error_state_widget.dart';
 
 /// Displays the result of the last executed SQL command, showing a loading
@@ -66,7 +67,8 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
         message: appLocalizations.key(state.error!, state.errorArgs ?? {}),
       );
     } else if (state.result == null) {
-      content = const SizedBox.shrink();
+      contentKind = 'empty';
+      content = EmptyStateWidget(message: appLocalizations.noQueryRunYet);
     } else {
       final result = (state.result! as SuccessResult).value;
 
@@ -134,7 +136,10 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
           );
         }
       } else {
-        content = const SizedBox.shrink();
+        contentKind = 'empty';
+        content = EmptyStateWidget(
+          message: appLocalizations.queryExecutedNoResult,
+        );
       }
     }
 

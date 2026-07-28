@@ -65,8 +65,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get about => 'Acerca de';
 
   @override
-  String get appDescription =>
-      'Practica SQL en tu teléfono con bases de datos SQLite locales, editables y totalmente offline.';
+  String get appDescription => 'Practica SQL en tu teléfono con bases de datos SQLite locales, editables y totalmente offline.';
 
   @override
   String versionLabel(Object version) {
@@ -131,6 +130,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearConsole => 'Limpiar Consola';
 
   @override
+  String get noQueryRunYet => 'Ejecuta una consulta para ver los resultados aquí';
+
+  @override
+  String get queryExecutedNoResult => 'Consulta ejecutada, sin datos para mostrar';
+
+  @override
   String get schemaCopied => 'Esquema copiado';
 
   @override
@@ -185,8 +190,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get attention => 'Atención';
 
   @override
-  String get deleteDatabaseConfirmation =>
-      '¿Está seguro de que desea eliminar permanentemente esta base de datos? Esta acción no se puede deshacer.';
+  String get deleteDatabaseConfirmation => '¿Está seguro de que desea eliminar permanentemente esta base de datos? Esta acción no se puede deshacer.';
 
   @override
   String get toDoListLabel => 'Lista de Tareas';
@@ -204,85 +208,73 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryLabel => 'Biblioteca';
 
   @override
-  String get libraryDescription =>
-      'Biblioteca con libros, miembros y préstamos';
+  String get libraryDescription => 'Biblioteca con libros, miembros y préstamos';
 
   @override
   String get fitnessClubLabel => 'Club de Fitness';
 
   @override
-  String get fitnessClubDescription =>
-      'Base de datos de miembros del gimnasio y suscripciones';
+  String get fitnessClubDescription => 'Base de datos de miembros del gimnasio y suscripciones';
 
   @override
   String get carRentalLabel => 'Alquiler de Autos';
 
   @override
-  String get carRentalDescription =>
-      'Base de datos de gestión de alquiler de autos';
+  String get carRentalDescription => 'Base de datos de gestión de alquiler de autos';
 
   @override
   String get restaurantLabel => 'Restaurante';
 
   @override
-  String get restaurantDescription =>
-      'Base de datos de pedidos y elementos del menú del restaurante';
+  String get restaurantDescription => 'Base de datos de pedidos y elementos del menú del restaurante';
 
   @override
   String get hrPayrollLabel => 'Nómina de RR. HH.';
 
   @override
-  String get hrPayrollDescription =>
-      'Departamentos, puestos de trabajo, empleados e historial salarial';
+  String get hrPayrollDescription => 'Departamentos, puestos de trabajo, empleados e historial salarial';
 
   @override
   String get logisticsLabel => 'Logística';
 
   @override
-  String get logisticsDescription =>
-      'Base de datos de paquetes, conductores, entregas e historial de estado';
+  String get logisticsDescription => 'Base de datos de paquetes, conductores, entregas e historial de estado';
 
   @override
   String get pharmacyLabel => 'Farmacia';
 
   @override
-  String get pharmacyDescription =>
-      'Inventario de farmacia, proveedores, clientes y ventas';
+  String get pharmacyDescription => 'Inventario de farmacia, proveedores, clientes y ventas';
 
   @override
   String get schoolLabel => 'Escuela';
 
   @override
-  String get schoolDescription =>
-      'Gestión escolar con estudiantes, profesores, clases, matrículas y calificaciones';
+  String get schoolDescription => 'Gestión escolar con estudiantes, profesores, clases, matrículas y calificaciones';
 
   @override
   String get socialNetworkLabel => 'Red Social';
 
   @override
-  String get socialNetworkDescription =>
-      'Red social con usuarios, publicaciones, comentarios, me gusta y seguidores';
+  String get socialNetworkDescription => 'Red social con usuarios, publicaciones, comentarios, me gusta y seguidores';
 
   @override
   String get hotelLabel => 'Hotel';
 
   @override
-  String get hotelDescription =>
-      'Base de datos de reservas, habitaciones, pagos, empleados y servicios';
+  String get hotelDescription => 'Base de datos de reservas, habitaciones, pagos, empleados y servicios';
 
   @override
   String get bankingLabel => 'Banca';
 
   @override
-  String get bankingDescription =>
-      'Sistema bancario con cuentas, transacciones, préstamos y empleados';
+  String get bankingDescription => 'Sistema bancario con cuentas, transacciones, préstamos y empleados';
 
   @override
   String get eCommerceLabel => 'Comercio Electrónico';
 
   @override
-  String get eCommerceDescription =>
-      'Tienda en línea con productos, pedidos, carritos y reseñas';
+  String get eCommerceDescription => 'Tienda en línea con productos, pedidos, carritos y reseñas';
 
   @override
   String get openFullscreen => 'Abrir pantalla completa';
@@ -324,15 +316,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get basicSuggestions => 'Sugerencias Básicas';
 
   @override
-  String get basicSuggestionsDescription =>
-      'Muestra ejemplos SQL completos como \"SELECT * FROM\". Ideal para consultas rápidas.';
+  String get basicSuggestionsDescription => 'Muestra ejemplos SQL completos como \"SELECT * FROM\". Ideal para consultas rápidas.';
 
   @override
   String get advancedSuggestions => 'Sugerencias Avanzadas';
 
   @override
-  String get advancedSuggestionsDescription =>
-      'Muestra pistas cortas como \"ALL\" o \"COUNT\" que se expanden en sentencias SQL completas al hacer clic.';
+  String get advancedSuggestionsDescription => 'Muestra pistas cortas como \"ALL\" o \"COUNT\" que se expanden en sentencias SQL completas al hacer clic.';
 
   @override
   String get otherSuggestions => 'Atajos del Editor';
@@ -341,19 +331,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get characterSuggestions => 'Símbolos Rápidos';
 
   @override
-  String get characterSuggestionsDescription =>
-      'Agrega botones rápidos para >, =, !, %, ; y más.';
+  String get characterSuggestionsDescription => 'Agrega botones rápidos para >, =, !, %, ; y más.';
 
   @override
   String get saveSettings => 'Guardar Configuración';
 
   @override
-  String get advancedSuggestionsInitialized =>
-      'Las sugerencias avanzadas se han inicializado correctamente';
+  String get advancedSuggestionsInitialized => 'Las sugerencias avanzadas se han inicializado correctamente';
 
   @override
-  String get advancedSuggestionsFailed =>
-      'Error al inicializar las sugerencias avanzadas';
+  String get advancedSuggestionsFailed => 'Error al inicializar las sugerencias avanzadas';
 
   @override
   String get settingsSavedSuccessfully => '¡Configuración guardada con éxito';
@@ -380,8 +367,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get removeSuggestion => 'Eliminar Sugerencia';
 
   @override
-  String get removeSuggestionDescription =>
-      '¿Estás seguro de que deseas eliminar esta sugerencia?';
+  String get removeSuggestionDescription => '¿Estás seguro de que deseas eliminar esta sugerencia?';
 
   @override
   String get remove => 'Eliminar';
@@ -390,8 +376,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get resetSuggestions => 'Restablecer Sugerencias';
 
   @override
-  String get resetSuggestionsDescription =>
-      '¿Estás seguro de que deseas restablecer la lista de sugerencias?';
+  String get resetSuggestionsDescription => '¿Estás seguro de que deseas restablecer la lista de sugerencias?';
 
   @override
   String get reset => 'Restablecer';
@@ -414,16 +399,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suggestionDeleteFailed => 'Error al eliminar la sugerencia';
 
   @override
-  String get resetSuggestionsConfirm =>
-      '¿Estás seguro de que deseas restablecer las sugerencias?';
+  String get resetSuggestionsConfirm => '¿Estás seguro de que deseas restablecer las sugerencias?';
 
   @override
-  String get suggestionsResetSuccess =>
-      'Todas las sugerencias se han restablecido con éxito';
+  String get suggestionsResetSuccess => 'Todas las sugerencias se han restablecido con éxito';
 
   @override
-  String get suggestionsResetFailed =>
-      'No se pudieron restablecer las sugerencias. Inténtalo de nuevo';
+  String get suggestionsResetFailed => 'No se pudieron restablecer las sugerencias. Inténtalo de nuevo';
 
   @override
   String get label => 'Etiqueta';
@@ -435,8 +417,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectableTextOptional => 'Texto seleccionable (opcional)';
 
   @override
-  String get selectableTextHint =>
-      'Parte del SQL que será seleccionada automáticamente para reemplazo';
+  String get selectableTextHint => 'Parte del SQL que será seleccionada automáticamente para reemplazo';
 
   @override
   String get fieldRequired => 'Este campo es obligatorio';
@@ -469,8 +450,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get error => 'Error';
 
   @override
-  String get failedToSaveWorkspaceLayout =>
-      'No se pudo guardar el diseño del espacio de trabajo. Por favor, inténtalo de nuevo.';
+  String get failedToSaveWorkspaceLayout => 'No se pudo guardar el diseño del espacio de trabajo. Por favor, inténtalo de nuevo.';
 
   @override
   String databaseCreationError(Object databaseName) {
@@ -478,12 +458,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get fetchDatabasesError =>
-      'No se pudo obtener las bases de datos creadas.';
+  String get fetchDatabasesError => 'No se pudo obtener las bases de datos creadas.';
 
   @override
-  String get checkDatabaseExistsError =>
-      'No se pudo comprobar si la base de datos ya existe.';
+  String get checkDatabaseExistsError => 'No se pudo comprobar si la base de datos ya existe.';
 
   @override
   String deleteDatabaseError(Object databaseName) {
@@ -502,8 +480,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unableToClear => 'No se pueden borrar las bases de datos';
 
   @override
-  String get failedToGetAppVersion =>
-      'No se pudo obtener la versión de la aplicación';
+  String get failedToGetAppVersion => 'No se pudo obtener la versión de la aplicación';
 
   @override
   String sqlExecutionError(Object error) {
@@ -514,60 +491,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noDatabaseSelected => 'Ninguna base de datos seleccionada';
 
   @override
-  String get failedToLoadSqlSuggestions =>
-      'No se pudieron cargar las sugerencias SQL';
+  String get failedToLoadSqlSuggestions => 'No se pudieron cargar las sugerencias SQL';
 
   @override
-  String get failedToSaveSqlSuggestionsSettings =>
-      'No se pudieron guardar las configuraciones de sugerencias SQL';
+  String get failedToSaveSqlSuggestionsSettings => 'No se pudieron guardar las configuraciones de sugerencias SQL';
 
   @override
-  String get failedToLoadAdvancedSuggestions =>
-      'No se pudieron cargar las sugerencias avanzadas';
+  String get failedToLoadAdvancedSuggestions => 'No se pudieron cargar las sugerencias avanzadas';
 
   @override
-  String get failedToAddAdvancedSuggestion =>
-      'No se pudo agregar la sugerencia avanzada';
+  String get failedToAddAdvancedSuggestion => 'No se pudo agregar la sugerencia avanzada';
 
   @override
-  String get failedToUpdateAdvancedSuggestion =>
-      'No se pudo actualizar la sugerencia avanzada';
+  String get failedToUpdateAdvancedSuggestion => 'No se pudo actualizar la sugerencia avanzada';
 
   @override
-  String get failedToRemoveAdvancedSuggestion =>
-      'No se pudo eliminar la sugerencia avanzada';
+  String get failedToRemoveAdvancedSuggestion => 'No se pudo eliminar la sugerencia avanzada';
 
   @override
-  String get failedToSaveAllAdvancedSuggestions =>
-      'No se pudieron guardar todas las sugerencias avanzadas';
+  String get failedToSaveAllAdvancedSuggestions => 'No se pudieron guardar todas las sugerencias avanzadas';
 
   @override
-  String get failedToReorderAdvancedSuggestions =>
-      'No se pudieron reordenar las sugerencias avanzadas';
+  String get failedToReorderAdvancedSuggestions => 'No se pudieron reordenar las sugerencias avanzadas';
 
   @override
-  String get failedToResetAdvancedSuggestions =>
-      'No se pudieron restablecer las sugerencias avanzadas';
+  String get failedToResetAdvancedSuggestions => 'No se pudieron restablecer las sugerencias avanzadas';
 
   @override
-  String get failedToLoadBasicSuggestions =>
-      'No se pudieron cargar las sugerencias básicas';
+  String get failedToLoadBasicSuggestions => 'No se pudieron cargar las sugerencias básicas';
 
   @override
-  String get failedToAddBasicSuggestion =>
-      'No se pudo agregar la sugerencia básica';
+  String get failedToAddBasicSuggestion => 'No se pudo agregar la sugerencia básica';
 
   @override
-  String get failedToUpdateBasicSuggestions =>
-      'No se pudieron actualizar las sugerencias básicas';
+  String get failedToUpdateBasicSuggestions => 'No se pudieron actualizar las sugerencias básicas';
 
   @override
-  String get failedToRemoveBasicSuggestion =>
-      'No se pudo eliminar la sugerencia básica';
+  String get failedToRemoveBasicSuggestion => 'No se pudo eliminar la sugerencia básica';
 
   @override
-  String get failedToResetBasicSuggestions =>
-      'No se pudieron restablecer las sugerencias básicas';
+  String get failedToResetBasicSuggestions => 'No se pudieron restablecer las sugerencias básicas';
 
   @override
   String failedToLoadSqlFiles(Object error) {
@@ -580,16 +543,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get databaseResetSuccessfully =>
-      'Base de datos restablecida correctamente';
+  String get databaseResetSuccessfully => 'Base de datos restablecida correctamente';
 
   @override
-  String get databaseCreatedSuccessfully =>
-      'Base de datos creada correctamente';
+  String get databaseCreatedSuccessfully => 'Base de datos creada correctamente';
 
   @override
-  String get databaseDeletedSuccessfully =>
-      'Base de datos eliminada correctamente';
+  String get databaseDeletedSuccessfully => 'Base de datos eliminada correctamente';
 
   @override
   String get unknownError => 'Error desconocido';
@@ -638,8 +598,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get screenNotFound => 'Pantalla no encontrada';
 
   @override
-  String get screenNotFoundDescription =>
-      'La pantalla que buscas no existe o ha sido movida.';
+  String get screenNotFoundDescription => 'La pantalla que buscas no existe o ha sido movida.';
 
   @override
   String get goHome => 'Ir al inicio';
@@ -651,12 +610,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get thisFieldIsRequired => 'Este campo es obligatorio';
 
   @override
-  String get sortOrderSavedSuccessfully =>
-      'El orden de clasificación se guardó correctamente';
+  String get sortOrderSavedSuccessfully => 'El orden de clasificación se guardó correctamente';
 
   @override
-  String get failedToSaveSortOrder =>
-      'No se pudo guardar el orden de clasificación';
+  String get failedToSaveSortOrder => 'No se pudo guardar el orden de clasificación';
 
   @override
   String deleteSuccess(Object count) {
