@@ -1201,6 +1201,12 @@ abstract class AppLocalizations {
   /// **'No databases yet'**
   String get noDatabasesYet;
 
+  /// No description provided for @noDatabasesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No databases found'**
+  String get noDatabasesFound;
+
   /// No description provided for @noSuggestionsYet.
   ///
   /// In en, this message translates to:

@@ -132,7 +132,7 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
             }
             _wasKeyboardOpen = isKeyboardOpen;
 
-            final hideNavBar = _isEditorFocused && isKeyboardOpen;
+            final hideNavBar = isKeyboardOpen;
             final bottomInset = hideNavBar
                 ? 0.0
                 : _navBarHeight + MediaQuery.of(bodyContext).padding.bottom;

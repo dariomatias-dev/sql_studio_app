@@ -183,6 +183,7 @@
   "loading": "Cargando...",
   "theDatabaseIsEmpty": "La base de datos está vacía",
   "noDatabasesYet": "Aún no hay bases de datos",
+  "noDatabasesFound": "No se encontraron bases de datos",
   "noSuggestionsYet": "Aún no hay sugerencias",
   "toggleTheme": "Cambiar tema",
   "screenNotFound": "Pantalla no encontrada",

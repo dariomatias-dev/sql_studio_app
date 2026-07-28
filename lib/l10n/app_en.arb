@@ -183,6 +183,7 @@
   "loading": "Loading...",
   "theDatabaseIsEmpty": "The database is empty",
   "noDatabasesYet": "No databases yet",
+  "noDatabasesFound": "No databases found",
   "noSuggestionsYet": "No suggestions yet",
   "toggleTheme": "Toggle Theme",
   "screenNotFound": "Screen Not Found",

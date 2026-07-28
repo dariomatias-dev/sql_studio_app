@@ -589,6 +589,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noDatabasesYet => 'No databases yet';
 
   @override
+  String get noDatabasesFound => 'No databases found';
+
+  @override
   String get noSuggestionsYet => 'No suggestions yet';
 
   @override

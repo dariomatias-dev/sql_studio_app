@@ -183,6 +183,7 @@
   "loading": "Carregando...",
   "theDatabaseIsEmpty": "O banco de dados está vazio",
   "noDatabasesYet": "Nenhum banco de dados ainda",
+  "noDatabasesFound": "Nenhum banco de dados encontrado",
   "noSuggestionsYet": "Nenhuma sugestão ainda",
   "toggleTheme": "Alternar tema",
   "screenNotFound": "Tela não encontrada",

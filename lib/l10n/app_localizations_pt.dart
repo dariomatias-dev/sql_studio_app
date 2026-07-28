@@ -589,6 +589,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noDatabasesYet => 'Nenhum banco de dados ainda';
 
   @override
+  String get noDatabasesFound => 'Nenhum banco de dados encontrado';
+
+  @override
   String get noSuggestionsYet => 'Nenhuma sugestão ainda';
 
   @override
