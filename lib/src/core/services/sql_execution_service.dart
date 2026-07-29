@@ -10,6 +10,20 @@ import 'package:sql_studio/src/features/database_visualizer/data/models/table_in
 /// inspects its structure.
 class SqlExecutionService {
   final _logger = Logger();
+  final _databases = <String, Database>{};
+
+  Future<Database> _openDatabase(String databaseName) async {
+    final cached = _databases[databaseName];
+    if (cached != null) return cached;
+
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, '$databaseName.db');
+    final db = await openDatabase(path);
+
+    _databases[databaseName] = db;
+
+    return db;
+  }
 
   /// Runs one or more semicolon-separated [sql] statements against
   /// [databaseName], returning the result of the last statement.
@@ -24,22 +38,16 @@ class SqlExecutionService {
     }
 
     try {
-      final dbPath = await getDatabasesPath();
-      final path = join(dbPath, '$databaseName.db');
-      final db = await openDatabase(path);
+      final db = await _openDatabase(databaseName);
 
-      final statements = sql
-          .split(';')
-          .map((e) => e.trim())
-          .where((e) => e.isNotEmpty)
-          .toList();
+      final statements = _splitStatements(sql);
 
       DatabaseSuccess? lastResult;
 
       for (final stmt in statements) {
         final upper = stmt.toUpperCase();
 
-        if (upper.startsWith('SELECT')) {
+        if (upper.startsWith('SELECT') || upper.startsWith('WITH')) {
           final result = await db.rawQuery(stmt);
 
           lastResult = DatabaseSuccess(result: result);
@@ -83,12 +91,6 @@ class SqlExecutionService {
         }
       }
 
-      if (statements.length > 1) {
-        return const SuccessResult(
-          DatabaseSuccess(type: AppLocalizationsKey.statementSuccess),
-        );
-      }
-
       return SuccessResult(lastResult);
     } on Exception catch (err, stackTrace) {
       _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
@@ -99,11 +101,71 @@ class SqlExecutionService {
     }
   }
 
+  /// Splits [sql] into individual statements on top-level `;`, ignoring
+  /// semicolons inside string literals or `BEGIN...END` trigger bodies.
+  List<String> _splitStatements(String sql) {
+    final statements = <String>[];
+    final buffer = StringBuffer();
+    final upperSql = sql.toUpperCase();
+
+    String? quoteChar;
+    var blockDepth = 0;
+
+    for (var i = 0; i < sql.length; i++) {
+      final char = sql[i];
+
+      if (quoteChar != null) {
+        buffer.write(char);
+        if (char == quoteChar) quoteChar = null;
+        continue;
+      }
+
+      if (char == "'" || char == '"') {
+        quoteChar = char;
+        buffer.write(char);
+        continue;
+      }
+
+      if (_matchesKeyword(upperSql, i, 'BEGIN')) {
+        blockDepth++;
+      } else if (_matchesKeyword(upperSql, i, 'END')) {
+        if (blockDepth > 0) blockDepth--;
+      }
+
+      if (char == ';' && blockDepth == 0) {
+        final stmt = buffer.toString().trim();
+        if (stmt.isNotEmpty) statements.add(stmt);
+        buffer.clear();
+        continue;
+      }
+
+      buffer.write(char);
+    }
+
+    final last = buffer.toString().trim();
+    if (last.isNotEmpty) statements.add(last);
+
+    return statements;
+  }
+
+  bool _matchesKeyword(String upperSql, int index, String keyword) {
+    if (index + keyword.length > upperSql.length) return false;
+    if (upperSql.substring(index, index + keyword.length) != keyword) {
+      return false;
+    }
+
+    final before = index == 0 ? ' ' : upperSql[index - 1];
+    final afterIndex = index + keyword.length;
+    final after = afterIndex >= upperSql.length ? ' ' : upperSql[afterIndex];
+
+    return !_isWordChar(before) && !_isWordChar(after);
+  }
+
+  bool _isWordChar(String char) => RegExp('[A-Za-z0-9_]').hasMatch(char);
+
   /// Returns the names of all user tables in [databaseName].
   Future<List<String>> getTables({required String databaseName}) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, '$databaseName.db');
-    final db = await openDatabase(path);
+    final db = await _openDatabase(databaseName);
     final result = await db.rawQuery(
       'SELECT name FROM sqlite_master '
       "WHERE type='table' AND name NOT LIKE 'sqlite_%';",
@@ -117,9 +179,7 @@ class SqlExecutionService {
     required String databaseName,
     required String tableName,
   }) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, '$databaseName.db');
-    final db = await openDatabase(path);
+    final db = await _openDatabase(databaseName);
     final result = await db.rawQuery('PRAGMA table_info($tableName);');
 
     return result.builder((col, index) => col['name']! as String);
@@ -130,8 +190,7 @@ class SqlExecutionService {
   Future<List<TableInfoModel>> getDatabaseStructure({
     required String databaseName,
   }) async {
-    final path = join(await getDatabasesPath(), '$databaseName.db');
-    final db = await openDatabase(path);
+    final db = await _openDatabase(databaseName);
 
     final tableResult = await db.rawQuery(
       'SELECT name FROM sqlite_master '
