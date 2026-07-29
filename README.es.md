@@ -56,15 +56,16 @@ Cada base de datos incluye un esquema y datos de seed predefinidos. Escribes y e
 ## Capturas de Pantalla
 
 <div align="center">
-<img src="screenshots/01_home.png" width="200" alt="Inicio / editor SQL">
-<img src="screenshots/02_databases.png" width="200" alt="Bases de datos">
-<img src="screenshots/03_editor.png" width="200" alt="Editor SQL con una base de datos activa">
-<img src="screenshots/04_drawer.png" width="200" alt="Menú de navegación">
-<img src="screenshots/05_visualizer.png" width="200" alt="Visualizador de base de datos">
-<img src="screenshots/06_settings.png" width="200" alt="Configuración">
-<img src="screenshots/07_language_selector.png" width="200" alt="Selector de idioma">
-<img src="screenshots/08_sql_suggestions_settings.png" width="200" alt="Configuración de sugerencias de SQL">
-<img src="screenshots/09_workspace_layout_settings.png" width="200" alt="Configuración de diseño del workspace">
+<img src="screenshots/es/01_home.png" width="200" alt="Inicio / editor SQL">
+<img src="screenshots/es/02_databases.png" width="200" alt="Bases de datos">
+<img src="screenshots/es/03_editor.png" width="200" alt="Editor SQL con una base de datos activa">
+<img src="screenshots/es/04_drawer.png" width="200" alt="Menú de navegación">
+<img src="screenshots/es/05_visualizer.png" width="200" alt="Visualizador de base de datos">
+<img src="screenshots/es/06_settings.png" width="200" alt="Configuración">
+<img src="screenshots/es/07_language_selector.png" width="200" alt="Selector de idioma">
+<img src="screenshots/es/08_theme_selector.png" width="200" alt="Selector de tema">
+<img src="screenshots/es/09_sql_suggestions_settings.png" width="200" alt="Configuración de sugerencias de SQL">
+<img src="screenshots/es/10_workspace_layout_settings.png" width="200" alt="Configuración de diseño del workspace">
 </div>
 
 ## Construido Con
@@ -99,7 +100,7 @@ Los scripts de utilidad están en `scripts/`.
 
 | Script       | Comando                             | Descripción                                                                                                                                            |
 | ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `screenshot` | `scripts/screenshot.sh [device-id]` | Recorre la app por sus pantallas principales en un dispositivo o emulador conectado y guarda una captura de cada una en `screenshots/`, usado en el README, la ficha de Play Store y el sitio oficial. |
+| `screenshot` | `scripts/screenshot.sh [device-id]` | Recorre la app por sus pantallas principales en un dispositivo o emulador conectado y guarda una captura de cada una en `screenshots/<locale>/`, usado en el README, la ficha de Play Store y el sitio oficial. |
 
 ## Contribuir
 

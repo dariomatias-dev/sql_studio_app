@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Automatically drives the app through its main screens and saves a
-# screenshot of each into screenshots/, for use in the README,
-# Play Store listing, official website, etc.
+# Automatically drives the app through its main screens in every
+# supported locale, saving a screenshot of each into a per-locale
+# subfolder of screenshots/, for use in the README (one folder per
+# language), Play Store listing, official website, etc.
 #
 # Usage:
 #   scripts/screenshot.sh [device-id]
@@ -26,4 +27,4 @@ flutter drive \
   --target=integration_test/screenshot_test.dart \
   "${DEVICE_ARGS[@]}"
 
-echo "Screenshots saved in screenshots/"
+echo "Screenshots saved in screenshots/<locale>/"
