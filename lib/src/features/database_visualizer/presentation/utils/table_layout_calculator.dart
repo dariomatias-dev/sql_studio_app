@@ -30,7 +30,7 @@ class TableLayoutCalculator {
   const TableLayoutCalculator._();
 
   static const double _tableWidth = 260;
-  static const double _headerHeight = 54;
+  static const double _headerHeight = 60;
   static const double _columnRowHeight = 44;
   static const double _footerHeight = 12;
   static const double _padding = 100;

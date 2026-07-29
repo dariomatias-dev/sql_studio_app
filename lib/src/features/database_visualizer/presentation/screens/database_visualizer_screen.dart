@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/database_visualizer_canvas_widget.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/zoom_controls_widget.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
@@ -28,6 +31,19 @@ class _DatabaseVisualizerScreenState
     extends ConsumerState<DatabaseVisualizerScreen> {
   final _transformationController = TransformationController();
   String? _selectedTable;
+
+  void _openTable(String tableName) {
+    final sql = 'SELECT * FROM $tableName;';
+
+    ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
+        widget.databaseName;
+    ref.read(sqlEditorViewModelProvider.notifier).controller
+      ..text = sql
+      ..selection = const TextSelection.collapsed(offset: 0);
+    unawaited(ref.read(sqlCommandsViewModelProvider.notifier).runQuery(sql));
+    ref.read(navigationViewModelProvider.notifier).index = 0;
+    context.pop();
+  }
 
   Future<void> _loadDatabaseStructure() async {
     // Discards any structure left over from a previously visualized
@@ -89,6 +105,7 @@ class _DatabaseVisualizerScreenState
                     onSelectTable: (table) {
                       setState(() => _selectedTable = table);
                     },
+                    onOpenTable: _openTable,
                   ),
                   Positioned(
                     right: 16,

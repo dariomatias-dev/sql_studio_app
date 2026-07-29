@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
@@ -19,6 +20,7 @@ class DatabaseVisualizerTableWidget extends StatefulWidget {
     this.isSelected = false,
     this.isDimmed = false,
     this.onTap,
+    this.onOpen,
     super.key,
   });
 
@@ -37,6 +39,10 @@ class DatabaseVisualizerTableWidget extends StatefulWidget {
 
   /// Called when the card is tapped.
   final VoidCallback? onTap;
+
+  /// Called when the "open table" action is tapped, to navigate to this
+  /// table's data.
+  final VoidCallback? onOpen;
 
   @override
   State<DatabaseVisualizerTableWidget> createState() =>
@@ -97,9 +103,11 @@ class _DatabaseVisualizerTableWidgetState
           children: <Widget>[
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-                horizontal: 16,
+              padding: const EdgeInsets.only(
+                top: 8,
+                bottom: 8,
+                left: 16,
+                right: 6,
               ),
               color: context.colors.black,
               child: Row(
@@ -113,6 +121,8 @@ class _DatabaseVisualizerTableWidgetState
                   Expanded(
                     child: Text(
                       table.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colors.white,
                         fontWeight: FontWeight.w900,
@@ -121,6 +131,28 @@ class _DatabaseVisualizerTableWidgetState
                       ),
                     ),
                   ),
+                  if (widget.onOpen != null)
+                    Tooltip(
+                      message: AppLocalizations.of(context)!.viewTableData,
+                      child: Material(
+                        type: MaterialType.circle,
+                        color: context.colors.black,
+                        child: InkWell(
+                          onTap: widget.onOpen,
+                          splashColor: context.colors.white.withAlpha(60),
+                          highlightColor: context.colors.white.withAlpha(40),
+                          customBorder: const CircleBorder(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(9),
+                            child: Icon(
+                              Icons.north_east_rounded,
+                              color: context.colors.white,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

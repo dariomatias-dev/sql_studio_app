@@ -17,6 +17,7 @@ class DatabaseVisualizerCanvasWidget extends StatefulWidget {
     required this.transformationController,
     required this.selectedTable,
     required this.onSelectTable,
+    required this.onOpenTable,
     super.key,
   });
 
@@ -32,6 +33,9 @@ class DatabaseVisualizerCanvasWidget extends StatefulWidget {
   /// Called with a table's name when it's tapped, or `null` when the
   /// background is tapped to clear the selection.
   final ValueChanged<String?> onSelectTable;
+
+  /// Called with a table's name when its "open table" action is tapped.
+  final ValueChanged<String> onOpenTable;
 
   @override
   State<DatabaseVisualizerCanvasWidget> createState() =>
@@ -101,6 +105,7 @@ class _DatabaseVisualizerCanvasWidgetState
     final transformationController = widget.transformationController;
     final selectedTable = widget.selectedTable;
     final onSelectTable = widget.onSelectTable;
+    final onOpenTable = widget.onOpenTable;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -183,6 +188,7 @@ class _DatabaseVisualizerCanvasWidgetState
                             isDimmed: hasSelection && !isSelected && !isRelated,
                             onTap: () =>
                                 onSelectTable(isSelected ? null : table.name),
+                            onOpen: () => onOpenTable(table.name),
                           ),
                         );
                       }),

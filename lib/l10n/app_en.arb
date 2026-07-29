@@ -42,6 +42,7 @@
   "seedCopied": "Seed copied",
   "schemaAndSeedCopied": "Schema and Seed copied",
   "viewStructure": "View Structure",
+  "viewTableData": "View table data",
   "copySchema": "Copy Schema",
   "copySeed": "Copy Seed",
   "copyAll": "Copy All",
