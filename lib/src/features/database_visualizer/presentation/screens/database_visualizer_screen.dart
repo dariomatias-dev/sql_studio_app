@@ -9,6 +9,7 @@ import 'package:sql_studio/src/features/database_visualizer/presentation/provide
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/database_visualizer_canvas_widget.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/zoom_controls_widget.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
@@ -50,9 +51,13 @@ class _DatabaseVisualizerScreenState
     // database, since this view model is a long-lived singleton.
     ref.invalidate(databaseVisualizerViewModelProvider);
 
-    await ref
+    final result = await ref
         .read(databaseVisualizerViewModelProvider.notifier)
         .load(widget.databaseName);
+
+    if (mounted && result.isFailure) {
+      await handleError(context, result);
+    }
   }
 
   @override

@@ -98,6 +98,8 @@ extension LocalizationExtension on AppLocalizations {
         l.failedToLoadSqlFiles(args['error'] as Object),
     AppLocalizationsKey.databaseResetSuccessfully: (l, args) =>
         l.databaseResetSuccessfully,
+    AppLocalizationsKey.failedToLoadDatabaseStructure: (l, args) =>
+        l.failedToLoadDatabaseStructure,
     AppLocalizationsKey.unknownError: (l, args) => l.unknownError,
     AppLocalizationsKey.deleteSuccess: (l, args) =>
         l.deleteSuccess(args['count'] as Object),

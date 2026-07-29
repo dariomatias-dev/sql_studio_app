@@ -591,6 +591,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Banco de dados reiniciado com sucesso';
 
   @override
+  String get failedToLoadDatabaseStructure =>
+      'Não foi possível carregar a estrutura do banco de dados.';
+
+  @override
   String get databaseCreatedSuccessfully => 'Banco de dados criado com sucesso';
 
   @override

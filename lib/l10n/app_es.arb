@@ -171,6 +171,7 @@
   "failedToLoadSqlFiles": "Error al cargar los archivos SQL: {error}",
   "failedToExecuteSql": "Error al ejecutar SQL para \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Base de datos restablecida correctamente",
+  "failedToLoadDatabaseStructure": "No se pudo cargar la estructura de la base de datos.",
   "databaseCreatedSuccessfully": "Base de datos creada correctamente",
   "databaseDeletedSuccessfully": "Base de datos eliminada correctamente",
   "unknownError": "Error desconocido",

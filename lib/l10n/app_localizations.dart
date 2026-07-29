@@ -1132,6 +1132,12 @@ abstract class AppLocalizations {
   /// **'Database reset successfully'**
   String get databaseResetSuccessfully;
 
+  /// No description provided for @failedToLoadDatabaseStructure.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the database structure.'**
+  String get failedToLoadDatabaseStructure;
+
   /// No description provided for @databaseCreatedSuccessfully.
   ///
   /// In en, this message translates to:

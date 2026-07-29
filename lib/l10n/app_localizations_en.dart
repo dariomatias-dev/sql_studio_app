@@ -584,6 +584,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get databaseResetSuccessfully => 'Database reset successfully';
 
   @override
+  String get failedToLoadDatabaseStructure =>
+      'Could not load the database structure.';
+
+  @override
   String get databaseCreatedSuccessfully => 'Database created successfully';
 
   @override

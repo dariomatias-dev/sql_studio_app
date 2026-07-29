@@ -171,6 +171,7 @@
   "failedToLoadSqlFiles": "Failed to load SQL files: {error}",
   "failedToExecuteSql": "Failed to execute SQL for \"{dbName}\": {error}",
   "databaseResetSuccessfully": "Database reset successfully",
+  "failedToLoadDatabaseStructure": "Could not load the database structure.",
   "databaseCreatedSuccessfully": "Database created successfully",
   "databaseDeletedSuccessfully": "Database deleted successfully",
   "unknownError": "Unknown error",

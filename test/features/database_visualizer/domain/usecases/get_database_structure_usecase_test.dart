@@ -1,24 +1,31 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/usecases/get_database_structure_usecase.dart';
+
+class _MockDatabaseStructureRepository extends Mock
+    implements DatabaseStructureRepository {}
 
 void main() {
   test('forwards the database name and returns the fetched tables', () async {
-    String? receivedName;
-    final useCase = GetDatabaseStructureUseCase((databaseName) async {
-      receivedName = databaseName;
+    final repository = _MockDatabaseStructureRepository();
+    final useCase = GetDatabaseStructureUseCase(repository);
+    final tables = [
+      TableInfoModel(
+        name: 'todo_list',
+        columns: [ColumnInfoModel(name: 'id', type: 'TEXT')],
+      ),
+    ];
 
-      return [
-        TableInfoModel(
-          name: databaseName,
-          columns: [ColumnInfoModel(name: 'id', type: 'TEXT')],
-        ),
-      ];
-    });
+    when(
+      () => repository.getStructure('todo_list'),
+    ).thenAnswer((_) async => SuccessResult(tables));
 
-    final tables = await useCase('todo_list');
+    final result = await useCase('todo_list');
 
-    expect(receivedName, 'todo_list');
-    expect(tables.single.name, 'todo_list');
+    expect(result.isSuccess, isTrue);
+    verify(() => repository.getStructure('todo_list')).called(1);
   });
 }

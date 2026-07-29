@@ -595,6 +595,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Base de datos restablecida correctamente';
 
   @override
+  String get failedToLoadDatabaseStructure =>
+      'No se pudo cargar la estructura de la base de datos.';
+
+  @override
   String get databaseCreatedSuccessfully =>
       'Base de datos creada correctamente';
 

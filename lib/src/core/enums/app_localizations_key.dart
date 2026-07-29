@@ -181,6 +181,9 @@ enum AppLocalizationsKey {
   /// Message shown after a database is reset successfully.
   databaseResetSuccessfully,
 
+  /// Error shown when a database's structure could not be loaded.
+  failedToLoadDatabaseStructure,
+
   /// Fallback message shown for unrecognized errors.
   unknownError,
 }
