@@ -54,7 +54,12 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           itemCount: databases.length,
           itemBuilder: (context, index) {
-            return RootDrawerDatabaseCardWidget(database: databases[index]);
+            final database = databases[index];
+
+            return RootDrawerDatabaseCardWidget(
+              key: ValueKey(database.name),
+              database: database,
+            );
           },
         ),
       ],

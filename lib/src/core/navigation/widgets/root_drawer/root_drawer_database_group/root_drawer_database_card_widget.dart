@@ -49,8 +49,6 @@ class _RootDrawerDatabaseCardWidgetState
   Future<void> _onDeleteDatabase() async {
     final l10n = AppLocalizations.of(context)!;
 
-    context.pop();
-
     final result = await ref
         .read(databaseListViewModelProvider.notifier)
         .delete(widget.database);
@@ -65,7 +63,11 @@ class _RootDrawerDatabaseCardWidgetState
         await SharedPreferencesService.remove(
           SharedPreferencesKeys.selectedDatabaseKey,
         );
+
+        if (!mounted) return;
       }
+
+      context.pop();
 
       unawaited(AppToast.show(l10n.databaseDeletedSuccessfully));
     } else {
@@ -80,7 +82,13 @@ class _RootDrawerDatabaseCardWidgetState
         .read(databaseListViewModelProvider.notifier)
         .toggleFavorite(widget.database);
 
-    if (mounted) await handleError(context, result);
+    if (!mounted) return;
+
+    if (result.isFailure) {
+      setState(() => _isFavorite = !_isFavorite);
+
+      await handleError(context, result);
+    }
   }
 
   @override

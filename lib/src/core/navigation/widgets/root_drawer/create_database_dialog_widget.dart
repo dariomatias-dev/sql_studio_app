@@ -71,6 +71,8 @@ class _CreateDatabaseDialogWidgetState
         if (value != null) {
           shouldStopFlow = true;
 
+          if (!mounted) return;
+
           await ErrorDialogWidget.show(
             context,
             description: appLocalizations.databaseAlreadyExists(name),
@@ -79,6 +81,8 @@ class _CreateDatabaseDialogWidgetState
       },
       onFailure: (error) async {
         shouldStopFlow = true;
+
+        if (!mounted) return;
 
         await handleError(context, getByNameResult);
       },
