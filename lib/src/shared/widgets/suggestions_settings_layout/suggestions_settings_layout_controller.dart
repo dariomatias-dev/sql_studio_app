@@ -40,6 +40,17 @@ class SuggestionsSettingsLayoutController<T> {
     itemsNotifier.value = value;
   }
 
+  /// Replaces both the current items and the baseline they're compared
+  /// against, clearing any pending unsaved-changes state.
+  void setInitialItems(List<T> value) {
+    _initialItems
+      ..clear()
+      ..addAll(value);
+
+    itemsNotifier.value = value;
+    hasChangesNotifier.value = false;
+  }
+
   /// Moves the item at [oldIndex] to [newIndex], as reported by a
   /// reorderable list view.
   void reorderItems(int oldIndex, int newIndex) {
@@ -69,6 +80,12 @@ class SuggestionsSettingsLayoutController<T> {
             : appLocalizations.failedToSaveSortOrder,
       ),
     );
+
+    if (saved) {
+      _initialItems
+        ..clear()
+        ..addAll(itemsNotifier.value);
+    }
 
     hasChangesNotifier.value = !saved;
   }

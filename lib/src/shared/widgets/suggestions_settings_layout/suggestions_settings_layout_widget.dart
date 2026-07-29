@@ -63,7 +63,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
   void didUpdateWidget(covariant SuggestionsSettingsLayoutWidget<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    _controller.items = widget.initialItems;
+    _controller.setInitialItems(widget.initialItems);
   }
 
   @override
