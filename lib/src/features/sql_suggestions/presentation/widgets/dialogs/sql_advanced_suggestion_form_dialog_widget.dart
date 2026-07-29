@@ -54,6 +54,15 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
     text: widget.initialValue?.selectText ?? '',
   );
 
+  @override
+  void dispose() {
+    _labelController.dispose();
+    _codeController.dispose();
+    _selectTextController.dispose();
+
+    super.dispose();
+  }
+
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 

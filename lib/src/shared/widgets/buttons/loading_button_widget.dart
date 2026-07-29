@@ -53,9 +53,11 @@ class _LoadingButtonWidgetState extends State<LoadingButtonWidget> {
 
     setState(() => _loading = true);
 
-    await widget.onPressed!();
-
-    if (mounted) setState(() => _loading = false);
+    try {
+      await widget.onPressed!();
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   @override
