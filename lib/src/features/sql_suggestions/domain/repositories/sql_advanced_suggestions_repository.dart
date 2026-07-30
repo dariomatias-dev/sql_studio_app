@@ -1,3 +1,4 @@
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 
 /// Persists and retrieves the advanced SQL autocomplete suggestions.
@@ -7,23 +8,23 @@ import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced
 /// separate domain entity would only duplicate the same fields.
 abstract interface class SqlAdvancedSuggestionsRepository {
   /// Fetches all suggestions ordered by their display order.
-  Future<List<SqlAdvancedSuggestionModel>> getAll();
+  Future<Result<List<SqlAdvancedSuggestionModel>>> getAll();
 
   /// Persists a new suggestion.
-  Future<void> create(SqlAdvancedSuggestionModel model);
+  Future<Result<void>> create(SqlAdvancedSuggestionModel model);
 
   /// Persists multiple suggestions at once.
-  Future<void> addAll(List<SqlAdvancedSuggestionModel> models);
+  Future<Result<void>> addAll(List<SqlAdvancedSuggestionModel> models);
 
   /// Updates an existing suggestion.
-  Future<void> update(SqlAdvancedSuggestionModel model);
+  Future<Result<void>> update(SqlAdvancedSuggestionModel model);
 
   /// Updates multiple suggestions at once.
-  Future<void> updateAll(List<SqlAdvancedSuggestionModel> models);
+  Future<Result<void>> updateAll(List<SqlAdvancedSuggestionModel> models);
 
   /// Deletes the suggestion matching [id].
-  Future<void> delete(String id);
+  Future<Result<void>> delete(String id);
 
   /// Removes all stored suggestions.
-  Future<void> clear();
+  Future<Result<void>> clear();
 }

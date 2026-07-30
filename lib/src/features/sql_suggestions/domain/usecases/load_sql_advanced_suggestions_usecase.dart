@@ -1,3 +1,4 @@
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 
@@ -9,5 +10,6 @@ class LoadSqlAdvancedSuggestionsUseCase {
   final SqlAdvancedSuggestionsRepository _repository;
 
   /// Runs the use case.
-  Future<List<SqlAdvancedSuggestionModel>> call() => _repository.getAll();
+  Future<Result<List<SqlAdvancedSuggestionModel>>> call() =>
+      _repository.getAll();
 }

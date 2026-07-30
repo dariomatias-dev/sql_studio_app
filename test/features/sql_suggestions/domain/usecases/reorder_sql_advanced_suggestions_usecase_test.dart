@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reorder_sql_advanced_suggestions_usecase.dart';
@@ -20,22 +22,38 @@ void main() {
   setUp(() {
     repository = _MockSqlAdvancedSuggestionsRepository();
     useCase = ReorderSqlAdvancedSuggestionsUseCase(repository);
-    when(() => repository.updateAll(any())).thenAnswer((_) async {});
+    when(
+      () => repository.updateAll(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
   });
 
   test(
     'assigns each suggestion its position in the new order and persists it',
     () async {
       final newOrder = [
-        SqlAdvancedSuggestionModel(label: 'C', code: 'SELECT 3', orderIndex: 2),
-        SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
-        SqlAdvancedSuggestionModel(label: 'B', code: 'SELECT 2', orderIndex: 1),
+        SqlAdvancedSuggestionModel(
+          label: 'C',
+          code: 'SELECT 3',
+          orderIndex: 2,
+        ),
+        SqlAdvancedSuggestionModel(
+          label: 'A',
+          code: 'SELECT 1',
+          orderIndex: 0,
+        ),
+        SqlAdvancedSuggestionModel(
+          label: 'B',
+          code: 'SELECT 2',
+          orderIndex: 1,
+        ),
       ];
 
-      final updated = await useCase(newOrder);
+      final result =
+          await useCase(newOrder)
+              as SuccessResult<List<SqlAdvancedSuggestionModel>>;
 
-      expect(updated.map((s) => s.label).toList(), ['C', 'A', 'B']);
-      expect(updated.map((s) => s.orderIndex).toList(), [0, 1, 2]);
+      expect(result.value.map((s) => s.label).toList(), ['C', 'A', 'B']);
+      expect(result.value.map((s) => s.orderIndex).toList(), [0, 1, 2]);
     },
   );
 
@@ -52,9 +70,30 @@ void main() {
 
   test('returns an empty list without touching the repository when given '
       'an empty order', () async {
-    final updated = await useCase(const []);
+    final result =
+        await useCase(const [])
+            as SuccessResult<List<SqlAdvancedSuggestionModel>>;
 
-    expect(updated, isEmpty);
+    expect(result.value, isEmpty);
     verifyNever(() => repository.updateAll(any()));
+  });
+
+  test('propagates the failure when persisting fails', () async {
+    when(() => repository.updateAll(any())).thenAnswer(
+      (_) async => const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToReorderAdvancedSuggestions),
+      ),
+    );
+
+    final newOrder = [
+      SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
+    ];
+
+    final result = await useCase(newOrder) as FailureResult;
+
+    expect(
+      result.error.type,
+      AppLocalizationsKey.failedToReorderAdvancedSuggestions,
+    );
   });
 }

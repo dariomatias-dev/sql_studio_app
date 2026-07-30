@@ -127,6 +127,7 @@ final Provider<SqlAdvancedSuggestionsRepository>
 sqlAdvancedSuggestionsRepositoryProvider = Provider(
   (ref) => SqlAdvancedSuggestionsRepositoryImpl(
     ref.watch(sqlAdvancedSuggestionsLocalDatasourceProvider),
+    ref.watch(loggerProvider),
   ),
 );
 

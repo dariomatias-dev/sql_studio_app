@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
@@ -75,7 +77,7 @@ void main() {
   test('load populates the state with the loaded suggestions', () async {
     when(
       () => repository.getAll(),
-    ).thenAnswer((_) async => [suggestion('A')]);
+    ).thenAnswer((_) async => SuccessResult([suggestion('A')]));
 
     final container = buildContainer();
     final notifier = container.read(
@@ -91,7 +93,11 @@ void main() {
   });
 
   test('load returns a failure and clears the loading flag on error', () async {
-    when(() => repository.getAll()).thenThrow(Exception('boom'));
+    when(() => repository.getAll()).thenAnswer(
+      (_) async => const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToLoadAdvancedSuggestions),
+      ),
+    );
 
     final container = buildContainer();
     final notifier = container.read(
@@ -108,7 +114,9 @@ void main() {
   });
 
   test('addSuggestion appends the new suggestion on success', () async {
-    when(() => repository.create(any())).thenAnswer((_) async {});
+    when(
+      () => repository.create(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
 
     final container = buildContainer();
     final notifier = container.read(
@@ -125,7 +133,11 @@ void main() {
   });
 
   test('addSuggestion leaves the list untouched on failure', () async {
-    when(() => repository.create(any())).thenThrow(Exception('boom'));
+    when(() => repository.create(any())).thenAnswer(
+      (_) async => const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToAddAdvancedSuggestion),
+      ),
+    );
 
     final container = buildContainer();
     final notifier = container.read(
@@ -142,8 +154,12 @@ void main() {
   });
 
   test('updateSuggestion replaces the matching suggestion in place', () async {
-    when(() => repository.create(any())).thenAnswer((_) async {});
-    when(() => repository.update(any())).thenAnswer((_) async {});
+    when(
+      () => repository.create(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
+    when(
+      () => repository.update(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
 
     final container = buildContainer();
     final notifier = container.read(
@@ -166,8 +182,12 @@ void main() {
   });
 
   test('removeSuggestion drops the matching id from the list', () async {
-    when(() => repository.create(any())).thenAnswer((_) async {});
-    when(() => repository.delete(any())).thenAnswer((_) async {});
+    when(
+      () => repository.create(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
+    when(
+      () => repository.delete(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
 
     final container = buildContainer();
     final notifier = container.read(
@@ -186,8 +206,12 @@ void main() {
   });
 
   test('saveAllSuggestions replaces the whole list on success', () async {
-    when(() => repository.clear()).thenAnswer((_) async {});
-    when(() => repository.addAll(any())).thenAnswer((_) async {});
+    when(
+      () => repository.clear(),
+    ).thenAnswer((_) async => const SuccessResult(null));
+    when(
+      () => repository.addAll(any()),
+    ).thenAnswer((_) async => const SuccessResult(null));
 
     final container = buildContainer();
     final notifier = container.read(
@@ -207,7 +231,9 @@ void main() {
   test(
     'reorderSuggestions stores the reordered list from the use case',
     () async {
-      when(() => repository.updateAll(any())).thenAnswer((_) async {});
+      when(
+        () => repository.updateAll(any()),
+      ).thenAnswer((_) async => const SuccessResult(null));
 
       final container = buildContainer();
       final notifier = container.read(
@@ -230,8 +256,12 @@ void main() {
   test(
     'resetSuggestions replaces the list with the restored defaults',
     () async {
-      when(() => repository.clear()).thenAnswer((_) async {});
-      when(() => repository.addAll(any())).thenAnswer((_) async {});
+      when(
+        () => repository.clear(),
+      ).thenAnswer((_) async => const SuccessResult(null));
+      when(
+        () => repository.addAll(any()),
+      ).thenAnswer((_) async => const SuccessResult(null));
 
       final container = buildContainer();
       final notifier = container.read(

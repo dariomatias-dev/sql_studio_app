@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
@@ -17,10 +18,13 @@ void main() {
       orderIndex: 0,
     );
 
-    when(repository.getAll).thenAnswer((_) async => [suggestion]);
+    when(
+      repository.getAll,
+    ).thenAnswer((_) async => SuccessResult([suggestion]));
 
-    final result = await useCase();
+    final result =
+        await useCase() as SuccessResult<List<SqlAdvancedSuggestionModel>>;
 
-    expect(result.single, same(suggestion));
+    expect(result.value.single, same(suggestion));
   });
 }

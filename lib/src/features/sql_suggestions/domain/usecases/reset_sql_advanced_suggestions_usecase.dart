@@ -1,4 +1,5 @@
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 
@@ -10,14 +11,19 @@ class ResetSqlAdvancedSuggestionsUseCase {
   final SqlAdvancedSuggestionsRepository _repository;
 
   /// Runs the use case, returning the restored default suggestions.
-  Future<List<SqlAdvancedSuggestionModel>> call() async {
+  Future<Result<List<SqlAdvancedSuggestionModel>>> call() async {
     final defaults = List<SqlAdvancedSuggestionModel>.from(
       defaultSqlAdvancedSuggestions,
     );
 
-    await _repository.clear();
-    await _repository.addAll(defaults);
+    final cleared = await _repository.clear();
+    if (cleared.isFailure) {
+      return FailureResult((cleared as FailureResult).error);
+    }
 
-    return defaults;
+    final added = await _repository.addAll(defaults);
+    if (added.isFailure) return FailureResult((added as FailureResult).error);
+
+    return SuccessResult(defaults);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/update_sql_advanced_suggestion_usecase.dart';
@@ -17,7 +18,9 @@ void main() {
       orderIndex: 0,
     );
 
-    when(() => repository.update(suggestion)).thenAnswer((_) async {});
+    when(
+      () => repository.update(suggestion),
+    ).thenAnswer((_) async => const SuccessResult(null));
 
     await useCase(suggestion);
 

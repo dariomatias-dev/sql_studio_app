@@ -1,4 +1,8 @@
+import 'package:logger/logger.dart';
+
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
+import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
+import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_advanced_suggestions_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
@@ -7,57 +11,158 @@ import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_
 /// [SqlAdvancedSuggestionsLocalDatasource].
 class SqlAdvancedSuggestionsRepositoryImpl
     implements SqlAdvancedSuggestionsRepository {
-  /// Creates the repository with its [_datasource].
-  const SqlAdvancedSuggestionsRepositoryImpl(this._datasource);
+  /// Creates the repository with its [_datasource] and [_logger].
+  const SqlAdvancedSuggestionsRepositoryImpl(this._datasource, this._logger);
 
   final SqlAdvancedSuggestionsLocalDatasource _datasource;
+  final Logger _logger;
 
   @override
-  Future<List<SqlAdvancedSuggestionModel>> getAll() async {
-    final maps = await _datasource.getAll();
+  Future<Result<List<SqlAdvancedSuggestionModel>>> getAll() async {
+    try {
+      final maps = await _datasource.getAll();
 
-    if (maps.isEmpty) {
-      final defaults = List<SqlAdvancedSuggestionModel>.from(
-        defaultSqlAdvancedSuggestions,
+      if (maps.isEmpty) {
+        final defaults = List<SqlAdvancedSuggestionModel>.from(
+          defaultSqlAdvancedSuggestions,
+        );
+
+        await _datasource.insertAll(defaults.map((m) => m.toMap()).toList());
+
+        return SuccessResult(defaults);
+      }
+
+      return SuccessResult(
+        maps.map(SqlAdvancedSuggestionModel.fromMap).toList(),
+      );
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to load advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
       );
 
-      await _datasource.insertAll(defaults.map((m) => m.toMap()).toList());
-
-      return defaults;
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToLoadAdvancedSuggestions),
+      );
     }
-
-    return maps.map(SqlAdvancedSuggestionModel.fromMap).toList();
   }
 
   @override
-  Future<void> create(SqlAdvancedSuggestionModel model) async {
-    await _datasource.insert(model.toMap());
+  Future<Result<void>> create(SqlAdvancedSuggestionModel model) async {
+    try {
+      await _datasource.insert(model.toMap());
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to add advanced suggestion',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToAddAdvancedSuggestion),
+      );
+    }
   }
 
   @override
-  Future<void> addAll(List<SqlAdvancedSuggestionModel> models) async {
-    if (models.isEmpty) return;
+  Future<Result<void>> addAll(List<SqlAdvancedSuggestionModel> models) async {
+    if (models.isEmpty) return const SuccessResult(null);
 
-    await _datasource.insertAll(models.map((m) => m.toMap()).toList());
+    try {
+      await _datasource.insertAll(models.map((m) => m.toMap()).toList());
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to save all advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToSaveAllAdvancedSuggestions),
+      );
+    }
   }
 
   @override
-  Future<void> update(SqlAdvancedSuggestionModel model) async {
-    await _datasource.update(model.toMap());
+  Future<Result<void>> update(SqlAdvancedSuggestionModel model) async {
+    try {
+      await _datasource.update(model.toMap());
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to update advanced suggestion',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToUpdateAdvancedSuggestion),
+      );
+    }
   }
 
   @override
-  Future<void> updateAll(List<SqlAdvancedSuggestionModel> models) async {
-    if (models.isEmpty) return;
+  Future<Result<void>> updateAll(
+    List<SqlAdvancedSuggestionModel> models,
+  ) async {
+    if (models.isEmpty) return const SuccessResult(null);
 
-    await _datasource.updateAll(models.map((m) => m.toMap()).toList());
+    try {
+      await _datasource.updateAll(models.map((m) => m.toMap()).toList());
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to reorder advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToReorderAdvancedSuggestions),
+      );
+    }
   }
 
   @override
-  Future<void> delete(String id) async {
-    await _datasource.deleteById(id);
+  Future<Result<void>> delete(String id) async {
+    try {
+      await _datasource.deleteById(id);
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to remove advanced suggestion',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(
+        AppFailure(AppLocalizationsKey.failedToRemoveAdvancedSuggestion),
+      );
+    }
   }
 
   @override
-  Future<void> clear() => _datasource.clear();
+  Future<Result<void>> clear() async {
+    try {
+      await _datasource.clear();
+
+      return const SuccessResult(null);
+    } on Exception catch (err, stackTrace) {
+      _logger.e(
+        'Failed to clear advanced suggestions',
+        error: err,
+        stackTrace: stackTrace,
+      );
+
+      return const FailureResult(AppFailure(AppLocalizationsKey.unableToClear));
+    }
+  }
 }
