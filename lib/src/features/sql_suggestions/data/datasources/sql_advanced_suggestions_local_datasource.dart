@@ -3,10 +3,11 @@ import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced
 
 /// Reads and writes advanced SQL suggestions rows in sqflite.
 class SqlAdvancedSuggestionsLocalDatasource {
-  /// Creates the datasource.
-  SqlAdvancedSuggestionsLocalDatasource()
+  /// Creates the datasource, backed by [manager].
+  SqlAdvancedSuggestionsLocalDatasource(DatabaseManager manager)
     : _repository = DatabaseRepository<SqlAdvancedSuggestionModel>(
         tableName: _tableName,
+        manager: manager,
       );
 
   static const _tableName = 'sql_advanced_suggestions';

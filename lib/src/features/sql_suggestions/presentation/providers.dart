@@ -119,7 +119,8 @@ sqlBasicSuggestionsViewModelProvider = NotifierProvider(
 /// Provides the raw advanced suggestions datasource.
 final Provider<SqlAdvancedSuggestionsLocalDatasource>
 sqlAdvancedSuggestionsLocalDatasourceProvider = Provider(
-  (ref) => SqlAdvancedSuggestionsLocalDatasource(),
+  (ref) =>
+      SqlAdvancedSuggestionsLocalDatasource(ref.watch(databaseManagerProvider)),
 );
 
 /// Provides the [SqlAdvancedSuggestionsRepository] implementation.

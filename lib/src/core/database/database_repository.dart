@@ -53,12 +53,15 @@ class DatabaseManager {
 
 /// Generic CRUD access to a single SQLite table.
 class DatabaseRepository<T> {
-  /// Creates a repository bound to [tableName].
-  DatabaseRepository({required this.tableName});
+  /// Creates a repository bound to [tableName], backed by [manager].
+  DatabaseRepository({
+    required this.tableName,
+    required DatabaseManager manager,
+  }) : _manager = manager;
 
   /// The name of the SQLite table this repository operates on.
   final String tableName;
-  final _manager = DatabaseManager();
+  final DatabaseManager _manager;
 
   Future<Database> get _db async => _manager.database;
 

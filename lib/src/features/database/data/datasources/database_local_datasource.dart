@@ -4,9 +4,12 @@ import 'package:sql_studio/src/features/database/data/models/database_model.dart
 /// Reads and writes database rows in sqflite, and manages the underlying
 /// per-database SQLite files.
 class DatabaseLocalDatasource {
-  /// Creates the datasource.
-  DatabaseLocalDatasource()
-    : _repository = DatabaseRepository<DatabaseModel>(tableName: 'databases');
+  /// Creates the datasource, backed by [manager].
+  DatabaseLocalDatasource(DatabaseManager manager)
+    : _repository = DatabaseRepository<DatabaseModel>(
+        tableName: 'databases',
+        manager: manager,
+      );
 
   final DatabaseRepository<DatabaseModel> _repository;
 

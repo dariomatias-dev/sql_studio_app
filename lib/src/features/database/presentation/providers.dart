@@ -19,7 +19,9 @@ import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart'
 
 /// Provides the raw database datasource.
 final Provider<DatabaseLocalDatasource> databaseLocalDatasourceProvider =
-    Provider((ref) => DatabaseLocalDatasource());
+    Provider(
+      (ref) => DatabaseLocalDatasource(ref.watch(databaseManagerProvider)),
+    );
 
 /// Provides the [DatabaseRepository] implementation.
 final Provider<DatabaseRepository> databaseRepositoryProvider = Provider(
