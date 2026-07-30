@@ -64,6 +64,8 @@ class _CreateSqlBasicSuggestionDialogWidgetState
             .read(sqlBasicSuggestionsViewModelProvider.notifier)
             .add(value);
 
+        if (!mounted) return result.isSuccess;
+
         if (result.isSuccess) {
           _controller.text = '';
         } else {

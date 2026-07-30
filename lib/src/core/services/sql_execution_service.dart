@@ -25,6 +25,14 @@ class SqlExecutionService {
     return db;
   }
 
+  /// Closes and evicts the cached connection for [databaseName], if any.
+  /// Call this before the underlying database file is deleted so a later
+  /// reuse of the same name doesn't hand back a stale handle.
+  Future<void> closeDatabase(String databaseName) async {
+    final db = _databases.remove(databaseName);
+    await db?.close();
+  }
+
   /// Runs one or more semicolon-separated [sql] statements against
   /// [databaseName], returning the result of the last statement.
   Future<Result<DatabaseSuccess?>> execute({
@@ -163,6 +171,11 @@ class SqlExecutionService {
 
   bool _isWordChar(String char) => RegExp('[A-Za-z0-9_]').hasMatch(char);
 
+  /// Quotes [identifier] as an SQLite double-quoted identifier, escaping
+  /// embedded double quotes.
+  String _quoteIdentifier(String identifier) =>
+      '"${identifier.replaceAll('"', '""')}"';
+
   /// Returns the names of all user tables in [databaseName].
   Future<List<String>> getTables({required String databaseName}) async {
     final db = await _openDatabase(databaseName);
@@ -180,7 +193,9 @@ class SqlExecutionService {
     required String tableName,
   }) async {
     final db = await _openDatabase(databaseName);
-    final result = await db.rawQuery('PRAGMA table_info($tableName);');
+    final result = await db.rawQuery(
+      'PRAGMA table_info(${_quoteIdentifier(tableName)});',
+    );
 
     return result.builder((col, index) => col['name']! as String);
   }
@@ -202,8 +217,11 @@ class SqlExecutionService {
 
     for (final row in tableResult) {
       final name = row['name']! as String;
-      final columnsRaw = await db.rawQuery('PRAGMA table_info($name);');
-      final fkRaw = await db.rawQuery('PRAGMA foreign_key_list($name);');
+      final quotedName = _quoteIdentifier(name);
+      final columnsRaw = await db.rawQuery('PRAGMA table_info($quotedName);');
+      final fkRaw = await db.rawQuery(
+        'PRAGMA foreign_key_list($quotedName);',
+      );
 
       final columns = columnsRaw.builder((col, index) {
         final fk = fkRaw.firstWhere(

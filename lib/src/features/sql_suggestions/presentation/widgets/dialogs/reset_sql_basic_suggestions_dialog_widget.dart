@@ -51,6 +51,8 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
               .read(sqlBasicSuggestionsViewModelProvider.notifier)
               .updateSuggestions(List<String>.from(defaultSqlBasicSuggestions));
 
+          if (!mounted) return;
+
           if (result.isSuccess) {
             _getContext().pop();
           } else {

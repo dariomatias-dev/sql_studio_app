@@ -14,6 +14,8 @@ import 'package:sql_studio/src/features/database/presentation/view_models/databa
 import 'package:sql_studio/src/features/database/presentation/view_models/database_list_view_model.dart';
 import 'package:sql_studio/src/features/database/presentation/view_models/default_databases_state.dart';
 import 'package:sql_studio/src/features/database/presentation/view_models/default_databases_view_model.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart'
+    show sqlExecutionServiceProvider;
 
 /// Provides the raw database datasource.
 final Provider<DatabaseLocalDatasource> databaseLocalDatasourceProvider =
@@ -45,7 +47,10 @@ final Provider<GetDatabaseByNameUseCase> getDatabaseByNameUseCaseProvider =
 
 /// Provides the [DeleteDatabaseUseCase].
 final Provider<DeleteDatabaseUseCase> deleteDatabaseUseCaseProvider = Provider(
-  (ref) => DeleteDatabaseUseCase(ref.watch(databaseRepositoryProvider)),
+  (ref) => DeleteDatabaseUseCase(
+    ref.watch(databaseRepositoryProvider),
+    ref.watch(sqlExecutionServiceProvider),
+  ),
 );
 
 /// Provides the [ToggleDatabaseFavoriteUseCase].

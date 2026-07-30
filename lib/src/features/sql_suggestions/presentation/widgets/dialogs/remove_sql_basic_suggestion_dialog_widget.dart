@@ -56,6 +56,8 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
               .read(sqlBasicSuggestionsViewModelProvider.notifier)
               .remove(widget.suggestion);
 
+          if (!mounted) return;
+
           if (result.isFailure) {
             await handleError(_getContext(), result);
 
