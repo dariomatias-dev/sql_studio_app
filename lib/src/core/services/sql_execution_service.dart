@@ -218,10 +218,12 @@ class SqlExecutionService {
     for (final row in tableResult) {
       final name = row['name']! as String;
       final quotedName = _quoteIdentifier(name);
-      final columnsRaw = await db.rawQuery('PRAGMA table_info($quotedName);');
-      final fkRaw = await db.rawQuery(
-        'PRAGMA foreign_key_list($quotedName);',
-      );
+      final results = await Future.wait([
+        db.rawQuery('PRAGMA table_info($quotedName);'),
+        db.rawQuery('PRAGMA foreign_key_list($quotedName);'),
+      ]);
+      final columnsRaw = results[0];
+      final fkRaw = results[1];
 
       final columns = columnsRaw.builder((col, index) {
         final fk = fkRaw.firstWhere(
