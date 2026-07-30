@@ -9,19 +9,18 @@ class ReorderSqlAdvancedSuggestionsUseCase {
   final SqlAdvancedSuggestionsRepository _repository;
 
   /// Runs the use case, persisting each suggestion in [newOrder] with its
-  /// new index, and returning the updated list.
+  /// new index in a single batch, and returning the updated list.
   Future<List<SqlAdvancedSuggestionModel>> call(
     List<SqlAdvancedSuggestionModel> newOrder,
   ) async {
-    final updated = <SqlAdvancedSuggestionModel>[];
+    if (newOrder.isEmpty) return const [];
 
-    for (var i = 0; i < newOrder.length; i++) {
-      final suggestion = newOrder[i].copyWith(orderIndex: i);
+    final updated = [
+      for (var i = 0; i < newOrder.length; i++)
+        newOrder[i].copyWith(orderIndex: i),
+    ];
 
-      await _repository.update(suggestion);
-
-      updated.add(suggestion);
-    }
+    await _repository.updateAll(updated);
 
     return updated;
   }

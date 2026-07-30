@@ -163,6 +163,26 @@ class DatabaseRepository<T> {
     );
   }
 
+  /// Updates every row matching each map's `id` in a single batch.
+  Future<List<Object?>> updateAll(List<Map<String, dynamic>> models) async {
+    if (models.isEmpty) return <List<Object?>>[];
+
+    final db = await _db;
+    final batch = db.batch();
+
+    for (final model in models) {
+      batch.update(
+        tableName,
+        model,
+        where: 'id = ?',
+        whereArgs: [model['id']],
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+
+    return batch.commit(noResult: false);
+  }
+
   /// Deletes the row with the given [id].
   Future<int> deleteById(String id) async {
     final db = await _db;

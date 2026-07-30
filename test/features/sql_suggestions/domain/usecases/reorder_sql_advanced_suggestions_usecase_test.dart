@@ -20,7 +20,7 @@ void main() {
   setUp(() {
     repository = _MockSqlAdvancedSuggestionsRepository();
     useCase = ReorderSqlAdvancedSuggestionsUseCase(repository);
-    when(() => repository.update(any())).thenAnswer((_) async {});
+    when(() => repository.updateAll(any())).thenAnswer((_) async {});
   });
 
   test(
@@ -39,7 +39,7 @@ void main() {
     },
   );
 
-  test('persists every suggestion via the repository', () async {
+  test('persists the whole new order via a single batch call', () async {
     final newOrder = [
       SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
       SqlAdvancedSuggestionModel(label: 'B', code: 'SELECT 2', orderIndex: 1),
@@ -47,7 +47,7 @@ void main() {
 
     await useCase(newOrder);
 
-    verify(() => repository.update(any())).called(newOrder.length);
+    verify(() => repository.updateAll(any())).called(1);
   });
 
   test('returns an empty list without touching the repository when given '
@@ -55,6 +55,6 @@ void main() {
     final updated = await useCase(const []);
 
     expect(updated, isEmpty);
-    verifyNever(() => repository.update(any()));
+    verifyNever(() => repository.updateAll(any()));
   });
 }

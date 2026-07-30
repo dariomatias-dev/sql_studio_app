@@ -47,6 +47,13 @@ class SqlAdvancedSuggestionsRepositoryImpl
   }
 
   @override
+  Future<void> updateAll(List<SqlAdvancedSuggestionModel> models) async {
+    if (models.isEmpty) return;
+
+    await _datasource.updateAll(models.map((m) => m.toMap()).toList());
+  }
+
+  @override
   Future<void> delete(String id) async {
     await _datasource.deleteById(id);
   }

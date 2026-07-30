@@ -29,6 +29,11 @@ class SqlAdvancedSuggestionsLocalDatasource {
   /// Updates an existing row.
   Future<int> update(Map<String, dynamic> map) => _repository.update(map);
 
+  /// Updates multiple rows at once.
+  Future<List<Object?>> updateAll(List<Map<String, dynamic>> maps) {
+    return _repository.updateAll(maps);
+  }
+
   /// Deletes the row matching [id].
   Future<int> deleteById(String id) => _repository.deleteById(id);
 

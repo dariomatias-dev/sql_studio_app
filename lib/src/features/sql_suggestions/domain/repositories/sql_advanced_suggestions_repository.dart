@@ -18,6 +18,9 @@ abstract interface class SqlAdvancedSuggestionsRepository {
   /// Updates an existing suggestion.
   Future<void> update(SqlAdvancedSuggestionModel model);
 
+  /// Updates multiple suggestions at once.
+  Future<void> updateAll(List<SqlAdvancedSuggestionModel> models);
+
   /// Deletes the suggestion matching [id].
   Future<void> delete(String id);
 

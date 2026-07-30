@@ -207,7 +207,7 @@ void main() {
   test(
     'reorderSuggestions stores the reordered list from the use case',
     () async {
-      when(() => repository.update(any())).thenAnswer((_) async {});
+      when(() => repository.updateAll(any())).thenAnswer((_) async {});
 
       final container = buildContainer();
       final notifier = container.read(

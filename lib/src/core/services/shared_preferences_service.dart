@@ -191,7 +191,7 @@ class SharedPreferencesService {
   ///
   /// Returns `true` if all data was successfully erased,
   /// otherwise returns `false`.
-  Future<bool> clear() async {
+  static Future<bool> clear() async {
     return await _prefs?.clear() ?? false;
   }
 }

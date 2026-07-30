@@ -27,9 +27,12 @@ class AppRoutes {
     BuildContext context, {
     required String dbName,
   }) {
-    final uri = Uri(path: '/database-visualizer/$dbName');
+    final path = RoutePaths.databaseVisualizer.replaceFirst(
+      ':dbName',
+      Uri.encodeComponent(dbName),
+    );
 
-    unawaited(context.push(uri.toString()));
+    unawaited(context.push(path));
   }
 
   /// Pushes the SQL basic suggestion settings screen.

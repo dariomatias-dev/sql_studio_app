@@ -17,24 +17,21 @@ Future<void> handleError<T>(
   await result.fold(
     onSuccess: onSuccess,
     onFailure: (error) async {
-      switch (error) {
-        default:
-          await DialogWidget.show<void>(
-            context,
-            title: appLocalizations.error,
-            content: Text(
-              appLocalizations.key(error.type, error.args),
-              textAlign: TextAlign.center,
-            ),
-            actions: <Widget>[
-              ButtonWidget(
-                onPressed: () => Navigator.pop(context),
-                style: ButtonStyleType.red,
-                text: 'Ok',
-              ),
-            ],
-          );
-      }
+      await DialogWidget.show<void>(
+        context,
+        title: appLocalizations.error,
+        content: Text(
+          appLocalizations.key(error.type, error.args),
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          ButtonWidget(
+            onPressed: () => Navigator.pop(context),
+            style: ButtonStyleType.red,
+            text: 'Ok',
+          ),
+        ],
+      );
     },
   );
 }

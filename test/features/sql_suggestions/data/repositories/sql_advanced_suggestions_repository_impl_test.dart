@@ -95,6 +95,22 @@ void main() {
     verify(() => datasource.update(suggestion.toMap())).called(1);
   });
 
+  test('updateAll skips the datasource call for an empty list', () async {
+    await repository.updateAll(const []);
+
+    verifyNever(() => datasource.updateAll(any()));
+  });
+
+  test('updateAll forwards every model as a map when non-empty', () async {
+    when(
+      () => datasource.updateAll(any()),
+    ).thenAnswer((_) async => [1]);
+
+    await repository.updateAll([suggestion]);
+
+    verify(() => datasource.updateAll([suggestion.toMap()])).called(1);
+  });
+
   test('delete forwards the id', () async {
     when(() => datasource.deleteById(any())).thenAnswer((_) async => 1);
 
