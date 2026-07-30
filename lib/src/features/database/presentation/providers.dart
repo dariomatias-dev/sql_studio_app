@@ -12,6 +12,8 @@ import 'package:sql_studio/src/features/database/domain/usecases/get_databases_u
 import 'package:sql_studio/src/features/database/domain/usecases/toggle_database_favorite_usecase.dart';
 import 'package:sql_studio/src/features/database/presentation/view_models/database_list_state.dart';
 import 'package:sql_studio/src/features/database/presentation/view_models/database_list_view_model.dart';
+import 'package:sql_studio/src/features/database/presentation/view_models/default_databases_state.dart';
+import 'package:sql_studio/src/features/database/presentation/view_models/default_databases_view_model.dart';
 
 /// Provides the raw database datasource.
 final Provider<DatabaseLocalDatasource> databaseLocalDatasourceProvider =
@@ -55,3 +57,9 @@ toggleDatabaseFavoriteUseCaseProvider = Provider(
 /// Exposes the [DatabaseListViewModel] and its [DatabaseListState].
 final NotifierProvider<DatabaseListViewModel, DatabaseListState>
 databaseListViewModelProvider = NotifierProvider(DatabaseListViewModel.new);
+
+/// Exposes the [DefaultDatabasesViewModel] and its [DefaultDatabasesState].
+final NotifierProvider<DefaultDatabasesViewModel, DefaultDatabasesState>
+defaultDatabasesViewModelProvider = NotifierProvider(
+  DefaultDatabasesViewModel.new,
+);

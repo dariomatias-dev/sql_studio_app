@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 
+import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
@@ -11,18 +12,17 @@ import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
 
 /// Screen that lists the available default databases.
-class DatabasesScreen extends StatefulWidget {
+class DatabasesScreen extends ConsumerStatefulWidget {
   /// Creates the databases screen.
   const DatabasesScreen({super.key});
 
   @override
-  State<DatabasesScreen> createState() => _DatabasesScreenState();
+  ConsumerState<DatabasesScreen> createState() => _DatabasesScreenState();
 }
 
-class _DatabasesScreenState extends State<DatabasesScreen>
+class _DatabasesScreenState extends ConsumerState<DatabasesScreen>
     with AutomaticKeepAliveClientMixin {
   final _searchController = TextEditingController();
-  var _filter = '';
 
   @override
   bool get wantKeepAlive => true;
@@ -38,14 +38,11 @@ class _DatabasesScreenState extends State<DatabasesScreen>
     super.build(context);
 
     final l10n = AppLocalizations.of(context)!;
-    final query = _filter.trim().toLowerCase();
-    final databases = query.isEmpty
-        ? defaultDatabases
-        : defaultDatabases
-              .where(
-                (db) => l10n.key(db.labelKey).toLowerCase().contains(query),
-              )
-              .toList();
+    final viewModel = ref.read(defaultDatabasesViewModelProvider.notifier);
+
+    ref.watch(defaultDatabasesViewModelProvider);
+
+    final databases = viewModel.filtered(l10n.key);
 
     return ScaffoldWidget(
       showExitButton: false,
@@ -60,12 +57,12 @@ class _DatabasesScreenState extends State<DatabasesScreen>
                   ? IconButton(
                       onPressed: () {
                         _searchController.clear();
-                        setState(() => _filter = '');
+                        viewModel.setFilter('');
                       },
                       icon: const Icon(Icons.close_rounded, size: 18),
                     )
                   : const Icon(Icons.search_rounded, size: 18),
-              onChanged: (value) => setState(() => _filter = value),
+              onChanged: viewModel.setFilter,
             ),
             const SizedBox(height: 16),
             Expanded(
