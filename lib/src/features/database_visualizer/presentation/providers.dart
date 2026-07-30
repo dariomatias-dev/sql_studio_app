@@ -28,7 +28,13 @@ getDatabaseStructureUseCaseProvider = Provider(
 
 /// Exposes the [DatabaseVisualizerViewModel] and its
 /// [DatabaseVisualizerState].
-final NotifierProvider<DatabaseVisualizerViewModel, DatabaseVisualizerState>
-databaseVisualizerViewModelProvider = NotifierProvider(
+///
+/// Auto-disposes once the visualizer screen is popped, so each visit
+/// starts from a clean state without needing a manual `ref.invalidate`.
+final AutoDisposeNotifierProvider<
+  DatabaseVisualizerViewModel,
+  DatabaseVisualizerState
+>
+databaseVisualizerViewModelProvider = NotifierProvider.autoDispose(
   DatabaseVisualizerViewModel.new,
 );

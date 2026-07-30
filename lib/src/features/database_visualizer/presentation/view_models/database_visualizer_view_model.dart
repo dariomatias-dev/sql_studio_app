@@ -6,7 +6,8 @@ import 'package:sql_studio/src/features/database_visualizer/presentation/provide
 import 'package:sql_studio/src/features/database_visualizer/presentation/view_models/database_visualizer_state.dart';
 
 /// Loads and exposes a database's table/column/foreign-key structure.
-class DatabaseVisualizerViewModel extends Notifier<DatabaseVisualizerState> {
+class DatabaseVisualizerViewModel
+    extends AutoDisposeNotifier<DatabaseVisualizerState> {
   @override
   DatabaseVisualizerState build() => const DatabaseVisualizerState();
 

@@ -47,10 +47,6 @@ class _DatabaseVisualizerScreenState
   }
 
   Future<void> _loadDatabaseStructure() async {
-    // Discards any structure left over from a previously visualized
-    // database, since this view model is a long-lived singleton.
-    ref.invalidate(databaseVisualizerViewModelProvider);
-
     final result = await ref
         .read(databaseVisualizerViewModelProvider.notifier)
         .load(widget.databaseName);

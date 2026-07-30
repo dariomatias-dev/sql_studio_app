@@ -79,9 +79,9 @@ void main() {
   });
 
   test(
-    'load() can run again on the same notifier instance after '
-    'ref.invalidate recreates it — regression test for the '
-    'LateInitializationError previously thrown by a cached late field',
+    'load() works again after the autoDispose provider is recreated — '
+    'regression test for the LateInitializationError previously thrown '
+    'by a cached late field',
     () async {
       when(
         () => repository.getStructure('todo_list'),
