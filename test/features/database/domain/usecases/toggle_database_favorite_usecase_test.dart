@@ -13,9 +13,9 @@ void main() {
     final useCase = ToggleDatabaseFavoriteUseCase(repository);
     final model = DatabaseModel(label: 'Todo', name: 'todo');
 
-    when(
-      () => repository.toggleFavorite(model),
-    ).thenAnswer((_) async => const SuccessResult(null));
+    when(() => repository.toggleFavorite(model)).thenAnswer(
+      (_) async => SuccessResult(model.copyWith(isFavorite: true)),
+    );
 
     final result = await useCase(model);
 

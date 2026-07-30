@@ -124,7 +124,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<void>> toggleFavorite(DatabaseModel model) async {
+  Future<Result<DatabaseModel>> toggleFavorite(DatabaseModel model) async {
     try {
       final updated = model.copyWith(
         isFavorite: !model.isFavorite,
@@ -135,7 +135,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       if (updatedCount > 0) {
         _logger.i('Toggled favorite for database: ${model.name}');
 
-        return const SuccessResult(null);
+        return SuccessResult(updated);
       }
 
       _logger.w('Unable to toggle favorite for database: ${model.name}');

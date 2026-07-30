@@ -128,13 +128,19 @@ void main() {
   });
 
   group('toggleFavorite', () {
-    test('succeeds when a row was actually updated', () async {
-      when(() => datasource.update(any())).thenAnswer((_) async => 1);
+    test(
+      'succeeds when a row was actually updated, returning the flipped '
+      'model',
+      () async {
+        when(() => datasource.update(any())).thenAnswer((_) async => 1);
 
-      final result = await repository.toggleFavorite(model);
+        final result =
+            await repository.toggleFavorite(model)
+                as SuccessResult<DatabaseModel>;
 
-      expect(result.isSuccess, isTrue);
-    });
+        expect(result.value.isFavorite, !model.isFavorite);
+      },
+    );
 
     test(
       'fails with toggleDatabaseFavoriteError when no row matched',
@@ -142,7 +148,8 @@ void main() {
         when(() => datasource.update(any())).thenAnswer((_) async => 0);
 
         final result =
-            await repository.toggleFavorite(model) as FailureResult<void>;
+            await repository.toggleFavorite(model)
+                as FailureResult<DatabaseModel>;
 
         expect(
           result.error.type,

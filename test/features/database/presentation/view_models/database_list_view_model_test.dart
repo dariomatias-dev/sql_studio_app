@@ -187,9 +187,9 @@ void main() {
       when(
         () => repository.getAll(),
       ).thenAnswer((_) async => SuccessResult([existing]));
-      when(
-        () => repository.toggleFavorite(any()),
-      ).thenAnswer((_) async => const SuccessResult(null));
+      when(() => repository.toggleFavorite(any())).thenAnswer(
+        (_) async => SuccessResult(existing.copyWith(isFavorite: true)),
+      );
 
       final container = buildContainer();
       final notifier = container.read(databaseListViewModelProvider.notifier);

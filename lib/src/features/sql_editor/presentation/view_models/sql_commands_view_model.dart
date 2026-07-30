@@ -104,7 +104,7 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
     } on Exception catch (e) {
       state = state.copyWith(
         error: AppLocalizationsKey.sqlExecutionError,
-        errorArgs: {'dbName': tableName, 'error': e.toString()},
+        errorArgs: {'error': e.toString()},
       );
 
       return <String>[];

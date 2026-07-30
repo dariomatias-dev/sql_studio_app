@@ -19,8 +19,9 @@ abstract interface class DatabaseRepository {
   /// Deletes the record for [model].
   Future<Result<void>> delete(DatabaseModel model);
 
-  /// Flips the favorite flag of [model] and persists the change.
-  Future<Result<void>> toggleFavorite(DatabaseModel model);
+  /// Flips the favorite flag of [model], persists the change, and returns
+  /// the updated record.
+  Future<Result<DatabaseModel>> toggleFavorite(DatabaseModel model);
 
   /// Deletes the underlying database file for [model].
   Future<Result<void>> dropDatabaseFile(DatabaseModel model);

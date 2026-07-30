@@ -120,17 +120,15 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   Future<Result<void>> toggleFavorite(DatabaseModel model) async {
     final result = await _toggleFavorite(model);
 
-    if (result is SuccessResult) {
+    if (result is SuccessResult<DatabaseModel>) {
       _removeFromLists(model);
 
-      final updated = model.copyWith(isFavorite: !model.isFavorite);
-
-      _addToProperList(updated);
+      _addToProperList(result.value);
 
       _applyFilter();
 
       return const SuccessResult(null);
-    } else if (result is FailureResult) {
+    } else if (result is FailureResult<DatabaseModel>) {
       return FailureResult(
         DatabaseFailure(result.error.type, result.error.args),
       );

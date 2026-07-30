@@ -10,6 +10,6 @@ class ToggleDatabaseFavoriteUseCase {
   final DatabaseRepository _repository;
 
   /// Runs the use case for [model].
-  Future<Result<void>> call(DatabaseModel model) =>
+  Future<Result<DatabaseModel>> call(DatabaseModel model) =>
       _repository.toggleFavorite(model);
 }
