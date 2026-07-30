@@ -25,8 +25,13 @@ void main() {
       expect(rect.left, 100);
       expect(rect.top, 100);
       expect(rect.width, 260);
-      // header (54) + footer (12) + 2 columns * 44
-      expect(rect.height, 54 + 12 + 2 * 44);
+      // header + footer (12) + 2 columns
+      expect(
+        rect.height,
+        TableLayoutCalculator.headerHeight +
+            12 +
+            2 * TableLayoutCalculator.columnRowHeight,
+      );
     });
 
     test('lays out up to 3 tables in a row before wrapping', () {
@@ -54,7 +59,10 @@ void main() {
       ], Size.zero);
 
       // a, b, and c (1 column each) are the first row; d starts the second.
-      const rowHeight = 54 + 12 + 1 * 44;
+      final rowHeight =
+          TableLayoutCalculator.headerHeight +
+          12 +
+          TableLayoutCalculator.columnRowHeight;
 
       expect(result.tableRects['d']!.left, 100);
       expect(result.tableRects['d']!.top, 100 + rowHeight + 100);
