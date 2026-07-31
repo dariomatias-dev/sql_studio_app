@@ -4,6 +4,34 @@ All notable changes to this project are documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.0] - 2026-07-31
+
+### Added
+- Light, dark, and system theme support.
+- Search filter on the databases list.
+- Empty states for query execution in the console.
+- Navigate-to-table action from the database visualizer's schema diagram.
+- Toast confirmation for database actions.
+- Localized screenshots generated for each README.
+
+### Changed
+- Migrated `AppColors` to a `ThemeExtension`.
+- `DatabaseManager` injected through Riverpod dependency injection.
+- Per-table `PRAGMA` queries now run concurrently.
+- Upgraded `flutter_riverpod` to v3, `go_router`, `package_info_plus`, and `share_plus`.
+- Expanded test coverage across database, screens, navigation, and SQL workspace.
+
+### Fixed
+- Complete repaint checks and SQL type detection after comments.
+- Reuse shared database connections for seed and reset instead of opening new ones.
+- Closed stale database handles and improved SQL statement-splitting safety.
+- Adopted the `Result`/`Failure` repository contract in SQL suggestions and the database visualizer.
+- Removed duplicate favorite toggle logic, SQL execution service provider, and dead code.
+- Auto-dispose the database visualizer view model provider and recover from load errors.
+- Prevented stuck loading state and undisposed controllers in shared widgets.
+- Reset the suggestions-settings change baseline after updates.
+- Improved root drawer state handling and dialog behavior.
+
 ## [0.2.0] - 2026-07-26
 
 ### Added

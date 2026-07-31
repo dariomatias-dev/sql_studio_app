@@ -1,7 +1,7 @@
 name: sql_studio
 description: "Practice SQL on your phone with local, editable, fully offline SQLite databases."
 publish_to: "none"
-version: 0.2.0+3
+version: 0.3.0+4
 
 environment:
   sdk: ^3.9.2
