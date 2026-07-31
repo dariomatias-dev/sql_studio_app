@@ -13,13 +13,17 @@ import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 
 /// Seeds and upgrades the bundled default (sample) databases.
 class DefaultDatabaseService {
-  DefaultDatabaseService._();
+  /// Creates the service backed by the shared [_sqlService], so cached
+  /// connections stay in sync with the rest of the app.
+  DefaultDatabaseService(this._sqlService);
+
+  final SqlExecutionService _sqlService;
 
   static const _currentVersion = 1;
 
   /// Runs schema/seed scripts for every default database when the
   /// stored version differs from [_currentVersion].
-  static Future<Result<void>> init() async {
+  Future<Result<void>> init() async {
     final storedVersion = SharedPreferencesService.getInt(
       SharedPreferencesKeys.defaultDatabaseVersionKey,
     );
@@ -45,8 +49,7 @@ class DefaultDatabaseService {
   }
 
   /// Loads and runs the schema and seed SQL scripts for [dbName].
-  static Future<Result<void>> execute(String dbName) async {
-    final sqlService = SqlExecutionService();
+  Future<Result<void>> execute(String dbName) async {
     final logger = Logger();
 
     try {
@@ -66,7 +69,7 @@ class DefaultDatabaseService {
 
         if (trimmedSql.isEmpty) continue;
 
-        await sqlService.execute(sql: trimmedSql, databaseName: dbName);
+        await _sqlService.execute(sql: trimmedSql, databaseName: dbName);
       }
 
       return const SuccessResult(null);
@@ -83,6 +86,8 @@ class DefaultDatabaseService {
           'error': err.toString(),
         }),
       );
+    } finally {
+      await _sqlService.closeDatabase(dbName);
     }
   }
 }

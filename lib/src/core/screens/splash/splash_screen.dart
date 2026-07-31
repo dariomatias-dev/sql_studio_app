@@ -7,7 +7,6 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
@@ -92,7 +91,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       await handleError(context, sqlBasicSuggestionsResult);
     }
 
-    final defaultDatabaseInitResult = await DefaultDatabaseService.init();
+    final defaultDatabaseInitResult = await ref
+        .read(defaultDatabaseServiceProvider)
+        .init();
 
     if (!mounted) return;
 

@@ -6,10 +6,15 @@ import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_comma
 /// [SqlCommandsRepository] backed by [SqlExecutionService] and
 /// [DefaultDatabaseService].
 class SqlCommandsRepositoryImpl implements SqlCommandsRepository {
-  /// Creates the repository with its [_sqlService].
-  const SqlCommandsRepositoryImpl(this._sqlService);
+  /// Creates the repository with its [_sqlService] and
+  /// [_defaultDatabaseService].
+  const SqlCommandsRepositoryImpl(
+    this._sqlService,
+    this._defaultDatabaseService,
+  );
 
   final SqlExecutionService _sqlService;
+  final DefaultDatabaseService _defaultDatabaseService;
 
   @override
   Future<Result<DatabaseSuccess?>> execute({
@@ -32,6 +37,6 @@ class SqlCommandsRepositoryImpl implements SqlCommandsRepository {
 
   @override
   Future<Result<void>> resetDefaultDatabase(String databaseName) {
-    return DefaultDatabaseService.execute(databaseName);
+    return _defaultDatabaseService.execute(databaseName);
   }
 }
