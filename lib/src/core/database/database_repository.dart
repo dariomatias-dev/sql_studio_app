@@ -2,19 +2,14 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/database/migrations.dart';
 
-/// Manages a singleton connection to the application's local SQLite
-/// database.
+/// Manages the connection to the application's local SQLite database.
+/// Instances are meant to be shared via DI (see `databaseManagerProvider`)
+/// rather than constructed as a static singleton.
 class DatabaseManager {
-  /// Returns the single shared instance of [DatabaseManager].
-  factory DatabaseManager() => _singleton;
-
-  DatabaseManager._internal();
   static const _databaseName = 'sql_studio_app.db';
   static const _databaseVersion = 1;
 
-  static Database? _instance;
-
-  static final _singleton = DatabaseManager._internal();
+  Database? _instance;
 
   /// The opened database connection, creating it on first access.
   Future<Database> get database async {
@@ -40,14 +35,23 @@ class DatabaseManager {
     );
   }
 
-  /// Deletes the underlying database file and clears the cached instance.
+  /// Closes the cached connection, if any, and clears it.
+  Future<void> close() async {
+    final db = _instance;
+    _instance = null;
+
+    await db?.close();
+  }
+
+  /// Closes the connection, deletes the underlying database file, and
+  /// clears the cached instance.
   Future<void> deleteDatabaseFile() async {
+    await close();
+
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _databaseName);
 
     await deleteDatabase(path);
-
-    _instance = null;
   }
 }
 
