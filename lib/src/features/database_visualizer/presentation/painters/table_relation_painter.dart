@@ -177,6 +177,8 @@ class TableRelationPainter extends CustomPainter {
   bool shouldRepaint(covariant TableRelationPainter oldDelegate) =>
       oldDelegate.tables != tables ||
       oldDelegate.tableRects != tableRects ||
+      oldDelegate.tableHeaderHeight != tableHeaderHeight ||
+      oldDelegate.tableColumnRowHeight != tableColumnRowHeight ||
       oldDelegate.selectedTable != selectedTable ||
       oldDelegate.colors != colors;
 }

@@ -53,7 +53,7 @@ class SqlExecutionService {
       DatabaseSuccess? lastResult;
 
       for (final stmt in statements) {
-        final upper = stmt.toUpperCase();
+        final upper = _stripLeadingComments(stmt).toUpperCase();
 
         if (upper.startsWith('SELECT') || upper.startsWith('WITH')) {
           final result = await db.rawQuery(stmt);
@@ -107,6 +107,30 @@ class SqlExecutionService {
         DatabaseFailure(AppLocalizationsKey.sqlExecutionError, {'error': err}),
       );
     }
+  }
+
+  /// Strips leading `--` line comments and `/* */` block comments so
+  /// statement-type detection isn't fooled by a commented-out prefix.
+  String _stripLeadingComments(String sql) {
+    var result = sql.trimLeft();
+
+    while (true) {
+      if (result.startsWith('--')) {
+        final newlineIndex = result.indexOf('\n');
+        result = newlineIndex == -1
+            ? ''
+            : result.substring(newlineIndex + 1).trimLeft();
+      } else if (result.startsWith('/*')) {
+        final endIndex = result.indexOf('*/');
+        result = endIndex == -1
+            ? ''
+            : result.substring(endIndex + 2).trimLeft();
+      } else {
+        break;
+      }
+    }
+
+    return result;
   }
 
   /// Splits [sql] into individual statements on top-level `;`, ignoring
