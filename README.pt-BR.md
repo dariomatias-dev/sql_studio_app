@@ -52,6 +52,8 @@ Cada banco de dados vem com um schema e dados de seed predefinidos. Você escrev
 - **Sugestões de SQL**: Snippets de SQL básicos e avançados para agilizar a escrita de queries comuns, ativados em Configurações.
 - **Layout de Workspace Configurável**: Escolha como o editor, console e visualizador são organizados na tela.
 - **Múltiplos Idiomas**: Interface completa em Inglês, Português (Brasil) e Espanhol.
+- **Seleção de Tema**: Tema claro, escuro ou de acordo com o sistema.
+- **Busca de Bancos de Dados**: Filtre a lista de bancos de dados por nome.
 
 ## Screenshots
 

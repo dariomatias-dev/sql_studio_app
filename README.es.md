@@ -52,6 +52,8 @@ Cada base de datos incluye un esquema y datos de seed predefinidos. Escribes y e
 - **Sugerencias de SQL**: Fragmentos de SQL básicos y avanzados para acelerar la escritura de consultas comunes, activables desde Configuración.
 - **Diseño de Workspace Configurable**: Elige cómo se organizan en pantalla el editor, la consola y el visualizador.
 - **Múltiples Idiomas**: Interfaz completa en inglés, portugués (Brasil) y español.
+- **Selección de Tema**: Tema claro, oscuro o según el sistema.
+- **Búsqueda de Bases de Datos**: Filtra la lista de bases de datos por nombre.
 
 ## Capturas de Pantalla
 

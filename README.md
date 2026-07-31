@@ -40,7 +40,7 @@ An Android app to practice SQL on local, editable, fully offline SQLite database
 
 **SQL Studio** is a mobile SQL playground: a set of ready-made SQLite databases you can query, edit, and reset, right on your phone, with no server or account required.
 
-Each database ships with a predefined schema and seed data. You write and run real SQL against it in a code editor with syntax highlighting, inspect results in a console, and can always reset the database back to its original state. A visual scheme view lets you inspect tables, columns, and relationships without writing a query.
+Each database ships with a predefined schema and seed data. You write and run real SQL against it in a code editor with syntax highlighting, inspect results in a console, and can always reset the database back to its original state. A visual schema view lets you inspect tables, columns, and relationships without writing a query.
 
 ## Features
 
@@ -52,6 +52,8 @@ Each database ships with a predefined schema and seed data. You write and run re
 - **SQL Suggestions**: Basic and advanced SQL snippets to speed up writing common queries, toggled from Settings.
 - **Configurable Workspace Layout**: Choose how the editor, console, and visualizer are arranged on screen.
 - **Multiple Languages**: Full app UI in English, Portuguese (Brazil), and Spanish.
+- **Theme Selection**: Light, dark, or system theme.
+- **Database Search**: Filter the databases list by name.
 
 ## Screenshots
 
