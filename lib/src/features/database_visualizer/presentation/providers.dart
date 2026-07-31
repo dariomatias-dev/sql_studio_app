@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/repositories/database_structure_repository_impl.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
@@ -31,10 +30,8 @@ getDatabaseStructureUseCaseProvider = Provider(
 ///
 /// Auto-disposes once the visualizer screen is popped, so each visit
 /// starts from a clean state without needing a manual `ref.invalidate`.
-final AutoDisposeNotifierProvider<
-  DatabaseVisualizerViewModel,
-  DatabaseVisualizerState
->
-databaseVisualizerViewModelProvider = NotifierProvider.autoDispose(
+final NotifierProvider<DatabaseVisualizerViewModel, DatabaseVisualizerState>
+databaseVisualizerViewModelProvider = NotifierProvider(
   DatabaseVisualizerViewModel.new,
+  isAutoDispose: true,
 );

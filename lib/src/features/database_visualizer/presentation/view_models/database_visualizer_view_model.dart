@@ -1,13 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/view_models/database_visualizer_state.dart';
 
 /// Loads and exposes a database's table/column/foreign-key structure.
-class DatabaseVisualizerViewModel
-    extends AutoDisposeNotifier<DatabaseVisualizerState> {
+class DatabaseVisualizerViewModel extends Notifier<DatabaseVisualizerState> {
   @override
   DatabaseVisualizerState build() => const DatabaseVisualizerState();
 
