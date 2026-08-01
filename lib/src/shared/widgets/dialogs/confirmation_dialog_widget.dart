@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// A dialog asking the user to confirm or cancel an action.

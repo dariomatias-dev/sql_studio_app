@@ -9,7 +9,7 @@ import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/cancel_button_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
