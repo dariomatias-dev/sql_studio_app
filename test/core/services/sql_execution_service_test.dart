@@ -176,6 +176,36 @@ void main() {
     ]);
   });
 
+  test('does not split on a semicolon inside a line comment', () async {
+    final result = await service.execute(
+      sql: '''
+        SELECT 1; -- note: uses ; here
+        SELECT 2;
+      ''',
+      databaseName: dbName,
+    );
+
+    final success = (result as SuccessResult<DatabaseSuccess?>).value!;
+    expect(success.result, [
+      {'2': 2},
+    ]);
+  });
+
+  test('does not split on a semicolon inside a block comment', () async {
+    final result = await service.execute(
+      sql: '''
+        SELECT 1; /* note: uses ; here */
+        SELECT 2;
+      ''',
+      databaseName: dbName,
+    );
+
+    final success = (result as SuccessResult<DatabaseSuccess?>).value!;
+    expect(success.result, [
+      {'2': 2},
+    ]);
+  });
+
   test(
     'does not split on semicolons inside a trigger BEGIN...END block',
     () async {

@@ -134,7 +134,8 @@ class SqlExecutionService {
   }
 
   /// Splits [sql] into individual statements on top-level `;`, ignoring
-  /// semicolons inside string literals or `BEGIN...END` trigger bodies.
+  /// semicolons inside string literals, `--`/`/* */` comments, or
+  /// `BEGIN...END` trigger bodies.
   List<String> _splitStatements(String sql) {
     final statements = <String>[];
     final buffer = StringBuffer();
@@ -142,9 +143,23 @@ class SqlExecutionService {
 
     String? quoteChar;
     var blockDepth = 0;
+    var inLineComment = false;
+    var inBlockComment = false;
 
     for (var i = 0; i < sql.length; i++) {
       final char = sql[i];
+
+      if (inLineComment) {
+        buffer.write(char);
+        if (char == '\n') inLineComment = false;
+        continue;
+      }
+
+      if (inBlockComment) {
+        buffer.write(char);
+        if (char == '/' && i > 0 && sql[i - 1] == '*') inBlockComment = false;
+        continue;
+      }
 
       if (quoteChar != null) {
         buffer.write(char);
@@ -154,6 +169,18 @@ class SqlExecutionService {
 
       if (char == "'" || char == '"') {
         quoteChar = char;
+        buffer.write(char);
+        continue;
+      }
+
+      if (char == '-' && i + 1 < sql.length && sql[i + 1] == '-') {
+        inLineComment = true;
+        buffer.write(char);
+        continue;
+      }
+
+      if (char == '/' && i + 1 < sql.length && sql[i + 1] == '*') {
+        inBlockComment = true;
         buffer.write(char);
         continue;
       }
