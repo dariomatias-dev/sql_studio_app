@@ -9,16 +9,13 @@ class DatabaseManager {
   static const _databaseName = 'sql_studio_app.db';
   static const _databaseVersion = 1;
 
-  Database? _instance;
+  Future<Database>? _initFuture;
 
   /// The opened database connection, creating it on first access.
-  Future<Database> get database async {
-    if (_instance != null) return _instance!;
-
-    _instance = await _initDatabase();
-
-    return _instance!;
-  }
+  /// Caches the in-flight future (not just the result) so concurrent
+  /// callers awaiting before the first open resolves share one
+  /// connection instead of racing to open duplicates.
+  Future<Database> get database => _initFuture ??= _initDatabase();
 
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
@@ -37,10 +34,10 @@ class DatabaseManager {
 
   /// Closes the cached connection, if any, and clears it.
   Future<void> close() async {
-    final db = _instance;
-    _instance = null;
+    final future = _initFuture;
+    _initFuture = null;
 
-    await db?.close();
+    await future?.then((db) => db.close());
   }
 
   /// Closes the connection, deletes the underlying database file, and
