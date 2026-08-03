@@ -210,8 +210,13 @@ class DatabaseRepository<T> {
   Future<void> dropTable(String tableName) async {
     final db = await _db;
 
-    await db.execute('DROP TABLE IF EXISTS $tableName');
+    await db.execute('DROP TABLE IF EXISTS ${_quoteIdentifier(tableName)}');
   }
+
+  /// Quotes [identifier] as an SQLite double-quoted identifier, escaping
+  /// embedded double quotes.
+  String _quoteIdentifier(String identifier) =>
+      '"${identifier.replaceAll('"', '""')}"';
 
   /// Deletes the SQLite file for the database named [databaseName].
   Future<void> dropDatabaseFile(String databaseName) async {
