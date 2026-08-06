@@ -178,9 +178,7 @@ class _CreateDatabaseDialogWidgetState
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return appLocalizations.pleaseEnterName;
-                } else if (!RegExp(
-                  r'^[a-z0-9_]+$',
-                ).hasMatch(_toSnakeCase(value))) {
+                } else if (!RegExp(r'^[a-z0-9_]+$').hasMatch(value.trim())) {
                   return appLocalizations.invalidCharactersDetected;
                 }
 

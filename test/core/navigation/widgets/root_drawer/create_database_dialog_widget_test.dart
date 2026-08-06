@@ -143,6 +143,21 @@ void main() {
     },
   );
 
+  testWidgets(
+    'rejects a manually-typed name with characters outside a-z0-9_',
+    (tester) async {
+      await pumpAndOpen(tester);
+
+      await tester.enterText(find.byType(TextFormField).first, 'Label');
+      await tester.enterText(find.byType(TextFormField).last, '../evil');
+      await tester.tap(find.text('Create'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Invalid characters detected'), findsOneWidget);
+      verifyNever(() => repository.getByName(any()));
+    },
+  );
+
   testWidgets('shows an error dialog when the database name already exists', (
     tester,
   ) async {
