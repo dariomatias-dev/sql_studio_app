@@ -12,7 +12,9 @@ import 'package:sql_studio/src/features/workspace_layout_settings/presentation/v
 /// Provides the raw workspace layout preference datasource.
 final Provider<WorkspaceLayoutLocalDatasource>
 workspaceLayoutLocalDatasourceProvider = Provider(
-  (ref) => const WorkspaceLayoutLocalDatasource(),
+  (ref) => WorkspaceLayoutLocalDatasource(
+    ref.watch(sharedPreferencesServiceProvider),
+  ),
 );
 
 /// Provides the [WorkspaceLayoutRepository] implementation.

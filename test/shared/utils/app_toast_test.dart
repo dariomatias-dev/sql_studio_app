@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/main.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/core/providers/app_theme_mode_provider.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
+
+import '../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -36,11 +37,13 @@ void main() {
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
-    SharedPreferences.setMockInitialValues({
+    final prefs = await fakeSharedPreferencesService({
       SharedPreferencesKeys.themeModeKey: mode.name,
     });
-    await SharedPreferencesService.init();
-    appProviderContainer.invalidate(appThemeModeViewModelProvider);
+
+    appProviderContainer = ProviderContainer(
+      overrides: [sharedPreferencesServiceProvider.overrideWithValue(prefs)],
+    );
   }
 
   group('AppToast.show', () {

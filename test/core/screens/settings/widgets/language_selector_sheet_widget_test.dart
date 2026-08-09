@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_sheet/language_selector_sheet_widget.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +16,6 @@ void main() {
   const toastChannel = MethodChannel('PonnamKarthik/fluttertoast');
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    await SharedPreferencesService.init();
-
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(toastChannel, (_) async => true);
   });
@@ -28,7 +26,10 @@ void main() {
   });
 
   Future<ProviderContainer> pumpSheet(WidgetTester tester) async {
-    final container = ProviderContainer();
+    final prefs = await fakeSharedPreferencesService();
+    final container = ProviderContainer(
+      overrides: [sharedPreferencesServiceProvider.overrideWithValue(prefs)],
+    );
     addTearDown(container.dispose);
 
     await tester.pumpWidget(

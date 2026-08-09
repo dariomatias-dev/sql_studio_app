@@ -3,12 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
@@ -19,6 +18,8 @@ import 'package:sql_studio/src/features/database/domain/usecases/get_databases_u
 import 'package:sql_studio/src/features/database/domain/usecases/toggle_database_favorite_usecase.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockDatabaseRepository extends Mock implements DatabaseRepository {}
 
@@ -62,8 +63,7 @@ void main() {
   });
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    await SharedPreferencesService.init();
+    final prefs = await fakeSharedPreferencesService();
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(toastChannel, (_) async => true);
@@ -73,6 +73,7 @@ void main() {
 
     container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         getDatabasesUseCaseProvider.overrideWithValue(
           GetDatabasesUseCase(repository),
         ),

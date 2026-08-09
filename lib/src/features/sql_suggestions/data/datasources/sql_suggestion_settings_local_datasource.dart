@@ -3,12 +3,14 @@ import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
 /// Reads and writes the raw persisted suggestion-toggle preferences.
 class SqlSuggestionSettingsLocalDatasource {
-  /// Creates the datasource.
-  const SqlSuggestionSettingsLocalDatasource();
+  /// Creates the datasource backed by [_prefs].
+  const SqlSuggestionSettingsLocalDatasource(this._prefs);
+
+  final SharedPreferencesService _prefs;
 
   /// Whether basic suggestions are enabled, defaulting to `true`.
   bool getUseBasicSuggestions() {
-    return SharedPreferencesService.getBool(
+    return _prefs.getBool(
       SharedPreferencesKeys.useBasicSuggestionsKey,
       defaultValue: true,
     );
@@ -16,15 +18,13 @@ class SqlSuggestionSettingsLocalDatasource {
 
   /// Whether advanced suggestions are enabled, defaulting to `false`.
   bool getUseAdvancedSuggestions() {
-    return SharedPreferencesService.getBool(
-      SharedPreferencesKeys.useAdvancedSuggestionsKey,
-    );
+    return _prefs.getBool(SharedPreferencesKeys.useAdvancedSuggestionsKey);
   }
 
   /// Whether character-triggered suggestions are enabled, defaulting to
   /// `true`.
   bool getUseCharacterSuggestions() {
-    return SharedPreferencesService.getBool(
+    return _prefs.getBool(
       SharedPreferencesKeys.useCharacterSuggestionsKey,
       defaultValue: true,
     );
@@ -37,17 +37,17 @@ class SqlSuggestionSettingsLocalDatasource {
     required bool useAdvanced,
     required bool useCharacter,
   }) async {
-    await SharedPreferencesService.setBool(
+    await _prefs.setBool(
       SharedPreferencesKeys.useBasicSuggestionsKey,
       value: useBasic,
     );
 
-    await SharedPreferencesService.setBool(
+    await _prefs.setBool(
       SharedPreferencesKeys.useAdvancedSuggestionsKey,
       value: useAdvanced,
     );
 
-    await SharedPreferencesService.setBool(
+    await _prefs.setBool(
       SharedPreferencesKeys.useCharacterSuggestionsKey,
       value: useCharacter,
     );

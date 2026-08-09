@@ -8,8 +8,8 @@ import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
@@ -60,9 +60,9 @@ class _RootDrawerDatabaseCardWidgetState
       if (commands.activeDatabase == widget.database.name) {
         commands.activeDatabase = null;
 
-        await SharedPreferencesService.remove(
-          SharedPreferencesKeys.selectedDatabaseKey,
-        );
+        await ref
+            .read(sharedPreferencesServiceProvider)
+            .remove(SharedPreferencesKeys.selectedDatabaseKey);
 
         if (!mounted) return;
       }

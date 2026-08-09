@@ -8,6 +8,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
@@ -15,6 +16,8 @@ import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
+
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockSqlCommandsRepository extends Mock
     implements SqlCommandsRepository {}
@@ -27,10 +30,13 @@ void main() {
     registerFallbackValue(const DatabaseSuccess());
   });
 
-  setUp(() {
+  setUp(() async {
+    final prefs = await fakeSharedPreferencesService();
+
     repository = _MockSqlCommandsRepository();
     container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         runSqlQueryUseCaseProvider.overrideWithValue(
           RunSqlQueryUseCase(repository),
         ),

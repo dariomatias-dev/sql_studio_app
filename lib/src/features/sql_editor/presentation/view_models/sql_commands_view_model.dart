@@ -5,7 +5,7 @@ import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
@@ -44,10 +44,9 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
 
     if (value != null) {
       unawaited(
-        SharedPreferencesService.setString(
-          SharedPreferencesKeys.selectedDatabaseKey,
-          value,
-        ),
+        ref
+            .read(sharedPreferencesServiceProvider)
+            .setString(SharedPreferencesKeys.selectedDatabaseKey, value),
       );
     }
   }

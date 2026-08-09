@@ -6,8 +6,8 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
@@ -103,11 +103,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    ref
-        .read(sqlCommandsViewModelProvider.notifier)
-        .activeDatabase = SharedPreferencesService.getStringOrNull(
-      SharedPreferencesKeys.selectedDatabaseKey,
-    );
+    ref.read(sqlCommandsViewModelProvider.notifier).activeDatabase = ref
+        .read(sharedPreferencesServiceProvider)
+        .getStringOrNull(SharedPreferencesKeys.selectedDatabaseKey);
 
     AppRoutes.goToMain(context);
   }

@@ -3,87 +3,66 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
 void main() {
+  late SharedPreferencesService service;
+
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
+    service = SharedPreferencesService(await SharedPreferences.getInstance());
   });
 
-  group('before init', () {
-    test('getters return their default value', () {
-      expect(SharedPreferencesService.getString('key'), '');
-      expect(SharedPreferencesService.getString('key', defaultValue: 'd'), 'd');
-      expect(SharedPreferencesService.getStringOrNull('key'), isNull);
-      expect(SharedPreferencesService.getBool('key'), isFalse);
-      expect(
-        SharedPreferencesService.getBool('key', defaultValue: true),
-        isTrue,
-      );
-      expect(SharedPreferencesService.getBoolOrNull('key'), isNull);
-      expect(SharedPreferencesService.getInt('key'), 0);
-      expect(SharedPreferencesService.getInt('key', defaultValue: 5), 5);
-      expect(SharedPreferencesService.getIntOrNull('key'), isNull);
-      expect(SharedPreferencesService.getStringList('key'), isEmpty);
-      expect(SharedPreferencesService.getStringListOrNull('key'), isNull);
-    });
+  test('String get/set round-trip', () async {
+    expect(await service.setString('k', 'v'), 'v');
+
+    expect(service.getString('k'), 'v');
+    expect(service.getStringOrNull('k'), 'v');
+    expect(service.getStringOrNull('missing'), isNull);
+    expect(service.getString('missing'), '');
+    expect(service.getString('missing', defaultValue: 'd'), 'd');
   });
 
-  group('after init', () {
-    setUp(() async {
-      await SharedPreferencesService.init();
-    });
+  test('Bool get/set round-trip', () async {
+    expect(await service.setBool('k', value: true), isTrue);
 
-    test('String get/set round-trip', () async {
-      expect(await SharedPreferencesService.setString('k', 'v'), 'v');
+    expect(service.getBool('k'), isTrue);
+    expect(service.getBoolOrNull('k'), isTrue);
+    expect(service.getBoolOrNull('missing'), isNull);
+    expect(service.getBool('missing'), isFalse);
+    expect(service.getBool('missing', defaultValue: true), isTrue);
+  });
 
-      expect(SharedPreferencesService.getString('k'), 'v');
-      expect(SharedPreferencesService.getStringOrNull('k'), 'v');
-      expect(SharedPreferencesService.getStringOrNull('missing'), isNull);
-    });
+  test('Int get/set round-trip', () async {
+    expect(await service.setInt('k', 42), 42);
 
-    test('Bool get/set round-trip', () async {
-      expect(await SharedPreferencesService.setBool('k', value: true), isTrue);
+    expect(service.getInt('k'), 42);
+    expect(service.getIntOrNull('k'), 42);
+    expect(service.getIntOrNull('missing'), isNull);
+    expect(service.getInt('missing'), 0);
+    expect(service.getInt('missing', defaultValue: 5), 5);
+  });
 
-      expect(SharedPreferencesService.getBool('k'), isTrue);
-      expect(SharedPreferencesService.getBoolOrNull('k'), isTrue);
-      expect(SharedPreferencesService.getBoolOrNull('missing'), isNull);
-    });
+  test('String list get/set round-trip', () async {
+    expect(await service.setStringList('k', ['a', 'b']), ['a', 'b']);
 
-    test('Int get/set round-trip', () async {
-      expect(await SharedPreferencesService.setInt('k', 42), 42);
+    expect(service.getStringList('k'), ['a', 'b']);
+    expect(service.getStringListOrNull('k'), ['a', 'b']);
+    expect(service.getStringListOrNull('missing'), isNull);
+    expect(service.getStringList('missing'), isEmpty);
+    expect(service.getStringList('missing', defaultValue: ['x']), ['x']);
+  });
 
-      expect(SharedPreferencesService.getInt('k'), 42);
-      expect(SharedPreferencesService.getIntOrNull('k'), 42);
-      expect(SharedPreferencesService.getIntOrNull('missing'), isNull);
-    });
+  test('remove deletes the key', () async {
+    await service.setString('k', 'v');
 
-    test('String list get/set round-trip', () async {
-      expect(
-        await SharedPreferencesService.setStringList('k', ['a', 'b']),
-        ['a', 'b'],
-      );
+    expect(await service.remove('k'), isTrue);
+    expect(service.getStringOrNull('k'), isNull);
+  });
 
-      expect(SharedPreferencesService.getStringList('k'), ['a', 'b']);
-      expect(SharedPreferencesService.getStringListOrNull('k'), ['a', 'b']);
-      expect(SharedPreferencesService.getStringListOrNull('missing'), isNull);
-      expect(
-        SharedPreferencesService.getStringList('missing', defaultValue: ['x']),
-        ['x'],
-      );
-    });
+  test('clear erases every stored key', () async {
+    await service.setString('a', '1');
+    await service.setString('b', '2');
 
-    test('remove deletes the key', () async {
-      await SharedPreferencesService.setString('k', 'v');
-
-      expect(await SharedPreferencesService.remove('k'), isTrue);
-      expect(SharedPreferencesService.getStringOrNull('k'), isNull);
-    });
-
-    test('clear erases every stored key', () async {
-      await SharedPreferencesService.setString('a', '1');
-      await SharedPreferencesService.setString('b', '2');
-
-      expect(await SharedPreferencesService.clear(), isTrue);
-      expect(SharedPreferencesService.getStringOrNull('a'), isNull);
-      expect(SharedPreferencesService.getStringOrNull('b'), isNull);
-    });
+    expect(await service.clear(), isTrue);
+    expect(service.getStringOrNull('a'), isNull);
+    expect(service.getStringOrNull('b'), isNull);
   });
 }

@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
@@ -19,6 +18,8 @@ import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_sugge
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_basic_suggestions_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_character_bar_widget.dart';
 
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
+
 class _MockSqlCommandsRepository extends Mock
     implements SqlCommandsRepository {}
 
@@ -29,8 +30,7 @@ void main() {
   const toastChannel = MethodChannel('PonnamKarthik/fluttertoast');
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    await SharedPreferencesService.init();
+    final prefs = await fakeSharedPreferencesService();
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(toastChannel, (_) async => true);
@@ -38,6 +38,7 @@ void main() {
     repository = _MockSqlCommandsRepository();
     container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         runSqlQueryUseCaseProvider.overrideWithValue(
           RunSqlQueryUseCase(repository),
         ),

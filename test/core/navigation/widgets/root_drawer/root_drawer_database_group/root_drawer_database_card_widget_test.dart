@@ -8,6 +8,7 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
@@ -19,6 +20,8 @@ import 'package:sql_studio/src/features/database/domain/usecases/get_databases_u
 import 'package:sql_studio/src/features/database/domain/usecases/toggle_database_favorite_usecase.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+
+import '../../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockDatabaseRepository extends Mock implements DatabaseRepository {}
 
@@ -50,12 +53,15 @@ void main() {
     registerFallbackValue(db);
   });
 
-  setUp(() {
+  setUp(() async {
+    final prefs = await fakeSharedPreferencesService();
+
     repository = _MockDatabaseRepository();
     sqlExecutionService = _MockSqlExecutionService();
 
     container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         getDatabasesUseCaseProvider.overrideWithValue(
           GetDatabasesUseCase(repository),
         ),

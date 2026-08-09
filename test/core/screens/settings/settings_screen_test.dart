@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/screens/settings/settings_screen.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+
+import '../../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late SharedPreferencesService prefs;
+
   Widget wrap(Widget child) {
     return ProviderScope(
+      overrides: [sharedPreferencesServiceProvider.overrideWithValue(prefs)],
       child: MaterialApp(
         theme: AppTheme.light,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -23,8 +28,7 @@ void main() {
   }
 
   Future<void> initPrefs([Map<String, Object> values = const {}]) async {
-    SharedPreferences.setMockInitialValues(values);
-    await SharedPreferencesService.init();
+    prefs = await fakeSharedPreferencesService(values);
   }
 
   testWidgets('shows English and System by default', (tester) async {

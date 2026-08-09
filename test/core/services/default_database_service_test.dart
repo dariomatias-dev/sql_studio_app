@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
@@ -8,6 +7,8 @@ import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
+
+import '../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -19,14 +20,14 @@ void main() {
   });
 
   late SqlExecutionService sqlService;
+  late SharedPreferencesService prefs;
   late DefaultDatabaseService service;
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    await SharedPreferencesService.init();
+    prefs = await fakeSharedPreferencesService();
 
     sqlService = SqlExecutionService();
-    service = DefaultDatabaseService(sqlService);
+    service = DefaultDatabaseService(sqlService, prefs);
   });
 
   tearDown(() async {
@@ -71,18 +72,13 @@ void main() {
 
     expect(result, isA<SuccessResult<void>>());
     expect(
-      SharedPreferencesService.getInt(
-        SharedPreferencesKeys.defaultDatabaseVersionKey,
-      ),
+      prefs.getInt(SharedPreferencesKeys.defaultDatabaseVersionKey),
       1,
     );
   });
 
   test('init is a no-op when the stored version is current', () async {
-    await SharedPreferencesService.setInt(
-      SharedPreferencesKeys.defaultDatabaseVersionKey,
-      1,
-    );
+    await prefs.setInt(SharedPreferencesKeys.defaultDatabaseVersionKey, 1);
 
     final result = await service.init();
 

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/sql_editor/data/repositories/sql_commands_repository_impl.dart';
@@ -20,7 +21,10 @@ final Provider<SqlExecutionService> sqlExecutionServiceProvider = Provider(
 /// with [sqlExecutionServiceProvider].
 final Provider<DefaultDatabaseService> defaultDatabaseServiceProvider =
     Provider(
-      (ref) => DefaultDatabaseService(ref.watch(sqlExecutionServiceProvider)),
+      (ref) => DefaultDatabaseService(
+        ref.watch(sqlExecutionServiceProvider),
+        ref.watch(sharedPreferencesServiceProvider),
+      ),
     );
 
 /// Provides the [SqlCommandsRepository] implementation.

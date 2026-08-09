@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/screens/splash/splash_screen.dart';
 import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
@@ -24,6 +24,8 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_basic_suggestions_state.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_basic_suggestions_view_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_suggestion_settings_view_model.dart';
+
+import '../../../test_helpers/shared_preferences_test_helper.dart';
 
 /// These fakes let the splash screen's real loading sequence run to
 /// completion without touching platform channels, sqflite, or the
@@ -76,7 +78,8 @@ class _FakeSqlBasicSuggestionsViewModel extends SqlBasicSuggestionsViewModel {
 }
 
 class _FakeDefaultDatabaseService extends DefaultDatabaseService {
-  _FakeDefaultDatabaseService() : super(SqlExecutionService());
+  _FakeDefaultDatabaseService(SharedPreferencesService prefs)
+    : super(SqlExecutionService(), prefs);
 
   @override
   Future<Result<void>> init() async => const SuccessResult(null);
@@ -85,14 +88,12 @@ class _FakeDefaultDatabaseService extends DefaultDatabaseService {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() async {
-    SharedPreferences.setMockInitialValues({});
-    await SharedPreferencesService.init();
-  });
+  Future<ProviderContainer> buildContainer() async {
+    final prefs = await fakeSharedPreferencesService();
 
-  ProviderContainer buildContainer() {
     return ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         appVersionViewModelProvider.overrideWith(_FakeAppVersionViewModel.new),
         sqlSuggestionSettingsViewModelProvider.overrideWith(
           _FakeSqlSuggestionSettingsViewModel.new,
@@ -107,7 +108,7 @@ void main() {
           _FakeSqlBasicSuggestionsViewModel.new,
         ),
         defaultDatabaseServiceProvider.overrideWith(
-          (ref) => _FakeDefaultDatabaseService(),
+          (ref) => _FakeDefaultDatabaseService(prefs),
         ),
       ],
     );
@@ -143,7 +144,7 @@ void main() {
   }
 
   testWidgets('shows the branding while loading', (tester) async {
-    final container = buildContainer();
+    final container = await buildContainer();
     addTearDown(container.dispose);
 
     await tester.pumpWidget(wrap(container, buildRouter()));
@@ -155,7 +156,7 @@ void main() {
   testWidgets(
     'loads app resources and navigates to the main route without throwing',
     (tester) async {
-      final container = buildContainer();
+      final container = await buildContainer();
       addTearDown(container.dispose);
 
       await tester.pumpWidget(wrap(container, buildRouter()));

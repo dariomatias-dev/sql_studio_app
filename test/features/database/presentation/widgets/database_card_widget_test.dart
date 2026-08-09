@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/constants/default_databases.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
@@ -12,6 +13,8 @@ import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_col
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockSqlCommandsRepository extends Mock
     implements SqlCommandsRepository {}
@@ -31,11 +34,13 @@ void main() {
     );
   }
 
-  setUp(() {
+  setUp(() async {
+    final prefs = await fakeSharedPreferencesService();
     final repository = _MockSqlCommandsRepository();
 
     container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         runSqlQueryUseCaseProvider.overrideWithValue(
           RunSqlQueryUseCase(repository),
         ),

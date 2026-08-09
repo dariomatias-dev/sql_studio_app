@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
 /// Tracks the app's active locale and persists changes to it.
 class AppLocalizationViewModel extends Notifier<Locale> {
+  late final SharedPreferencesService _prefs;
+
   @override
   Locale build() {
-    final code = SharedPreferencesService.getString(
+    _prefs = ref.read(sharedPreferencesServiceProvider);
+
+    final code = _prefs.getString(
       SharedPreferencesKeys.localeKey,
       defaultValue: 'en',
     );
@@ -20,10 +25,7 @@ class AppLocalizationViewModel extends Notifier<Locale> {
   Future<void> changeLocale(String code) async {
     state = Locale(code);
 
-    await SharedPreferencesService.setString(
-      SharedPreferencesKeys.localeKey,
-      code,
-    );
+    await _prefs.setString(SharedPreferencesKeys.localeKey, code);
   }
 }
 

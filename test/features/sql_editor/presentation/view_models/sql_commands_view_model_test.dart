@@ -3,11 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+
+import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockSqlCommandsRepository extends Mock
     implements SqlCommandsRepository {}
@@ -15,9 +18,12 @@ class _MockSqlCommandsRepository extends Mock
 void main() {
   late _MockSqlCommandsRepository repository;
 
-  ProviderContainer buildContainer() {
+  Future<ProviderContainer> buildContainer() async {
+    final prefs = await fakeSharedPreferencesService();
+
     final container = ProviderContainer(
       overrides: [
+        sharedPreferencesServiceProvider.overrideWithValue(prefs),
         runSqlQueryUseCaseProvider.overrideWithValue(
           RunSqlQueryUseCase(repository),
         ),
@@ -40,7 +46,7 @@ void main() {
 
   group('runQuery', () {
     test('fails immediately with no active database selected', () async {
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier);
 
       await notifier.runQuery('SELECT 1;');
@@ -69,7 +75,7 @@ void main() {
         ),
       ).thenAnswer((_) async => const SuccessResult(success));
 
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'todo_list';
 
@@ -94,7 +100,7 @@ void main() {
         ),
       );
 
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'todo_list';
 
@@ -109,7 +115,7 @@ void main() {
 
   group('getTableColumns', () {
     test('returns an empty list with no active database selected', () async {
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier);
 
       final columns = await notifier.getTableColumns('tasks');
@@ -127,7 +133,7 @@ void main() {
         ),
       ).thenAnswer((_) async => ['id', 'title']);
 
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'todo_list';
 
@@ -141,7 +147,7 @@ void main() {
     test(
       'does nothing when the active database is not a default one',
       () async {
-        final container = buildContainer();
+        final container = await buildContainer();
         final notifier = container.read(sqlCommandsViewModelProvider.notifier)
           ..activeDatabase = 'my_custom_db';
 
@@ -156,7 +162,7 @@ void main() {
         () => repository.resetDefaultDatabase(any()),
       ).thenAnswer((_) async => const SuccessResult(null));
 
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'to_do_list';
 
@@ -182,7 +188,7 @@ void main() {
         ),
       );
 
-      final container = buildContainer();
+      final container = await buildContainer();
       final notifier = container.read(sqlCommandsViewModelProvider.notifier)
         ..activeDatabase = 'todo_list';
       await notifier.runQuery('SELECT * FROM missing;');

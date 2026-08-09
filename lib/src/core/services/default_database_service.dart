@@ -14,17 +14,19 @@ import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 /// Seeds and upgrades the bundled default (sample) databases.
 class DefaultDatabaseService {
   /// Creates the service backed by the shared [_sqlService], so cached
-  /// connections stay in sync with the rest of the app.
-  DefaultDatabaseService(this._sqlService);
+  /// connections stay in sync with the rest of the app, and [_prefs] to
+  /// track the seeded schema version.
+  DefaultDatabaseService(this._sqlService, this._prefs);
 
   final SqlExecutionService _sqlService;
+  final SharedPreferencesService _prefs;
 
   static const _currentVersion = 1;
 
   /// Runs schema/seed scripts for every default database when the
   /// stored version differs from [_currentVersion].
   Future<Result<void>> init() async {
-    final storedVersion = SharedPreferencesService.getInt(
+    final storedVersion = _prefs.getInt(
       SharedPreferencesKeys.defaultDatabaseVersionKey,
     );
 
@@ -40,7 +42,7 @@ class DefaultDatabaseService {
       }
     }
 
-    await SharedPreferencesService.setInt(
+    await _prefs.setInt(
       SharedPreferencesKeys.defaultDatabaseVersionKey,
       _currentVersion,
     );

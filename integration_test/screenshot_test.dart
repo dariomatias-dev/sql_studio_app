@@ -7,6 +7,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/providers/app_theme_mode_provider.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
 import 'package:sql_studio/src/sql_studio_app.dart';
@@ -31,11 +32,20 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('capture marketing screenshots', (tester) async {
-    await SharedPreferencesService.init();
+    final sharedPreferencesService = await SharedPreferencesService.create();
 
     await binding.convertFlutterSurfaceToImage();
 
-    await tester.pumpWidget(const ProviderScope(child: SqlStudioApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesServiceProvider.overrideWithValue(
+            sharedPreferencesService,
+          ),
+        ],
+        child: const SqlStudioApp(),
+      ),
+    );
 
     // Splash entry animation + resource loading.
     await tester.pumpAndSettle(const Duration(seconds: 3));

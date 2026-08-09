@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/divider_bar_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_workspace_widget.dart';
 
+import '../../../test_helpers/shared_preferences_test_helper.dart';
+
 void main() {
+  late SharedPreferencesService prefs;
+
   Future<void> initPrefs([Map<String, Object> values = const {}]) async {
-    SharedPreferences.setMockInitialValues(values);
-    await SharedPreferencesService.init();
+    prefs = await fakeSharedPreferencesService(values);
   }
 
   Future<void> pumpWorkspace(WidgetTester tester) {
     return tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          sharedPreferencesServiceProvider.overrideWithValue(prefs),
+        ],
         child: MaterialApp(
           theme: AppTheme.light,
           supportedLocales: AppLocalizations.supportedLocales,

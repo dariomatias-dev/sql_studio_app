@@ -36,7 +36,9 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models
 /// Provides the raw suggestion-toggle preferences datasource.
 final Provider<SqlSuggestionSettingsLocalDatasource>
 sqlSuggestionSettingsLocalDatasourceProvider = Provider(
-  (ref) => const SqlSuggestionSettingsLocalDatasource(),
+  (ref) => SqlSuggestionSettingsLocalDatasource(
+    ref.watch(sharedPreferencesServiceProvider),
+  ),
 );
 
 /// Provides the [SqlSuggestionSettingsRepository] implementation.
@@ -79,7 +81,9 @@ sqlSuggestionSettingsViewModelProvider = NotifierProvider(
 /// Provides the raw basic suggestions datasource.
 final Provider<SqlBasicSuggestionsLocalDatasource>
 sqlBasicSuggestionsLocalDatasourceProvider = Provider(
-  (ref) => const SqlBasicSuggestionsLocalDatasource(),
+  (ref) => SqlBasicSuggestionsLocalDatasource(
+    ref.watch(sharedPreferencesServiceProvider),
+  ),
 );
 
 /// Provides the [SqlBasicSuggestionsRepository] implementation.

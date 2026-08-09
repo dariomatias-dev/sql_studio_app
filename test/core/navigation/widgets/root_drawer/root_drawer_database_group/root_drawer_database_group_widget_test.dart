@@ -5,11 +5,22 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_group_widget.dart';
+import 'package:sql_studio/src/core/providers/core_providers.dart';
+import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 
+import '../../../../../test_helpers/shared_preferences_test_helper.dart';
+
 void main() {
+  late SharedPreferencesService prefs;
+
+  setUp(() async {
+    prefs = await fakeSharedPreferencesService();
+  });
+
   Widget wrap(Widget child) {
     return ProviderScope(
+      overrides: [sharedPreferencesServiceProvider.overrideWithValue(prefs)],
       child: MaterialApp(
         theme: AppTheme.light,
         supportedLocales: AppLocalizations.supportedLocales,
