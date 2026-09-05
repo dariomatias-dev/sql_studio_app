@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/main.dart';
-import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
-
-import '../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -36,21 +30,37 @@ void main() {
     return args!;
   }
 
-  Future<void> setThemeMode(ThemeMode mode) async {
-    final prefs = await fakeSharedPreferencesService({
-      SharedPreferencesKeys.themeModeKey: mode.name,
-    });
+  /// Builds the app under [themeMode] and returns the toast resolved from
+  /// a context below the [MaterialApp], as call sites resolve it.
+  Future<AppToast> resolveToast(
+    WidgetTester tester,
+    ThemeMode themeMode,
+  ) async {
+    late AppToast toast;
 
-    appProviderContainer = ProviderContainer(
-      overrides: [sharedPreferencesServiceProvider.overrideWithValue(prefs)],
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: themeMode,
+        home: Builder(
+          builder: (context) {
+            toast = AppToast.of(context);
+
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
     );
+
+    return toast;
   }
 
   group('AppToast.show', () {
     testWidgets('uses a white chip in dark mode', (tester) async {
-      await setThemeMode(ThemeMode.dark);
+      final toast = await resolveToast(tester, ThemeMode.dark);
 
-      final args = await captureCall(tester, () => AppToast.show('Saved'));
+      final args = await captureCall(tester, () => toast.show('Saved'));
 
       expect(args['msg'], 'Saved');
       expect(args['bgcolor'], Colors.white.toARGB32());
@@ -58,9 +68,9 @@ void main() {
     });
 
     testWidgets('uses a black chip in light mode', (tester) async {
-      await setThemeMode(ThemeMode.light);
+      final toast = await resolveToast(tester, ThemeMode.light);
 
-      final args = await captureCall(tester, () => AppToast.show('Saved'));
+      final args = await captureCall(tester, () => toast.show('Saved'));
 
       expect(args['msg'], 'Saved');
       expect(args['bgcolor'], Colors.black.toARGB32());
@@ -70,12 +80,12 @@ void main() {
     testWidgets('follows the platform brightness in system mode', (
       tester,
     ) async {
-      await setThemeMode(ThemeMode.system);
-
       tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
       addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-      final args = await captureCall(tester, () => AppToast.show('Saved'));
+      final toast = await resolveToast(tester, ThemeMode.system);
+
+      final args = await captureCall(tester, () => toast.show('Saved'));
 
       expect(args['bgcolor'], Colors.white.toARGB32());
       expect(args['textcolor'], Colors.black.toARGB32());

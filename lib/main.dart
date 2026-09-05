@@ -9,13 +9,6 @@ import 'package:sql_studio/src/core/services/local_state_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/sql_studio_app.dart';
 
-/// Global container so utilities outside the widget tree (e.g. AppToast)
-/// can read providers without threading a [WidgetRef] through every call.
-/// Assigned in [startApp] once the [SharedPreferencesService] override is
-/// ready. Mutable (not `final`) so tests can point it at a container of
-/// their own.
-late ProviderContainer appProviderContainer;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,17 +25,13 @@ Future<void> startApp(AppLogger logger) async {
   try {
     final sharedPreferencesService = await SharedPreferencesService.create();
 
-    appProviderContainer = ProviderContainer(
-      overrides: [
-        sharedPreferencesServiceProvider.overrideWithValue(
-          sharedPreferencesService,
-        ),
-      ],
-    );
-
     runApp(
-      UncontrolledProviderScope(
-        container: appProviderContainer,
+      ProviderScope(
+        overrides: [
+          sharedPreferencesServiceProvider.overrideWithValue(
+            sharedPreferencesService,
+          ),
+        ],
         child: const SqlStudioApp(),
       ),
     );

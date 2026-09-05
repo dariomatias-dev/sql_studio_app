@@ -107,7 +107,9 @@ class _CreateDatabaseDialogWidgetState
 
       Navigator.pop(context);
 
-      unawaited(AppToast.show(appLocalizations.databaseCreatedSuccessfully));
+      unawaited(
+        AppToast.of(context).show(appLocalizations.databaseCreatedSuccessfully),
+      );
     } else {
       await handleError(context, result);
     }

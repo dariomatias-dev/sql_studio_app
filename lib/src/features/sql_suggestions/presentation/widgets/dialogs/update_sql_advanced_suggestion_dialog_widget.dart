@@ -41,6 +41,7 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     return SqlAdvancedSuggestionFormDialogWidget(
       title: appLocalizations.updateSuggestion,
@@ -53,7 +54,7 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
         final result = await viewModel.updateSuggestion(value);
 
         unawaited(
-          AppToast.show(
+          toast.show(
             result.isSuccess
                 ? appLocalizations.updateSuggestionSuccess
                 : appLocalizations.updateSuggestionFail,

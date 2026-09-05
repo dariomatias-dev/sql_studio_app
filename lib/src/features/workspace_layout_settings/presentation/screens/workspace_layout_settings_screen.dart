@@ -42,7 +42,7 @@ class _WorkspaceLayoutConfigurationScreenState
         FailureResult<void>(AppFailure(result.error.type)),
       );
     } else {
-      unawaited(AppToast.show(appLocalizations.layoutSaved));
+      unawaited(AppToast.of(context).show(appLocalizations.layoutSaved));
     }
   }
 

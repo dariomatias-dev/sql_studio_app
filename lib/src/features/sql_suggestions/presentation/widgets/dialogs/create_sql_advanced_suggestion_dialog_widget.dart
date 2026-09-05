@@ -35,6 +35,7 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     return SqlAdvancedSuggestionFormDialogWidget(
       title: appLocalizations.createSuggestion,
@@ -48,7 +49,7 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
         if (!mounted) return false;
 
         unawaited(
-          AppToast.show(
+          toast.show(
             result.isSuccess
                 ? appLocalizations.advancedSuggestionAdded
                 : appLocalizations.advancedSuggestionFailed,

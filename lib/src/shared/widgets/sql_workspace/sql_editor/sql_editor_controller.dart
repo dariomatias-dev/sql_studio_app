@@ -54,6 +54,7 @@ class SqlEditorController {
   /// sheet, showing a toast if there is nothing to share.
   Future<void> onShareSql(BuildContext context, WidgetRef ref) async {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     final sql = ref
         .read(sqlEditorViewModelProvider.notifier)
@@ -62,7 +63,7 @@ class SqlEditorController {
         .trim();
 
     if (sql.isEmpty) {
-      unawaited(AppToast.show(appLocalizations.nothingToShare));
+      unawaited(toast.show(appLocalizations.nothingToShare));
 
       return;
     }
@@ -70,7 +71,7 @@ class SqlEditorController {
     final result = await SharePlus.instance.share(ShareParams(text: sql));
 
     if (result.status == ShareResultStatus.success) {
-      unawaited(AppToast.show(appLocalizations.sqlSharedSuccess));
+      unawaited(toast.show(appLocalizations.sqlSharedSuccess));
     }
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -80,6 +81,7 @@ class SqlEditorController {
   /// with the outcome.
   Future<void> onCopySql(BuildContext context, WidgetRef ref) async {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     final sql = ref
         .read(sqlEditorViewModelProvider.notifier)
@@ -88,13 +90,13 @@ class SqlEditorController {
         .trim();
 
     if (sql.isEmpty) {
-      unawaited(AppToast.show(appLocalizations.nothingToCopy));
+      unawaited(toast.show(appLocalizations.nothingToCopy));
       return;
     }
 
     await Clipboard.setData(ClipboardData(text: sql));
 
-    unawaited(AppToast.show(appLocalizations.sqlCopied));
+    unawaited(toast.show(appLocalizations.sqlCopied));
 
     FocusManager.instance.primaryFocus?.unfocus();
   }
@@ -104,6 +106,7 @@ class SqlEditorController {
   /// download.
   Future<void> onDownloadSql(BuildContext context, WidgetRef ref) async {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     final sql = ref
         .read(sqlEditorViewModelProvider.notifier)
@@ -112,9 +115,7 @@ class SqlEditorController {
         .trim();
 
     if (sql.isEmpty) {
-      unawaited(
-        AppToast.show(appLocalizations.nothingToDownload),
-      );
+      unawaited(toast.show(appLocalizations.nothingToDownload));
 
       return;
     }
@@ -130,7 +131,7 @@ class SqlEditorController {
     );
 
     if (result.status == ShareResultStatus.success) {
-      unawaited(AppToast.show(appLocalizations.sqlDownloaded));
+      unawaited(toast.show(appLocalizations.sqlDownloaded));
     }
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -140,17 +141,18 @@ class SqlEditorController {
   /// a toast if there is no previous query to load.
   void onLoadLastSql(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     final lastQuery = ref.read(sqlCommandsViewModelProvider).lastQuery;
 
     if (lastQuery == null || lastQuery.isEmpty) {
-      unawaited(AppToast.show(appLocalizations.nothingToLoad));
+      unawaited(toast.show(appLocalizations.nothingToLoad));
 
       return;
     }
 
     ref.read(sqlEditorViewModelProvider.notifier).controller.text = lastQuery;
 
-    unawaited(AppToast.show(appLocalizations.lastSqlLoaded));
+    unawaited(toast.show(appLocalizations.lastSqlLoaded));
   }
 }

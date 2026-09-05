@@ -39,7 +39,9 @@ class ThemeSelectorSheetOptionWidget extends ConsumerWidget {
     Navigator.pop(context);
 
     unawaited(
-      AppToast.show(AppLocalizations.of(context)!.themeUpdated(label)),
+      AppToast.of(
+        context,
+      ).show(AppLocalizations.of(context)!.themeUpdated(label)),
     );
   }
 

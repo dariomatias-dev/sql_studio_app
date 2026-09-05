@@ -74,7 +74,7 @@ class SuggestionsSettingsLayoutController<T> {
     final appLocalizations = AppLocalizations.of(getContext())!;
 
     unawaited(
-      AppToast.show(
+      AppToast.of(getContext()).show(
         saved
             ? appLocalizations.sortOrderSavedSuccessfully
             : appLocalizations.failedToSaveSortOrder,

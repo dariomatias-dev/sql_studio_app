@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sql_studio/main.dart';
-import 'package:sql_studio/src/core/providers/app_theme_mode_provider.dart';
 
 /// Shows short, transient feedback messages with the app's single,
 /// consistent toast style.
 class AppToast {
-  const AppToast._();
+  /// Creates a toast styled for a dark surface when [isDark] is true.
+  const AppToast({required this.isDark});
 
-  /// Shows [message] in a toast styled consistently across the app,
-  /// flipping to a white chip in dark mode so it stays legible.
-  static Future<void> show(String message) {
-    final themeMode = appProviderContainer.read(appThemeModeViewModelProvider);
-    final isDark = switch (themeMode) {
-      ThemeMode.dark => true,
-      ThemeMode.light => false,
-      ThemeMode.system =>
-        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-            Brightness.dark,
-    };
+  /// Creates a toast matching the theme in effect at [context]. Resolve
+  /// it before any `await`, the way localizations are resolved.
+  factory AppToast.of(BuildContext context) =>
+      AppToast(isDark: Theme.of(context).brightness == Brightness.dark);
 
+  /// Whether the toast is drawn for a dark surface, flipping to a white
+  /// chip so it stays legible.
+  final bool isDark;
+
+  /// Shows [message] in a toast styled consistently across the app.
+  Future<void> show(String message) {
     return Fluttertoast.showToast(
       msg: message,
       backgroundColor: isDark ? Colors.white : Colors.black,

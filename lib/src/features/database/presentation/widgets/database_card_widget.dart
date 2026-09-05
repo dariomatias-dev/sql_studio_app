@@ -39,7 +39,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
     await Clipboard.setData(ClipboardData(text: contents.join('\n')));
 
     if (mounted) {
-      unawaited(AppToast.show(message));
+      unawaited(AppToast.of(context).show(message));
     }
   }
 

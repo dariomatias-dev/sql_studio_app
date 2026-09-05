@@ -69,7 +69,7 @@ class _RootDrawerDatabaseCardWidgetState
 
       context.pop();
 
-      unawaited(AppToast.show(l10n.databaseDeletedSuccessfully));
+      unawaited(AppToast.of(context).show(l10n.databaseDeletedSuccessfully));
     } else {
       await handleError(context, result);
     }

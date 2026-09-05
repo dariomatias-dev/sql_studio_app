@@ -147,6 +147,8 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
         PopupMenuItem<void>(
           child: InkWell(
             onTap: () {
+              final toast = AppToast.of(context);
+
               Navigator.pop(context);
               unawaited(() async {
                 final result = await ref
@@ -154,9 +156,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
                     .resetDatabase();
 
                 if (result.isSuccess) {
-                  await AppToast.show(
-                    appLocalizations.databaseResetSuccessfully,
-                  );
+                  await toast.show(appLocalizations.databaseResetSuccessfully);
                 } else if (context.mounted) {
                   await handleError(context, result);
                 }

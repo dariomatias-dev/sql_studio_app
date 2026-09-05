@@ -45,6 +45,7 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     return ConfirmationDialogWidget(
       title: appLocalizations.removeSuggestion,
@@ -57,7 +58,7 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
           final result = await viewModel.removeSuggestion(id);
 
           unawaited(
-            AppToast.show(
+            toast.show(
               result.isSuccess
                   ? appLocalizations.suggestionDeleted
                   : appLocalizations.suggestionDeleteFailed,

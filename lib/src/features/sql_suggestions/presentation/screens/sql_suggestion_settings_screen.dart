@@ -46,6 +46,7 @@ class _SqlSuggestionSettingsScreenState
 
   Future<void> _onSave() async {
     final l10n = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
     final settingsViewModel = ref.read(
       sqlSuggestionSettingsViewModelProvider.notifier,
     );
@@ -63,7 +64,7 @@ class _SqlSuggestionSettingsScreenState
       final result = await advancedViewModel.resetSuggestions();
 
       unawaited(
-        AppToast.show(
+        toast.show(
           result.isSuccess
               ? l10n.advancedSuggestionsInitialized
               : l10n.advancedSuggestionsFailed,
@@ -82,7 +83,7 @@ class _SqlSuggestionSettingsScreenState
 
     _hasChangesNotifier.value = _hasChanges;
 
-    unawaited(AppToast.show(l10n.settingsSavedSuccessfully));
+    unawaited(toast.show(l10n.settingsSavedSuccessfully));
   }
 
   @override

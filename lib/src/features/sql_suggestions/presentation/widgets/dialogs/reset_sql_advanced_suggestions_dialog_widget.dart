@@ -31,6 +31,7 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
+    final toast = AppToast.of(context);
 
     return ConfirmationDialogWidget(
       title: appLocalizations.resetSuggestions,
@@ -46,7 +47,7 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends ConsumerWidget {
           final result = await viewModel.resetSuggestions();
 
           unawaited(
-            AppToast.show(
+            toast.show(
               result.isSuccess
                   ? appLocalizations.suggestionsResetSuccess
                   : appLocalizations.suggestionsResetFailed,
