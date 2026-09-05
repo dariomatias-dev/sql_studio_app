@@ -1,25 +1,92 @@
 #!/usr/bin/env bash
 # Enforces Conventional Commits (https://www.conventionalcommits.org).
 # Enabled via: git config core.hooksPath .githooks
+#
+# Scope vocabulary (lowercase, hyphenated, never underscored):
+#   features   database, database-visualizer, sql-editor, sql-suggestions,
+#              workspace-layout, app-version
+#   core       core, navigation, routes, theme, l10n, sql-execution,
+#              default-database, shared-preferences
+#   crosscut   shared, deps, ci, scripts, docs, release
+# A scope is optional. Prefer the narrowest one that fits the change.
+
+set -euo pipefail
 
 commit_msg_file="$1"
-subject_line=$(head -n1 "$commit_msg_file")
 
-# type(optional-scope)!: subject
-pattern='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9_-]+\))?!?: .{1,72}$'
+# Drops comment lines, the `git commit -v` scissors block and everything
+# after it, so git's own help text is never read as message content.
+message=$(sed -e '/^#/d' -e '/^# ------------------------ >8 /,$d' "$commit_msg_file")
+
+subject_line=$(printf '%s\n' "$message" | sed -n '1p')
 
 if [[ "$subject_line" =~ ^Merge ]] || [[ "$subject_line" =~ ^Revert ]]; then
   exit 0
 fi
 
-if ! [[ "$subject_line" =~ $pattern ]]; then
-  echo "Commit message rejected: does not follow Conventional Commits." >&2
+max_subject=72
+max_body=100
+
+reject() {
+  echo "Commit message rejected: $1" >&2
   echo "" >&2
-  echo "  Got:      $subject_line" >&2
+  echo "  Got: $subject_line" >&2
+  echo "" >&2
   echo "  Expected: <type>(<scope>): <subject>" >&2
   echo "  Types:    build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test" >&2
+  echo "  Scope:    lowercase and hyphenated, e.g. sql-editor" >&2
+  echo "  Subject:  at most $max_subject characters, lowercase, no trailing period" >&2
   echo "  Example:  feat(database): add favorite toggle to database card" >&2
   exit 1
+}
+
+pattern='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9-]+\))?!?: .+$'
+
+if ! [[ "$subject_line" =~ $pattern ]]; then
+  reject "does not follow Conventional Commits."
+fi
+
+if (( ${#subject_line} > max_subject )); then
+  reject "subject is ${#subject_line} characters, over the $max_subject limit."
+fi
+
+if [[ "$subject_line" == *. ]]; then
+  reject "subject ends in a period; a subject is a title, not a sentence."
+fi
+
+description=${subject_line#*: }
+
+if [[ "$description" =~ ^[A-Z][a-z] ]]; then
+  reject "subject starts with a capital letter."
+fi
+
+body=$(printf '%s\n' "$message" | sed -n '2,$p')
+
+if [[ -n "${body//[[:space:]]/}" ]]; then
+  second_line=$(printf '%s\n' "$message" | sed -n '2p')
+
+  if [[ -n "${second_line//[[:space:]]/}" ]]; then
+    reject "body must be separated from the subject by a blank line."
+  fi
+
+  in_fence=false
+
+  while IFS= read -r line; do
+    # A code fence, a bare URL or a trailer carries no wrap point, so
+    # wrapping it would change what it means.
+    if [[ "$line" =~ ^[[:space:]]*'```' ]]; then
+      if [[ "$in_fence" == true ]]; then in_fence=false; else in_fence=true; fi
+      continue
+    fi
+
+    [[ "$in_fence" == true ]] && continue
+    [[ "$line" =~ (https?|ftp)://[^[:space:]]+$ ]] && continue
+    [[ "$line" =~ ^[A-Za-z-]+:[[:space:]] ]] && continue
+
+    if (( ${#line} > max_body )); then
+      reject "body line is ${#line} characters, over the $max_body limit."
+    fi
+  done <<< "$body"
 fi
 
 exit 0
