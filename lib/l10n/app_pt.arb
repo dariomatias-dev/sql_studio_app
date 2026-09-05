@@ -149,6 +149,7 @@
   "clearAppData": "Limpar dados do aplicativo",
   "clearAppDataConfirmation": "Isso exclui permanentemente todos os bancos de dados e configurações salvos neste dispositivo. Esta ação não pode ser desfeita.",
   "unexpectedError": "Algo deu errado.",
+  "tableRowsRange": "{start}-{end} de {total}",
   "error": "Erro",
   "failedToSaveWorkspaceLayout": "Falha ao salvar o layout do espaço de trabalho. Por favor, tente novamente.",
   "databaseCreationError": "Não foi possível criar o banco de dados \"{databaseName}\".",

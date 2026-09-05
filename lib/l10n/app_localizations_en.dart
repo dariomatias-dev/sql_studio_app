@@ -495,6 +495,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unexpectedError => 'Something went wrong.';
 
   @override
+  String tableRowsRange(int start, int end, int total) {
+    return '$start-$end of $total';
+  }
+
+  @override
   String get error => 'Error';
 
   @override

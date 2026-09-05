@@ -149,6 +149,7 @@
   "clearAppData": "Borrar datos de la aplicación",
   "clearAppDataConfirmation": "Esto elimina permanentemente todas las bases de datos y ajustes guardados en este dispositivo. Esta acción no se puede deshacer.",
   "unexpectedError": "Algo salió mal.",
+  "tableRowsRange": "{start}-{end} de {total}",
   "error": "Error",
   "failedToSaveWorkspaceLayout": "No se pudo guardar el diseño del espacio de trabajo. Por favor, inténtalo de nuevo.",
   "databaseCreationError": "No se pudo crear la base de datos \"{databaseName}\".",

@@ -500,6 +500,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unexpectedError => 'Algo salió mal.';
 
   @override
+  String tableRowsRange(int start, int end, int total) {
+    return '$start-$end de $total';
+  }
+
+  @override
   String get error => 'Error';
 
   @override

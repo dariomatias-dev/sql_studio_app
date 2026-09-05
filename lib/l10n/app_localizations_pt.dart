@@ -499,6 +499,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get unexpectedError => 'Algo deu errado.';
 
   @override
+  String tableRowsRange(int start, int end, int total) {
+    return '$start-$end de $total';
+  }
+
+  @override
   String get error => 'Erro';
 
   @override

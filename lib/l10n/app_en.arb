@@ -149,6 +149,14 @@
   "clearAppData": "Clear app data",
   "clearAppDataConfirmation": "This permanently deletes every database and setting stored on this device. This action cannot be undone.",
   "unexpectedError": "Something went wrong.",
+  "tableRowsRange": "{start}-{end} of {total}",
+  "@tableRowsRange": {
+    "placeholders": {
+      "start": { "type": "int" },
+      "end": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
   "error": "Error",
   "failedToSaveWorkspaceLayout": "Failed to save workspace layout. Please try again.",
   "databaseCreationError": "Could not create the database \"{databaseName}\".",

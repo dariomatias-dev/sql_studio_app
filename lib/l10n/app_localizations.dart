@@ -1000,6 +1000,12 @@ abstract class AppLocalizations {
   /// **'Something went wrong.'**
   String get unexpectedError;
 
+  /// No description provided for @tableRowsRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{start}-{end} of {total}'**
+  String tableRowsRange(int start, int end, int total);
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
