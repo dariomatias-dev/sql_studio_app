@@ -46,7 +46,7 @@ final Provider<SqlSuggestionSettingsRepository>
 sqlSuggestionSettingsRepositoryProvider = Provider(
   (ref) => SqlSuggestionSettingsRepositoryImpl(
     ref.watch(sqlSuggestionSettingsLocalDatasourceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 
@@ -91,7 +91,7 @@ final Provider<SqlBasicSuggestionsRepository>
 sqlBasicSuggestionsRepositoryProvider = Provider(
   (ref) => SqlBasicSuggestionsRepositoryImpl(
     ref.watch(sqlBasicSuggestionsLocalDatasourceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 
@@ -132,7 +132,7 @@ final Provider<SqlAdvancedSuggestionsRepository>
 sqlAdvancedSuggestionsRepositoryProvider = Provider(
   (ref) => SqlAdvancedSuggestionsRepositoryImpl(
     ref.watch(sqlAdvancedSuggestionsLocalDatasourceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 

@@ -16,7 +16,7 @@ import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_
 final Provider<SqlExecutionService> sqlExecutionServiceProvider = Provider((
   ref,
 ) {
-  final service = SqlExecutionService();
+  final service = SqlExecutionService(ref.watch(appLoggerProvider));
   ref.onDispose(service.closeAll);
 
   return service;
@@ -29,6 +29,7 @@ final Provider<DefaultDatabaseService> defaultDatabaseServiceProvider =
       (ref) => DefaultDatabaseService(
         ref.watch(sqlExecutionServiceProvider),
         ref.watch(sharedPreferencesServiceProvider),
+        ref.watch(appLoggerProvider),
       ),
     );
 

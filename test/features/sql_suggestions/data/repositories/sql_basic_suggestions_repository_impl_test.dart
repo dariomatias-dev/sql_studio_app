@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_basic_suggestions_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/repositories/sql_basic_suggestions_repository_impl.dart';
 
 class _MockDatasource extends Mock
     implements SqlBasicSuggestionsLocalDatasource {}
 
-class _MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements AppLogger {}
 
 void main() {
   late _MockDatasource datasource;

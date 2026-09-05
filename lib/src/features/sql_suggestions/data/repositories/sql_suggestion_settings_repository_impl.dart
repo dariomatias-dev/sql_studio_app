@@ -1,7 +1,6 @@
-import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_suggestion_settings_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_suggestion_settings_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_suggestion_settings_repository.dart';
@@ -14,7 +13,7 @@ class SqlSuggestionSettingsRepositoryImpl
   const SqlSuggestionSettingsRepositoryImpl(this._datasource, this._logger);
 
   final SqlSuggestionSettingsLocalDatasource _datasource;
-  final Logger _logger;
+  final AppLogger _logger;
 
   @override
   Future<Result<SqlSuggestionSettingsEntity>> load() async {
@@ -27,7 +26,7 @@ class SqlSuggestionSettingsRepositoryImpl
         ),
       );
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Error loading SQL suggestions',
         error: err,
         stackTrace: stackTrace,
@@ -50,7 +49,7 @@ class SqlSuggestionSettingsRepositoryImpl
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Error saving SQL suggestions settings',
         error: err,
         stackTrace: stackTrace,

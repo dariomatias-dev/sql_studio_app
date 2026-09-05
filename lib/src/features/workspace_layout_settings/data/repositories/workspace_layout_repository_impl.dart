@@ -1,7 +1,6 @@
-import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/data/datasources/workspace_layout_local_datasource.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/domain/repositories/workspace_layout_repository.dart';
@@ -12,7 +11,7 @@ class WorkspaceLayoutRepositoryImpl implements WorkspaceLayoutRepository {
   const WorkspaceLayoutRepositoryImpl(this._datasource, this._logger);
 
   final WorkspaceLayoutLocalDatasource _datasource;
-  final Logger _logger;
+  final AppLogger _logger;
 
   @override
   WorkspaceLayoutType getSelectedLayout() {
@@ -30,7 +29,7 @@ class WorkspaceLayoutRepositoryImpl implements WorkspaceLayoutRepository {
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Error saving workspace layout',
         error: err,
         stackTrace: stackTrace,

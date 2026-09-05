@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/repositories/database_structure_repository_impl.dart';
 
 class _MockSqlExecutionService extends Mock implements SqlExecutionService {}
 
-class _MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements AppLogger {}
 
 void main() {
   late _MockSqlExecutionService sqlService;

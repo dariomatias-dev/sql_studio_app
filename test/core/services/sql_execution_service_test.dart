@@ -5,6 +5,8 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 
+import '../../test_helpers/fake_app_logger.dart';
+
 void main() {
   setUpAll(() {
     Logger.level = Level.off;
@@ -17,7 +19,7 @@ void main() {
 
   setUp(() {
     dbName = 'test_db_${DateTime.now().microsecondsSinceEpoch}';
-    service = SqlExecutionService();
+    service = SqlExecutionService(FakeAppLogger());
   });
 
   tearDown(() async {

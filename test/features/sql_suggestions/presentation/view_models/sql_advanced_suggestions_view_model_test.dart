@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
@@ -19,7 +19,7 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.d
 class _MockRepository extends Mock
     implements SqlAdvancedSuggestionsRepository {}
 
-class _MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements AppLogger {}
 
 void main() {
   late _MockRepository repository;
@@ -36,7 +36,7 @@ void main() {
   ProviderContainer buildContainer() {
     final container = ProviderContainer(
       overrides: [
-        loggerProvider.overrideWithValue(_MockLogger()),
+        appLoggerProvider.overrideWithValue(_MockLogger()),
         loadSqlAdvancedSuggestionsUseCaseProvider.overrideWithValue(
           LoadSqlAdvancedSuggestionsUseCase(repository),
         ),

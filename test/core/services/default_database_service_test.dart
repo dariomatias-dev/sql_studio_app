@@ -10,6 +10,7 @@ import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 
+import '../../test_helpers/fake_app_logger.dart';
 import '../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockSqlExecutionService extends Mock implements SqlExecutionService {}
@@ -30,8 +31,8 @@ void main() {
   setUp(() async {
     prefs = await fakeSharedPreferencesService();
 
-    sqlService = SqlExecutionService();
-    service = DefaultDatabaseService(sqlService, prefs);
+    sqlService = SqlExecutionService(FakeAppLogger());
+    service = DefaultDatabaseService(sqlService, prefs, FakeAppLogger());
   });
 
   tearDown(() async {
@@ -182,7 +183,11 @@ void main() {
 
     setUp(() {
       failingSqlService = _MockSqlExecutionService();
-      failingService = DefaultDatabaseService(failingSqlService, prefs);
+      failingService = DefaultDatabaseService(
+        failingSqlService,
+        prefs,
+        FakeAppLogger(),
+      );
 
       when(
         () => failingSqlService.closeDatabase(any()),

@@ -1,7 +1,6 @@
-import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/database/data/datasources/database_local_datasource.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart'
@@ -13,18 +12,18 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   const DatabaseRepositoryImpl(this._datasource, this._logger);
 
   final DatabaseLocalDatasource _datasource;
-  final Logger _logger;
+  final AppLogger _logger;
 
   @override
   Future<Result<void>> create(DatabaseModel model) async {
     try {
       await _datasource.insert(model.toMap());
 
-      _logger.i('Database created: ${model.name}');
+      _logger.info('Database created: ${model.name}');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to create database',
         error: err,
         stackTrace: stackTrace,
@@ -44,11 +43,11 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       final results = await _datasource.getAll(orderBy: 'name ASC');
       final models = results.map(DatabaseModel.fromMap).toList();
 
-      _logger.i('Fetched ${models.length} databases');
+      _logger.info('Fetched ${models.length} databases');
 
       return SuccessResult(models);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to fetch databases',
         error: err,
         stackTrace: stackTrace,
@@ -71,16 +70,16 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       if (results.isNotEmpty) {
         final model = DatabaseModel.fromMap(results.first);
 
-        _logger.i('Fetched database by name: $name');
+        _logger.info('Fetched database by name: $name');
 
         return SuccessResult(model);
       }
 
-      _logger.w('No database found with name: $name');
+      _logger.warning('No database found with name: $name');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to retrieve database by name',
         error: err,
         stackTrace: stackTrace,
@@ -98,18 +97,18 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       final deletedCount = await _datasource.delete(model.toMap());
 
       if (deletedCount > 0) {
-        _logger.i('Database deleted: ${model.name}');
+        _logger.info('Database deleted: ${model.name}');
 
         return const SuccessResult(null);
       }
 
-      _logger.w('No record deleted for database: ${model.name}');
+      _logger.warning('No record deleted for database: ${model.name}');
 
       return const FailureResult(
         DatabaseFailure(AppLocalizationsKey.noRecordDeleted),
       );
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to delete database',
         error: err,
         stackTrace: stackTrace,
@@ -133,12 +132,12 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       final updatedCount = await _datasource.update(updated.toMap());
 
       if (updatedCount > 0) {
-        _logger.i('Toggled favorite for database: ${model.name}');
+        _logger.info('Toggled favorite for database: ${model.name}');
 
         return SuccessResult(updated);
       }
 
-      _logger.w('Unable to toggle favorite for database: ${model.name}');
+      _logger.warning('Unable to toggle favorite for database: ${model.name}');
 
       return FailureResult(
         DatabaseFailure(AppLocalizationsKey.toggleDatabaseFavoriteError, {
@@ -146,7 +145,11 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
         }),
       );
     } on Exception catch (err, stackTrace) {
-      _logger.e('Error toggling favorite', error: err, stackTrace: stackTrace);
+      _logger.error(
+        'Error toggling favorite',
+        error: err,
+        stackTrace: stackTrace,
+      );
 
       return FailureResult(
         DatabaseFailure(AppLocalizationsKey.toggleDatabaseFavoriteError, {
@@ -161,11 +164,11 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
     try {
       await _datasource.dropDatabaseFile(model.name);
 
-      _logger.i('Complete drop executed for: ${model.name}');
+      _logger.info('Complete drop executed for: ${model.name}');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to perform complete drop for: ${model.name}',
         error: err,
         stackTrace: stackTrace,

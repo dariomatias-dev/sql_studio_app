@@ -13,7 +13,7 @@ final Provider<DatabaseStructureRepository>
 databaseStructureRepositoryProvider = Provider(
   (ref) => DatabaseStructureRepositoryImpl(
     ref.watch(sqlExecutionServiceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 

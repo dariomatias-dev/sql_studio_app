@@ -1,7 +1,6 @@
-import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart'
@@ -14,7 +13,7 @@ class DatabaseStructureRepositoryImpl
   const DatabaseStructureRepositoryImpl(this._sqlService, this._logger);
 
   final SqlExecutionService _sqlService;
-  final Logger _logger;
+  final AppLogger _logger;
 
   @override
   Future<Result<List<TableInfoModel>>> getStructure(
@@ -27,7 +26,7 @@ class DatabaseStructureRepositoryImpl
 
       return SuccessResult(tables);
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to fetch database structure',
         error: err,
         stackTrace: stackTrace,

@@ -15,7 +15,7 @@ final Provider<AppVersionLocalDatasource> appVersionLocalDatasourceProvider =
 final appVersionRepositoryProvider = Provider<AppVersionRepositoryImpl>(
   (ref) => AppVersionRepositoryImpl(
     ref.watch(appVersionLocalDatasourceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 

@@ -1,7 +1,6 @@
-import 'package:logger/logger.dart';
-
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/app_version/data/datasources/app_version_local_datasource.dart';
 import 'package:sql_studio/src/features/app_version/domain/entities/app_version_entity.dart';
 
@@ -11,7 +10,7 @@ class AppVersionRepositoryImpl {
   const AppVersionRepositoryImpl(this._datasource, this._logger);
 
   final AppVersionLocalDatasource _datasource;
-  final Logger _logger;
+  final AppLogger _logger;
 
   /// Returns the current build version.
   Future<Result<AppVersionEntity>> getVersion() async {
@@ -25,7 +24,7 @@ class AppVersionRepositoryImpl {
         ),
       );
     } on Exception catch (err, stackTrace) {
-      _logger.e(
+      _logger.error(
         'Failed to get app version',
         error: err,
         stackTrace: stackTrace,

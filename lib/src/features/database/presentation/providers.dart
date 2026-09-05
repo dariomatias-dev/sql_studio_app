@@ -27,7 +27,7 @@ final Provider<DatabaseLocalDatasource> databaseLocalDatasourceProvider =
 final Provider<DatabaseRepository> databaseRepositoryProvider = Provider(
   (ref) => DatabaseRepositoryImpl(
     ref.watch(databaseLocalDatasourceProvider),
-    ref.watch(loggerProvider),
+    ref.watch(appLoggerProvider),
   ),
 );
 

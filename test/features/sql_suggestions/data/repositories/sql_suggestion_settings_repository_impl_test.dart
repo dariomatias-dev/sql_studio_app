@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_suggestion_settings_local_datasource.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/repositories/sql_suggestion_settings_repository_impl.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_suggestion_settings_entity.dart';
@@ -10,7 +10,7 @@ import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_sugg
 class _MockDatasource extends Mock
     implements SqlSuggestionSettingsLocalDatasource {}
 
-class _MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements AppLogger {}
 
 void main() {
   late _MockDatasource datasource;

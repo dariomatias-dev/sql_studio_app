@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
@@ -17,11 +17,13 @@ import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
 class DefaultDatabaseService {
   /// Creates the service backed by the shared [_sqlService], so cached
   /// connections stay in sync with the rest of the app, and [_prefs] to
-  /// track the seeded schema version.
-  DefaultDatabaseService(this._sqlService, this._prefs);
+  /// track the seeded schema version. Failures are recorded through
+  /// [_logger].
+  DefaultDatabaseService(this._sqlService, this._prefs, this._logger);
 
   final SqlExecutionService _sqlService;
   final SharedPreferencesService _prefs;
+  final AppLogger _logger;
 
   /// Version the single legacy key stood for: every default database
   /// seeded at version 1.
@@ -71,8 +73,6 @@ class DefaultDatabaseService {
 
   /// Loads and runs the schema and seed SQL scripts for [dbName].
   Future<Result<void>> execute(String dbName) async {
-    final logger = Logger();
-
     try {
       final schemaPath = 'assets/sql/schemas/${dbName}_schema.sql';
       final seedPath = 'assets/sql/seeds/${dbName}_seed.sql';
@@ -92,7 +92,9 @@ class DefaultDatabaseService {
         );
 
         if (result case FailureResult(:final error)) {
-          logger.e('Failed to seed database "$dbName": ${error.args['error']}');
+          _logger.error(
+            'Failed to seed database "$dbName": ${error.args['error']}',
+          );
 
           return FailureResult(
             DatabaseFailure(AppLocalizationsKey.failedToExecuteSql, {
@@ -105,7 +107,7 @@ class DefaultDatabaseService {
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
-      logger.e(
+      _logger.error(
         'Error executing SQL for database "$dbName".',
         error: err,
         stackTrace: stackTrace,

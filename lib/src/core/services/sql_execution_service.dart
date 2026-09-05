@@ -1,16 +1,19 @@
-import 'package:logger/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Executes raw SQL statements against a named SQLite database and
 /// inspects its structure.
 class SqlExecutionService {
-  final _logger = Logger();
+  /// Creates the service, recording failures through [_logger].
+  SqlExecutionService(this._logger);
+
+  final AppLogger _logger;
   final _databases = <String, Database>{};
 
   Future<Database> _openDatabase(String databaseName) async {
@@ -72,7 +75,7 @@ class SqlExecutionService {
 
           lastResult = DatabaseSuccess(result: result);
 
-          _logger.i('Executed SELECT on $databaseName: $stmt');
+          _logger.info('Executed SELECT on $databaseName: $stmt');
         } else if (upper.startsWith('DELETE')) {
           final count = await db.rawDelete(stmt);
 
@@ -81,7 +84,7 @@ class SqlExecutionService {
             args: {'count': count},
           );
 
-          _logger.i('Executed DELETE: $stmt');
+          _logger.info('Executed DELETE: $stmt');
         } else if (upper.startsWith('UPDATE')) {
           final count = await db.rawUpdate(stmt);
 
@@ -90,7 +93,7 @@ class SqlExecutionService {
             args: {'count': count},
           );
 
-          _logger.i('Executed UPDATE: $stmt');
+          _logger.info('Executed UPDATE: $stmt');
         } else if (upper.startsWith('INSERT')) {
           final id = await db.rawInsert(stmt);
 
@@ -99,7 +102,7 @@ class SqlExecutionService {
             args: {'id': id},
           );
 
-          _logger.i('Executed INSERT: $stmt');
+          _logger.info('Executed INSERT: $stmt');
         } else {
           await db.execute(stmt);
 
@@ -107,13 +110,17 @@ class SqlExecutionService {
             type: AppLocalizationsKey.statementSuccess,
           );
 
-          _logger.i('Executed SQL: $stmt');
+          _logger.info('Executed SQL: $stmt');
         }
       }
 
       return SuccessResult(lastResult);
     } on Exception catch (err, stackTrace) {
-      _logger.e('Failed to execute SQL', error: err, stackTrace: stackTrace);
+      _logger.error(
+        'Failed to execute SQL',
+        error: err,
+        stackTrace: stackTrace,
+      );
 
       return FailureResult(
         DatabaseFailure(AppLocalizationsKey.sqlExecutionError, {'error': err}),

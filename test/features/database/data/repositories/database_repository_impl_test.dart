@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logger/logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/database/data/datasources/database_local_datasource.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/data/repositories/database_repository_impl.dart';
@@ -10,7 +10,7 @@ import 'package:sql_studio/src/features/database/data/repositories/database_repo
 class _MockDatabaseLocalDatasource extends Mock
     implements DatabaseLocalDatasource {}
 
-class _MockLogger extends Mock implements Logger {}
+class _MockLogger extends Mock implements AppLogger {}
 
 void main() {
   late _MockDatabaseLocalDatasource datasource;

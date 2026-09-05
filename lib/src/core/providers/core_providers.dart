@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/database/database_repository.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
+import 'package:sql_studio/src/core/logging/logger_app_logger.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 
-/// Shared [Logger] instance used by data-layer repositories to record
-/// failures before mapping them to a result.
-final loggerProvider = Provider<Logger>((ref) => Logger());
+/// Shared [AppLogger] used across the app to record failures before
+/// mapping them to a result.
+final appLoggerProvider = Provider<AppLogger>((ref) => LoggerAppLogger());
 
 /// Shared [DatabaseManager] instance for datasources that need direct
 /// access to the app's local SQLite connection.

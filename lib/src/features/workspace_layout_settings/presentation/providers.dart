@@ -22,7 +22,7 @@ final Provider<WorkspaceLayoutRepository> workspaceLayoutRepositoryProvider =
     Provider(
       (ref) => WorkspaceLayoutRepositoryImpl(
         ref.watch(workspaceLayoutLocalDatasourceProvider),
-        ref.watch(loggerProvider),
+        ref.watch(appLoggerProvider),
       ),
     );
 

@@ -25,6 +25,7 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_basic_suggestions_view_model.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_suggestion_settings_view_model.dart';
 
+import '../../../test_helpers/fake_app_logger.dart';
 import '../../../test_helpers/shared_preferences_test_helper.dart';
 
 /// These fakes let the splash screen's real loading sequence run to
@@ -79,7 +80,7 @@ class _FakeSqlBasicSuggestionsViewModel extends SqlBasicSuggestionsViewModel {
 
 class _FakeDefaultDatabaseService extends DefaultDatabaseService {
   _FakeDefaultDatabaseService(SharedPreferencesService prefs)
-    : super(SqlExecutionService(), prefs);
+    : super(SqlExecutionService(FakeAppLogger()), prefs, FakeAppLogger());
 
   @override
   Future<Result<void>> init() async => const SuccessResult(null);
