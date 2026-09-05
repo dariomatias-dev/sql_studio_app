@@ -71,22 +71,105 @@ void main() {
     expect(() => service.execute('does_not_exist'), throwsFlutterError);
   });
 
-  test('init seeds every default database and stores the version', () async {
+  test('init seeds every default database and stores each version', () async {
+    final result = await service.init();
+
+    expect(result, isA<SuccessResult<void>>());
+
+    for (final dbModel in defaultDatabases) {
+      expect(
+        prefs.getIntOrNull(
+          SharedPreferencesKeys.defaultDatabaseVersionKey(dbModel.name),
+        ),
+        dbModel.version,
+        reason: dbModel.name,
+      );
+    }
+  });
+
+  test('init skips a database whose stored version is current', () async {
+    final dbModel = defaultDatabases.first;
+
+    await prefs.setInt(
+      SharedPreferencesKeys.defaultDatabaseVersionKey(dbModel.name),
+      dbModel.version,
+    );
+
+    final result = await service.init();
+
+    expect(result, isA<SuccessResult<void>>());
+    final tables = await sqlService.getTables(databaseName: dbModel.name);
+    expect(tables, isEmpty);
+  });
+
+  test('init seeds only the databases whose version changed', () async {
+    await service.init();
+
+    final untouched = defaultDatabases.first;
+    final bumped = defaultDatabases[1];
+
+    await sqlService.execute(
+      sql: 'DELETE FROM ${untouched.tables.first}',
+      databaseName: untouched.name,
+    );
+    await sqlService.execute(
+      sql: 'DELETE FROM ${bumped.tables.first}',
+      databaseName: bumped.name,
+    );
+    await sqlService.closeAll();
+
+    await prefs.setInt(
+      SharedPreferencesKeys.defaultDatabaseVersionKey(bumped.name),
+      bumped.version + 1,
+    );
+
+    await service.init();
+
+    final untouchedRows = await sqlService.execute(
+      sql: 'SELECT * FROM ${untouched.tables.first}',
+      databaseName: untouched.name,
+    );
+    final bumpedRows = await sqlService.execute(
+      sql: 'SELECT * FROM ${bumped.tables.first}',
+      databaseName: bumped.name,
+    );
+
+    expect(
+      (untouchedRows as SuccessResult<DatabaseSuccess?>).value!.result,
+      isEmpty,
+    );
+    expect(
+      (bumpedRows as SuccessResult<DatabaseSuccess?>).value!.result,
+      isNotEmpty,
+    );
+  });
+
+  test('init migrates the legacy version key without re-seeding', () async {
+    await prefs.setInt(
+      SharedPreferencesKeys.legacyDefaultDatabaseVersionKey,
+      1,
+    );
+
     final result = await service.init();
 
     expect(result, isA<SuccessResult<void>>());
     expect(
-      prefs.getInt(SharedPreferencesKeys.defaultDatabaseVersionKey),
-      1,
+      prefs.getIntOrNull(
+        SharedPreferencesKeys.legacyDefaultDatabaseVersionKey,
+      ),
+      isNull,
     );
-  });
 
-  test('init is a no-op when the stored version is current', () async {
-    await prefs.setInt(SharedPreferencesKeys.defaultDatabaseVersionKey, 1);
+    for (final dbModel in defaultDatabases) {
+      expect(
+        prefs.getIntOrNull(
+          SharedPreferencesKeys.defaultDatabaseVersionKey(dbModel.name),
+        ),
+        1,
+        reason: dbModel.name,
+      );
+    }
 
-    final result = await service.init();
-
-    expect(result, isA<SuccessResult<void>>());
     final tables = await sqlService.getTables(
       databaseName: defaultDatabases.first.name,
     );
@@ -147,7 +230,11 @@ void main() {
 
       expect(result, isA<FailureResult<void>>());
       expect(
-        prefs.getIntOrNull(SharedPreferencesKeys.defaultDatabaseVersionKey),
+        prefs.getIntOrNull(
+          SharedPreferencesKeys.defaultDatabaseVersionKey(
+            defaultDatabases.first.name,
+          ),
+        ),
         isNull,
       );
     });

@@ -15,8 +15,13 @@ class SharedPreferencesKeys {
   /// Key for the persisted workspace layout.
   static const workspaceLayoutKey = 'workspace_layout';
 
-  /// Key for the installed version of the default databases.
-  static const defaultDatabaseVersionKey = 'default_database_version';
+  /// Key for the single version that used to cover every default
+  /// database. Only read to migrate to the per-database keys.
+  static const legacyDefaultDatabaseVersionKey = 'default_database_version';
+
+  /// Key for the installed seed version of the default database [name].
+  static String defaultDatabaseVersionKey(String name) =>
+      'default_database_version_$name';
 
   /// Key for whether basic SQL suggestions are enabled.
   static const useBasicSuggestionsKey = 'use_basic_suggestions';

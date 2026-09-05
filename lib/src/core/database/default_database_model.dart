@@ -8,6 +8,7 @@ class DefaultDatabaseModel {
     required this.labelKey,
     required this.descriptionKey,
     required this.tables,
+    this.version = 1,
   });
 
   /// Underlying database file name, used to locate schema/seed assets.
@@ -21,4 +22,8 @@ class DefaultDatabaseModel {
 
   /// Names of the tables created by this database's schema.
   final List<String> tables;
+
+  /// Seed version of this database. Bump it to re-seed this database
+  /// alone on the next launch, discarding the user's edits to it.
+  final int version;
 }

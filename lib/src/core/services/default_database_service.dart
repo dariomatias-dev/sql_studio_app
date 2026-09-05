@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 
 import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
+import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 
@@ -22,33 +23,50 @@ class DefaultDatabaseService {
   final SqlExecutionService _sqlService;
   final SharedPreferencesService _prefs;
 
-  static const _currentVersion = 1;
+  /// Version the single legacy key stood for: every default database
+  /// seeded at version 1.
+  static const _legacySeededVersion = 1;
 
-  /// Runs schema/seed scripts for every default database when the
-  /// stored version differs from [_currentVersion].
+  /// Seeds each default database whose stored version differs from the
+  /// version declared by its [DefaultDatabaseModel], leaving the others,
+  /// and the user's edits to them, untouched.
   Future<Result<void>> init() async {
-    final storedVersion = _prefs.getInt(
-      SharedPreferencesKeys.defaultDatabaseVersionKey,
-    );
-
-    if (storedVersion == _currentVersion) {
-      return const SuccessResult(null);
-    }
+    await _migrateLegacyVersionKey();
 
     for (final dbModel in defaultDatabases) {
+      final key = SharedPreferencesKeys.defaultDatabaseVersionKey(dbModel.name);
+
+      if (_prefs.getIntOrNull(key) == dbModel.version) continue;
+
       final result = await execute(dbModel.name);
 
       if (result.isFailure) {
         return result;
       }
+
+      await _prefs.setInt(key, dbModel.version);
     }
 
-    await _prefs.setInt(
-      SharedPreferencesKeys.defaultDatabaseVersionKey,
-      _currentVersion,
+    return const SuccessResult(null);
+  }
+
+  /// Rewrites the pre-per-database version key as one key per database,
+  /// so an existing install is not re-seeded on top of the user's edits.
+  Future<void> _migrateLegacyVersionKey() async {
+    final legacyVersion = _prefs.getIntOrNull(
+      SharedPreferencesKeys.legacyDefaultDatabaseVersionKey,
     );
 
-    return const SuccessResult(null);
+    if (legacyVersion != _legacySeededVersion) return;
+
+    for (final dbModel in defaultDatabases) {
+      await _prefs.setInt(
+        SharedPreferencesKeys.defaultDatabaseVersionKey(dbModel.name),
+        _legacySeededVersion,
+      );
+    }
+
+    await _prefs.remove(SharedPreferencesKeys.legacyDefaultDatabaseVersionKey);
   }
 
   /// Loads and runs the schema and seed SQL scripts for [dbName].
