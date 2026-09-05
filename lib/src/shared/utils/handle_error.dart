@@ -28,7 +28,7 @@ Future<void> handleError<T>(
           ButtonWidget(
             onPressed: () => Navigator.pop(context),
             style: ButtonStyleType.red,
-            text: 'Ok',
+            text: appLocalizations.ok,
           ),
         ],
       );

@@ -56,6 +56,7 @@
   "unfavorite": "Unfavorite",
   "delete": "Delete",
   "cancel": "Cancel",
+  "ok": "OK",
   "attention": "Attention",
   "deleteDatabaseConfirmation": "Are you sure you want to permanently delete this database? This action cannot be undone.",
   "toDoListLabel": "To-Do List",

@@ -163,8 +163,8 @@ void main() {
     await tester.tap(find.text('Favorite'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Ok'), findsOneWidget);
-    await tester.tap(find.text('Ok'));
+    expect(find.text('OK'), findsOneWidget);
+    await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.more_vert));

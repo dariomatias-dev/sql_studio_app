@@ -22,7 +22,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Something went wrong'), findsOneWidget);
-      expect(find.text('Ok'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
     });
 
     testWidgets('renders a custom title when provided', (tester) async {
@@ -63,7 +63,7 @@ void main() {
 
       expect(find.text('Failed to save'), findsOneWidget);
 
-      await tester.tap(find.text('Ok'));
+      await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
       expect(find.text('Failed to save'), findsNothing);

@@ -193,6 +193,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get ok => 'OK';
+
+  @override
   String get attention => 'Atención';
 
   @override

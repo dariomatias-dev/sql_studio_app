@@ -56,6 +56,7 @@
   "unfavorite": "Remover dos favoritos",
   "delete": "Excluir",
   "cancel": "Cancelar",
+  "ok": "OK",
   "attention": "Atenção",
   "deleteDatabaseConfirmation": "Tem certeza de que deseja excluir permanentemente este banco de dados? Esta ação não pode ser desfeita.",
   "toDoListLabel": "Lista de Tarefas",

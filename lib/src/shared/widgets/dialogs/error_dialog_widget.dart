@@ -35,8 +35,10 @@ class ErrorDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return DialogWidget(
-      title: title ?? AppLocalizations.of(context)!.error,
+      title: title ?? appLocalizations.error,
       content: Text(description, textAlign: TextAlign.center),
       actions: <Widget>[
         ButtonWidget(
@@ -44,7 +46,7 @@ class ErrorDialogWidget extends StatelessWidget {
             Navigator.pop(context);
           },
           style: ButtonStyleType.red,
-          text: 'Ok',
+          text: appLocalizations.ok,
         ),
       ],
     );

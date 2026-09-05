@@ -56,6 +56,7 @@
   "unfavorite": "No favorito",
   "delete": "Eliminar",
   "cancel": "Cancelar",
+  "ok": "OK",
   "attention": "Atención",
   "deleteDatabaseConfirmation": "¿Está seguro de que desea eliminar permanentemente esta base de datos? Esta acción no se puede deshacer.",
   "toDoListLabel": "Lista de Tareas",

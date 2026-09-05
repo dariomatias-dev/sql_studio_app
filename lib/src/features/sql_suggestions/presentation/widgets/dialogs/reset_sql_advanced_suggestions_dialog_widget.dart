@@ -53,7 +53,7 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends ConsumerWidget {
             ),
           );
         },
-        text: 'Ok',
+        text: appLocalizations.ok,
         style: ButtonStyleType.black,
       ),
     );

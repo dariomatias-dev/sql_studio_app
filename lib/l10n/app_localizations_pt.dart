@@ -191,6 +191,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get ok => 'OK';
+
+  @override
   String get attention => 'Atenção';
 
   @override

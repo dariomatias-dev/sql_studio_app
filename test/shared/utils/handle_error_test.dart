@@ -76,7 +76,7 @@ void main() {
       expect(find.text(localizations.error), findsOneWidget);
       expect(find.text(localizations.unknownError), findsOneWidget);
 
-      await tester.tap(find.text('Ok'));
+      await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
       expect(find.byType(Dialog), findsNothing);
