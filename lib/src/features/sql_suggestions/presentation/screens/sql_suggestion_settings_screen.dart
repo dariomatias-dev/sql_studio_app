@@ -7,7 +7,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_card_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_title_option_widget.dart';

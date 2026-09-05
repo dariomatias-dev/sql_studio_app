@@ -11,8 +11,8 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_d
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';

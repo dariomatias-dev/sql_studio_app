@@ -8,7 +8,7 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 
 /// Handles user actions triggered from the SQL editor toolbar, such as

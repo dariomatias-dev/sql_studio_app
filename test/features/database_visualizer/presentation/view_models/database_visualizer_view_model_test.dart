@@ -3,9 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/features/database_visualizer/data/providers/database_visualizer_data_providers.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
-import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
+import 'package:sql_studio/src/features/database_visualizer/presentation/database_visualizer_providers.dart';
 
 class _MockDatabaseStructureRepository extends Mock
     implements DatabaseStructureRepository {}

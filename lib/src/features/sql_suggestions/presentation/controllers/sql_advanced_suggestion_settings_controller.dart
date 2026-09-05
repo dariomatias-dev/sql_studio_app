@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_view_model.dart';
 
 /// Controller backing the advanced SQL suggestions settings screen,

@@ -9,7 +9,7 @@ import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_section_widget.dart';
-import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
+import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -4,8 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/features/sql_suggestions/data/providers/sql_suggestions_data_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_basic_suggestions_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 class _MockRepository extends Mock implements SqlBasicSuggestionsRepository {}
 

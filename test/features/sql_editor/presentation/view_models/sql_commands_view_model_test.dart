@@ -4,8 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
+import 'package:sql_studio/src/features/sql_editor/data/providers/sql_editor_data_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 
 import '../../../../test_helpers/shared_preferences_test_helper.dart';
 

@@ -4,8 +4,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/data/providers/workspace_layout_data_providers.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/domain/repositories/workspace_layout_repository.dart';
-import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/presentation/workspace_layout_providers.dart';
 
 class _MockWorkspaceLayoutRepository extends Mock
     implements WorkspaceLayoutRepository {}

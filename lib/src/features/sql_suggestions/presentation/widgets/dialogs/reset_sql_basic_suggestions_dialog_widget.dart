@@ -6,7 +6,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';

@@ -6,8 +6,8 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
+import 'package:sql_studio/src/features/sql_editor/data/providers/sql_editor_data_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_state.dart';
 
 /// Runs SQL commands against the active database and tracks their state.

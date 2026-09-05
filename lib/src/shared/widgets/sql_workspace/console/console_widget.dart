@@ -4,7 +4,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/console_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/console/styled_data_table_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';

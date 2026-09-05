@@ -4,10 +4,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
+import 'package:sql_studio/src/features/database/data/providers/database_data_providers.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 
 class _MockDatabaseRepository extends Mock implements DatabaseRepository {}
 

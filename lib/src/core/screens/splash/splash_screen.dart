@@ -7,10 +7,10 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 
 /// Initial screen shown while the app loads its persisted state, plays an

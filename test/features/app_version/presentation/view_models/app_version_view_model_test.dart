@@ -3,9 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/features/app_version/data/providers/app_version_data_providers.dart';
 import 'package:sql_studio/src/features/app_version/data/repositories/app_version_repository_impl.dart';
 import 'package:sql_studio/src/features/app_version/domain/entities/app_version_entity.dart';
-import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
+import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
 
 class _MockAppVersionRepository extends Mock
     implements AppVersionRepositoryImpl {}

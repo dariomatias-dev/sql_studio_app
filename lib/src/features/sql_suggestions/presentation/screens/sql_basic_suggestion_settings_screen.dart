@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/controllers/sql_basic_suggestion_settings_controller.dart';
-import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/create_sql_basic_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/reset_sql_basic_suggestions_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_basic_suggestion_card_widget.dart';

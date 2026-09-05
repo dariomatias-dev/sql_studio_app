@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
+import 'package:sql_studio/src/features/workspace_layout_settings/data/providers/workspace_layout_data_providers.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/domain/repositories/workspace_layout_repository.dart';
-import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
 
 /// Exposes and updates the selected workspace layout.
 class WorkspaceLayoutViewModel extends Notifier<WorkspaceLayoutType> {

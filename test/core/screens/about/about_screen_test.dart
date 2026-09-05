@@ -6,7 +6,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/screens/about/about_screen.dart';
 import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
-import 'package:sql_studio/src/features/app_version/presentation/providers.dart';
+import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
 import 'package:sql_studio/src/features/app_version/presentation/view_models/app_version_state.dart';
 import 'package:sql_studio/src/features/app_version/presentation/view_models/app_version_view_model.dart';
 

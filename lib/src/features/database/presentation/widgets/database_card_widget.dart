@@ -10,7 +10,7 @@ import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';

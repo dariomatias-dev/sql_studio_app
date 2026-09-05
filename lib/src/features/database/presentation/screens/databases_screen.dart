@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
 
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';

@@ -11,11 +11,12 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_d
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
+import 'package:sql_studio/src/features/database/data/providers/database_data_providers.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 
 import '../../../../../test_helpers/shared_preferences_test_helper.dart';
 

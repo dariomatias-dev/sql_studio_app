@@ -8,8 +8,9 @@ import 'package:sql_studio/src/core/constants/default_databases.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
+import 'package:sql_studio/src/features/sql_editor/data/providers/sql_editor_data_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
+import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 
 import '../../../../test_helpers/shared_preferences_test_helper.dart';
 

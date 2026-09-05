@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/src/core/constants/default_databases.dart';
-import 'package:sql_studio/src/features/database/presentation/providers.dart';
+import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 
 void main() {
   String resolveLabel(dynamic key) => (key as Enum).name;

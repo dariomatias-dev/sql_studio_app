@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
+import 'package:sql_studio/src/features/database_visualizer/data/providers/database_visualizer_data_providers.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/view_models/database_visualizer_state.dart';
 
 /// Loads and exposes a database's table/column/foreign-key structure.
