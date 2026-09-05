@@ -25,7 +25,7 @@ class RootNavBarWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(navigationViewModelProvider);
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final pillWidth = MediaQuery.of(context).size.width * 0.24;
 
     return SafeArea(

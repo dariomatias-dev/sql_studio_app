@@ -56,7 +56,7 @@ class _CreateDatabaseDialogWidgetState
   Future<void> _onCreate() async {
     if (!formKey.currentState!.validate()) return;
 
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final label = labelController.text.trim();
     final name = nameController.text.trim();
 
@@ -125,7 +125,7 @@ class _CreateDatabaseDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return DialogWidget(
       title: appLocalizations.createDatabase,

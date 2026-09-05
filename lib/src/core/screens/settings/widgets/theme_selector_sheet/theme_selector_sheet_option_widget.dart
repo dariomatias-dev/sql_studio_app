@@ -42,7 +42,7 @@ class ThemeSelectorSheetOptionWidget extends ConsumerWidget {
     unawaited(
       AppToast.of(
         context,
-      ).show(AppLocalizations.of(context)!.themeUpdated(label)),
+      ).show(AppLocalizations.of(context).themeUpdated(label)),
     );
   }
 

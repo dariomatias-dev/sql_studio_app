@@ -70,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
     final l10n = AppLocalizations.of(
       tester.element(find.byType(Scaffold).first),
-    )!;
+    );
     await tester.tap(find.text(l10n.newDatabase));
     await tester.pumpAndSettle();
     final dialogFields = find.descendant(
@@ -108,7 +108,7 @@ Future<void> _captureScreens(
   }
 
   final context = tester.element(find.byType(Scaffold).first);
-  final l10n = AppLocalizations.of(context)!;
+  final l10n = AppLocalizations.of(context);
 
   // Home (SQL editor).
   await shoot('01_home');

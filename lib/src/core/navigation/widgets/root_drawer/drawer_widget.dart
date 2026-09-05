@@ -34,7 +34,7 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final state = ref.watch(databaseListViewModelProvider);
     final notifier = ref.read(databaseListViewModelProvider.notifier);
 

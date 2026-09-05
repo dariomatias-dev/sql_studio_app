@@ -57,7 +57,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
     if (!await launchUrl(Uri.parse(url))) {
       if (!mounted) return;
 
-      final l10n = AppLocalizations.of(context)!;
+      final l10n = AppLocalizations.of(context);
 
       await ErrorDialogWidget.show(
         context,
@@ -91,7 +91,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return ScaffoldWidget(
       showExitButton: false,

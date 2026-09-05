@@ -34,7 +34,7 @@ class _CreateSqlAdvancedSuggestionDialogWidgetState
     extends ConsumerState<CreateSqlAdvancedSuggestionDialogWidget> {
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     return SqlAdvancedSuggestionFormDialogWidget(

@@ -62,7 +62,7 @@ class ScaffoldWidget extends StatelessWidget {
               leading: showExitButton
                   ? IconButton(
                       onPressed: context.pop,
-                      tooltip: AppLocalizations.of(context)!.exitScreen,
+                      tooltip: AppLocalizations.of(context).exitScreen,
                       icon: Icon(
                         Icons.arrow_back_ios_new,
                         color: context.colors.black54,

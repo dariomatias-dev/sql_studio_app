@@ -44,7 +44,7 @@ class _StartupFailureScreenState extends State<StartupFailureScreen> {
   }
 
   Future<void> _confirmClearAppData() async {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     final confirmed = await ConfirmationDialogWidget.show<bool>(
       context,
@@ -66,7 +66,7 @@ class _StartupFailureScreenState extends State<StartupFailureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return Scaffold(
       body: SafeArea(

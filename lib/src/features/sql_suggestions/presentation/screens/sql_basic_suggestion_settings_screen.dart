@@ -27,7 +27,7 @@ class _SqlBasicSuggestionsSettingsScreenState
     final state = ref.watch(sqlBasicSuggestionsViewModelProvider);
 
     return SuggestionsSettingsLayoutWidget<String>(
-      title: AppLocalizations.of(context)!.basicSuggestions,
+      title: AppLocalizations.of(context).basicSuggestions,
       isLoading: state.isLoading,
       initialItems: state.suggestions,
       itemBuilder: (suggestion, index) {

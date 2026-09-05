@@ -48,7 +48,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return ScaffoldWidget(
       appBar: AppBar(title: Text(l10n.licenses)),

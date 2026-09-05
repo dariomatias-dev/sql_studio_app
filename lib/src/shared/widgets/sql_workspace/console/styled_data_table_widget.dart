@@ -94,7 +94,7 @@ class _StyledDataTableWidgetState extends State<StyledDataTableWidget> {
   }
 
   Widget _buildPager(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.xs),

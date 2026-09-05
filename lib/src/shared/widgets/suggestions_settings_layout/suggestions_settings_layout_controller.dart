@@ -71,7 +71,7 @@ class SuggestionsSettingsLayoutController<T> {
   Future<void> saveItems() async {
     final saved = await _onSave(itemsNotifier.value);
 
-    final appLocalizations = AppLocalizations.of(getContext())!;
+    final appLocalizations = AppLocalizations.of(getContext());
 
     unawaited(
       AppToast.of(getContext()).show(

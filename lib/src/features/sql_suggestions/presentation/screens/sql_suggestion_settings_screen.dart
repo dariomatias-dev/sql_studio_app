@@ -45,7 +45,7 @@ class _SqlSuggestionSettingsScreenState
   }
 
   Future<void> _onSave() async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final toast = AppToast.of(context);
     final settingsViewModel = ref.read(
       sqlSuggestionSettingsViewModelProvider.notifier,
@@ -99,7 +99,7 @@ class _SqlSuggestionSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     return ScaffoldWidget(
       appBar: AppBar(title: Text(l10n.suggestionSettings)),

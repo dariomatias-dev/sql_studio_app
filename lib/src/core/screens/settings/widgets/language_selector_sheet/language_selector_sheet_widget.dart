@@ -48,7 +48,7 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
             ),
           ),
           Text(
-            AppLocalizations.of(context)!.language,
+            AppLocalizations.of(context).language,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,

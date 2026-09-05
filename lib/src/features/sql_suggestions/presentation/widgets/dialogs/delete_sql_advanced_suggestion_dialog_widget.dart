@@ -44,7 +44,7 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     return ConfirmationDialogWidget(

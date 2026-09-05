@@ -14,7 +14,7 @@ class CancelButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonWidget(
       onPressed: () => Navigator.pop(context),
-      text: AppLocalizations.of(context)!.cancel,
+      text: AppLocalizations.of(context).cancel,
     );
   }
 }

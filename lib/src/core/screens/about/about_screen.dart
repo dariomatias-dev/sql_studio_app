@@ -26,7 +26,7 @@ class AboutScreen extends ConsumerWidget {
     if (!await launchUrl(Uri.parse(url))) {
       if (!context.mounted) return;
 
-      final l10n = AppLocalizations.of(context)!;
+      final l10n = AppLocalizations.of(context);
 
       await ErrorDialogWidget.show(
         context,
@@ -38,7 +38,7 @@ class AboutScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final version = ref.watch(appVersionViewModelProvider).formattedVersion;
 
     return ScaffoldWidget(

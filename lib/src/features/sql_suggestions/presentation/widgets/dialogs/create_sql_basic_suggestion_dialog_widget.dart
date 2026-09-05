@@ -43,7 +43,7 @@ class _CreateSqlBasicSuggestionDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return InputDialogWidget(
       title: appLocalizations.createSuggestion,

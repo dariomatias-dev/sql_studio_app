@@ -222,7 +222,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 FadeTransition(
                   opacity: _progressOpacityAnimation,
                   child: Text(
-                    AppLocalizations.of(context)!.loading,
+                    AppLocalizations.of(context).loading,
                     style: TextStyle(
                       fontSize: 14,
                       color: context.colors.textMuted,

@@ -36,7 +36,7 @@ class _WorkspaceLayoutConfigurationScreenState
 
     if (!mounted) return;
 
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     switch (result) {
       case FailureResult(:final error):
@@ -51,7 +51,7 @@ class _WorkspaceLayoutConfigurationScreenState
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final selectedLayout = ref.watch(workspaceLayoutViewModelProvider);
 
     return ScaffoldWidget(

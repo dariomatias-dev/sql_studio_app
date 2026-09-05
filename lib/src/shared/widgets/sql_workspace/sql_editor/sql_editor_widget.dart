@@ -57,7 +57,7 @@ class _SqlEditorWidgetState extends ConsumerState<SqlEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     final commandsState = ref.watch(sqlCommandsViewModelProvider);
     final suggestionsSettings = ref.watch(

@@ -18,7 +18,7 @@ void main() {
 
       final localizations = AppLocalizations.of(
         tester.element(find.byType(CancelButtonWidget)),
-      )!;
+      );
 
       expect(find.text(localizations.cancel), findsOneWidget);
     });
@@ -51,7 +51,7 @@ void main() {
 
       final localizations = AppLocalizations.of(
         tester.element(find.byType(CancelButtonWidget)),
-      )!;
+      );
 
       expect(find.text(localizations.cancel), findsOneWidget);
 

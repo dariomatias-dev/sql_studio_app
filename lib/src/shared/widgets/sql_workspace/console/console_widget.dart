@@ -43,7 +43,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final state = ref.watch(sqlCommandsViewModelProvider);
     final commands = ref.read(sqlCommandsViewModelProvider.notifier);
 

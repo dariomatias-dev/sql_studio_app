@@ -84,7 +84,7 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return DialogWidget(
       title: widget.title,

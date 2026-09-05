@@ -48,25 +48,25 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
   Future<void> _copySchema() async {
     await _copyFile(<String>[
       'assets/sql/schemas/${widget.db.name.toLowerCase()}_schema.sql',
-    ], AppLocalizations.of(context)!.schemaCopied);
+    ], AppLocalizations.of(context).schemaCopied);
   }
 
   Future<void> _copySeed() async {
     await _copyFile(<String>[
       'assets/sql/seeds/${widget.db.name.toLowerCase()}_seed.sql',
-    ], AppLocalizations.of(context)!.seedCopied);
+    ], AppLocalizations.of(context).seedCopied);
   }
 
   Future<void> _copyAll() async {
     await _copyFile(<String>[
       'assets/sql/schemas/${widget.db.name.toLowerCase()}_schema.sql',
       'assets/sql/seeds/${widget.db.name.toLowerCase()}_seed.sql',
-    ], AppLocalizations.of(context)!.schemaAndSeedCopied);
+    ], AppLocalizations.of(context).schemaAndSeedCopied);
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final tableCount = widget.db.tables.length;
 
     return Container(

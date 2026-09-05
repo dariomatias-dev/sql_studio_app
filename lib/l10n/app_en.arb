@@ -1,238 +1,981 @@
 {
   "home": "Home",
+  "@home": {
+    "description": "Title of the home screen."
+  },
   "databases": "Databases",
+  "@databases": {
+    "description": "Title of the databases screen listing the sample databases."
+  },
   "settings": "Settings",
+  "@settings": {
+    "description": "Title of the settings screen."
+  },
   "navHome": "Home",
+  "@navHome": {
+    "description": "Label of the home tab in the bottom navigation bar."
+  },
   "navDatabases": "Databases",
+  "@navDatabases": {
+    "description": "Label of the databases tab in the bottom navigation bar."
+  },
   "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Label of the settings tab in the bottom navigation bar."
+  },
   "general": "General",
+  "@general": {
+    "description": "Header of the general group in settings."
+  },
   "language": "Language",
+  "@language": {
+    "description": "Label of the setting that opens the app language picker."
+  },
   "theme": "Theme",
+  "@theme": {
+    "description": "Label of the setting that opens the app theme picker."
+  },
   "themeLight": "Light",
+  "@themeLight": {
+    "description": "Name of the light theme in the theme picker."
+  },
   "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Name of the dark theme in the theme picker."
+  },
   "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Name of the theme option that follows the system setting."
+  },
   "themeUpdated": "Theme updated to {theme}",
+  "@themeUpdated": {
+    "description": "Toast confirming the app theme changed.",
+    "placeholders": {
+      "theme": {}
+    }
+  },
   "sqlSuggestions": "SQL Suggestions",
+  "@sqlSuggestions": {
+    "description": "Label of the setting that opens the SQL suggestion settings."
+  },
   "workspaceLayout": "Workspace Layout",
+  "@workspaceLayout": {
+    "description": "Label of the setting that opens the workspace layout settings."
+  },
   "information": "Information",
+  "@information": {
+    "description": "Header of the information group on the about screen."
+  },
   "appVersion": "App Version",
+  "@appVersion": {
+    "description": "Label of the row showing the installed app version."
+  },
   "about": "About",
+  "@about": {
+    "description": "Title of the about screen."
+  },
   "appDescription": "Practice SQL on your phone with local, editable, fully offline SQLite databases.",
+  "@appDescription": {
+    "description": "One-sentence description of the app, shown on the about screen."
+  },
   "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "description": "Installed app version, shown on the about screen.",
+    "placeholders": {
+      "version": {}
+    }
+  },
   "licenses": "Licenses",
+  "@licenses": {
+    "description": "Label of the entry that opens the open-source licenses screen."
+  },
   "developedBy": "Developed by {name}",
+  "@developedBy": {
+    "description": "Credit line naming the app developer, shown on the about screen.",
+    "placeholders": {
+      "name": {}
+    }
+  },
   "packagesCount": "{count} open-source packages",
+  "@packagesCount": {
+    "description": "Number of open-source packages listed on the licenses screen.",
+    "placeholders": {
+      "count": {}
+    }
+  },
   "officialWebsite": "Official Website",
+  "@officialWebsite": {
+    "description": "Label of the link to the project website."
+  },
   "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Label of the settings entry that opens the privacy policy."
+  },
   "contact": "Contact",
+  "@contact": {
+    "description": "Label of the link that opens the contact address."
+  },
   "errorOpeningUrl": "Error opening URL",
+  "@errorOpeningUrl": {
+    "description": "Title of the dialog shown when a link cannot be opened."
+  },
   "errorOpeningUrlDescription": "The URL {url} could not be opened.",
+  "@errorOpeningUrlDescription": {
+    "description": "Body of the dialog shown when a link cannot be opened.",
+    "placeholders": {
+      "url": {}
+    }
+  },
   "enterFullscreen": "Enter Fullscreen",
+  "@enterFullscreen": {
+    "description": "Tooltip of the button that expands a workspace panel to full screen."
+  },
   "exitFullscreen": "Exit Fullscreen",
+  "@exitFullscreen": {
+    "description": "Tooltip of the button that restores a full screen workspace panel."
+  },
   "editor": "Editor",
+  "@editor": {
+    "description": "Title of the SQL editor panel."
+  },
   "viewVisualScheme": "View Visual Scheme",
+  "@viewVisualScheme": {
+    "description": "Label of the action opening the visual schema of the active database."
+  },
   "resetDatabase": "Reset Database",
+  "@resetDatabase": {
+    "description": "Label of the action restoring a sample database to its bundled data."
+  },
   "runQuery": "Run Query",
+  "@runQuery": {
+    "description": "Tooltip of the button that runs the SQL in the editor."
+  },
   "clearEditor": "Clear Editor",
+  "@clearEditor": {
+    "description": "Tooltip of the button that empties the SQL editor."
+  },
   "console": "Console",
+  "@console": {
+    "description": "Title of the console panel showing query results."
+  },
   "clearConsole": "Clear Console",
+  "@clearConsole": {
+    "description": "Tooltip of the button that clears the console output."
+  },
   "noQueryRunYet": "Run a query to see the results here",
+  "@noQueryRunYet": {
+    "description": "Console placeholder shown before any query has run."
+  },
   "queryExecutedNoResult": "Query executed, no data to display",
+  "@queryExecutedNoResult": {
+    "description": "Console message shown when a query returns no rows."
+  },
   "schemaCopied": "Schema copied",
+  "@schemaCopied": {
+    "description": "Toast confirming the schema SQL was copied."
+  },
   "seedCopied": "Seed copied",
+  "@seedCopied": {
+    "description": "Toast confirming the seed SQL was copied."
+  },
   "schemaAndSeedCopied": "Schema and Seed copied",
+  "@schemaAndSeedCopied": {
+    "description": "Toast confirming both the schema and the seed SQL were copied."
+  },
   "viewStructure": "View Structure",
+  "@viewStructure": {
+    "description": "Label of the action opening the visual schema of a sample database."
+  },
   "viewTableData": "View table data",
+  "@viewTableData": {
+    "description": "Tooltip of the action that queries every row of a table in the visualizer."
+  },
   "copySchema": "Copy Schema",
+  "@copySchema": {
+    "description": "Label of the action copying the schema SQL of a sample database."
+  },
   "copySeed": "Copy Seed",
+  "@copySeed": {
+    "description": "Label of the action copying the seed SQL of a sample database."
+  },
   "copyAll": "Copy All",
+  "@copyAll": {
+    "description": "Label of the action copying both the schema and the seed SQL."
+  },
   "structureSection": "Structure",
+  "@structureSection": {
+    "description": "Header of the sample database menu section about its structure."
+  },
   "sqlFilesSection": "SQL files",
+  "@sqlFilesSection": {
+    "description": "Header of the sample database menu section about its SQL files."
+  },
   "searchDatabases": "Search databases",
+  "@searchDatabases": {
+    "description": "Hint of the field that filters the database list by name."
+  },
   "newDatabase": "New Database",
+  "@newDatabase": {
+    "description": "Label of the action that opens the create database dialog."
+  },
   "favorites": "Favorites",
+  "@favorites": {
+    "description": "Header of the favorite databases group in the list."
+  },
   "allDatabases": "All Databases",
+  "@allDatabases": {
+    "description": "Header of the non-favorite databases group in the list."
+  },
   "favorite": "Favorite",
+  "@favorite": {
+    "description": "Label of the action marking a database as a favorite."
+  },
   "unfavorite": "Unfavorite",
+  "@unfavorite": {
+    "description": "Label of the action removing a database from the favorites."
+  },
   "delete": "Delete",
+  "@delete": {
+    "description": "Label of a destructive confirm action."
+  },
   "cancel": "Cancel",
+  "@cancel": {
+    "description": "Label of the button dismissing a dialog without acting."
+  },
   "ok": "OK",
+  "@ok": {
+    "description": "Label of the button acknowledging a dialog."
+  },
   "attention": "Attention",
+  "@attention": {
+    "description": "Title of a confirmation dialog for a destructive action."
+  },
   "deleteDatabaseConfirmation": "Are you sure you want to permanently delete this database? This action cannot be undone.",
+  "@deleteDatabaseConfirmation": {
+    "description": "Body of the dialog confirming a database is deleted for good."
+  },
   "toDoListLabel": "To-Do List",
+  "@toDoListLabel": {
+    "description": "Name of the to-do list sample database."
+  },
   "toDoListDescription": "Simple task management database",
+  "@toDoListDescription": {
+    "description": "Description of the to-do list sample database."
+  },
   "contactsLabel": "Contacts",
+  "@contactsLabel": {
+    "description": "Name of the contacts sample database."
+  },
   "contactsDescription": "Contacts and groups database",
+  "@contactsDescription": {
+    "description": "Description of the contacts sample database."
+  },
   "libraryLabel": "Library",
+  "@libraryLabel": {
+    "description": "Name of the library sample database."
+  },
   "libraryDescription": "Library with books, members, and loans",
+  "@libraryDescription": {
+    "description": "Description of the library sample database."
+  },
   "fitnessClubLabel": "Fitness Club",
+  "@fitnessClubLabel": {
+    "description": "Name of the fitness club sample database."
+  },
   "fitnessClubDescription": "Gym members and subscriptions database",
+  "@fitnessClubDescription": {
+    "description": "Description of the fitness club sample database."
+  },
   "carRentalLabel": "Car Rental",
+  "@carRentalLabel": {
+    "description": "Name of the car rental sample database."
+  },
   "carRentalDescription": "Car rental management database",
+  "@carRentalDescription": {
+    "description": "Description of the car rental sample database."
+  },
   "restaurantLabel": "Restaurant",
+  "@restaurantLabel": {
+    "description": "Name of the restaurant sample database."
+  },
   "restaurantDescription": "Restaurant orders and menu items database",
+  "@restaurantDescription": {
+    "description": "Description of the restaurant sample database."
+  },
   "hrPayrollLabel": "HR Payroll",
+  "@hrPayrollLabel": {
+    "description": "Name of the HR payroll sample database."
+  },
   "hrPayrollDescription": "Company departments, job positions, employees, and salary history",
+  "@hrPayrollDescription": {
+    "description": "Description of the HR payroll sample database."
+  },
   "logisticsLabel": "Logistics",
+  "@logisticsLabel": {
+    "description": "Name of the logistics sample database."
+  },
   "logisticsDescription": "Packages, drivers, deliveries, and status history database",
+  "@logisticsDescription": {
+    "description": "Description of the logistics sample database."
+  },
   "pharmacyLabel": "Pharmacy",
+  "@pharmacyLabel": {
+    "description": "Name of the pharmacy sample database."
+  },
   "pharmacyDescription": "Pharmacy inventory, suppliers, customers, and sales database",
+  "@pharmacyDescription": {
+    "description": "Description of the pharmacy sample database."
+  },
   "schoolLabel": "School",
+  "@schoolLabel": {
+    "description": "Name of the school sample database."
+  },
   "schoolDescription": "School management with students, teachers, classes, enrollments, and grades",
+  "@schoolDescription": {
+    "description": "Description of the school sample database."
+  },
   "socialNetworkLabel": "Social Network",
+  "@socialNetworkLabel": {
+    "description": "Name of the social network sample database."
+  },
   "socialNetworkDescription": "Social media with users, posts, likes, comments, and followers",
+  "@socialNetworkDescription": {
+    "description": "Description of the social network sample database."
+  },
   "hotelLabel": "Hotel",
+  "@hotelLabel": {
+    "description": "Name of the hotel sample database."
+  },
   "hotelDescription": "Hotel reservations, rooms, payments, employees, and services database",
+  "@hotelDescription": {
+    "description": "Description of the hotel sample database."
+  },
   "bankingLabel": "Banking",
+  "@bankingLabel": {
+    "description": "Name of the banking sample database."
+  },
   "bankingDescription": "Banking system with accounts, transactions, loans, and employees",
+  "@bankingDescription": {
+    "description": "Description of the banking sample database."
+  },
   "eCommerceLabel": "E-Commerce",
+  "@eCommerceLabel": {
+    "description": "Name of the e-commerce sample database."
+  },
   "eCommerceDescription": "Online store with products, orders, carts, and reviews",
+  "@eCommerceDescription": {
+    "description": "Description of the e-commerce sample database."
+  },
   "openFullscreen": "Open Fullscreen",
+  "@openFullscreen": {
+    "description": "Tooltip of the control that opens a panel in full screen."
+  },
   "options": "Options",
+  "@options": {
+    "description": "Tooltip of the button that opens a popup menu of actions."
+  },
   "table": "Table",
+  "@table": {
+    "description": "Singular noun for a database table."
+  },
   "tables": "Tables",
+  "@tables": {
+    "description": "Header above the list of tables a sample database contains."
+  },
   "splitLayout": "Split Layout",
+  "@splitLayout": {
+    "description": "Name of the layout that stacks the editor above the console."
+  },
   "splitLayoutSubtitle": "Editor above and console below.",
+  "@splitLayoutSubtitle": {
+    "description": "Description of the split workspace layout."
+  },
   "tabsLayout": "Tabs Layout",
+  "@tabsLayout": {
+    "description": "Name of the layout that puts the editor and console in tabs."
+  },
   "tabsLayoutSubtitle": "Editor and console in tabs.",
+  "@tabsLayoutSubtitle": {
+    "description": "Description of the tabbed workspace layout."
+  },
   "preview": "Preview:",
+  "@preview": {
+    "description": "Header above the live preview of the selected workspace layout."
+  },
   "layoutSaved": "Layout saved",
+  "@layoutSaved": {
+    "description": "Toast confirming the workspace layout was saved."
+  },
   "suggestionSettings": "Suggestion Settings",
+  "@suggestionSettings": {
+    "description": "Title of the SQL suggestion settings screen."
+  },
   "suggestionModes": "Suggestion Modes",
+  "@suggestionModes": {
+    "description": "Header of the group toggling each suggestion mode."
+  },
   "basicSuggestions": "Basic Suggestions",
+  "@basicSuggestions": {
+    "description": "Name of the suggestion mode offering full SQL examples."
+  },
   "basicSuggestionsDescription": "Displays full SQL examples like \"SELECT * FROM\". Ideal for quick queries.",
+  "@basicSuggestionsDescription": {
+    "description": "Description of the basic suggestion mode."
+  },
   "advancedSuggestions": "Advanced Suggestions",
+  "@advancedSuggestions": {
+    "description": "Name of the suggestion mode offering short expandable hints."
+  },
   "advancedSuggestionsDescription": "Shows short hints like \"ALL\" or \"COUNT\" that expand into full SQL statements when clicked.",
+  "@advancedSuggestionsDescription": {
+    "description": "Description of the advanced suggestion mode."
+  },
   "otherSuggestions": "Editor Shortcuts",
+  "@otherSuggestions": {
+    "description": "Header of the group holding the remaining editor shortcuts."
+  },
   "characterSuggestions": "Quick Symbols",
+  "@characterSuggestions": {
+    "description": "Name of the shortcut bar offering SQL symbols."
+  },
   "characterSuggestionsDescription": "Adds quick buttons to >, =, !, %, ; and more.",
+  "@characterSuggestionsDescription": {
+    "description": "Description of the quick symbols shortcut bar."
+  },
   "saveSettings": "Save Settings",
+  "@saveSettings": {
+    "description": "Label of the button saving the suggestion settings."
+  },
   "advancedSuggestionsInitialized": "Advanced suggestions have been initialized successfully",
+  "@advancedSuggestionsInitialized": {
+    "description": "Toast confirming the advanced suggestions were seeded with the defaults."
+  },
   "advancedSuggestionsFailed": "Failed to initialize advanced suggestions",
+  "@advancedSuggestionsFailed": {
+    "description": "Toast shown when seeding the default advanced suggestions fails."
+  },
   "settingsSavedSuccessfully": "Settings saved successfully",
+  "@settingsSavedSuccessfully": {
+    "description": "Toast confirming the suggestion settings were saved."
+  },
   "configure": "Configure",
+  "@configure": {
+    "description": "Label of the action opening the settings of a suggestion mode."
+  },
   "createSuggestion": "Create Suggestion",
+  "@createSuggestion": {
+    "description": "Title of the dialog creating a suggestion."
+  },
   "suggestionName": "Suggestion name",
+  "@suggestionName": {
+    "description": "Label of the field holding the name of a suggestion."
+  },
   "create": "Create",
+  "@create": {
+    "description": "Label of the button confirming creation."
+  },
   "enterSuggestionName": "Enter a name for the suggestion.",
+  "@enterSuggestionName": {
+    "description": "Validation error shown when the suggestion name is empty."
+  },
   "invalidCharacters": "Invalid characters",
+  "@invalidCharacters": {
+    "description": "Validation error shown when a suggestion name contains unsupported characters."
+  },
   "removeSuggestion": "Remove Suggestion",
+  "@removeSuggestion": {
+    "description": "Title of the dialog removing a suggestion."
+  },
   "removeSuggestionDescription": "Are you sure you want to remove this suggestion?",
+  "@removeSuggestionDescription": {
+    "description": "Body of the dialog confirming a suggestion is removed."
+  },
   "remove": "Remove",
+  "@remove": {
+    "description": "Label of the action removing an item from a list."
+  },
   "resetSuggestions": "Reset Suggestions",
+  "@resetSuggestions": {
+    "description": "Label of the action restoring the default suggestions."
+  },
   "resetSuggestionsDescription": "Are you sure you want to reset the suggestion list?",
+  "@resetSuggestionsDescription": {
+    "description": "Body of the dialog confirming the suggestion list is reset."
+  },
   "reset": "Reset",
+  "@reset": {
+    "description": "Label of the button confirming a reset to defaults."
+  },
   "advancedSuggestionAdded": "Suggestion added successfully",
+  "@advancedSuggestionAdded": {
+    "description": "Toast confirming an advanced suggestion was created."
+  },
   "advancedSuggestionFailed": "Failed to add suggestion",
+  "@advancedSuggestionFailed": {
+    "description": "Toast shown when creating an advanced suggestion fails."
+  },
   "deleteSuggestionConfirmation": "Are you sure you want to delete the suggestion \"{label}\"?",
+  "@deleteSuggestionConfirmation": {
+    "description": "Body of the dialog confirming a suggestion is deleted.",
+    "placeholders": {
+      "label": {}
+    }
+  },
   "suggestionDeleted": "Suggestion deleted successfully",
+  "@suggestionDeleted": {
+    "description": "Toast confirming a suggestion was deleted."
+  },
   "suggestionDeleteFailed": "Failed to delete suggestion",
+  "@suggestionDeleteFailed": {
+    "description": "Toast shown when deleting a suggestion fails."
+  },
   "resetSuggestionsConfirm": "Are you sure you want to reset the suggestions?",
+  "@resetSuggestionsConfirm": {
+    "description": "Body of the dialog confirming the advanced suggestions are reset."
+  },
   "suggestionsResetSuccess": "All suggestions have been reset successfully",
+  "@suggestionsResetSuccess": {
+    "description": "Toast confirming the suggestions were restored to the defaults."
+  },
   "suggestionsResetFailed": "Failed to reset suggestions. Please try again",
+  "@suggestionsResetFailed": {
+    "description": "Toast shown when restoring the default suggestions fails."
+  },
   "label": "Label",
+  "@label": {
+    "description": "Label of the field holding the display name of a database."
+  },
   "sqlCode": "SQL Code",
+  "@sqlCode": {
+    "description": "Label of the field holding the SQL a suggestion inserts."
+  },
   "selectableTextOptional": "Selectable Text (optional)",
+  "@selectableTextOptional": {
+    "description": "Label of the optional field naming the part of the SQL to pre-select."
+  },
   "selectableTextHint": "Part of SQL to auto-select for user replacement",
+  "@selectableTextHint": {
+    "description": "Hint explaining what the selectable text field is for."
+  },
   "fieldRequired": "This field is required",
+  "@fieldRequired": {
+    "description": "Validation error shown when a required suggestion field is empty."
+  },
   "updateSuggestion": "Update Suggestion",
+  "@updateSuggestion": {
+    "description": "Title of the dialog editing a suggestion."
+  },
   "update": "Update",
+  "@update": {
+    "description": "Label of the button confirming an update."
+  },
   "updateSuggestionSuccess": "Suggestion updated successfully",
+  "@updateSuggestionSuccess": {
+    "description": "Toast confirming a suggestion was updated."
+  },
   "updateSuggestionFail": "Failed to update suggestion",
+  "@updateSuggestionFail": {
+    "description": "Toast shown when updating a suggestion fails."
+  },
   "editSuggestion": "Edit suggestion",
+  "@editSuggestion": {
+    "description": "Tooltip of the button that edits a suggestion."
+  },
   "deleteSuggestion": "Delete suggestion",
+  "@deleteSuggestion": {
+    "description": "Tooltip of the button that deletes a suggestion."
+  },
   "save": "Save",
+  "@save": {
+    "description": "Label of the button persisting the current changes."
+  },
   "exitScreen": "Exit screen",
+  "@exitScreen": {
+    "description": "Tooltip of the button that closes a full screen view."
+  },
   "startupFailedTitle": "Could not start SQL Studio",
+  "@startupFailedTitle": {
+    "description": "Title of the screen shown when the app cannot load its local state."
+  },
   "startupFailedMessage": "Something went wrong while loading your data. Try again, or clear the app data if the problem persists.",
+  "@startupFailedMessage": {
+    "description": "Body of the screen shown when the app cannot load its local state."
+  },
   "retry": "Try again",
+  "@retry": {
+    "description": "Label of the button running the startup sequence again."
+  },
   "clearAppData": "Clear app data",
+  "@clearAppData": {
+    "description": "Label of the button deleting every database and setting on the device."
+  },
   "clearAppDataConfirmation": "This permanently deletes every database and setting stored on this device. This action cannot be undone.",
+  "@clearAppDataConfirmation": {
+    "description": "Body of the dialog confirming every database and setting is deleted."
+  },
   "unexpectedError": "Something went wrong.",
+  "@unexpectedError": {
+    "description": "Fallback message shown when a widget fails to build in release."
+  },
   "tableRowsRange": "{start}-{end} of {total}",
   "@tableRowsRange": {
+    "description": "Range of result rows currently shown, and the total row count.",
     "placeholders": {
-      "start": { "type": "int" },
-      "end": { "type": "int" },
-      "total": { "type": "int" }
+      "start": {
+        "type": "int"
+      },
+      "end": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "clearSearch": "Clear search",
+  "@clearSearch": {
+    "description": "Tooltip of the button that clears the database search field."
+  },
   "clearField": "Clear field",
+  "@clearField": {
+    "description": "Tooltip of the button that empties a text field."
+  },
   "previousPage": "Previous page",
+  "@previousPage": {
+    "description": "Tooltip of the button showing the previous page of result rows."
+  },
   "nextPage": "Next page",
+  "@nextPage": {
+    "description": "Tooltip of the button showing the next page of result rows."
+  },
   "zoomIn": "Zoom in",
+  "@zoomIn": {
+    "description": "Tooltip of the visualizer control that zooms the canvas in."
+  },
   "zoomOut": "Zoom out",
+  "@zoomOut": {
+    "description": "Tooltip of the visualizer control that zooms the canvas out."
+  },
   "resetZoom": "Reset zoom",
+  "@resetZoom": {
+    "description": "Tooltip of the visualizer control that restores the default zoom."
+  },
   "error": "Error",
+  "@error": {
+    "description": "Title of the dialog reporting a failure."
+  },
   "failedToSaveWorkspaceLayout": "Failed to save workspace layout. Please try again.",
+  "@failedToSaveWorkspaceLayout": {
+    "description": "Failure shown when the workspace layout cannot be saved."
+  },
   "databaseCreationError": "Could not create the database \"{databaseName}\".",
+  "@databaseCreationError": {
+    "description": "Failure shown when a database cannot be created.",
+    "placeholders": {
+      "databaseName": {}
+    }
+  },
   "fetchDatabasesError": "Could not fetch the created databases.",
+  "@fetchDatabasesError": {
+    "description": "Failure shown when the database list cannot be read."
+  },
   "checkDatabaseExistsError": "Unable to check if the database already exists.",
+  "@checkDatabaseExistsError": {
+    "description": "Failure shown when the app cannot tell whether a database already exists."
+  },
   "deleteDatabaseError": "Unable to delete the database \"{databaseName}\".",
+  "@deleteDatabaseError": {
+    "description": "Failure shown when a database cannot be deleted.",
+    "placeholders": {
+      "databaseName": {}
+    }
+  },
   "noRecordDeleted": "No record was deleted",
+  "@noRecordDeleted": {
+    "description": "Failure shown when a delete matched no record."
+  },
   "toggleDatabaseFavoriteError": "Unable to change the favorite status of the database \"{databaseName}\".",
+  "@toggleDatabaseFavoriteError": {
+    "description": "Failure shown when the favorite state of a database cannot be changed.",
+    "placeholders": {
+      "databaseName": {}
+    }
+  },
   "unableToClear": "Unable to clear databases",
+  "@unableToClear": {
+    "description": "Failure shown when the databases cannot be cleared."
+  },
   "failedToGetAppVersion": "Failed to get app version",
+  "@failedToGetAppVersion": {
+    "description": "Failure shown when the installed app version cannot be read."
+  },
   "sqlExecutionError": "SQL execution error: {error}",
+  "@sqlExecutionError": {
+    "description": "Failure shown when the SQL entered by the user cannot be executed.",
+    "placeholders": {
+      "error": {}
+    }
+  },
   "noDatabaseSelected": "No database selected",
+  "@noDatabaseSelected": {
+    "description": "Failure shown when a query runs with no active database."
+  },
   "failedToLoadSqlSuggestions": "Failed to load SQL suggestions",
+  "@failedToLoadSqlSuggestions": {
+    "description": "Failure shown when the SQL suggestions cannot be read."
+  },
   "failedToSaveSqlSuggestionsSettings": "Failed to save SQL suggestions settings",
+  "@failedToSaveSqlSuggestionsSettings": {
+    "description": "Failure shown when the suggestion settings cannot be saved."
+  },
   "failedToLoadAdvancedSuggestions": "Failed to load advanced suggestions",
+  "@failedToLoadAdvancedSuggestions": {
+    "description": "Failure shown when the advanced suggestions cannot be read."
+  },
   "failedToAddAdvancedSuggestion": "Failed to add advanced suggestion",
+  "@failedToAddAdvancedSuggestion": {
+    "description": "Failure shown when an advanced suggestion cannot be created."
+  },
   "failedToUpdateAdvancedSuggestion": "Failed to update advanced suggestion",
+  "@failedToUpdateAdvancedSuggestion": {
+    "description": "Failure shown when an advanced suggestion cannot be updated."
+  },
   "failedToRemoveAdvancedSuggestion": "Failed to remove advanced suggestion",
+  "@failedToRemoveAdvancedSuggestion": {
+    "description": "Failure shown when an advanced suggestion cannot be removed."
+  },
   "failedToSaveAllAdvancedSuggestions": "Failed to save all advanced suggestions",
+  "@failedToSaveAllAdvancedSuggestions": {
+    "description": "Failure shown when the advanced suggestions cannot be saved."
+  },
   "failedToReorderAdvancedSuggestions": "Failed to reorder advanced suggestions",
+  "@failedToReorderAdvancedSuggestions": {
+    "description": "Failure shown when the advanced suggestions cannot be reordered."
+  },
   "failedToResetAdvancedSuggestions": "Failed to reset advanced suggestions",
+  "@failedToResetAdvancedSuggestions": {
+    "description": "Failure shown when the advanced suggestions cannot be reset."
+  },
   "failedToLoadBasicSuggestions": "Failed to load basic suggestions",
+  "@failedToLoadBasicSuggestions": {
+    "description": "Failure shown when the basic suggestions cannot be read."
+  },
   "failedToAddBasicSuggestion": "Failed to add basic suggestion",
+  "@failedToAddBasicSuggestion": {
+    "description": "Failure shown when a basic suggestion cannot be created."
+  },
   "failedToUpdateBasicSuggestions": "Failed to update basic suggestions",
+  "@failedToUpdateBasicSuggestions": {
+    "description": "Failure shown when the basic suggestions cannot be updated."
+  },
   "failedToRemoveBasicSuggestion": "Failed to remove basic suggestion",
+  "@failedToRemoveBasicSuggestion": {
+    "description": "Failure shown when a basic suggestion cannot be removed."
+  },
   "failedToResetBasicSuggestions": "Failed to reset basic suggestions",
+  "@failedToResetBasicSuggestions": {
+    "description": "Failure shown when the basic suggestions cannot be reset."
+  },
   "failedToLoadSqlFiles": "Failed to load SQL files: {error}",
+  "@failedToLoadSqlFiles": {
+    "description": "Failure shown when the bundled SQL files of a sample database cannot be read.",
+    "placeholders": {
+      "error": {}
+    }
+  },
   "failedToExecuteSql": "Failed to execute SQL for \"{dbName}\": {error}",
+  "@failedToExecuteSql": {
+    "description": "Failure shown when seeding a sample database fails.",
+    "placeholders": {
+      "dbName": {},
+      "error": {}
+    }
+  },
   "databaseResetSuccessfully": "Database reset successfully",
+  "@databaseResetSuccessfully": {
+    "description": "Toast confirming a sample database was restored."
+  },
   "failedToLoadDatabaseStructure": "Could not load the database structure.",
+  "@failedToLoadDatabaseStructure": {
+    "description": "Failure shown when the structure of a database cannot be read."
+  },
   "databaseCreatedSuccessfully": "Database created successfully",
+  "@databaseCreatedSuccessfully": {
+    "description": "Toast confirming a database was created."
+  },
   "databaseDeletedSuccessfully": "Database deleted successfully",
+  "@databaseDeletedSuccessfully": {
+    "description": "Toast confirming a database was deleted."
+  },
   "unknownError": "Unknown error",
+  "@unknownError": {
+    "description": "Message used when a failure carries no more specific reason."
+  },
   "createDatabase": "Create Database",
+  "@createDatabase": {
+    "description": "Title of the dialog where a new database is created."
+  },
   "name": "Name",
+  "@name": {
+    "description": "Label of the field holding the file name of a database."
+  },
   "pleaseEnterLabel": "Please enter a label",
+  "@pleaseEnterLabel": {
+    "description": "Validation error shown when the label field is empty."
+  },
   "pleaseEnterName": "Please enter a name",
+  "@pleaseEnterName": {
+    "description": "Validation error shown when the name field is empty."
+  },
   "invalidCharactersDetected": "Invalid characters detected",
+  "@invalidCharactersDetected": {
+    "description": "Validation error shown when a database name contains unsupported characters."
+  },
   "databaseAlreadyExists": "Database \"{name}\" already exists",
+  "@databaseAlreadyExists": {
+    "description": "Validation error shown when a database with that name already exists.",
+    "placeholders": {
+      "name": {}
+    }
+  },
   "languageUpdated": "Language updated to {lang}",
+  "@languageUpdated": {
+    "description": "Toast confirming the app language changed.",
+    "placeholders": {
+      "lang": {}
+    }
+  },
   "loading": "Loading...",
+  "@loading": {
+    "description": "Text shown under the progress bar on the splash screen."
+  },
   "theDatabaseIsEmpty": "The database is empty",
+  "@theDatabaseIsEmpty": {
+    "description": "Message shown when the visualized database has no tables."
+  },
   "noDatabasesYet": "No databases yet",
+  "@noDatabasesYet": {
+    "description": "Message shown when no database has been created yet."
+  },
   "noDatabasesFound": "No databases found",
+  "@noDatabasesFound": {
+    "description": "Message shown when the search filter matches no database."
+  },
   "noSuggestionsYet": "No suggestions yet",
+  "@noSuggestionsYet": {
+    "description": "Message shown when the suggestion list is empty."
+  },
   "toggleTheme": "Toggle Theme",
+  "@toggleTheme": {
+    "description": "Tooltip of the control that switches between light and dark theme."
+  },
   "screenNotFound": "Screen Not Found",
+  "@screenNotFound": {
+    "description": "Title shown when a route does not match any screen."
+  },
   "screenNotFoundDescription": "The screen you are looking for does not exist or has been moved.",
+  "@screenNotFoundDescription": {
+    "description": "Body text shown when a route does not match any screen."
+  },
   "goHome": "Go Home",
+  "@goHome": {
+    "description": "Label of the button returning to the home screen from the not-found screen."
+  },
   "submit": "Submit",
+  "@submit": {
+    "description": "Label of the button confirming a form dialog."
+  },
   "thisFieldIsRequired": "This field is required",
+  "@thisFieldIsRequired": {
+    "description": "Validation error shown when a required dialog field is empty."
+  },
   "sortOrderSavedSuccessfully": "Sort order saved successfully",
+  "@sortOrderSavedSuccessfully": {
+    "description": "Toast confirming a reordered list was saved."
+  },
   "failedToSaveSortOrder": "Failed to save sort order",
+  "@failedToSaveSortOrder": {
+    "description": "Toast shown when saving a reordered list fails."
+  },
   "deleteSuccess": "Delete executed successfully. {count} rows affected.",
+  "@deleteSuccess": {
+    "description": "Console message reporting how many rows a DELETE removed.",
+    "placeholders": {
+      "count": {}
+    }
+  },
   "updateSuccess": "Update executed successfully. {count} rows affected.",
+  "@updateSuccess": {
+    "description": "Console message reporting how many rows an UPDATE changed.",
+    "placeholders": {
+      "count": {}
+    }
+  },
   "insertSuccess": "Insert executed successfully. {count} rows affected.",
+  "@insertSuccess": {
+    "description": "Console message reporting the id of the inserted row.",
+    "placeholders": {
+      "count": {}
+    }
+  },
   "statementSuccess": "Statement executed successfully.",
+  "@statementSuccess": {
+    "description": "Console message reporting a statement ran with no rows to show."
+  },
   "loadLastSql": "Load Last SQL",
+  "@loadLastSql": {
+    "description": "Tooltip of the button that restores the last executed query."
+  },
   "shareSql": "Share query",
+  "@shareSql": {
+    "description": "Tooltip of the button that shares the editor content as text."
+  },
   "downloadSql": "Download query",
+  "@downloadSql": {
+    "description": "Tooltip of the button that saves the editor content as a .sql file."
+  },
   "nothingToShare": "There is nothing to share",
+  "@nothingToShare": {
+    "description": "Toast shown when the editor is empty and there is nothing to share."
+  },
   "sqlSharedSuccess": "SQL shared successfully",
+  "@sqlSharedSuccess": {
+    "description": "Toast confirming the query was shared."
+  },
   "copySql": "Copy query",
+  "@copySql": {
+    "description": "Tooltip of the button that copies the editor content."
+  },
   "nothingToCopy": "There is nothing to copy",
+  "@nothingToCopy": {
+    "description": "Toast shown when the editor is empty and there is nothing to copy."
+  },
   "sqlCopied": "SQL copied to clipboard",
+  "@sqlCopied": {
+    "description": "Toast confirming the query was copied to the clipboard."
+  },
   "currentQuerySection": "Current query",
+  "@currentQuerySection": {
+    "description": "Header of the editor menu section acting on the current query."
+  },
   "databaseSection": "Database",
+  "@databaseSection": {
+    "description": "Header of the editor menu section acting on the active database."
+  },
   "nothingToDownload": "There is nothing to download",
+  "@nothingToDownload": {
+    "description": "Toast shown when the editor is empty and there is nothing to save."
+  },
   "sqlDownloaded": "Query saved as a .sql file",
+  "@sqlDownloaded": {
+    "description": "Toast confirming the query was saved as a file."
+  },
   "nothingToLoad": "No previous query to load",
-  "lastSqlLoaded": "Last query loaded"
+  "@nothingToLoad": {
+    "description": "Toast shown when there is no previous query to restore."
+  },
+  "lastSqlLoaded": "Last query loaded",
+  "@lastSqlLoaded": {
+    "description": "Toast confirming the last executed query was restored."
+  }
 }

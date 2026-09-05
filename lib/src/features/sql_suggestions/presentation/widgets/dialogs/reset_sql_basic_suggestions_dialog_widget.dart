@@ -40,7 +40,7 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return ConfirmationDialogWidget(
       title: appLocalizations.resetSuggestions,

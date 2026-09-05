@@ -53,7 +53,7 @@ class SqlEditorController {
   /// Shares the current editor content as text using the platform share
   /// sheet, showing a toast if there is nothing to share.
   Future<void> onShareSql(BuildContext context, WidgetRef ref) async {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     final sql = ref
@@ -80,7 +80,7 @@ class SqlEditorController {
   /// Copies the current editor content to the clipboard, showing a toast
   /// with the outcome.
   Future<void> onCopySql(BuildContext context, WidgetRef ref) async {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     final sql = ref
@@ -105,7 +105,7 @@ class SqlEditorController {
   /// platform's save/share sheet, showing a toast if there is nothing to
   /// download.
   Future<void> onDownloadSql(BuildContext context, WidgetRef ref) async {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     final sql = ref
@@ -140,7 +140,7 @@ class SqlEditorController {
   /// Restores the text of the last executed query into the editor, showing
   /// a toast if there is no previous query to load.
   void onLoadLastSql(BuildContext context, WidgetRef ref) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
     final toast = AppToast.of(context);
 
     final lastQuery = ref.read(sqlCommandsViewModelProvider).lastQuery;

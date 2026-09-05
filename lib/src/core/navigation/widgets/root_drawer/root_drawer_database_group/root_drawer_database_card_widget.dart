@@ -49,7 +49,7 @@ class _RootDrawerDatabaseCardWidgetState
   }
 
   Future<void> _onDeleteDatabase() async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
 
     final result = await ref
         .read(databaseListViewModelProvider.notifier)
@@ -95,7 +95,7 @@ class _RootDrawerDatabaseCardWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final commandsState = ref.watch(sqlCommandsViewModelProvider);
     final isActive = commandsState.activeDatabase == widget.database.label;
 

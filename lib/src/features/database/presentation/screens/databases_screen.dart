@@ -36,7 +36,7 @@ class _DatabasesScreenState extends ConsumerState<DatabasesScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final viewModel = ref.read(defaultDatabasesViewModelProvider.notifier);
 
     ref.watch(defaultDatabasesViewModelProvider);

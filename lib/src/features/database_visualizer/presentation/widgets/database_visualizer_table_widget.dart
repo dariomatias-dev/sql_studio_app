@@ -136,7 +136,7 @@ class _DatabaseVisualizerTableWidgetState
                   ),
                   if (widget.onOpen != null)
                     Tooltip(
-                      message: AppLocalizations.of(context)!.viewTableData,
+                      message: AppLocalizations.of(context).viewTableData,
                       child: Material(
                         type: MaterialType.circle,
                         color: context.colors.black,

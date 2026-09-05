@@ -92,7 +92,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
                 const SizedBox(height: 20),
                 ButtonWidget(
                   onPressed: onConfigure,
-                  text: AppLocalizations.of(context)!.configure,
+                  text: AppLocalizations.of(context).configure,
                   width: double.infinity,
                   height: 42,
                   backgroundColor: context.colors.white,

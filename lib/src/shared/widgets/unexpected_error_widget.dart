@@ -11,9 +11,7 @@ class UnexpectedErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final message =
-        AppLocalizations.of(context)?.unexpectedError ??
-        'Something went wrong.';
+    final message = AppLocalizations.of(context).unexpectedError;
 
     return Material(
       child: Center(

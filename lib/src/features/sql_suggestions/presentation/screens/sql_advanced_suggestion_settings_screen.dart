@@ -29,7 +29,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
     final state = ref.watch(sqlAdvancedSuggestionsViewModelProvider);
 
     return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionEntity>(
-      title: AppLocalizations.of(context)!.advancedSuggestions,
+      title: AppLocalizations.of(context).advancedSuggestions,
       isLoading: state.isLoading,
       initialItems: state.suggestions,
       itemBuilder: (suggestion, index) {

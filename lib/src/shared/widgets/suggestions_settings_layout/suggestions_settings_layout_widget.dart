@@ -77,7 +77,7 @@ class _SuggestionsSettingsLayoutWidgetState<T>
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return ScaffoldWidget(
       appBar: AppBar(

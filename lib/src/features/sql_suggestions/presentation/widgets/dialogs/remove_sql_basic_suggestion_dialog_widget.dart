@@ -45,7 +45,7 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context);
 
     return ConfirmationDialogWidget(
       title: appLocalizations.removeSuggestion,

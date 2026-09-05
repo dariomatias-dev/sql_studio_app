@@ -48,7 +48,7 @@ class SqlBasicSuggestionCardWidget extends StatelessWidget {
                 ),
               );
             },
-            tooltip: AppLocalizations.of(context)!.deleteSuggestion,
+            tooltip: AppLocalizations.of(context).deleteSuggestion,
             icon: Icon(Icons.delete_outline, color: context.colors.error),
           ),
         ),

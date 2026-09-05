@@ -94,7 +94,7 @@ class _DatabaseVisualizerScreenState
             ? const LoadingStateWidget()
             : tables.isEmpty
             ? EmptyStateWidget(
-                message: AppLocalizations.of(context)!.theDatabaseIsEmpty,
+                message: AppLocalizations.of(context).theDatabaseIsEmpty,
                 icon: Icons.table_chart_outlined,
               )
             : Stack(

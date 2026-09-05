@@ -71,7 +71,7 @@ void main() {
 
       final localizations = AppLocalizations.of(
         tester.element(find.byType(Dialog)),
-      )!;
+      );
 
       expect(find.text(localizations.error), findsOneWidget);
       expect(find.text(localizations.unknownError), findsOneWidget);

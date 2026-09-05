@@ -27,7 +27,7 @@ class PopupMenuButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<void>(
-      tooltip: AppLocalizations.of(context)!.options,
+      tooltip: AppLocalizations.of(context).options,
       color: context.colors.white,
       icon: Icon(
         Icons.more_vert,

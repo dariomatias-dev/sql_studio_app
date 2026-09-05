@@ -38,7 +38,7 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
     unawaited(
       AppToast.of(
         context,
-      ).show(AppLocalizations.of(context)!.languageUpdated(lang)),
+      ).show(AppLocalizations.of(context).languageUpdated(lang)),
     );
   }
 

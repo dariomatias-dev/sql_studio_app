@@ -12,7 +12,7 @@ Future<void> handleError<T>(
   Result<T> result, {
   Future<void> Function(T value)? onSuccess,
 }) async {
-  final appLocalizations = AppLocalizations.of(context)!;
+  final appLocalizations = AppLocalizations.of(context);
 
   await result.fold(
     onSuccess: onSuccess,
