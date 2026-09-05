@@ -303,4 +303,49 @@ void main() {
       expect(authorIdColumn.foreignColumn, 'id');
     },
   );
+
+  test('closeAll closes every cached connection', () async {
+    final otherDbName = '${dbName}_other';
+
+    await service.execute(
+      sql: 'CREATE TABLE a (id INTEGER)',
+      databaseName: dbName,
+    );
+    await service.execute(
+      sql: 'CREATE TABLE b (id INTEGER)',
+      databaseName: otherDbName,
+    );
+
+    final dbPath = await getDatabasesPath();
+    final first = await databaseFactory.openDatabase('$dbPath/$dbName.db');
+    final second = await databaseFactory.openDatabase(
+      '$dbPath/$otherDbName.db',
+    );
+
+    await service.closeAll();
+
+    expect(first.isOpen, isFalse);
+    expect(second.isOpen, isFalse);
+
+    await databaseFactory.deleteDatabase('$dbPath/$otherDbName.db');
+  });
+
+  test('closeAll reopens a database on the next execute', () async {
+    await service.execute(
+      sql: 'CREATE TABLE a (id INTEGER)',
+      databaseName: dbName,
+    );
+    await service.closeAll();
+
+    final result = await service.execute(
+      sql: 'INSERT INTO a (id) VALUES (1)',
+      databaseName: dbName,
+    );
+
+    expect(result, isA<SuccessResult<DatabaseSuccess?>>());
+  });
+
+  test('closeAll is a no-op when nothing is cached', () async {
+    await expectLater(service.closeAll(), completes);
+  });
 }

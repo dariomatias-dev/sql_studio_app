@@ -13,9 +13,14 @@ import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_editor_view_model.dart';
 
 /// Provides the raw SQL execution service.
-final Provider<SqlExecutionService> sqlExecutionServiceProvider = Provider(
-  (ref) => SqlExecutionService(),
-);
+final Provider<SqlExecutionService> sqlExecutionServiceProvider = Provider((
+  ref,
+) {
+  final service = SqlExecutionService();
+  ref.onDispose(service.closeAll);
+
+  return service;
+});
 
 /// Provides the [DefaultDatabaseService], sharing its connection cache
 /// with [sqlExecutionServiceProvider].

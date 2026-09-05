@@ -33,6 +33,17 @@ class SqlExecutionService {
     await db?.close();
   }
 
+  /// Closes and evicts every cached connection. Call this when the
+  /// service is disposed so no SQLite handle outlives it.
+  Future<void> closeAll() async {
+    final databases = _databases.values.toList();
+    _databases.clear();
+
+    for (final db in databases) {
+      await db.close();
+    }
+  }
+
   /// Runs one or more semicolon-separated [sql] statements against
   /// [databaseName], returning the result of the last statement.
   Future<Result<DatabaseSuccess?>> execute({
