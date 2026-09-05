@@ -7,9 +7,6 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_controller.dart';
 
@@ -74,15 +71,7 @@ void main() {
     container = ProviderContainer(
       overrides: [
         sharedPreferencesServiceProvider.overrideWithValue(prefs),
-        runSqlQueryUseCaseProvider.overrideWithValue(
-          RunSqlQueryUseCase(repository),
-        ),
-        getTableColumnsUseCaseProvider.overrideWithValue(
-          GetTableColumnsUseCase(repository),
-        ),
-        resetDefaultDatabaseUseCaseProvider.overrideWithValue(
-          ResetDefaultDatabaseUseCase(repository),
-        ),
+        sqlCommandsRepositoryProvider.overrideWithValue(repository),
       ],
     );
     addTearDown(container.dispose);

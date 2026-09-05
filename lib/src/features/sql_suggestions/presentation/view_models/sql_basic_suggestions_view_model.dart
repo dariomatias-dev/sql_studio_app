@@ -2,20 +2,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_basic_suggestions.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_basic_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_basic_suggestions_usecase.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_basic_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_basic_suggestions_state.dart';
 
 /// Manages the persisted list of basic SQL autocomplete suggestions.
 class SqlBasicSuggestionsViewModel extends Notifier<SqlBasicSuggestionsState> {
-  late final LoadSqlBasicSuggestionsUseCase _loadSuggestions;
-  late final SaveSqlBasicSuggestionsUseCase _saveSuggestions;
+  late final SqlBasicSuggestionsRepository _repository;
 
   @override
   SqlBasicSuggestionsState build() {
-    _loadSuggestions = ref.read(loadSqlBasicSuggestionsUseCaseProvider);
-    _saveSuggestions = ref.read(saveSqlBasicSuggestionsUseCaseProvider);
+    _repository = ref.read(sqlBasicSuggestionsRepositoryProvider);
 
     return const SqlBasicSuggestionsState();
   }
@@ -24,7 +21,7 @@ class SqlBasicSuggestionsViewModel extends Notifier<SqlBasicSuggestionsState> {
   Future<Result<void>> load() async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _loadSuggestions();
+    final result = await _repository.load();
 
     state = state.copyWith(isLoading: false);
 
@@ -67,7 +64,7 @@ class SqlBasicSuggestionsViewModel extends Notifier<SqlBasicSuggestionsState> {
   Future<Result<void>> _persist(List<String> suggestions) async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _saveSuggestions(suggestions);
+    final result = await _repository.save(suggestions);
 
     state = state.copyWith(
       isLoading: false,

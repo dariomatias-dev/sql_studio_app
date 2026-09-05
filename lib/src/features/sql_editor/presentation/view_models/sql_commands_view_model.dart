@@ -6,23 +6,17 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
+import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_state.dart';
 
 /// Runs SQL commands against the active database and tracks their state.
 class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
-  late final RunSqlQueryUseCase _runQuery;
-  late final GetTableColumnsUseCase _getTableColumns;
-  late final ResetDefaultDatabaseUseCase _resetDefaultDatabase;
+  late final SqlCommandsRepository _repository;
 
   @override
   SqlCommandsState build() {
-    _runQuery = ref.read(runSqlQueryUseCaseProvider);
-    _getTableColumns = ref.read(getTableColumnsUseCaseProvider);
-    _resetDefaultDatabase = ref.read(resetDefaultDatabaseUseCaseProvider);
+    _repository = ref.read(sqlCommandsRepositoryProvider);
 
     return const SqlCommandsState();
   }
@@ -67,7 +61,10 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
       clearError: true,
     );
 
-    final response = await _runQuery(sql: sql, databaseName: databaseName);
+    final response = await _repository.execute(
+      sql: sql,
+      databaseName: databaseName,
+    );
 
     response.when(
       onSuccess: (_) => state = state.copyWith(
@@ -95,7 +92,7 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
     }
 
     try {
-      return await _getTableColumns(
+      return await _repository.getTableColumns(
         databaseName: databaseName,
         tableName: tableName,
       );
@@ -121,7 +118,7 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
 
     state = state.copyWith(isLoading: true, clearError: true);
 
-    final result = await _resetDefaultDatabase(databaseName);
+    final result = await _repository.resetDefaultDatabase(databaseName);
 
     result.when(
       onSuccess: (_) => state = state.copyWith(

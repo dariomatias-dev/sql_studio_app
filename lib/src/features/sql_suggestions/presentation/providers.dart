@@ -13,17 +13,9 @@ import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_sugg
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_basic_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_suggestion_settings_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/add_sql_advanced_suggestion_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_basic_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_suggestion_settings_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/remove_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reorder_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reset_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_all_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_basic_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_suggestion_settings_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/update_sql_advanced_suggestion_usecase.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_state.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_view_model.dart';
@@ -47,22 +39,6 @@ sqlSuggestionSettingsRepositoryProvider = Provider(
   (ref) => SqlSuggestionSettingsRepositoryImpl(
     ref.watch(sqlSuggestionSettingsLocalDatasourceProvider),
     ref.watch(appLoggerProvider),
-  ),
-);
-
-/// Provides the [LoadSqlSuggestionSettingsUseCase].
-final Provider<LoadSqlSuggestionSettingsUseCase>
-loadSqlSuggestionSettingsUseCaseProvider = Provider(
-  (ref) => LoadSqlSuggestionSettingsUseCase(
-    ref.watch(sqlSuggestionSettingsRepositoryProvider),
-  ),
-);
-
-/// Provides the [SaveSqlSuggestionSettingsUseCase].
-final Provider<SaveSqlSuggestionSettingsUseCase>
-saveSqlSuggestionSettingsUseCaseProvider = Provider(
-  (ref) => SaveSqlSuggestionSettingsUseCase(
-    ref.watch(sqlSuggestionSettingsRepositoryProvider),
   ),
 );
 
@@ -95,22 +71,6 @@ sqlBasicSuggestionsRepositoryProvider = Provider(
   ),
 );
 
-/// Provides the [LoadSqlBasicSuggestionsUseCase].
-final Provider<LoadSqlBasicSuggestionsUseCase>
-loadSqlBasicSuggestionsUseCaseProvider = Provider(
-  (ref) => LoadSqlBasicSuggestionsUseCase(
-    ref.watch(sqlBasicSuggestionsRepositoryProvider),
-  ),
-);
-
-/// Provides the [SaveSqlBasicSuggestionsUseCase].
-final Provider<SaveSqlBasicSuggestionsUseCase>
-saveSqlBasicSuggestionsUseCaseProvider = Provider(
-  (ref) => SaveSqlBasicSuggestionsUseCase(
-    ref.watch(sqlBasicSuggestionsRepositoryProvider),
-  ),
-);
-
 /// Exposes the [SqlBasicSuggestionsViewModel] and its
 /// [SqlBasicSuggestionsState].
 final NotifierProvider<SqlBasicSuggestionsViewModel, SqlBasicSuggestionsState>
@@ -133,38 +93,6 @@ sqlAdvancedSuggestionsRepositoryProvider = Provider(
   (ref) => SqlAdvancedSuggestionsRepositoryImpl(
     ref.watch(sqlAdvancedSuggestionsLocalDatasourceProvider),
     ref.watch(appLoggerProvider),
-  ),
-);
-
-/// Provides the [LoadSqlAdvancedSuggestionsUseCase].
-final Provider<LoadSqlAdvancedSuggestionsUseCase>
-loadSqlAdvancedSuggestionsUseCaseProvider = Provider(
-  (ref) => LoadSqlAdvancedSuggestionsUseCase(
-    ref.watch(sqlAdvancedSuggestionsRepositoryProvider),
-  ),
-);
-
-/// Provides the [AddSqlAdvancedSuggestionUseCase].
-final Provider<AddSqlAdvancedSuggestionUseCase>
-addSqlAdvancedSuggestionUseCaseProvider = Provider(
-  (ref) => AddSqlAdvancedSuggestionUseCase(
-    ref.watch(sqlAdvancedSuggestionsRepositoryProvider),
-  ),
-);
-
-/// Provides the [UpdateSqlAdvancedSuggestionUseCase].
-final Provider<UpdateSqlAdvancedSuggestionUseCase>
-updateSqlAdvancedSuggestionUseCaseProvider = Provider(
-  (ref) => UpdateSqlAdvancedSuggestionUseCase(
-    ref.watch(sqlAdvancedSuggestionsRepositoryProvider),
-  ),
-);
-
-/// Provides the [RemoveSqlAdvancedSuggestionUseCase].
-final Provider<RemoveSqlAdvancedSuggestionUseCase>
-removeSqlAdvancedSuggestionUseCaseProvider = Provider(
-  (ref) => RemoveSqlAdvancedSuggestionUseCase(
-    ref.watch(sqlAdvancedSuggestionsRepositoryProvider),
   ),
 );
 

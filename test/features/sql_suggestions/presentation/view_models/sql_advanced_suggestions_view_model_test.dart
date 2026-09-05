@@ -7,13 +7,9 @@ import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/add_sql_advanced_suggestion_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/remove_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reorder_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reset_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_all_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/update_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 class _MockRepository extends Mock
@@ -37,18 +33,7 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         appLoggerProvider.overrideWithValue(_MockLogger()),
-        loadSqlAdvancedSuggestionsUseCaseProvider.overrideWithValue(
-          LoadSqlAdvancedSuggestionsUseCase(repository),
-        ),
-        addSqlAdvancedSuggestionUseCaseProvider.overrideWithValue(
-          AddSqlAdvancedSuggestionUseCase(repository),
-        ),
-        updateSqlAdvancedSuggestionUseCaseProvider.overrideWithValue(
-          UpdateSqlAdvancedSuggestionUseCase(repository),
-        ),
-        removeSqlAdvancedSuggestionUseCaseProvider.overrideWithValue(
-          RemoveSqlAdvancedSuggestionUseCase(repository),
-        ),
+        sqlAdvancedSuggestionsRepositoryProvider.overrideWithValue(repository),
         saveAllSqlAdvancedSuggestionsUseCaseProvider.overrideWithValue(
           SaveAllSqlAdvancedSuggestionsUseCase(repository),
         ),

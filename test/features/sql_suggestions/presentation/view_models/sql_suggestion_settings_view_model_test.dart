@@ -4,8 +4,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_suggestion_settings_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_suggestion_settings_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_suggestion_settings_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_suggestion_settings_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 class _MockRepository extends Mock implements SqlSuggestionSettingsRepository {}
@@ -16,12 +14,7 @@ void main() {
   ProviderContainer buildContainer() {
     final container = ProviderContainer(
       overrides: [
-        loadSqlSuggestionSettingsUseCaseProvider.overrideWithValue(
-          LoadSqlSuggestionSettingsUseCase(repository),
-        ),
-        saveSqlSuggestionSettingsUseCaseProvider.overrideWithValue(
-          SaveSqlSuggestionSettingsUseCase(repository),
-        ),
+        sqlSuggestionSettingsRepositoryProvider.overrideWithValue(repository),
       ],
     );
     addTearDown(container.dispose);

@@ -10,8 +10,8 @@ class DatabaseVisualizerViewModel extends Notifier<DatabaseVisualizerState> {
 
   /// Loads the structure of [databaseName].
   Future<Result<void>> load(String databaseName) async {
-    final getStructure = ref.read(getDatabaseStructureUseCaseProvider);
-    final result = await getStructure(databaseName);
+    final repository = ref.read(databaseStructureRepositoryProvider);
+    final result = await repository.getStructure(databaseName);
 
     return result.when(
       onSuccess: (tables) {

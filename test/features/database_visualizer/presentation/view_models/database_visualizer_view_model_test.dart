@@ -5,7 +5,6 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
-import 'package:sql_studio/src/features/database_visualizer/domain/usecases/get_database_structure_usecase.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
 
 class _MockDatabaseStructureRepository extends Mock
@@ -28,9 +27,7 @@ void main() {
   ProviderContainer buildContainer() {
     final container = ProviderContainer(
       overrides: [
-        getDatabaseStructureUseCaseProvider.overrideWithValue(
-          GetDatabaseStructureUseCase(repository),
-        ),
+        databaseStructureRepositoryProvider.overrideWithValue(repository),
       ],
     );
     addTearDown(container.dispose);

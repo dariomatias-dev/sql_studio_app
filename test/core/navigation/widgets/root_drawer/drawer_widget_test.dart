@@ -13,11 +13,7 @@ import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/get_database_by_name_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/get_databases_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/toggle_database_favorite_usecase.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 
 import '../../../../test_helpers/shared_preferences_test_helper.dart';
@@ -56,20 +52,9 @@ void main() {
     container = ProviderContainer(
       overrides: [
         sharedPreferencesServiceProvider.overrideWithValue(prefs),
-        getDatabasesUseCaseProvider.overrideWithValue(
-          GetDatabasesUseCase(repository),
-        ),
-        createDatabaseUseCaseProvider.overrideWithValue(
-          CreateDatabaseUseCase(repository),
-        ),
-        getDatabaseByNameUseCaseProvider.overrideWithValue(
-          GetDatabaseByNameUseCase(repository),
-        ),
+        databaseRepositoryProvider.overrideWithValue(repository),
         deleteDatabaseUseCaseProvider.overrideWithValue(
           DeleteDatabaseUseCase(repository, sqlExecutionService),
-        ),
-        toggleDatabaseFavoriteUseCaseProvider.overrideWithValue(
-          ToggleDatabaseFavoriteUseCase(repository),
         ),
       ],
     );

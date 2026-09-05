@@ -2,32 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
+import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/get_database_by_name_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/get_databases_usecase.dart';
-import 'package:sql_studio/src/features/database/domain/usecases/toggle_database_favorite_usecase.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/database/presentation/view_models/database_list_state.dart';
 
 /// Manages the list of known databases and their favorite state.
 class DatabaseListViewModel extends Notifier<DatabaseListState> {
-  late final GetDatabasesUseCase _getDatabases;
-  late final CreateDatabaseUseCase _createDatabase;
-  late final GetDatabaseByNameUseCase _getDatabaseByName;
+  late final DatabaseRepository _repository;
   late final DeleteDatabaseUseCase _deleteDatabase;
-  late final ToggleDatabaseFavoriteUseCase _toggleFavorite;
 
   var _favorites = <DatabaseEntity>[];
   var _others = <DatabaseEntity>[];
 
   @override
   DatabaseListState build() {
-    _getDatabases = ref.read(getDatabasesUseCaseProvider);
-    _createDatabase = ref.read(createDatabaseUseCaseProvider);
-    _getDatabaseByName = ref.read(getDatabaseByNameUseCaseProvider);
+    _repository = ref.read(databaseRepositoryProvider);
     _deleteDatabase = ref.read(deleteDatabaseUseCaseProvider);
-    _toggleFavorite = ref.read(toggleDatabaseFavoriteUseCaseProvider);
 
     return const DatabaseListState();
   }
@@ -38,7 +29,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     state = state.copyWith(isLoading: true);
 
-    final result = await _getDatabases();
+    final result = await _repository.getAll();
 
     state = state.copyWith(isLoading: false);
 
@@ -57,7 +48,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
   /// Creates a new database from [model] and adds it to the proper list.
   Future<Result<void>> create(DatabaseEntity model) async {
-    final result = await _createDatabase(model);
+    final result = await _repository.create(model);
 
     return result.when(
       onSuccess: (_) {
@@ -74,7 +65,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
   /// Retrieves a database by its [name], or `null` if none is found.
   Future<Result<DatabaseEntity?>> getByName(String name) async {
-    final result = await _getDatabaseByName(name);
+    final result = await _repository.getByName(name);
 
     return result.when(
       onSuccess: SuccessResult.new,
@@ -101,7 +92,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
   /// Toggles the favorite state of [model] and moves it between lists.
   Future<Result<void>> toggleFavorite(DatabaseEntity model) async {
-    final result = await _toggleFavorite(model);
+    final result = await _repository.toggleFavorite(model);
 
     return result.when(
       onSuccess: (updated) {

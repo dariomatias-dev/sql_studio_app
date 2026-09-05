@@ -2,27 +2,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_suggestion_settings_entity.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_suggestion_settings_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_suggestion_settings_usecase.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_suggestion_settings_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 /// Manages which SQL suggestion features are enabled and persists them.
 class SqlSuggestionSettingsViewModel
     extends Notifier<SqlSuggestionSettingsEntity> {
-  late final LoadSqlSuggestionSettingsUseCase _loadSettings;
-  late final SaveSqlSuggestionSettingsUseCase _saveSettings;
+  late final SqlSuggestionSettingsRepository _repository;
 
   @override
   SqlSuggestionSettingsEntity build() {
-    _loadSettings = ref.read(loadSqlSuggestionSettingsUseCaseProvider);
-    _saveSettings = ref.read(saveSqlSuggestionSettingsUseCaseProvider);
+    _repository = ref.read(sqlSuggestionSettingsRepositoryProvider);
 
     return const SqlSuggestionSettingsEntity();
   }
 
   /// Loads the persisted suggestion settings.
   Future<Result<void>> load() async {
-    final result = await _loadSettings();
+    final result = await _repository.load();
 
     return result.when(
       onSuccess: (settings) {
@@ -35,7 +32,7 @@ class SqlSuggestionSettingsViewModel
   }
 
   /// Persists the current suggestion settings.
-  Future<Result<void>> saveSettings() => _saveSettings(state);
+  Future<Result<void>> saveSettings() => _repository.save(state);
 
   /// Enables or disables basic suggestions, disabling advanced ones when
   /// [value] is `true`.

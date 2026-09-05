@@ -5,8 +5,6 @@ import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sq
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_basic_suggestions_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_basic_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_sql_basic_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 class _MockRepository extends Mock implements SqlBasicSuggestionsRepository {}
@@ -17,12 +15,7 @@ void main() {
   ProviderContainer buildContainer() {
     final container = ProviderContainer(
       overrides: [
-        loadSqlBasicSuggestionsUseCaseProvider.overrideWithValue(
-          LoadSqlBasicSuggestionsUseCase(repository),
-        ),
-        saveSqlBasicSuggestionsUseCaseProvider.overrideWithValue(
-          SaveSqlBasicSuggestionsUseCase(repository),
-        ),
+        sqlBasicSuggestionsRepositoryProvider.overrideWithValue(repository),
       ],
     );
     addTearDown(container.dispose);

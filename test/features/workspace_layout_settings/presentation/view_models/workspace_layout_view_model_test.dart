@@ -5,8 +5,6 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/domain/repositories/workspace_layout_repository.dart';
-import 'package:sql_studio/src/features/workspace_layout_settings/domain/usecases/get_selected_workspace_layout_usecase.dart';
-import 'package:sql_studio/src/features/workspace_layout_settings/domain/usecases/set_workspace_layout_usecase.dart';
 import 'package:sql_studio/src/features/workspace_layout_settings/presentation/providers.dart';
 
 class _MockWorkspaceLayoutRepository extends Mock
@@ -18,12 +16,7 @@ void main() {
   ProviderContainer buildContainer() {
     final container = ProviderContainer(
       overrides: [
-        getSelectedWorkspaceLayoutUseCaseProvider.overrideWithValue(
-          GetSelectedWorkspaceLayoutUseCase(repository),
-        ),
-        setWorkspaceLayoutUseCaseProvider.overrideWithValue(
-          SetWorkspaceLayoutUseCase(repository),
-        ),
+        workspaceLayoutRepositoryProvider.overrideWithValue(repository),
       ],
     );
     addTearDown(container.dispose);

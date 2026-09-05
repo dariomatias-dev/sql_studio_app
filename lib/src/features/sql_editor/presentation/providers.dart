@@ -4,9 +4,6 @@ import 'package:sql_studio/src/core/services/default_database_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 import 'package:sql_studio/src/features/sql_editor/data/repositories/sql_commands_repository_impl.dart';
 import 'package:sql_studio/src/features/sql_editor/domain/repositories/sql_commands_repository.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/get_table_columns_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/reset_default_database_usecase.dart';
-import 'package:sql_studio/src/features/sql_editor/domain/usecases/run_sql_query_usecase.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_state.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_commands_view_model.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/view_models/sql_editor_state.dart';
@@ -39,24 +36,6 @@ final Provider<SqlCommandsRepository> sqlCommandsRepositoryProvider = Provider(
     ref.watch(sqlExecutionServiceProvider),
     ref.watch(defaultDatabaseServiceProvider),
   ),
-);
-
-/// Provides the [RunSqlQueryUseCase].
-final Provider<RunSqlQueryUseCase> runSqlQueryUseCaseProvider = Provider(
-  (ref) => RunSqlQueryUseCase(ref.watch(sqlCommandsRepositoryProvider)),
-);
-
-/// Provides the [GetTableColumnsUseCase].
-final Provider<GetTableColumnsUseCase> getTableColumnsUseCaseProvider =
-    Provider(
-      (ref) => GetTableColumnsUseCase(ref.watch(sqlCommandsRepositoryProvider)),
-    );
-
-/// Provides the [ResetDefaultDatabaseUseCase].
-final Provider<ResetDefaultDatabaseUseCase>
-resetDefaultDatabaseUseCaseProvider = Provider(
-  (ref) =>
-      ResetDefaultDatabaseUseCase(ref.watch(sqlCommandsRepositoryProvider)),
 );
 
 /// Exposes the [SqlCommandsViewModel] and its [SqlCommandsState].

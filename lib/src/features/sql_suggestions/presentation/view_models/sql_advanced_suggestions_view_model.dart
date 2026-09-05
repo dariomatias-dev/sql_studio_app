@@ -2,33 +2,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/add_sql_advanced_suggestion_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/remove_sql_advanced_suggestion_usecase.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reorder_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reset_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_all_sql_advanced_suggestions_usecase.dart';
-import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/update_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_state.dart';
 
 /// Manages the persisted list of advanced SQL autocomplete suggestions.
 class SqlAdvancedSuggestionsViewModel
     extends Notifier<SqlAdvancedSuggestionsState> {
-  late final LoadSqlAdvancedSuggestionsUseCase _loadSuggestions;
-  late final AddSqlAdvancedSuggestionUseCase _addSuggestion;
-  late final UpdateSqlAdvancedSuggestionUseCase _updateSuggestion;
-  late final RemoveSqlAdvancedSuggestionUseCase _removeSuggestion;
+  late final SqlAdvancedSuggestionsRepository _repository;
   late final SaveAllSqlAdvancedSuggestionsUseCase _saveAllSuggestions;
   late final ReorderSqlAdvancedSuggestionsUseCase _reorderSuggestions;
   late final ResetSqlAdvancedSuggestionsUseCase _resetSuggestions;
 
   @override
   SqlAdvancedSuggestionsState build() {
-    _loadSuggestions = ref.read(loadSqlAdvancedSuggestionsUseCaseProvider);
-    _addSuggestion = ref.read(addSqlAdvancedSuggestionUseCaseProvider);
-    _updateSuggestion = ref.read(updateSqlAdvancedSuggestionUseCaseProvider);
-    _removeSuggestion = ref.read(removeSqlAdvancedSuggestionUseCaseProvider);
+    _repository = ref.read(sqlAdvancedSuggestionsRepositoryProvider);
     _saveAllSuggestions = ref.read(
       saveAllSqlAdvancedSuggestionsUseCaseProvider,
     );
@@ -44,7 +35,7 @@ class SqlAdvancedSuggestionsViewModel
   Future<Result<void>> load() async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _loadSuggestions();
+    final result = await _repository.getAll();
 
     state = state.copyWith(isLoading: false);
 
@@ -64,7 +55,7 @@ class SqlAdvancedSuggestionsViewModel
   ) async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _addSuggestion(suggestion);
+    final result = await _repository.create(suggestion);
 
     state = state.copyWith(
       isLoading: false,
@@ -82,7 +73,7 @@ class SqlAdvancedSuggestionsViewModel
   ) async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _updateSuggestion(suggestion);
+    final result = await _repository.update(suggestion);
 
     if (result.isSuccess) {
       final updated = [...state.suggestions];
@@ -101,7 +92,7 @@ class SqlAdvancedSuggestionsViewModel
   Future<Result<void>> removeSuggestion(String id) async {
     state = state.copyWith(isLoading: true);
 
-    final result = await _removeSuggestion(id);
+    final result = await _repository.delete(id);
 
     state = state.copyWith(
       isLoading: false,
