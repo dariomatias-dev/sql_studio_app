@@ -3,7 +3,8 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_advanced_suggestions_local_datasource.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/data/mappers/sql_advanced_suggestion_mapper.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 
 /// [SqlAdvancedSuggestionsRepository] backed by
@@ -17,22 +18,24 @@ class SqlAdvancedSuggestionsRepositoryImpl
   final AppLogger _logger;
 
   @override
-  Future<Result<List<SqlAdvancedSuggestionModel>>> getAll() async {
+  Future<Result<List<SqlAdvancedSuggestionEntity>>> getAll() async {
     try {
       final maps = await _datasource.getAll();
 
       if (maps.isEmpty) {
-        final defaults = List<SqlAdvancedSuggestionModel>.from(
+        final defaults = List<SqlAdvancedSuggestionEntity>.from(
           defaultSqlAdvancedSuggestions,
         );
 
-        await _datasource.insertAll(defaults.map((m) => m.toMap()).toList());
+        await _datasource.insertAll(
+          defaults.map(SqlAdvancedSuggestionMapper.toMap).toList(),
+        );
 
         return SuccessResult(defaults);
       }
 
       return SuccessResult(
-        maps.map(SqlAdvancedSuggestionModel.fromMap).toList(),
+        maps.map(SqlAdvancedSuggestionMapper.fromMap).toList(),
       );
     } on Exception catch (err, stackTrace) {
       _logger.error(
@@ -48,9 +51,9 @@ class SqlAdvancedSuggestionsRepositoryImpl
   }
 
   @override
-  Future<Result<void>> create(SqlAdvancedSuggestionModel model) async {
+  Future<Result<void>> create(SqlAdvancedSuggestionEntity model) async {
     try {
-      await _datasource.insert(model.toMap());
+      await _datasource.insert(SqlAdvancedSuggestionMapper.toMap(model));
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
@@ -67,11 +70,13 @@ class SqlAdvancedSuggestionsRepositoryImpl
   }
 
   @override
-  Future<Result<void>> addAll(List<SqlAdvancedSuggestionModel> models) async {
+  Future<Result<void>> addAll(List<SqlAdvancedSuggestionEntity> models) async {
     if (models.isEmpty) return const SuccessResult(null);
 
     try {
-      await _datasource.insertAll(models.map((m) => m.toMap()).toList());
+      await _datasource.insertAll(
+        models.map(SqlAdvancedSuggestionMapper.toMap).toList(),
+      );
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
@@ -88,9 +93,9 @@ class SqlAdvancedSuggestionsRepositoryImpl
   }
 
   @override
-  Future<Result<void>> update(SqlAdvancedSuggestionModel model) async {
+  Future<Result<void>> update(SqlAdvancedSuggestionEntity model) async {
     try {
-      await _datasource.update(model.toMap());
+      await _datasource.update(SqlAdvancedSuggestionMapper.toMap(model));
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
@@ -108,12 +113,14 @@ class SqlAdvancedSuggestionsRepositoryImpl
 
   @override
   Future<Result<void>> updateAll(
-    List<SqlAdvancedSuggestionModel> models,
+    List<SqlAdvancedSuggestionEntity> models,
   ) async {
     if (models.isEmpty) return const SuccessResult(null);
 
     try {
-      await _datasource.updateAll(models.map((m) => m.toMap()).toList());
+      await _datasource.updateAll(
+        models.map(SqlAdvancedSuggestionMapper.toMap).toList(),
+      );
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {

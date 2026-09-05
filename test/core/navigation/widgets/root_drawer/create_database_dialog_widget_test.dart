@@ -9,7 +9,7 @@ import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
@@ -59,7 +59,7 @@ void main() {
   }
 
   setUpAll(() {
-    registerFallbackValue(DatabaseModel(label: 'fallback', name: 'fallback'));
+    registerFallbackValue(DatabaseEntity(label: 'fallback', name: 'fallback'));
   });
 
   setUp(() async {
@@ -164,7 +164,7 @@ void main() {
   ) async {
     when(() => repository.getByName('existing')).thenAnswer(
       (_) async => SuccessResult(
-        DatabaseModel(label: 'Existing', name: 'existing'),
+        DatabaseEntity(label: 'Existing', name: 'existing'),
       ),
     );
 

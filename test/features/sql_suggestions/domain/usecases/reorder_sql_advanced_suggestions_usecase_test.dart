@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reorder_sql_advanced_suggestions_usecase.dart';
 
@@ -15,7 +15,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(
-      SqlAdvancedSuggestionModel(label: '', code: '', orderIndex: 0),
+      SqlAdvancedSuggestionEntity(label: '', code: '', orderIndex: 0),
     );
   });
 
@@ -31,17 +31,17 @@ void main() {
     'assigns each suggestion its position in the new order and persists it',
     () async {
       final newOrder = [
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'C',
           code: 'SELECT 3',
           orderIndex: 2,
         ),
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'A',
           code: 'SELECT 1',
           orderIndex: 0,
         ),
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'B',
           code: 'SELECT 2',
           orderIndex: 1,
@@ -50,7 +50,7 @@ void main() {
 
       final result =
           await useCase(newOrder)
-              as SuccessResult<List<SqlAdvancedSuggestionModel>>;
+              as SuccessResult<List<SqlAdvancedSuggestionEntity>>;
 
       expect(result.value.map((s) => s.label).toList(), ['C', 'A', 'B']);
       expect(result.value.map((s) => s.orderIndex).toList(), [0, 1, 2]);
@@ -59,8 +59,8 @@ void main() {
 
   test('persists the whole new order via a single batch call', () async {
     final newOrder = [
-      SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
-      SqlAdvancedSuggestionModel(label: 'B', code: 'SELECT 2', orderIndex: 1),
+      SqlAdvancedSuggestionEntity(label: 'A', code: 'SELECT 1', orderIndex: 0),
+      SqlAdvancedSuggestionEntity(label: 'B', code: 'SELECT 2', orderIndex: 1),
     ];
 
     await useCase(newOrder);
@@ -72,7 +72,7 @@ void main() {
       'an empty order', () async {
     final result =
         await useCase(const [])
-            as SuccessResult<List<SqlAdvancedSuggestionModel>>;
+            as SuccessResult<List<SqlAdvancedSuggestionEntity>>;
 
     expect(result.value, isEmpty);
     verifyNever(() => repository.updateAll(any()));
@@ -86,7 +86,7 @@ void main() {
     );
 
     final newOrder = [
-      SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
+      SqlAdvancedSuggestionEntity(label: 'A', code: 'SELECT 1', orderIndex: 0),
     ];
 
     final result = await useCase(newOrder) as FailureResult;

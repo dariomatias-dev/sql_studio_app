@@ -5,7 +5,7 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/add_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
@@ -24,8 +24,8 @@ class _MockLogger extends Mock implements AppLogger {}
 void main() {
   late _MockRepository repository;
 
-  SqlAdvancedSuggestionModel suggestion(String label, {String? id}) {
-    return SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity suggestion(String label, {String? id}) {
+    return SqlAdvancedSuggestionEntity(
       id: id,
       label: label,
       code: 'SELECT 1',
@@ -67,7 +67,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(suggestion('fallback'));
-    registerFallbackValue(<SqlAdvancedSuggestionModel>[]);
+    registerFallbackValue(<SqlAdvancedSuggestionEntity>[]);
   });
 
   setUp(() {

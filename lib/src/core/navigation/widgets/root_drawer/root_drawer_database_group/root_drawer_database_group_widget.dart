@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 
 /// Titled section of the drawer listing a group of databases (e.g.
 /// favorites or all databases).
@@ -19,7 +19,7 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
   final String title;
 
   /// Databases displayed in this group.
-  final List<DatabaseModel> databases;
+  final List<DatabaseEntity> databases;
 
   @override
   Widget build(BuildContext context) {

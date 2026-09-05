@@ -1,17 +1,17 @@
 import 'package:sql_studio/src/core/database/database_repository.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 
 /// Reads and writes database rows in sqflite, and manages the underlying
 /// per-database SQLite files.
 class DatabaseLocalDatasource {
   /// Creates the datasource, backed by [manager].
   DatabaseLocalDatasource(DatabaseManager manager)
-    : _repository = DatabaseRepository<DatabaseModel>(
+    : _repository = DatabaseRepository<DatabaseEntity>(
         tableName: 'databases',
         manager: manager,
       );
 
-  final DatabaseRepository<DatabaseModel> _repository;
+  final DatabaseRepository<DatabaseEntity> _repository;
 
   /// Inserts a new row.
   Future<int> insert(Map<String, dynamic> map) => _repository.insert(map);

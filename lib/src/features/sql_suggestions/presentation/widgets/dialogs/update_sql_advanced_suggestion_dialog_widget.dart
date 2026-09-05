@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/sql_advanced_suggestion_form_dialog_widget.dart';
@@ -20,13 +20,13 @@ class UpdateSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
   });
 
   /// Suggestion being edited, used to prefill the form.
-  final SqlAdvancedSuggestionModel initialValue;
+  final SqlAdvancedSuggestionEntity initialValue;
 
   /// Displays the update-suggestion dialog above [context], prefilled with
   /// [initialValue].
   static Future<void> show(
     BuildContext context, {
-    required SqlAdvancedSuggestionModel initialValue,
+    required SqlAdvancedSuggestionEntity initialValue,
   }) async {
     await showDialog<void>(
       context: context,

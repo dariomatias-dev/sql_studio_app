@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/controllers/sql_advanced_suggestion_settings_controller.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/create_sql_advanced_suggestion_dialog_widget.dart';
@@ -28,7 +28,7 @@ class _SqlAdvancedSuggestionSettingsScreenState
   Widget build(BuildContext context) {
     final state = ref.watch(sqlAdvancedSuggestionsViewModelProvider);
 
-    return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionModel>(
+    return SuggestionsSettingsLayoutWidget<SqlAdvancedSuggestionEntity>(
       title: AppLocalizations.of(context)!.advancedSuggestions,
       isLoading: state.isLoading,
       initialItems: state.suggestions,

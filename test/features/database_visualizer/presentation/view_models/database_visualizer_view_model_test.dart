@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/usecases/get_database_structure_usecase.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/providers.dart';
@@ -18,10 +18,10 @@ void main() {
     repository = _MockDatabaseStructureRepository();
   });
 
-  List<TableInfoModel> tablesFor(String databaseName) => [
-    TableInfoModel(
+  List<TableInfoEntity> tablesFor(String databaseName) => [
+    TableInfoEntity(
       name: databaseName,
-      columns: [ColumnInfoModel(name: 'id', type: 'TEXT')],
+      columns: [ColumnInfoEntity(name: 'id', type: 'TEXT')],
     ),
   ];
 
@@ -57,7 +57,7 @@ void main() {
   });
 
   test('load() clears tables and surfaces the failure on error', () async {
-    const failure = FailureResult<List<TableInfoModel>>(
+    const failure = FailureResult<List<TableInfoEntity>>(
       DatabaseFailure(AppLocalizationsKey.failedToLoadDatabaseStructure),
     );
 

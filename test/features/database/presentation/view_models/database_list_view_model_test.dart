@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
@@ -21,12 +21,12 @@ void main() {
   late _MockDatabaseRepository repository;
   late _MockSqlExecutionService sqlExecutionService;
 
-  DatabaseModel model({
+  DatabaseEntity model({
     required String label,
     required String name,
     bool isFavorite = false,
   }) {
-    return DatabaseModel(label: label, name: name, isFavorite: isFavorite);
+    return DatabaseEntity(label: label, name: name, isFavorite: isFavorite);
   }
 
   ProviderContainer buildContainer() {
@@ -110,7 +110,7 @@ void main() {
       'does not run a second load while one is already in progress',
       () async {
         when(() => repository.getAll()).thenAnswer((_) async {
-          return const SuccessResult(<DatabaseModel>[]);
+          return const SuccessResult(<DatabaseEntity>[]);
         });
 
         final container = buildContainer();
@@ -236,7 +236,7 @@ void main() {
     test('does nothing when the filter is unchanged', () async {
       when(
         () => repository.getAll(),
-      ).thenAnswer((_) async => const SuccessResult(<DatabaseModel>[]));
+      ).thenAnswer((_) async => const SuccessResult(<DatabaseEntity>[]));
 
       final container = buildContainer();
       final notifier = container.read(databaseListViewModelProvider.notifier);

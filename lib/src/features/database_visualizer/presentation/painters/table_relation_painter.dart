@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Paints the foreign-key relation arrows between visualized tables.
 ///
@@ -20,7 +20,7 @@ class TableRelationPainter extends CustomPainter {
   });
 
   /// The tables whose relations are drawn.
-  final List<TableInfoModel> tables;
+  final List<TableInfoEntity> tables;
 
   /// The on-screen bounds of each table, keyed by table name.
   final Map<String, Rect> tableRects;

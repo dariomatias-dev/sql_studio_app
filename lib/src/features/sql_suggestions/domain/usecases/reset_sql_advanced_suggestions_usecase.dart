@@ -1,6 +1,6 @@
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 
 /// Restores the default advanced SQL suggestions, overwriting stored ones.
@@ -11,8 +11,8 @@ class ResetSqlAdvancedSuggestionsUseCase {
   final SqlAdvancedSuggestionsRepository _repository;
 
   /// Runs the use case, returning the restored default suggestions.
-  Future<Result<List<SqlAdvancedSuggestionModel>>> call() async {
-    final defaults = List<SqlAdvancedSuggestionModel>.from(
+  Future<Result<List<SqlAdvancedSuggestionEntity>>> call() async {
+    final defaults = List<SqlAdvancedSuggestionEntity>.from(
       defaultSqlAdvancedSuggestions,
     );
 

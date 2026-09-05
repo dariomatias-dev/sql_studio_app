@@ -1,14 +1,19 @@
+import 'package:uuid/uuid.dart';
+
 /// A saved user database.
-abstract class DatabaseEntity {
-  /// Creates a database entity from its persisted fields.
-  const DatabaseEntity({
-    required this.id,
+class DatabaseEntity {
+  /// Creates a database, generating an [id] and timestamps when not
+  /// provided.
+  DatabaseEntity({
     required this.label,
     required this.name,
-    required this.isFavorite,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+    String? id,
+    this.isFavorite = false,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) : id = id ?? const Uuid().v4(),
+       createdAt = createdAt ?? DateTime.now(),
+       updatedAt = updatedAt ?? DateTime.now();
 
   /// Unique identifier of the database.
   final String id;
@@ -27,4 +32,23 @@ abstract class DatabaseEntity {
 
   /// When the database was last updated.
   final DateTime updatedAt;
+
+  /// Returns a copy of this database with the given fields replaced.
+  DatabaseEntity copyWith({
+    String? id,
+    String? label,
+    String? name,
+    bool? isFavorite,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return DatabaseEntity(
+      id: id ?? this.id,
+      label: label ?? this.label,
+      name: name ?? this.name,
+      isFavorite: isFavorite ?? this.isFavorite,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

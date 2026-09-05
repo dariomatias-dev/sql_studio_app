@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/get_database_by_name_usecase.dart';
@@ -18,8 +18,8 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   late final DeleteDatabaseUseCase _deleteDatabase;
   late final ToggleDatabaseFavoriteUseCase _toggleFavorite;
 
-  var _favorites = <DatabaseModel>[];
-  var _others = <DatabaseModel>[];
+  var _favorites = <DatabaseEntity>[];
+  var _others = <DatabaseEntity>[];
 
   @override
   DatabaseListState build() {
@@ -56,7 +56,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   }
 
   /// Creates a new database from [model] and adds it to the proper list.
-  Future<Result<void>> create(DatabaseModel model) async {
+  Future<Result<void>> create(DatabaseEntity model) async {
     final result = await _createDatabase(model);
 
     return result.when(
@@ -73,7 +73,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   }
 
   /// Retrieves a database by its [name], or `null` if none is found.
-  Future<Result<DatabaseModel?>> getByName(String name) async {
+  Future<Result<DatabaseEntity?>> getByName(String name) async {
     final result = await _getDatabaseByName(name);
 
     return result.when(
@@ -83,7 +83,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   }
 
   /// Drops the underlying table and deletes [model] from the lists.
-  Future<Result<void>> delete(DatabaseModel model) async {
+  Future<Result<void>> delete(DatabaseEntity model) async {
     final result = await _deleteDatabase(model);
 
     return result.when(
@@ -100,7 +100,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   }
 
   /// Toggles the favorite state of [model] and moves it between lists.
-  Future<Result<void>> toggleFavorite(DatabaseModel model) async {
+  Future<Result<void>> toggleFavorite(DatabaseEntity model) async {
     final result = await _toggleFavorite(model);
 
     return result.when(
@@ -127,7 +127,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
     _applyFilter();
   }
 
-  void _addToProperList(DatabaseModel model) {
+  void _addToProperList(DatabaseEntity model) {
     if (model.isFavorite) {
       _favorites = [..._favorites, model];
     } else {
@@ -135,7 +135,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
     }
   }
 
-  void _removeFromLists(DatabaseModel model) {
+  void _removeFromLists(DatabaseEntity model) {
     _favorites = _favorites.where((db) => db.id != model.id).toList();
     _others = _others.where((db) => db.id != model.id).toList();
   }
@@ -147,7 +147,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
     );
   }
 
-  List<DatabaseModel> _filtered(List<DatabaseModel> list) {
+  List<DatabaseEntity> _filtered(List<DatabaseEntity> list) {
     if (state.filter.isEmpty) return List.unmodifiable(list);
 
     final lower = state.filter.toLowerCase();

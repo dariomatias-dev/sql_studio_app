@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
@@ -16,7 +16,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
   const SqlAdvancedSuggestionCardWidget({required this.suggestion, super.key});
 
   /// Advanced suggestion displayed by this card.
-  final SqlAdvancedSuggestionModel suggestion;
+  final SqlAdvancedSuggestionEntity suggestion;
 
   @override
   Widget build(BuildContext context) {

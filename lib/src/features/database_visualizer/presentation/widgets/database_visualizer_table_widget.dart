@@ -3,7 +3,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Card that renders a single table's name and columns in the database
 /// visualizer diagram.
@@ -25,7 +25,7 @@ class DatabaseVisualizerTableWidget extends StatefulWidget {
   });
 
   /// The table whose structure is displayed.
-  final TableInfoModel table;
+  final TableInfoEntity table;
 
   /// The position of this card among the tables appearing together, used to
   /// stagger its entrance animation.

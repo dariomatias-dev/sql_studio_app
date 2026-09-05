@@ -1,20 +1,20 @@
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 
 /// Presentation state for the list of saved databases.
 class DatabaseListState {
   /// Creates the state, defaulting to empty, non-loading lists.
   const DatabaseListState({
-    this.favorites = const <DatabaseModel>[],
-    this.others = const <DatabaseModel>[],
+    this.favorites = const <DatabaseEntity>[],
+    this.others = const <DatabaseEntity>[],
     this.isLoading = false,
     this.filter = '',
   });
 
   /// The favorite databases, already matching [filter].
-  final List<DatabaseModel> favorites;
+  final List<DatabaseEntity> favorites;
 
   /// The non-favorite databases, already matching [filter].
-  final List<DatabaseModel> others;
+  final List<DatabaseEntity> others;
 
   /// Whether the databases are currently being loaded.
   final bool isLoading;
@@ -24,8 +24,8 @@ class DatabaseListState {
 
   /// Returns a copy of this state with the given fields replaced.
   DatabaseListState copyWith({
-    List<DatabaseModel>? favorites,
-    List<DatabaseModel>? others,
+    List<DatabaseEntity>? favorites,
+    List<DatabaseEntity>? others,
     bool? isLoading,
     String? filter,
   }) {

@@ -11,7 +11,7 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_databa
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/delete_database_usecase.dart';
@@ -44,7 +44,7 @@ void main() {
   }
 
   setUpAll(() {
-    registerFallbackValue(DatabaseModel(label: 'fallback', name: 'fallback'));
+    registerFallbackValue(DatabaseEntity(label: 'fallback', name: 'fallback'));
   });
 
   setUp(() async {
@@ -87,7 +87,7 @@ void main() {
   testWidgets('shows a loading indicator while databases are being loaded', (
     tester,
   ) async {
-    final completer = Completer<Result<List<DatabaseModel>>>();
+    final completer = Completer<Result<List<DatabaseEntity>>>();
     when(() => repository.getAll()).thenAnswer((_) => completer.future);
 
     await tester.pumpWidget(wrap(const RootDrawerWidget()));
@@ -99,7 +99,7 @@ void main() {
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    completer.complete(const SuccessResult(<DatabaseModel>[]));
+    completer.complete(const SuccessResult(<DatabaseEntity>[]));
     await tester.pumpAndSettle();
   });
 
@@ -108,8 +108,8 @@ void main() {
   ) async {
     when(() => repository.getAll()).thenAnswer(
       (_) async => SuccessResult([
-        DatabaseModel(label: 'Todo', name: 'todo', isFavorite: true),
-        DatabaseModel(label: 'Contacts', name: 'contacts'),
+        DatabaseEntity(label: 'Todo', name: 'todo', isFavorite: true),
+        DatabaseEntity(label: 'Contacts', name: 'contacts'),
       ]),
     );
 
@@ -129,8 +129,8 @@ void main() {
   testWidgets('typing in the search field filters the list', (tester) async {
     when(() => repository.getAll()).thenAnswer(
       (_) async => SuccessResult([
-        DatabaseModel(label: 'Todo', name: 'todo'),
-        DatabaseModel(label: 'Contacts', name: 'contacts'),
+        DatabaseEntity(label: 'Todo', name: 'todo'),
+        DatabaseEntity(label: 'Contacts', name: 'contacts'),
       ]),
     );
 

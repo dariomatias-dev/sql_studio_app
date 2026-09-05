@@ -10,7 +10,7 @@ import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/database_delete_dialog_widget.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
@@ -24,7 +24,7 @@ class RootDrawerDatabaseCardWidget extends ConsumerStatefulWidget {
   const RootDrawerDatabaseCardWidget({required this.database, super.key});
 
   /// The database this card represents.
-  final DatabaseModel database;
+  final DatabaseEntity database;
 
   @override
   ConsumerState<RootDrawerDatabaseCardWidget> createState() =>

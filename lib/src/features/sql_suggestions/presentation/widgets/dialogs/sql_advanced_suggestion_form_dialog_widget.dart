@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
@@ -24,7 +24,7 @@ class SqlAdvancedSuggestionFormDialogWidget extends ConsumerStatefulWidget {
 
   /// Called with the built suggestion when the form is submitted; returns
   /// whether the operation succeeded.
-  final Future<bool> Function(SqlAdvancedSuggestionModel value) onSubmit;
+  final Future<bool> Function(SqlAdvancedSuggestionEntity value) onSubmit;
 
   /// Dialog title.
   final String title;
@@ -33,7 +33,7 @@ class SqlAdvancedSuggestionFormDialogWidget extends ConsumerStatefulWidget {
   final String submitText;
 
   /// Existing suggestion to prefill the form with, when editing.
-  final SqlAdvancedSuggestionModel? initialValue;
+  final SqlAdvancedSuggestionEntity? initialValue;
 
   @override
   ConsumerState<SqlAdvancedSuggestionFormDialogWidget> createState() =>
@@ -66,7 +66,7 @@ class _SqlAdvancedSuggestionFormDialogWidgetState
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final value = SqlAdvancedSuggestionModel(
+    final value = SqlAdvancedSuggestionEntity(
       id: widget.initialValue?.id,
       label: _labelController.text.trim(),
       code: _codeController.text.trim(),

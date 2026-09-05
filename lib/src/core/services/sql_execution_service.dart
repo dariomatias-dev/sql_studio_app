@@ -6,7 +6,7 @@ import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Executes raw SQL statements against a named SQLite database and
 /// inspects its structure.
@@ -184,7 +184,7 @@ class SqlExecutionService {
 
   /// Returns the full table/column/foreign-key structure of
   /// [databaseName].
-  Future<List<TableInfoModel>> getDatabaseStructure({
+  Future<List<TableInfoEntity>> getDatabaseStructure({
     required String databaseName,
   }) async {
     final db = await _openDatabase(databaseName);
@@ -195,7 +195,7 @@ class SqlExecutionService {
       "AND name != 'android_metadata';",
     );
 
-    final tables = <TableInfoModel>[];
+    final tables = <TableInfoEntity>[];
 
     for (final row in tableResult) {
       final name = row['name']! as String;
@@ -213,7 +213,7 @@ class SqlExecutionService {
           orElse: () => {},
         );
 
-        return ColumnInfoModel(
+        return ColumnInfoEntity(
           name: col['name']! as String,
           type: col['type']! as String,
           foreignTable: fk['table'] as String?,
@@ -221,7 +221,7 @@ class SqlExecutionService {
         );
       });
 
-      tables.add(TableInfoModel(name: name, columns: columns));
+      tables.add(TableInfoEntity(name: name, columns: columns));
     }
 
     return tables;

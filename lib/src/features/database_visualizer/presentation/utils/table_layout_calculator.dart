@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Result of laying out a set of tables on the visualizer canvas.
 class TableLayoutResult {
@@ -24,7 +24,7 @@ class TableLayoutResult {
   final Size contentSize;
 }
 
-/// Arranges [TableInfoModel]s into a grid for the database visualizer
+/// Arranges [TableInfoEntity]s into a grid for the database visualizer
 /// diagram, computing each table's on-screen bounds.
 class TableLayoutCalculator {
   const TableLayoutCalculator._();
@@ -38,7 +38,7 @@ class TableLayoutCalculator {
 
   /// Computes a grid layout for [tables], guaranteeing the resulting
   /// canvas is at least as large as [minSize].
-  static TableLayoutResult layout(List<TableInfoModel> tables, Size minSize) {
+  static TableLayoutResult layout(List<TableInfoEntity> tables, Size minSize) {
     final tableRects = <String, Rect>{};
 
     var currentX = _padding;

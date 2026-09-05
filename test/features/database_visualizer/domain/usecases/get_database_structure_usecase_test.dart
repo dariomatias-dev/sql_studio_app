@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/repositories/database_structure_repository.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/usecases/get_database_structure_usecase.dart';
 
@@ -13,9 +13,9 @@ void main() {
     final repository = _MockDatabaseStructureRepository();
     final useCase = GetDatabaseStructureUseCase(repository);
     final tables = [
-      TableInfoModel(
+      TableInfoEntity(
         name: 'todo_list',
-        columns: [ColumnInfoModel(name: 'id', type: 'TEXT')],
+        columns: [ColumnInfoEntity(name: 'id', type: 'TEXT')],
       ),
     ];
 

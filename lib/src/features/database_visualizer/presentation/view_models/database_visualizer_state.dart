@@ -1,4 +1,4 @@
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Presentation state for the database visualizer.
 class DatabaseVisualizerState {
@@ -7,5 +7,5 @@ class DatabaseVisualizerState {
   const DatabaseVisualizerState({this.tables});
 
   /// The visualized database's tables, or `null` before the first load.
-  final List<TableInfoModel>? tables;
+  final List<TableInfoEntity>? tables;
 }

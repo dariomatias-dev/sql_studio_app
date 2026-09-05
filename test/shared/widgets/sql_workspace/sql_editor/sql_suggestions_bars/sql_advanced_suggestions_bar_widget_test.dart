@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_state.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/view_models/sql_advanced_suggestions_view_model.dart';
@@ -21,7 +21,7 @@ class _FakeSqlAdvancedSuggestionsViewModel
 void main() {
   Future<void> pumpBar(
     WidgetTester tester, {
-    required List<SqlAdvancedSuggestionModel> suggestions,
+    required List<SqlAdvancedSuggestionEntity> suggestions,
     required void Function(String code, {String? selectText}) onInsert,
   }) {
     return tester.pumpWidget(
@@ -47,12 +47,12 @@ void main() {
     await pumpBar(
       tester,
       suggestions: [
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'Users',
           code: 'SELECT * FROM users;',
           orderIndex: 0,
         ),
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'Orders',
           code: 'SELECT * FROM orders;',
           orderIndex: 1,
@@ -74,7 +74,7 @@ void main() {
     await pumpBar(
       tester,
       suggestions: [
-        SqlAdvancedSuggestionModel(
+        SqlAdvancedSuggestionEntity(
           label: 'Users',
           code: 'SELECT * FROM users WHERE id = ?;',
           selectText: '?',

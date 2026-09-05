@@ -1,62 +1,62 @@
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 
 /// Built-in advanced SQL snippet suggestions shown in the editor.
-final defaultSqlAdvancedSuggestions = <SqlAdvancedSuggestionModel>[
-  SqlAdvancedSuggestionModel(
+final defaultSqlAdvancedSuggestions = <SqlAdvancedSuggestionEntity>[
+  SqlAdvancedSuggestionEntity(
     label: 'ALL',
     code: 'SELECT * FROM table_name;',
     selectText: 'table_name',
     orderIndex: 0,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'TOP10',
     code: 'SELECT * FROM table_name LIMIT 10;',
     selectText: 'table_name',
     orderIndex: 1,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'COUNT',
     code: 'SELECT COUNT(*) FROM table_name;',
     selectText: 'table_name',
     orderIndex: 2,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'JOIN',
     code: 'SELECT a.*, b.* FROM table_a a JOIN table_b b ON a.id = b.id;',
     selectText: 'table_a',
     orderIndex: 3,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'WHERE',
     code: 'SELECT * FROM table_name WHERE column_name = value;',
     selectText: 'table_name',
     orderIndex: 4,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'INS',
     code: 'INSERT INTO table_name (column1, column2) VALUES (value1, value2);',
     selectText: 'table_name',
     orderIndex: 5,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'UPD',
     code: 'UPDATE table_name SET column_name = value WHERE id = 1;',
     selectText: 'table_name',
     orderIndex: 6,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'DEL',
     code: 'DELETE FROM table_name WHERE id = 1;',
     selectText: 'table_name',
     orderIndex: 7,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'DROP',
     code: 'DROP TABLE IF EXISTS table_name;',
     selectText: 'table_name',
     orderIndex: 8,
   ),
-  SqlAdvancedSuggestionModel(
+  SqlAdvancedSuggestionEntity(
     label: 'DESC',
     code: 'DESCRIBE table_name;',
     selectText: 'table_name',

@@ -4,8 +4,9 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/database/data/datasources/database_local_datasource.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/data/mappers/database_mapper.dart';
 import 'package:sql_studio/src/features/database/data/repositories/database_repository_impl.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 
 class _MockDatabaseLocalDatasource extends Mock
     implements DatabaseLocalDatasource {}
@@ -16,7 +17,7 @@ void main() {
   late _MockDatabaseLocalDatasource datasource;
   late DatabaseRepositoryImpl repository;
 
-  final model = DatabaseModel(label: 'Todo', name: 'todo');
+  final model = DatabaseEntity(label: 'Todo', name: 'todo');
 
   setUpAll(() {
     registerFallbackValue(<String, dynamic>{});
@@ -47,13 +48,13 @@ void main() {
   });
 
   group('getAll', () {
-    test('maps every row into a DatabaseModel on success', () async {
+    test('maps every row into a DatabaseEntity on success', () async {
       when(
         () => datasource.getAll(orderBy: any(named: 'orderBy')),
-      ).thenAnswer((_) async => [model.toMap()]);
+      ).thenAnswer((_) async => [DatabaseMapper.toMap(model)]);
 
       final result =
-          await repository.getAll() as SuccessResult<List<DatabaseModel>>;
+          await repository.getAll() as SuccessResult<List<DatabaseEntity>>;
 
       expect(result.value.single.name, 'todo');
     });
@@ -64,7 +65,7 @@ void main() {
       ).thenThrow(Exception('io error'));
 
       final result =
-          await repository.getAll() as FailureResult<List<DatabaseModel>>;
+          await repository.getAll() as FailureResult<List<DatabaseEntity>>;
 
       expect(result.error.type, AppLocalizationsKey.fetchDatabasesError);
     });
@@ -77,10 +78,10 @@ void main() {
           conditions: any(named: 'conditions'),
           limit: any(named: 'limit'),
         ),
-      ).thenAnswer((_) async => [model.toMap()]);
+      ).thenAnswer((_) async => [DatabaseMapper.toMap(model)]);
 
       final result =
-          await repository.getByName('todo') as SuccessResult<DatabaseModel?>;
+          await repository.getByName('todo') as SuccessResult<DatabaseEntity?>;
 
       expect(result.value?.name, 'todo');
     });
@@ -95,7 +96,7 @@ void main() {
 
       final result =
           await repository.getByName('missing')
-              as SuccessResult<DatabaseModel?>;
+              as SuccessResult<DatabaseEntity?>;
 
       expect(result.value, isNull);
     });
@@ -136,7 +137,7 @@ void main() {
 
         final result =
             await repository.toggleFavorite(model)
-                as SuccessResult<DatabaseModel>;
+                as SuccessResult<DatabaseEntity>;
 
         expect(result.value.isFavorite, !model.isFavorite);
       },
@@ -149,7 +150,7 @@ void main() {
 
         final result =
             await repository.toggleFavorite(model)
-                as FailureResult<DatabaseModel>;
+                as FailureResult<DatabaseEntity>;
 
         expect(
           result.error.type,

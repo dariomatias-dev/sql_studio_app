@@ -1,5 +1,5 @@
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 
 /// Persists a new ordering for the advanced SQL suggestions.
@@ -11,8 +11,8 @@ class ReorderSqlAdvancedSuggestionsUseCase {
 
   /// Runs the use case, persisting each suggestion in [newOrder] with its
   /// new index in a single batch, and returning the updated list.
-  Future<Result<List<SqlAdvancedSuggestionModel>>> call(
-    List<SqlAdvancedSuggestionModel> newOrder,
+  Future<Result<List<SqlAdvancedSuggestionEntity>>> call(
+    List<SqlAdvancedSuggestionEntity> newOrder,
   ) async {
     if (newOrder.isEmpty) return const SuccessResult([]);
 

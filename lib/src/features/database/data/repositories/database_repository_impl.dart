@@ -2,7 +2,8 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/database/data/datasources/database_local_datasource.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/data/mappers/database_mapper.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/domain/repositories/database_repository.dart'
     as domain;
 
@@ -15,9 +16,9 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   final AppLogger _logger;
 
   @override
-  Future<Result<void>> create(DatabaseModel model) async {
+  Future<Result<void>> create(DatabaseEntity model) async {
     try {
-      await _datasource.insert(model.toMap());
+      await _datasource.insert(DatabaseMapper.toMap(model));
 
       _logger.info('Database created');
 
@@ -38,10 +39,10 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<List<DatabaseModel>>> getAll() async {
+  Future<Result<List<DatabaseEntity>>> getAll() async {
     try {
       final results = await _datasource.getAll(orderBy: 'name ASC');
-      final models = results.map(DatabaseModel.fromMap).toList();
+      final models = results.map(DatabaseMapper.fromMap).toList();
 
       _logger.info('Fetched ${models.length} databases');
 
@@ -60,7 +61,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<DatabaseModel?>> getByName(String name) async {
+  Future<Result<DatabaseEntity?>> getByName(String name) async {
     try {
       final results = await _datasource.getWhere(
         conditions: {'name': name},
@@ -68,7 +69,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       );
 
       if (results.isNotEmpty) {
-        final model = DatabaseModel.fromMap(results.first);
+        final model = DatabaseMapper.fromMap(results.first);
 
         _logger.info('Fetched database by name');
 
@@ -92,9 +93,11 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<void>> delete(DatabaseModel model) async {
+  Future<Result<void>> delete(DatabaseEntity model) async {
     try {
-      final deletedCount = await _datasource.delete(model.toMap());
+      final deletedCount = await _datasource.delete(
+        DatabaseMapper.toMap(model),
+      );
 
       if (deletedCount > 0) {
         _logger.info('Database deleted');
@@ -123,13 +126,15 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<DatabaseModel>> toggleFavorite(DatabaseModel model) async {
+  Future<Result<DatabaseEntity>> toggleFavorite(DatabaseEntity model) async {
     try {
       final updated = model.copyWith(
         isFavorite: !model.isFavorite,
         updatedAt: DateTime.now(),
       );
-      final updatedCount = await _datasource.update(updated.toMap());
+      final updatedCount = await _datasource.update(
+        DatabaseMapper.toMap(updated),
+      );
 
       if (updatedCount > 0) {
         _logger.info('Toggled favorite for the database');
@@ -160,7 +165,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
   }
 
   @override
-  Future<Result<void>> dropDatabaseFile(DatabaseModel model) async {
+  Future<Result<void>> dropDatabaseFile(DatabaseEntity model) async {
     try {
       await _datasource.dropDatabaseFile(model.name);
 

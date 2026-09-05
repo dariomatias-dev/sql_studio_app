@@ -5,8 +5,9 @@ import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/datasources/sql_advanced_suggestions_local_datasource.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/data/mappers/sql_advanced_suggestion_mapper.dart';
 import 'package:sql_studio/src/features/sql_suggestions/data/repositories/sql_advanced_suggestions_repository_impl.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 
 class _MockDatasource extends Mock
     implements SqlAdvancedSuggestionsLocalDatasource {}
@@ -17,7 +18,7 @@ void main() {
   late _MockDatasource datasource;
   late SqlAdvancedSuggestionsRepositoryImpl repository;
 
-  final suggestion = SqlAdvancedSuggestionModel(
+  final suggestion = SqlAdvancedSuggestionEntity(
     label: 'A',
     code: 'SELECT 1',
     orderIndex: 0,
@@ -40,11 +41,13 @@ void main() {
     test('maps every stored row into a model', () async {
       when(
         () => datasource.getAll(),
-      ).thenAnswer((_) async => [suggestion.toMap()]);
+      ).thenAnswer(
+        (_) async => [SqlAdvancedSuggestionMapper.toMap(suggestion)],
+      );
 
       final result =
           await repository.getAll()
-              as SuccessResult<List<SqlAdvancedSuggestionModel>>;
+              as SuccessResult<List<SqlAdvancedSuggestionEntity>>;
 
       expect(result.value.single.label, 'A');
     });
@@ -57,7 +60,7 @@ void main() {
 
       final result =
           await repository.getAll()
-              as SuccessResult<List<SqlAdvancedSuggestionModel>>;
+              as SuccessResult<List<SqlAdvancedSuggestionEntity>>;
 
       expect(result.value.length, defaultSqlAdvancedSuggestions.length);
       expect(
@@ -66,7 +69,9 @@ void main() {
       );
       verify(
         () => datasource.insertAll(
-          defaultSqlAdvancedSuggestions.map((s) => s.toMap()).toList(),
+          defaultSqlAdvancedSuggestions
+              .map(SqlAdvancedSuggestionMapper.toMap)
+              .toList(),
         ),
       ).called(1);
     });
@@ -78,7 +83,7 @@ void main() {
 
         final result =
             await repository.getAll()
-                as FailureResult<List<SqlAdvancedSuggestionModel>>;
+                as FailureResult<List<SqlAdvancedSuggestionEntity>>;
 
         expect(
           result.error.type,
@@ -95,7 +100,9 @@ void main() {
       final result = await repository.create(suggestion);
 
       expect(result.isSuccess, isTrue);
-      verify(() => datasource.insert(suggestion.toMap())).called(1);
+      verify(
+        () => datasource.insert(SqlAdvancedSuggestionMapper.toMap(suggestion)),
+      ).called(1);
     });
 
     test(
@@ -127,7 +134,11 @@ void main() {
       final result = await repository.addAll([suggestion]);
 
       expect(result.isSuccess, isTrue);
-      verify(() => datasource.insertAll([suggestion.toMap()])).called(1);
+      verify(
+        () => datasource.insertAll([
+          SqlAdvancedSuggestionMapper.toMap(suggestion),
+        ]),
+      ).called(1);
     });
 
     test(
@@ -152,7 +163,9 @@ void main() {
       final result = await repository.update(suggestion);
 
       expect(result.isSuccess, isTrue);
-      verify(() => datasource.update(suggestion.toMap())).called(1);
+      verify(
+        () => datasource.update(SqlAdvancedSuggestionMapper.toMap(suggestion)),
+      ).called(1);
     });
 
     test(
@@ -184,7 +197,11 @@ void main() {
       final result = await repository.updateAll([suggestion]);
 
       expect(result.isSuccess, isTrue);
-      verify(() => datasource.updateAll([suggestion.toMap()])).called(1);
+      verify(
+        () => datasource.updateAll([
+          SqlAdvancedSuggestionMapper.toMap(suggestion),
+        ]),
+      ).called(1);
     });
 
     test(

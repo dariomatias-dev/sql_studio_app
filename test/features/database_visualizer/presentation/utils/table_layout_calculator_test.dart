@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/utils/table_layout_calculator.dart';
 
 void main() {
-  TableInfoModel table(String name, int columnCount) {
-    return TableInfoModel(
+  TableInfoEntity table(String name, int columnCount) {
+    return TableInfoEntity(
       name: name,
       columns: List.generate(
         columnCount,
-        (i) => ColumnInfoModel(name: 'col$i', type: 'TEXT'),
+        (i) => ColumnInfoEntity(name: 'col$i', type: 'TEXT'),
       ),
     );
   }

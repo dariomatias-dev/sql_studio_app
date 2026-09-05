@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/src/core/app_colors.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/table_relation_painter.dart';
 
 void main() {
-  final tables = [TableInfoModel(name: 'users', columns: [])];
+  final tables = [TableInfoEntity(name: 'users', columns: [])];
   final tableRects = {'users': const Rect.fromLTWH(0, 0, 10, 10)};
 
   TableRelationPainter painter({
-    List<TableInfoModel>? tables_,
+    List<TableInfoEntity>? tables_,
     Map<String, Rect>? tableRects_,
     String? selectedTable,
     AppColors colors = AppColors.light,
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('returns true when tables identity changed', () {
-      final other = [TableInfoModel(name: 'orders', columns: [])];
+      final other = [TableInfoEntity(name: 'orders', columns: [])];
 
       expect(
         painter().shouldRepaint(painter(tables_: other)),

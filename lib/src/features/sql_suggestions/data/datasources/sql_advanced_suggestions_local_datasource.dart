@@ -1,18 +1,18 @@
 import 'package:sql_studio/src/core/database/database_repository.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 
 /// Reads and writes advanced SQL suggestions rows in sqflite.
 class SqlAdvancedSuggestionsLocalDatasource {
   /// Creates the datasource, backed by [manager].
   SqlAdvancedSuggestionsLocalDatasource(DatabaseManager manager)
-    : _repository = DatabaseRepository<SqlAdvancedSuggestionModel>(
+    : _repository = DatabaseRepository<SqlAdvancedSuggestionEntity>(
         tableName: _tableName,
         manager: manager,
       );
 
   static const _tableName = 'sql_advanced_suggestions';
 
-  final DatabaseRepository<SqlAdvancedSuggestionModel> _repository;
+  final DatabaseRepository<SqlAdvancedSuggestionEntity> _repository;
 
   /// Fetches all rows ordered by their display order.
   Future<List<Map<String, dynamic>>> getAll() {

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/add_sql_advanced_suggestion_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/load_sql_advanced_suggestions_usecase.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/remove_sql_advanced_suggestion_usecase.dart';
@@ -60,7 +60,7 @@ class SqlAdvancedSuggestionsViewModel
 
   /// Persists [suggestion] and adds it to the current list.
   Future<Result<void>> addSuggestion(
-    SqlAdvancedSuggestionModel suggestion,
+    SqlAdvancedSuggestionEntity suggestion,
   ) async {
     state = state.copyWith(isLoading: true);
 
@@ -78,7 +78,7 @@ class SqlAdvancedSuggestionsViewModel
 
   /// Persists changes to [suggestion] and updates it in the current list.
   Future<Result<void>> updateSuggestion(
-    SqlAdvancedSuggestionModel suggestion,
+    SqlAdvancedSuggestionEntity suggestion,
   ) async {
     state = state.copyWith(isLoading: true);
 
@@ -115,7 +115,7 @@ class SqlAdvancedSuggestionsViewModel
 
   /// Replaces all stored suggestions with [newSuggestions].
   Future<Result<void>> saveAllSuggestions(
-    List<SqlAdvancedSuggestionModel> newSuggestions,
+    List<SqlAdvancedSuggestionEntity> newSuggestions,
   ) async {
     state = state.copyWith(isLoading: true);
 
@@ -131,7 +131,7 @@ class SqlAdvancedSuggestionsViewModel
 
   /// Persists a new ordering for the suggestions, given as [newOrder].
   Future<Result<void>> reorderSuggestions(
-    List<SqlAdvancedSuggestionModel> newOrder,
+    List<SqlAdvancedSuggestionEntity> newOrder,
   ) async {
     state = state.copyWith(isLoading: true);
 

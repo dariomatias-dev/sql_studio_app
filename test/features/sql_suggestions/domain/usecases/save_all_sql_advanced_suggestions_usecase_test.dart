@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/save_all_sql_advanced_suggestions_usecase.dart';
 
@@ -14,7 +14,7 @@ void main() {
   late SaveAllSqlAdvancedSuggestionsUseCase useCase;
 
   setUpAll(() {
-    registerFallbackValue(<SqlAdvancedSuggestionModel>[]);
+    registerFallbackValue(<SqlAdvancedSuggestionEntity>[]);
   });
 
   setUp(() {
@@ -30,7 +30,7 @@ void main() {
 
   test('clears storage before writing the new suggestions', () async {
     final suggestions = [
-      SqlAdvancedSuggestionModel(label: 'A', code: 'SELECT 1', orderIndex: 0),
+      SqlAdvancedSuggestionEntity(label: 'A', code: 'SELECT 1', orderIndex: 0),
     ];
 
     await useCase(suggestions);

@@ -7,7 +7,7 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_d
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_group_widget.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 
 import '../../../../../test_helpers/shared_preferences_test_helper.dart';
 
@@ -32,8 +32,8 @@ void main() {
 
   testWidgets('renders the title and a card per database', (tester) async {
     final databases = [
-      DatabaseModel(label: 'Todo List', name: 'todo_list'),
-      DatabaseModel(label: 'Contacts', name: 'contacts'),
+      DatabaseEntity(label: 'Todo List', name: 'todo_list'),
+      DatabaseEntity(label: 'Contacts', name: 'contacts'),
     ];
 
     await tester.pumpWidget(
@@ -58,7 +58,7 @@ void main() {
       wrap(
         const RootDrawerDatabaseGroupWidget(
           title: 'Favorites',
-          databases: <DatabaseModel>[],
+          databases: <DatabaseEntity>[],
         ),
       ),
     );

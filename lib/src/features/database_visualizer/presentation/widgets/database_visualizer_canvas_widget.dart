@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/grid_background_painter.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/painters/table_relation_painter.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/utils/table_layout_calculator.dart';
@@ -22,7 +22,7 @@ class DatabaseVisualizerCanvasWidget extends StatefulWidget {
   });
 
   /// The tables to render.
-  final List<TableInfoModel> tables;
+  final List<TableInfoEntity> tables;
 
   /// Controller shared with the zoom controls, driving pan/zoom.
   final TransformationController transformationController;
@@ -203,7 +203,7 @@ class _DatabaseVisualizerCanvasWidgetState
     );
   }
 
-  bool _isRelated(TableInfoModel table, String selectedTable) {
+  bool _isRelated(TableInfoEntity table, String selectedTable) {
     if (table.name == selectedTable) return true;
 
     for (final column in table.columns) {

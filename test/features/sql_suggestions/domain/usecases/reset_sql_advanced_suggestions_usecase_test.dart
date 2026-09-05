@@ -3,7 +3,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sql_advanced_suggestions.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/features/sql_suggestions/data/models/sql_advanced_suggestion_model.dart';
+import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/repositories/sql_advanced_suggestions_repository.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/usecases/reset_sql_advanced_suggestions_usecase.dart';
 
@@ -15,7 +15,7 @@ void main() {
   late ResetSqlAdvancedSuggestionsUseCase useCase;
 
   setUpAll(() {
-    registerFallbackValue(<SqlAdvancedSuggestionModel>[]);
+    registerFallbackValue(<SqlAdvancedSuggestionEntity>[]);
   });
 
   setUp(() {
@@ -37,7 +37,7 @@ void main() {
 
   test('returns the same suggestions as the bundled defaults', () async {
     final result =
-        await useCase() as SuccessResult<List<SqlAdvancedSuggestionModel>>;
+        await useCase() as SuccessResult<List<SqlAdvancedSuggestionEntity>>;
 
     expect(result.value.map((s) => s.label).toList(), [
       for (final s in defaultSqlAdvancedSuggestions) s.label,

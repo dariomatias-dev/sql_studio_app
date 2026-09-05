@@ -1,7 +1,7 @@
 /// Describes a single column of a database table.
-class ColumnInfoModel {
+class ColumnInfoEntity {
   /// Creates a column description.
-  ColumnInfoModel({
+  ColumnInfoEntity({
     required this.name,
     required this.type,
     this.foreignTable,
@@ -22,13 +22,13 @@ class ColumnInfoModel {
 }
 
 /// Describes a database table and its columns.
-class TableInfoModel {
+class TableInfoEntity {
   /// Creates a table description.
-  TableInfoModel({required this.name, required this.columns});
+  TableInfoEntity({required this.name, required this.columns});
 
   /// Table name.
   final String name;
 
   /// Columns belonging to this table.
-  final List<ColumnInfoModel> columns;
+  final List<ColumnInfoEntity> columns;
 }

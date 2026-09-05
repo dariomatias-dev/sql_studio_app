@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_theme.dart';
-import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
+import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 import 'package:sql_studio/src/features/database_visualizer/presentation/widgets/database_visualizer_table_widget.dart';
 
 void main() {
@@ -13,14 +13,14 @@ void main() {
     home: Scaffold(body: child),
   );
 
-  TableInfoModel table({List<ColumnInfoModel>? columns}) {
-    return TableInfoModel(
+  TableInfoEntity table({List<ColumnInfoEntity>? columns}) {
+    return TableInfoEntity(
       name: 'users',
       columns:
           columns ??
           [
-            ColumnInfoModel(name: 'id', type: 'INTEGER'),
-            ColumnInfoModel(
+            ColumnInfoEntity(name: 'id', type: 'INTEGER'),
+            ColumnInfoEntity(
               name: 'group_id',
               type: 'INTEGER',
               foreignTable: 'groups',

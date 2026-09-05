@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/features/database/data/models/database_model.dart';
+import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 import 'package:sql_studio/src/features/database/presentation/providers.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/providers.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
@@ -90,7 +90,7 @@ class _CreateDatabaseDialogWidgetState
 
     if (shouldStopFlow) return;
 
-    final createDatabase = DatabaseModel(label: label, name: name);
+    final createDatabase = DatabaseEntity(label: label, name: name);
 
     if (!mounted) return;
 
