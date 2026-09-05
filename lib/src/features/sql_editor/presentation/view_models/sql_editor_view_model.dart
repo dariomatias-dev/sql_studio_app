@@ -24,7 +24,9 @@ class SqlEditorViewModel extends Notifier<SqlEditorState> {
     focusNode.addListener(_onFocusChanged);
 
     ref.onDispose(() {
-      controller.removeListener(_onTextChanged);
+      controller
+        ..removeListener(_onTextChanged)
+        ..dispose();
       focusNode
         ..removeListener(_onFocusChanged)
         ..dispose();
