@@ -964,6 +964,42 @@ abstract class AppLocalizations {
   /// **'Exit screen'**
   String get exitScreen;
 
+  /// No description provided for @startupFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start SQL Studio'**
+  String get startupFailedTitle;
+
+  /// No description provided for @startupFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while loading your data. Try again, or clear the app data if the problem persists.'**
+  String get startupFailedMessage;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
+
+  /// No description provided for @clearAppData.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear app data'**
+  String get clearAppData;
+
+  /// No description provided for @clearAppDataConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes every database and setting stored on this device. This action cannot be undone.'**
+  String get clearAppDataConfirmation;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong.'**
+  String get unexpectedError;
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:

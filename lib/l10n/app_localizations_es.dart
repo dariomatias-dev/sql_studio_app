@@ -480,6 +480,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exitScreen => 'Salir de la pantalla';
 
   @override
+  String get startupFailedTitle => 'No se pudo iniciar SQL Studio';
+
+  @override
+  String get startupFailedMessage =>
+      'Algo salió mal al cargar tus datos. Inténtalo de nuevo o borra los datos de la aplicación si el problema continúa.';
+
+  @override
+  String get retry => 'Intentar de nuevo';
+
+  @override
+  String get clearAppData => 'Borrar datos de la aplicación';
+
+  @override
+  String get clearAppDataConfirmation =>
+      'Esto elimina permanentemente todas las bases de datos y ajustes guardados en este dispositivo. Esta acción no se puede deshacer.';
+
+  @override
+  String get unexpectedError => 'Algo salió mal.';
+
+  @override
   String get error => 'Error';
 
   @override
