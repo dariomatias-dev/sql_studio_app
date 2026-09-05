@@ -93,3 +93,23 @@ jobs:
           name: app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 14
+
+  osv-scanner:
+    name: Scan dependencies for known vulnerabilities
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Runs on its own, not gated on or gating quality/build_apk: a newly
+    # disclosed advisory with no fix available yet is not a reason to stop
+    # the tests from reporting. Report only until there is a triage process.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install osv-scanner
+        run: go install github.com/google/osv-scanner/cmd/osv-scanner@latest
+
+      - name: Scan pubspec.lock
+        run: osv-scanner --lockfile=pubspec.lock || true
