@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
@@ -47,17 +48,17 @@ class LanguageSelectorSheetOptionWidget extends ConsumerWidget {
         code == ref.watch(appLocalizationViewModelProvider).languageCode;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
       child: Material(
         color: context.colors.transparent,
         child: InkWell(
           onTap: () => _changeLanguage(context, ref),
           borderRadius: BorderRadius.circular(AppRadii.md),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 250),
+            duration: AppDurations.md,
             curve: Curves.easeInOut,
             padding: const EdgeInsets.symmetric(
-              vertical: 16,
+              vertical: AppSpacing.md,
               horizontal: 20,
             ),
             decoration: BoxDecoration(

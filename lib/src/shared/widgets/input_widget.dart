@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A styled text form field used throughout the app's forms.
@@ -70,7 +71,7 @@ class InputWidget extends StatelessWidget {
         focusedErrorBorder: _border(context.colors.error, width: 1.5),
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
+          horizontal: AppSpacing.md,
           vertical: 18,
         ),
         fillColor: context.colors.background,

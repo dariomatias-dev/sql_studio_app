@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 
@@ -89,7 +90,9 @@ class ButtonWidget extends StatelessWidget {
           highlightColor: context.colors.white.withAlpha(20),
           splashColor: context.colors.white.withAlpha(20),
           child: Container(
-            padding: padding ?? const EdgeInsets.symmetric(horizontal: 32),
+            padding:
+                padding ??
+                const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadii.full),
               border: Border.all(color: buttonStyle.border),

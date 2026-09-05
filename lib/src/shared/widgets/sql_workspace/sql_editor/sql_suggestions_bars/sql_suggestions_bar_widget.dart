@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Base layout for a horizontally scrollable row of tappable suggestion
@@ -30,7 +32,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       height: 48,
       decoration: BoxDecoration(
         border: Border(top: BorderSide(color: context.colors.border)),
@@ -40,7 +42,7 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
       ),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
         itemCount: itemCount,
         separatorBuilder: (context, index) => const SizedBox(width: 4),
         itemBuilder: (context, index) {
@@ -53,7 +55,10 @@ class SqlSuggestionsBarBaseWidget extends StatelessWidget {
               alignment: Alignment.center,
               padding:
                   itemPadding ??
-                  const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                  const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: AppSpacing.xxs,
+                  ),
               decoration: BoxDecoration(
                 color: context.colors.background,
                 border: Border.all(color: context.colors.border),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_durations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_group_widget.dart';
@@ -46,9 +49,9 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 20,
-                24,
+                AppSpacing.lg,
                 20,
-                16,
+                AppSpacing.md,
               ),
               child: Row(
                 children: <Widget>[
@@ -69,7 +72,7 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: InputWidget(
                 controller: _searchController,
                 hintText: l10n.searchDatabases,
@@ -91,7 +94,7 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
             const SizedBox(height: 24),
             Expanded(
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
+                duration: AppDurations.sm,
                 child: state.isLoading
                     ? const LoadingStateWidget(
                         key: ValueKey('drawer_loading'),
@@ -124,7 +127,7 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: ButtonWidget(
                 onPressed: () => CreateDatabaseDialogWidget.show(context),
                 text: l10n.newDatabase,

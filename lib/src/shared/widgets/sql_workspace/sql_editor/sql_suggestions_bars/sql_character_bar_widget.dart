@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
 /// Special characters commonly used in SQL statements, shown as quick
@@ -19,7 +21,10 @@ class SqlCharacterBarWidget extends StatelessWidget {
     return SqlSuggestionsBarBaseWidget(
       onTap: (index) => onInsertCommand(characters[index]),
       itemCount: characters.length,
-      itemPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      itemPadding: const EdgeInsets.symmetric(
+        vertical: 6,
+        horizontal: AppSpacing.md,
+      ),
       itemBuilder: (index) => characters[index],
     );
   }

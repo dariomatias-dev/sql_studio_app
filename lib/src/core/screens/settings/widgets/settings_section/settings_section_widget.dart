@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Groups related settings entries under a titled section header, each
@@ -25,7 +26,7 @@ class SettingsSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 32, 0, 10),
+          padding: const EdgeInsets.fromLTRB(0, AppSpacing.xl, 0, 10),
           child: Text(
             title.toUpperCase(),
             style: TextStyle(

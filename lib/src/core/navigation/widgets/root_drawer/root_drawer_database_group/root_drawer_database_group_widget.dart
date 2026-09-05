@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
@@ -29,7 +30,12 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+          padding: const EdgeInsets.fromLTRB(
+            20,
+            AppSpacing.md,
+            20,
+            AppSpacing.sm,
+          ),
           child: Row(
             children: <Widget>[
               Text(
@@ -51,7 +57,7 @@ class RootDrawerDatabaseGroupWidget extends StatelessWidget {
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           itemCount: databases.length,
           itemBuilder: (context, index) {
             final database = databases[index];

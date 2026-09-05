@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
@@ -43,8 +44,8 @@ class StyledDataTableWidget extends StatelessWidget {
         ),
       ),
       dividerThickness: 1,
-      horizontalMargin: 12,
-      columnSpacing: 24,
+      horizontalMargin: AppSpacing.sm,
+      columnSpacing: AppSpacing.lg,
     );
   }
 }

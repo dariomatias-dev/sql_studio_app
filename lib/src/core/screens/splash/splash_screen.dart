@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
@@ -112,7 +114,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void _init() {
     _entryAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1400),
+      duration: AppDurations.splash,
     );
 
     _iconScaleAnimation = Tween<double>(begin: 0.4, end: 1).animate(

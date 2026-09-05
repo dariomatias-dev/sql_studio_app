@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/types/workspace_layout_type.dart';
@@ -56,7 +57,7 @@ class _WorkspaceLayoutConfigurationScreenState
     return ScaffoldWidget(
       appBar: AppBar(title: Text(appLocalizations.workspaceLayout)),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           children: <Widget>[
             WorkspaceLayoutSettingsOptionCardWidget(

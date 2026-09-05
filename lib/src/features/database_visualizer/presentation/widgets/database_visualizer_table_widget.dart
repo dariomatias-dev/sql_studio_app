@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
@@ -57,7 +60,7 @@ class _DatabaseVisualizerTableWidgetState
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(milliseconds: 40 * widget.entryIndex), () {
+    Future.delayed(AppDurations.stagger * widget.entryIndex, () {
       if (mounted) setState(() => _visible = true);
     });
   }
@@ -66,11 +69,11 @@ class _DatabaseVisualizerTableWidgetState
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _visible ? (widget.isDimmed ? 0.35 : 1) : 0,
-      duration: const Duration(milliseconds: 250),
+      duration: AppDurations.md,
       curve: Curves.easeOut,
       child: AnimatedScale(
         scale: _visible ? 1 : 0.92,
-        duration: const Duration(milliseconds: 250),
+        duration: AppDurations.md,
         curve: Curves.easeOut,
         child: GestureDetector(onTap: widget.onTap, child: _buildCard()),
       ),
@@ -83,7 +86,7 @@ class _DatabaseVisualizerTableWidgetState
     final table = widget.table;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: AppDurations.sm,
       width: 260,
       decoration: BoxDecoration(
         color: context.colors.white,
@@ -104,9 +107,9 @@ class _DatabaseVisualizerTableWidgetState
             Container(
               width: double.infinity,
               padding: const EdgeInsets.only(
-                top: 8,
-                bottom: 8,
-                left: 16,
+                top: AppSpacing.xs,
+                bottom: AppSpacing.xs,
+                left: AppSpacing.md,
                 right: 6,
               ),
               color: context.colors.black,
@@ -161,7 +164,7 @@ class _DatabaseVisualizerTableWidgetState
 
               return Container(
                 height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: context.colors.border),
@@ -171,7 +174,7 @@ class _DatabaseVisualizerTableWidgetState
                   children: <Widget>[
                     if (isFk)
                       Padding(
-                        padding: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsets.only(right: AppSpacing.xs),
                         child: Icon(
                           Icons.link_rounded,
                           size: 16,

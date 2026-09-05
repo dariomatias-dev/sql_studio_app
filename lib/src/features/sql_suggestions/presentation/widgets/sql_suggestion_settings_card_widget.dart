@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
@@ -43,7 +45,7 @@ class SqlSuggestionSettingsCardWidget extends StatelessWidget {
         onTap: () => onChanged(!active),
         borderRadius: BorderRadius.circular(AppRadii.lg),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: AppDurations.lg,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: context.colors.white,

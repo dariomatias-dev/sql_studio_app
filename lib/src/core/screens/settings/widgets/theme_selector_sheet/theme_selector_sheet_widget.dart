@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/theme_selector_sheet/theme_selector_sheet_option_widget.dart';
 
@@ -16,7 +18,10 @@ class ThemeSelectorSheetWidget extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: AppSpacing.lg,
+      ),
       decoration: BoxDecoration(
         color: context.colors.white,
         borderRadius: const BorderRadius.vertical(

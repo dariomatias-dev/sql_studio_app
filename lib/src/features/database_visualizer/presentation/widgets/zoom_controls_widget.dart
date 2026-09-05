@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// Floating zoom in/out/reset controls for the database visualizer canvas.
@@ -37,7 +39,7 @@ class ZoomControlsWidget extends StatelessWidget {
         border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.elevated,
       ),
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

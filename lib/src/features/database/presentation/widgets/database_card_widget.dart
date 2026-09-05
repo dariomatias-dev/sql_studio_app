@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/database/default_database_model.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
@@ -68,7 +70,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
     final tableCount = widget.db.tables.length;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
       child: CardWidget(
         borderRadius: BorderRadius.circular(AppRadii.lg),
         border: Border.all(color: context.colors.border),
@@ -83,7 +85,12 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 12, 16),
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  20,
+                  AppSpacing.sm,
+                  AppSpacing.md,
+                ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -176,7 +183,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 child: Text(
                   l10n.key(widget.db.descriptionKey),
                   style: TextStyle(
@@ -189,7 +196,7 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
               ),
               const SizedBox(height: 28),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
                   color: context.colors.white,
                   border: Border(
@@ -228,7 +235,9 @@ class _DatabaseCardWidgetState extends ConsumerState<DatabaseCardWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                      ),
                       child: Text(
                         '|',
                         style: TextStyle(color: context.colors.border),

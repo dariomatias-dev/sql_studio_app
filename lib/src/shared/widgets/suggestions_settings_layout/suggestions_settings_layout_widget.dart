@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
@@ -106,10 +108,10 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                       ).copyWith(canvasColor: context.colors.white),
                       child: ReorderableListView.builder(
                         padding: const EdgeInsets.only(
-                          top: 8,
-                          right: 12,
+                          top: AppSpacing.xs,
+                          right: AppSpacing.sm,
                           bottom: 80,
-                          left: 12,
+                          left: AppSpacing.sm,
                         ),
                         itemCount: items.length,
                         onReorder: _controller.reorderItems,
@@ -142,8 +144,8 @@ class _SuggestionsSettingsLayoutWidgetState<T>
                     child: Container(
                       color: context.colors.transparent,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.sm,
                       ),
                       child: Row(
                         children: <Widget>[

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
-
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 /// Screen shown when a navigation route could not be resolved.
@@ -19,7 +19,7 @@ class NotFoundScreen extends StatelessWidget {
       backgroundColor: context.colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

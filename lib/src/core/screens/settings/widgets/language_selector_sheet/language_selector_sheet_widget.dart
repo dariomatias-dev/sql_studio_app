@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
@@ -18,7 +20,10 @@ class LanguageSelectorSheetWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: AppSpacing.lg,
+      ),
       decoration: BoxDecoration(
         color: context.colors.white,
         borderRadius: const BorderRadius.vertical(

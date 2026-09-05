@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/core/routes/route_paths.dart';
@@ -24,8 +26,8 @@ CustomTransitionPage<void> _buildPage({
   return CustomTransitionPage<void>(
     key: key,
     child: child,
-    transitionDuration: const Duration(milliseconds: 280),
-    reverseTransitionDuration: const Duration(milliseconds: 280),
+    transitionDuration: AppDurations.pageTransition,
+    reverseTransitionDuration: AppDurations.pageTransition,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final incoming = CurvedAnimation(
         parent: animation,

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/navigation_provider.dart';
 
@@ -29,7 +30,12 @@ class RootNavBarWidget extends ConsumerWidget {
 
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        margin: const EdgeInsets.fromLTRB(
+          AppSpacing.sm,
+          0,
+          AppSpacing.sm,
+          AppSpacing.sm,
+        ),
         height: 72,
         decoration: BoxDecoration(
           color: context.colors.white,
@@ -40,7 +46,7 @@ class RootNavBarWidget extends ConsumerWidget {
         child: Stack(
           children: <Widget>[
             AnimatedAlign(
-              duration: const Duration(milliseconds: 500),
+              duration: AppDurations.xl,
               curve: Curves.easeOutBack,
               alignment: Alignment(index * 1.0 - 1.0, 0),
               child: Container(
@@ -142,13 +148,13 @@ class _NavBarItemState extends State<_NavBarItem> {
         behavior: HitTestBehavior.opaque,
         child: AnimatedScale(
           scale: _pressed ? 0.92 : 1,
-          duration: const Duration(milliseconds: 120),
+          duration: AppDurations.xs,
           curve: Curves.easeOut,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
+                duration: AppDurations.lg,
                 child: Icon(
                   isSelected ? widget.activeIcon : widget.icon,
                   key: ValueKey<String>('$_generation-$isSelected'),
@@ -164,7 +170,7 @@ class _NavBarItemState extends State<_NavBarItem> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 200),
+                    duration: AppDurations.sm,
                     style: TextStyle(
                       color: isSelected
                           ? context.colors.black

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
@@ -30,7 +32,7 @@ class SqlAdvancedSuggestionCardWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppRadii.md),
           ),
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
+            horizontal: AppSpacing.md,
             vertical: 6,
           ),
           leading: Icon(Icons.drag_handle, color: context.colors.black54),

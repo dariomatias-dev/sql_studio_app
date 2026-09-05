@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/screens/about/license_detail_screen.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
@@ -57,7 +59,7 @@ class _LicensesScreenState extends State<LicensesScreen> {
           if (packages == null) return const LoadingStateWidget();
 
           return ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
             itemCount: packages.length + 1,
             separatorBuilder: (context, index) => Divider(
               height: 1,
@@ -67,7 +69,12 @@ class _LicensesScreenState extends State<LicensesScreen> {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.md,
+                    AppSpacing.xs,
+                    AppSpacing.md,
+                    AppSpacing.md,
+                  ),
                   child: Text(
                     l10n.packagesCount(packages.length),
                     style: TextStyle(

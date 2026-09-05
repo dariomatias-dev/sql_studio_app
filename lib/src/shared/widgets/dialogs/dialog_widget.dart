@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
@@ -50,11 +51,11 @@ class DialogWidget extends StatelessWidget {
       backgroundColor: context.colors.transparent,
       elevation: 0,
       insetPadding: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 24,
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.lg,
       ),
       child: Container(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.xl),
         decoration: BoxDecoration(
           color: context.colors.white,
           borderRadius: BorderRadius.circular(AppRadii.xl),

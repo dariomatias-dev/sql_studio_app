@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
@@ -28,14 +30,14 @@ class LicenseDetailScreen extends StatelessWidget {
       appBar: AppBar(title: Text(packageName)),
       body: SelectionArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               for (final paragraph in paragraphs)
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: 16,
+                    bottom: AppSpacing.md,
                     left: paragraph.indent > 0
                         ? paragraph.indent * _indentUnit
                         : 0,

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-
 import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';
-
 import 'package:sql_studio/src/shared/widgets/input_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
@@ -47,7 +46,7 @@ class _DatabasesScreenState extends ConsumerState<DatabasesScreen>
     return ScaffoldWidget(
       showExitButton: false,
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           children: <Widget>[
             InputWidget(
@@ -72,7 +71,7 @@ class _DatabasesScreenState extends ConsumerState<DatabasesScreen>
                       icon: Icons.search_off_rounded,
                     )
                   : ListView.separated(
-                      padding: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.only(bottom: AppSpacing.md),
                       itemCount: databases.length,
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 8),

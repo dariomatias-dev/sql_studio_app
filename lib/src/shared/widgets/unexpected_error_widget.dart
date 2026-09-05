@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 
 /// Neutral replacement for the framework's red error screen, shown when a
 /// widget fails to build in release.
@@ -17,7 +18,7 @@ class UnexpectedErrorWidget extends StatelessWidget {
     return Material(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Text(message, textAlign: TextAlign.center),
         ),
       ),

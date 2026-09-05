@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_nav_bar_widget.dart';
@@ -66,7 +68,7 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
     unawaited(
       _pageController.animateToPage(
         page,
-        duration: const Duration(milliseconds: 500),
+        duration: AppDurations.xl,
         curve: Curves.easeInOutQuart,
       ),
     );
@@ -154,11 +156,11 @@ class _RootNavigationState extends ConsumerState<RootNavigation> {
                   child: IgnorePointer(
                     ignoring: hideNavBar,
                     child: AnimatedSlide(
-                      duration: const Duration(milliseconds: 200),
+                      duration: AppDurations.sm,
                       curve: Curves.easeOut,
                       offset: hideNavBar ? const Offset(0, 1) : Offset.zero,
                       child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 200),
+                        duration: AppDurations.sm,
                         curve: Curves.easeOut,
                         opacity: hideNavBar ? 0 : 1,
                         child: RootSwipeWrapperWidget(

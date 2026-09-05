@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:sql_studio/l10n/app_localizations.dart';
+import 'package:sql_studio/src/core/app_durations.dart';
+import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
@@ -51,7 +54,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
       contentKind = 'loading';
       content = Align(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.md),
           child: SizedBox(
             height: 4,
             child: LinearProgressIndicator(
@@ -90,7 +93,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       child: StyledDataTableWidget(
                         columns: columns,
                         rows: const <Map<String, dynamic>>[],
@@ -105,15 +108,15 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
 
             contentKind = 'rows';
             content = Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                      top: 16,
-                      right: 16,
-                      left: 16,
+                      top: AppSpacing.md,
+                      right: AppSpacing.md,
+                      left: AppSpacing.md,
                     ),
                     child: StyledDataTableWidget(columns: columns, rows: rows),
                   ),
@@ -128,7 +131,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
 
           contentKind = 'message';
           content = Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Text(
               text,
               style: const TextStyle(fontWeight: FontWeight.w500),
@@ -155,7 +158,7 @@ class _ConsoleWidgetState extends ConsumerState<ConsoleWidget> {
         ),
       ],
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
+        duration: AppDurations.sm,
         child: KeyedSubtree(key: ValueKey(contentKind), child: content),
       ),
     );
