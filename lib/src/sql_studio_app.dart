@@ -5,6 +5,7 @@ import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/providers/app_theme_mode_provider.dart';
 import 'package:sql_studio/src/core/routes/app_router.dart';
+import 'package:sql_studio/src/shared/utils/text_scaling.dart';
 
 /// Root widget of the SQL Studio application, wiring up routing and
 /// localization for the whole app.
@@ -27,6 +28,7 @@ class SqlStudioApp extends ConsumerWidget {
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
+      builder: clampTextScaling,
     );
   }
 }

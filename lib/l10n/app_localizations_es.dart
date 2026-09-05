@@ -505,6 +505,27 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get clearSearch => 'Borrar búsqueda';
+
+  @override
+  String get clearField => 'Borrar campo';
+
+  @override
+  String get previousPage => 'Página anterior';
+
+  @override
+  String get nextPage => 'Página siguiente';
+
+  @override
+  String get zoomIn => 'Acercar';
+
+  @override
+  String get zoomOut => 'Alejar';
+
+  @override
+  String get resetZoom => 'Restablecer zoom';
+
+  @override
   String get error => 'Error';
 
   @override

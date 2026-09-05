@@ -58,6 +58,7 @@ class _DatabasesScreenState extends ConsumerState<DatabasesScreen>
                         _searchController.clear();
                         viewModel.setFilter('');
                       },
+                      tooltip: l10n.clearSearch,
                       icon: const Icon(Icons.close_rounded, size: 18),
                     )
                   : const Icon(Icons.search_rounded, size: 18),

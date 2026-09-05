@@ -82,6 +82,7 @@ class _RootDrawerWidgetState extends ConsumerState<RootDrawerWidget> {
                           _searchController.clear();
                           notifier.setFilter('');
                         },
+                        tooltip: l10n.clearSearch,
                         icon: const Icon(
                           Icons.close_rounded,
                           size: 18,

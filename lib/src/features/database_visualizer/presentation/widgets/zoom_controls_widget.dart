@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/app_radii.dart';
 import 'package:sql_studio/src/core/app_shadows.dart';
 import 'package:sql_studio/src/core/app_spacing.dart';
@@ -32,6 +33,8 @@ class ZoomControlsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return Container(
       decoration: BoxDecoration(
         color: context.colors.surface,
@@ -45,6 +48,7 @@ class ZoomControlsWidget extends StatelessWidget {
         children: [
           _ZoomButton(
             icon: Icons.add_rounded,
+            label: appLocalizations.zoomIn,
             onTap: () => _zoom(_step),
           ),
           SizedBox(
@@ -53,6 +57,7 @@ class ZoomControlsWidget extends StatelessWidget {
           ),
           _ZoomButton(
             icon: Icons.remove_rounded,
+            label: appLocalizations.zoomOut,
             onTap: () => _zoom(1 / _step),
           ),
           SizedBox(
@@ -61,6 +66,7 @@ class ZoomControlsWidget extends StatelessWidget {
           ),
           _ZoomButton(
             icon: Icons.center_focus_strong_rounded,
+            label: appLocalizations.resetZoom,
             onTap: _reset,
           ),
         ],
@@ -70,21 +76,33 @@ class ZoomControlsWidget extends StatelessWidget {
 }
 
 class _ZoomButton extends StatelessWidget {
-  const _ZoomButton({required this.icon, required this.onTap});
+  const _ZoomButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
 
   final IconData icon;
+  final String label;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: context.colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Icon(icon, size: 20),
+      child: Tooltip(
+        message: label,
+        child: Semantics(
+          button: true,
+          label: label,
+          child: InkWell(
+            onTap: onTap,
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Icon(icon, size: 20),
+            ),
+          ),
         ),
       ),
     );

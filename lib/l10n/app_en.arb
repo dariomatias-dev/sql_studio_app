@@ -157,6 +157,13 @@
       "total": { "type": "int" }
     }
   },
+  "clearSearch": "Clear search",
+  "clearField": "Clear field",
+  "previousPage": "Previous page",
+  "nextPage": "Next page",
+  "zoomIn": "Zoom in",
+  "zoomOut": "Zoom out",
+  "resetZoom": "Reset zoom",
   "error": "Error",
   "failedToSaveWorkspaceLayout": "Failed to save workspace layout. Please try again.",
   "databaseCreationError": "Could not create the database \"{databaseName}\".",

@@ -140,56 +140,61 @@ class _NavBarItemState extends State<_NavBarItem> {
     final isSelected = widget.isSelected;
 
     return Expanded(
-      child: GestureDetector(
-        onTap: widget.onTap,
-        onTapDown: (_) => setState(() => _pressed = true),
-        onTapUp: (_) => setState(() => _pressed = false),
-        onTapCancel: () => setState(() => _pressed = false),
-        behavior: HitTestBehavior.opaque,
-        child: AnimatedScale(
-          scale: _pressed ? 0.92 : 1,
-          duration: AppDurations.xs,
-          curve: Curves.easeOut,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AnimatedSwitcher(
-                duration: AppDurations.lg,
-                child: Icon(
-                  isSelected ? widget.activeIcon : widget.icon,
-                  key: ValueKey<String>('$_generation-$isSelected'),
-                  size: 24,
-                  color: isSelected
-                      ? context.colors.black
-                      : context.colors.textMuted,
+      child: Semantics(
+        button: true,
+        selected: isSelected,
+        label: widget.label,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          onTapDown: (_) => setState(() => _pressed = true),
+          onTapUp: (_) => setState(() => _pressed = false),
+          onTapCancel: () => setState(() => _pressed = false),
+          behavior: HitTestBehavior.opaque,
+          child: AnimatedScale(
+            scale: _pressed ? 0.92 : 1,
+            duration: AppDurations.xs,
+            curve: Curves.easeOut,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                AnimatedSwitcher(
+                  duration: AppDurations.lg,
+                  child: Icon(
+                    isSelected ? widget.activeIcon : widget.icon,
+                    key: ValueKey<String>('$_generation-$isSelected'),
+                    size: 24,
+                    color: isSelected
+                        ? context.colors.black
+                        : context.colors.textMuted,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              SizedBox(
-                width: widget.labelMaxWidth - 16,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: AnimatedDefaultTextStyle(
-                    duration: AppDurations.sm,
-                    style: TextStyle(
-                      color: isSelected
-                          ? context.colors.black
-                          : context.colors.textMuted,
-                      fontSize: 10,
-                      fontWeight: isSelected
-                          ? FontWeight.w900
-                          : FontWeight.w500,
-                      letterSpacing: 0.8,
-                    ),
-                    child: Text(
-                      widget.label.toUpperCase(),
-                      maxLines: 1,
-                      softWrap: false,
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: widget.labelMaxWidth - 16,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: AnimatedDefaultTextStyle(
+                      duration: AppDurations.sm,
+                      style: TextStyle(
+                        color: isSelected
+                            ? context.colors.black
+                            : context.colors.textMuted,
+                        fontSize: 10,
+                        fontWeight: isSelected
+                            ? FontWeight.w900
+                            : FontWeight.w500,
+                        letterSpacing: 0.8,
+                      ),
+                      child: Text(
+                        widget.label.toUpperCase(),
+                        maxLines: 1,
+                        softWrap: false,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -146,6 +146,7 @@ class _CreateDatabaseDialogWidgetState
 
                   setState(() {});
                 },
+                tooltip: appLocalizations.clearField,
                 icon: const Icon(Icons.clear),
               ),
               onChanged: (value) {
@@ -174,6 +175,7 @@ class _CreateDatabaseDialogWidgetState
 
                   setState(() {});
                 },
+                tooltip: appLocalizations.clearField,
                 icon: const Icon(Icons.clear),
               ),
               onChanged: (_) => _nameEdited = true,

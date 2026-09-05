@@ -103,6 +103,7 @@ class _StyledDataTableWidgetState extends State<StyledDataTableWidget> {
         children: <Widget>[
           IconButton(
             onPressed: _page == 0 ? null : () => setState(() => _page--),
+            tooltip: appLocalizations.previousPage,
             icon: const Icon(Icons.chevron_left),
             visualDensity: VisualDensity.compact,
           ),
@@ -118,6 +119,7 @@ class _StyledDataTableWidgetState extends State<StyledDataTableWidget> {
             onPressed: _page >= _pageCount - 1
                 ? null
                 : () => setState(() => _page++),
+            tooltip: appLocalizations.nextPage,
             icon: const Icon(Icons.chevron_right),
             visualDensity: VisualDensity.compact,
           ),
