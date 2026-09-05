@@ -6,25 +6,90 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  analyze-and-test:
+  quality:
+    name: Format, analyze, test
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
+      - name: Read Flutter version from .fvmrc
+        id: flutter-version
+        run: echo "version=$(jq -r '.flutter' .fvmrc)" >> "$GITHUB_OUTPUT"
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.41.6'
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
           channel: 'stable'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Regenerate localizations
+        run: flutter gen-l10n
+
+      - name: Fail if gen-l10n changed anything
+        run: |
+          if ! git diff --quiet -- lib/l10n; then
+            echo "gen-l10n changed generated output. Commit the regenerated files." >&2
+            git diff --stat -- lib/l10n >&2
+            exit 1
+          fi
+
+      - name: Check ARB key parity
+        run: ./scripts/check_l10n.sh
+
       - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed lib/src lib/main.dart test
+        run: dart format --output=none --set-exit-if-changed lib/ test/
 
       - name: Analyze
         run: flutter analyze
 
-      - name: Test
-        run: flutter test
+      - name: Test with coverage
+        run: flutter test --coverage
+
+      - name: Check coverage threshold
+        run: ./scripts/check_coverage.sh coverage/lcov.info 86
+
+  build_apk:
+    name: Build debug APK
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read Flutter version from .fvmrc
+        id: flutter-version
+        run: echo "version=$(jq -r '.flutter' .fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Regenerate localizations
+        run: flutter gen-l10n
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 14
