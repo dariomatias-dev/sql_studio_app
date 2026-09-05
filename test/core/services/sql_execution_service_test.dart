@@ -3,9 +3,30 @@ import 'package:logger/logger.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
+import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
 
 import '../../test_helpers/fake_app_logger.dart';
+
+class _RecordingAppLogger implements AppLogger {
+  final messages = <String>[];
+  final errors = <Object?>[];
+
+  @override
+  void info(String message) => messages.add(message);
+
+  @override
+  void warning(String message, {Object? error, StackTrace? stackTrace}) {
+    messages.add(message);
+    errors.add(error);
+  }
+
+  @override
+  void error(String message, {Object? error, StackTrace? stackTrace}) {
+    messages.add(message);
+    errors.add(error);
+  }
+}
 
 void main() {
   setUpAll(() {
@@ -345,6 +366,85 @@ void main() {
     );
 
     expect(result, isA<SuccessResult<DatabaseSuccess?>>());
+  });
+
+  group('logging', () {
+    late _RecordingAppLogger logger;
+    late SqlExecutionService loggingService;
+
+    setUp(() {
+      logger = _RecordingAppLogger();
+      loggingService = SqlExecutionService(logger);
+    });
+
+    test('never records the statement text or the database name', () async {
+      await loggingService.execute(
+        sql: 'CREATE TABLE users (id INTEGER PRIMARY KEY, secret TEXT)',
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: "INSERT INTO users (secret) VALUES ('hunter2')",
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: 'SELECT * FROM users',
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: "UPDATE users SET secret = 'other'",
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: 'DELETE FROM users',
+        databaseName: dbName,
+      );
+      await loggingService.closeAll();
+
+      expect(logger.messages, isNotEmpty);
+
+      for (final message in logger.messages) {
+        expect(message, isNot(contains('hunter2')));
+        expect(message, isNot(contains('users')));
+        expect(message, isNot(contains(dbName)));
+      }
+    });
+
+    test('reports row counts instead of the statement', () async {
+      await loggingService.execute(
+        sql: 'CREATE TABLE users (id INTEGER PRIMARY KEY)',
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: 'INSERT INTO users (id) VALUES (1)',
+        databaseName: dbName,
+      );
+      await loggingService.execute(
+        sql: 'DELETE FROM users',
+        databaseName: dbName,
+      );
+      await loggingService.closeAll();
+
+      expect(logger.messages, contains('Executed statement'));
+      expect(logger.messages, contains('Executed INSERT'));
+      expect(logger.messages, contains('Executed DELETE: 1 rows'));
+    });
+
+    /// The raw error carries the failing SQL, so it is attached only in
+    /// debug builds; this runs in one, hence the attached error here.
+    test('records a failure without the statement in the message', () async {
+      await loggingService.execute(
+        sql: "SELECT * FROM missing_table WHERE secret = 'hunter2'",
+        databaseName: dbName,
+      );
+      await loggingService.closeAll();
+
+      expect(logger.messages, contains('Failed to execute SQL'));
+      expect(logger.errors.last, isNotNull);
+
+      for (final message in logger.messages) {
+        expect(message, isNot(contains('hunter2')));
+      }
+    });
   });
 
   test('closeAll is a no-op when nothing is cached', () async {

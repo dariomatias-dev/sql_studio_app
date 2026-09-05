@@ -19,7 +19,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
     try {
       await _datasource.insert(model.toMap());
 
-      _logger.info('Database created: ${model.name}');
+      _logger.info('Database created');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
@@ -70,12 +70,12 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       if (results.isNotEmpty) {
         final model = DatabaseModel.fromMap(results.first);
 
-        _logger.info('Fetched database by name: $name');
+        _logger.info('Fetched database by name');
 
         return SuccessResult(model);
       }
 
-      _logger.warning('No database found with name: $name');
+      _logger.warning('No database found with the given name');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {
@@ -97,12 +97,12 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       final deletedCount = await _datasource.delete(model.toMap());
 
       if (deletedCount > 0) {
-        _logger.info('Database deleted: ${model.name}');
+        _logger.info('Database deleted');
 
         return const SuccessResult(null);
       }
 
-      _logger.warning('No record deleted for database: ${model.name}');
+      _logger.warning('No record deleted for the database');
 
       return const FailureResult(
         DatabaseFailure(AppLocalizationsKey.noRecordDeleted),
@@ -132,12 +132,12 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
       final updatedCount = await _datasource.update(updated.toMap());
 
       if (updatedCount > 0) {
-        _logger.info('Toggled favorite for database: ${model.name}');
+        _logger.info('Toggled favorite for the database');
 
         return SuccessResult(updated);
       }
 
-      _logger.warning('Unable to toggle favorite for database: ${model.name}');
+      _logger.warning('Unable to toggle favorite for the database');
 
       return FailureResult(
         DatabaseFailure(AppLocalizationsKey.toggleDatabaseFavoriteError, {
@@ -164,7 +164,7 @@ class DatabaseRepositoryImpl implements domain.DatabaseRepository {
     try {
       await _datasource.dropDatabaseFile(model.name);
 
-      _logger.info('Complete drop executed for: ${model.name}');
+      _logger.info('Complete drop executed');
 
       return const SuccessResult(null);
     } on Exception catch (err, stackTrace) {

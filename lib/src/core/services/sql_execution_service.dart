@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
@@ -75,7 +76,7 @@ class SqlExecutionService {
 
           lastResult = DatabaseSuccess(result: result);
 
-          _logger.info('Executed SELECT on $databaseName: $stmt');
+          _logger.info('Executed SELECT: ${result.length} rows');
         } else if (upper.startsWith('DELETE')) {
           final count = await db.rawDelete(stmt);
 
@@ -84,7 +85,7 @@ class SqlExecutionService {
             args: {'count': count},
           );
 
-          _logger.info('Executed DELETE: $stmt');
+          _logger.info('Executed DELETE: $count rows');
         } else if (upper.startsWith('UPDATE')) {
           final count = await db.rawUpdate(stmt);
 
@@ -93,7 +94,7 @@ class SqlExecutionService {
             args: {'count': count},
           );
 
-          _logger.info('Executed UPDATE: $stmt');
+          _logger.info('Executed UPDATE: $count rows');
         } else if (upper.startsWith('INSERT')) {
           final id = await db.rawInsert(stmt);
 
@@ -102,7 +103,7 @@ class SqlExecutionService {
             args: {'id': id},
           );
 
-          _logger.info('Executed INSERT: $stmt');
+          _logger.info('Executed INSERT');
         } else {
           await db.execute(stmt);
 
@@ -110,7 +111,7 @@ class SqlExecutionService {
             type: AppLocalizationsKey.statementSuccess,
           );
 
-          _logger.info('Executed SQL: $stmt');
+          _logger.info('Executed statement');
         }
       }
 
@@ -118,7 +119,7 @@ class SqlExecutionService {
     } on Exception catch (err, stackTrace) {
       _logger.error(
         'Failed to execute SQL',
-        error: err,
+        error: kDebugMode ? err : err.runtimeType,
         stackTrace: stackTrace,
       );
 
