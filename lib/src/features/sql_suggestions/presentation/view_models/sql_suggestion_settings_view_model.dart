@@ -24,14 +24,13 @@ class SqlSuggestionSettingsViewModel
   Future<Result<void>> load() async {
     final result = await _loadSettings();
 
-    if (result is SuccessResult<SqlSuggestionSettingsEntity>) {
-      state = result.value;
+    return result.when(
+      onSuccess: (settings) {
+        state = settings;
 
-      return const SuccessResult(null);
-    }
-
-    return FailureResult(
-      (result as FailureResult<SqlSuggestionSettingsEntity>).error,
+        return const SuccessResult(null);
+      },
+      onFailure: FailureResult.new,
     );
   }
 

@@ -69,20 +69,19 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
 
     final response = await _runQuery(sql: sql, databaseName: databaseName);
 
-    if (response is SuccessResult<DatabaseSuccess?>) {
-      state = state.copyWith(
+    response.when(
+      onSuccess: (_) => state = state.copyWith(
         isLoading: false,
         result: response,
         clearError: true,
-      );
-    } else if (response is FailureResult<DatabaseSuccess?>) {
-      state = state.copyWith(
+      ),
+      onFailure: (error) => state = state.copyWith(
         isLoading: false,
-        error: response.error.type,
-        errorArgs: response.error.args,
+        error: error.type,
+        errorArgs: error.args,
         clearResult: true,
-      );
-    }
+      ),
+    );
   }
 
   /// Retrieves the column names of [tableName] in the active database.
@@ -124,24 +123,21 @@ class SqlCommandsViewModel extends Notifier<SqlCommandsState> {
 
     final result = await _resetDefaultDatabase(databaseName);
 
-    if (result is SuccessResult<void>) {
-      state = state.copyWith(
+    result.when(
+      onSuccess: (_) => state = state.copyWith(
         isLoading: false,
         clearError: true,
         clearResult: true,
-      );
-    } else if (result is FailureResult<void>) {
-      final failure = result.error;
-
-      state = state.copyWith(
+      ),
+      onFailure: (failure) => state = state.copyWith(
         isLoading: false,
         error: failure is DatabaseFailure
             ? AppLocalizationsKey.sqlExecutionError
             : AppLocalizationsKey.failedToLoadSqlFiles,
         errorArgs: {'error': failure.type},
         clearResult: true,
-      );
-    }
+      ),
+    );
 
     return result;
   }

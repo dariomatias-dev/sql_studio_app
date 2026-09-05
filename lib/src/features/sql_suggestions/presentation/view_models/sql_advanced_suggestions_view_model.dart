@@ -48,14 +48,13 @@ class SqlAdvancedSuggestionsViewModel
 
     state = state.copyWith(isLoading: false);
 
-    if (result is SuccessResult<List<SqlAdvancedSuggestionModel>>) {
-      state = state.copyWith(suggestions: result.value);
+    return result.when(
+      onSuccess: (suggestions) {
+        state = state.copyWith(suggestions: suggestions);
 
-      return const SuccessResult(null);
-    }
-
-    return FailureResult(
-      (result as FailureResult<List<SqlAdvancedSuggestionModel>>).error,
+        return const SuccessResult(null);
+      },
+      onFailure: FailureResult.new,
     );
   }
 
@@ -140,14 +139,13 @@ class SqlAdvancedSuggestionsViewModel
 
     state = state.copyWith(isLoading: false);
 
-    if (result is SuccessResult<List<SqlAdvancedSuggestionModel>>) {
-      state = state.copyWith(suggestions: result.value);
+    return result.when(
+      onSuccess: (suggestions) {
+        state = state.copyWith(suggestions: suggestions);
 
-      return const SuccessResult(null);
-    }
-
-    return FailureResult(
-      (result as FailureResult<List<SqlAdvancedSuggestionModel>>).error,
+        return const SuccessResult(null);
+      },
+      onFailure: FailureResult.new,
     );
   }
 
@@ -159,14 +157,13 @@ class SqlAdvancedSuggestionsViewModel
 
     state = state.copyWith(isLoading: false);
 
-    if (result is SuccessResult<List<SqlAdvancedSuggestionModel>>) {
-      state = state.copyWith(suggestions: result.value);
+    return result.when(
+      onSuccess: (suggestions) {
+        state = state.copyWith(suggestions: suggestions);
 
-      return const SuccessResult(null);
-    }
-
-    return FailureResult(
-      (result as FailureResult<List<SqlAdvancedSuggestionModel>>).error,
+        return const SuccessResult(null);
+      },
+      onFailure: FailureResult.new,
     );
   }
 }

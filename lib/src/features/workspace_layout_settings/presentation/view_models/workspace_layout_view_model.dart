@@ -23,7 +23,7 @@ class WorkspaceLayoutViewModel extends Notifier<WorkspaceLayoutType> {
   Future<Result<void>> setLayout(WorkspaceLayoutType layout) async {
     final result = await _setLayout(layout);
 
-    if (result is SuccessResult<void>) state = layout;
+    if (result.isSuccess) state = layout;
 
     return result;
   }

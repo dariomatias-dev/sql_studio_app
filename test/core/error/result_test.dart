@@ -64,4 +64,56 @@ void main() {
       expect(onSuccessCalled, isFalse);
     });
   });
+
+  group('when', () {
+    test('returns the value produced by onSuccess', () {
+      const result = SuccessResult<int>(7);
+
+      final label = result.when(
+        onSuccess: (value) => 'value $value',
+        onFailure: (error) => 'error ${error.type}',
+      );
+
+      expect(label, 'value 7');
+    });
+
+    test('returns the value produced by onFailure', () {
+      const failure = AppFailure(AppLocalizationsKey.toDoListLabel);
+      const result = FailureResult<int>(failure);
+
+      final label = result.when(
+        onSuccess: (value) => 'value $value',
+        onFailure: (error) => 'error ${error.type}',
+      );
+
+      expect(label, 'error ${AppLocalizationsKey.toDoListLabel}');
+    });
+  });
+
+  group('map', () {
+    test('transforms a successful value', () {
+      const result = SuccessResult<int>(7);
+
+      final mapped = result.map((value) => value * 2);
+
+      expect(mapped, isA<SuccessResult<int>>());
+      expect((mapped as SuccessResult<int>).value, 14);
+    });
+
+    test('carries a failure over without calling the transform', () {
+      const failure = AppFailure(AppLocalizationsKey.toDoListLabel);
+      const result = FailureResult<int>(failure);
+      var transformCalled = false;
+
+      final mapped = result.map((value) {
+        transformCalled = true;
+
+        return value * 2;
+      });
+
+      expect(mapped, isA<FailureResult<int>>());
+      expect((mapped as FailureResult<int>).error, same(failure));
+      expect(transformCalled, isFalse);
+    });
+  });
 }

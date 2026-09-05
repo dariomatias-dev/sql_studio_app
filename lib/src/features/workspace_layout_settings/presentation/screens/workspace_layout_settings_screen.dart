@@ -36,13 +36,14 @@ class _WorkspaceLayoutConfigurationScreenState
 
     final appLocalizations = AppLocalizations.of(context)!;
 
-    if (result is FailureResult) {
-      await handleError(
-        context,
-        FailureResult<void>(AppFailure(result.error.type)),
-      );
-    } else {
-      unawaited(AppToast.of(context).show(appLocalizations.layoutSaved));
+    switch (result) {
+      case FailureResult(:final error):
+        await handleError(
+          context,
+          FailureResult<void>(AppFailure(error.type)),
+        );
+      case SuccessResult():
+        unawaited(AppToast.of(context).show(appLocalizations.layoutSaved));
     }
   }
 

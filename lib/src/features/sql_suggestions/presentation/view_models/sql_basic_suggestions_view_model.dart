@@ -28,13 +28,14 @@ class SqlBasicSuggestionsViewModel extends Notifier<SqlBasicSuggestionsState> {
 
     state = state.copyWith(isLoading: false);
 
-    if (result is SuccessResult<List<String>>) {
-      state = state.copyWith(suggestions: result.value);
+    return result.when(
+      onSuccess: (suggestions) {
+        state = state.copyWith(suggestions: suggestions);
 
-      return const SuccessResult(null);
-    }
-
-    return FailureResult((result as FailureResult<List<String>>).error);
+        return const SuccessResult(null);
+      },
+      onFailure: FailureResult.new,
+    );
   }
 
   /// Adds [suggestion] to the list if it isn't already present.

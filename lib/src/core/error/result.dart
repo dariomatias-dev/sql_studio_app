@@ -57,6 +57,23 @@ sealed class Result<T> {
   /// Whether this result represents a failure.
   bool get isFailure => this is FailureResult<T>;
 
+  /// Returns [onSuccess] or [onFailure] applied to this result, whichever
+  /// variant it is.
+  R when<R>({
+    required R Function(T value) onSuccess,
+    required R Function(Failure error) onFailure,
+  }) => switch (this) {
+    SuccessResult<T>(:final value) => onSuccess(value),
+    FailureResult<T>(:final error) => onFailure(error),
+  };
+
+  /// Returns a new result with a successful value mapped through
+  /// [transform], carrying any failure over unchanged.
+  Result<R> map<R>(R Function(T value) transform) => switch (this) {
+    SuccessResult<T>(:final value) => SuccessResult(transform(value)),
+    FailureResult<T>(:final error) => FailureResult(error),
+  };
+
   /// Invokes [onSuccess] or [onFailure] depending on this result's variant.
   FutureOr<void> fold({
     FutureOr<void> Function(T value)? onSuccess,

@@ -8,24 +8,21 @@ class ConsoleController {
   /// [state], when the result was an empty `SELECT`. Returns an
   /// empty string when it can't be determined.
   String extractTableName(SqlCommandsState state) {
-    if (state.result is SuccessResult &&
-        ((state.result! as SuccessResult).value is DatabaseSuccess) &&
-        (((state.result! as SuccessResult).value as DatabaseSuccess).result
-                is List &&
-            (((state.result! as SuccessResult).value as DatabaseSuccess).result!
-                    as List)
-                .isEmpty)) {
-      final sql = state.lastQuery;
-      if (sql == null) return '';
+    final rows = switch (state.result) {
+      SuccessResult(value: final DatabaseSuccess success) => success.result,
+      _ => null,
+    };
 
-      final match = RegExp(
-        r'\bfrom\s+([a-zA-Z_][\w]*)\b',
-        caseSensitive: false,
-      ).firstMatch(sql);
+    if (rows == null || rows.isNotEmpty) return '';
 
-      return match?.group(1) ?? '';
-    }
+    final sql = state.lastQuery;
+    if (sql == null) return '';
 
-    return '';
+    final match = RegExp(
+      r'\bfrom\s+([a-zA-Z_][\w]*)\b',
+      caseSensitive: false,
+    ).firstMatch(sql);
+
+    return match?.group(1) ?? '';
   }
 }

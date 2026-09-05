@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
-import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
@@ -39,7 +38,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (versionResult is FailureResult) {
+    if (versionResult.isFailure) {
       await handleError(context, versionResult);
     }
 
@@ -51,7 +50,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (suggestionsResult is FailureResult) {
+    if (suggestionsResult.isFailure) {
       await handleError(context, suggestionsResult);
     }
 
@@ -63,7 +62,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (dbResult is FailureResult) {
+    if (dbResult.isFailure) {
       await handleError(context, dbResult);
     }
 
@@ -75,7 +74,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (sqlAdvancedSuggestionsResult is FailureResult) {
+    if (sqlAdvancedSuggestionsResult.isFailure) {
       await handleError(context, sqlAdvancedSuggestionsResult);
     }
 
@@ -87,7 +86,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (sqlBasicSuggestionsResult is FailureResult) {
+    if (sqlBasicSuggestionsResult.isFailure) {
       await handleError(context, sqlBasicSuggestionsResult);
     }
 
@@ -97,7 +96,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     if (!mounted) return;
 
-    if (defaultDatabaseInitResult is FailureResult) {
+    if (defaultDatabaseInitResult.isFailure) {
       await handleError(context, defaultDatabaseInitResult);
     }
 

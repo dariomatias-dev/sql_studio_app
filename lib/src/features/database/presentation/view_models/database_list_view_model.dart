@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/features/database/data/models/database_model.dart';
 import 'package:sql_studio/src/features/database/domain/usecases/create_database_usecase.dart';
@@ -43,19 +42,16 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     state = state.copyWith(isLoading: false);
 
-    if (result is SuccessResult<List<DatabaseModel>>) {
-      _favorites = result.value.where((db) => db.isFavorite).toList();
-      _others = result.value.where((db) => !db.isFavorite).toList();
+    return result.when(
+      onSuccess: (databases) {
+        _favorites = databases.where((db) => db.isFavorite).toList();
+        _others = databases.where((db) => !db.isFavorite).toList();
 
-      _applyFilter();
+        _applyFilter();
 
-      return const SuccessResult(null);
-    } else if (result is FailureResult<List<DatabaseModel>>) {
-      return FailureResult(DatabaseFailure(result.error.type));
-    }
-
-    return const FailureResult(
-      DatabaseFailure(AppLocalizationsKey.unknownError),
+        return const SuccessResult(null);
+      },
+      onFailure: (error) => FailureResult(DatabaseFailure(error.type)),
     );
   }
 
@@ -63,20 +59,16 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   Future<Result<void>> create(DatabaseModel model) async {
     final result = await _createDatabase(model);
 
-    if (result is SuccessResult) {
-      _addToProperList(model);
+    return result.when(
+      onSuccess: (_) {
+        _addToProperList(model);
 
-      _applyFilter();
+        _applyFilter();
 
-      return const SuccessResult(null);
-    } else if (result is FailureResult) {
-      return FailureResult(
-        DatabaseFailure(result.error.type, result.error.args),
-      );
-    }
-
-    return const FailureResult(
-      DatabaseFailure(AppLocalizationsKey.unknownError),
+        return const SuccessResult(null);
+      },
+      onFailure: (error) =>
+          FailureResult(DatabaseFailure(error.type, error.args)),
     );
   }
 
@@ -84,14 +76,9 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   Future<Result<DatabaseModel?>> getByName(String name) async {
     final result = await _getDatabaseByName(name);
 
-    if (result is SuccessResult<DatabaseModel?>) {
-      return SuccessResult(result.value);
-    } else if (result is FailureResult<DatabaseModel?>) {
-      return FailureResult(DatabaseFailure(result.error.type));
-    }
-
-    return const FailureResult(
-      DatabaseFailure(AppLocalizationsKey.unknownError),
+    return result.when(
+      onSuccess: SuccessResult.new,
+      onFailure: (error) => FailureResult(DatabaseFailure(error.type)),
     );
   }
 
@@ -99,20 +86,16 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   Future<Result<void>> delete(DatabaseModel model) async {
     final result = await _deleteDatabase(model);
 
-    if (result is SuccessResult) {
-      _removeFromLists(model);
+    return result.when(
+      onSuccess: (_) {
+        _removeFromLists(model);
 
-      _applyFilter();
+        _applyFilter();
 
-      return const SuccessResult(null);
-    } else if (result is FailureResult) {
-      return FailureResult(
-        DatabaseFailure(result.error.type, result.error.args),
-      );
-    }
-
-    return const FailureResult(
-      DatabaseFailure(AppLocalizationsKey.unknownError),
+        return const SuccessResult(null);
+      },
+      onFailure: (error) =>
+          FailureResult(DatabaseFailure(error.type, error.args)),
     );
   }
 
@@ -120,22 +103,18 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   Future<Result<void>> toggleFavorite(DatabaseModel model) async {
     final result = await _toggleFavorite(model);
 
-    if (result is SuccessResult<DatabaseModel>) {
-      _removeFromLists(model);
+    return result.when(
+      onSuccess: (updated) {
+        _removeFromLists(model);
 
-      _addToProperList(result.value);
+        _addToProperList(updated);
 
-      _applyFilter();
+        _applyFilter();
 
-      return const SuccessResult(null);
-    } else if (result is FailureResult<DatabaseModel>) {
-      return FailureResult(
-        DatabaseFailure(result.error.type, result.error.args),
-      );
-    }
-
-    return const FailureResult(
-      DatabaseFailure(AppLocalizationsKey.unknownError),
+        return const SuccessResult(null);
+      },
+      onFailure: (error) =>
+          FailureResult(DatabaseFailure(error.type, error.args)),
     );
   }
 
