@@ -68,7 +68,21 @@ class DefaultDatabaseService {
       ];
 
       for (final sql in allSqlCommands) {
-        await _sqlService.execute(sql: sql, databaseName: dbName);
+        final result = await _sqlService.execute(
+          sql: sql,
+          databaseName: dbName,
+        );
+
+        if (result case FailureResult(:final error)) {
+          logger.e('Failed to seed database "$dbName": ${error.args['error']}');
+
+          return FailureResult(
+            DatabaseFailure(AppLocalizationsKey.failedToExecuteSql, {
+              'dbName': dbName,
+              'error': error.args['error']?.toString() ?? '',
+            }),
+          );
+        }
       }
 
       return const SuccessResult(null);
