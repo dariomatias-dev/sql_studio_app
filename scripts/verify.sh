@@ -68,6 +68,7 @@ step "flutter analyze"
 if [[ "$SKIP_TESTS" == true ]]; then
   echo ""
   echo "Skipped tests and coverage (--skip-tests). This is not the final gate."
+  rm -f .claude/verify-stamp
   exit 0
 fi
 
@@ -76,6 +77,9 @@ step "flutter test --coverage"
 
 step "check_coverage.sh"
 scripts/check_coverage.sh coverage/lcov.info "$COVERAGE_MINIMUM"
+
+mkdir -p .claude
+scripts/workspace_hash.sh > .claude/verify-stamp
 
 echo ""
 echo "verify.sh: all checks passed."
