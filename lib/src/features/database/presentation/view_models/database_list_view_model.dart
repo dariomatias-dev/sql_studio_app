@@ -13,9 +13,6 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
   late final DatabaseRepository _repository;
   late final DeleteDatabaseUseCase _deleteDatabase;
 
-  var _favorites = <DatabaseEntity>[];
-  var _others = <DatabaseEntity>[];
-
   @override
   DatabaseListState build() {
     _repository = ref.read(databaseRepositoryProvider);
@@ -36,10 +33,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     return result.when(
       onSuccess: (databases) {
-        _favorites = databases.where((db) => db.isFavorite).toList();
-        _others = databases.where((db) => !db.isFavorite).toList();
-
-        _applyFilter();
+        state = state.copyWith(databases: databases);
 
         return const SuccessResult(null);
       },
@@ -53,9 +47,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     return result.when(
       onSuccess: (_) {
-        _addToProperList(model);
-
-        _applyFilter();
+        state = state.copyWith(databases: [...state.databases, model]);
 
         return const SuccessResult(null);
       },
@@ -80,9 +72,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     return result.when(
       onSuccess: (_) {
-        _removeFromLists(model);
-
-        _applyFilter();
+        state = state.copyWith(databases: _without(model));
 
         return const SuccessResult(null);
       },
@@ -97,11 +87,7 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
 
     return result.when(
       onSuccess: (updated) {
-        _removeFromLists(model);
-
-        _addToProperList(updated);
-
-        _applyFilter();
+        state = state.copyWith(databases: [..._without(model), updated]);
 
         return const SuccessResult(null);
       },
@@ -115,37 +101,8 @@ class DatabaseListViewModel extends Notifier<DatabaseListState> {
     if (state.filter == value) return;
 
     state = state.copyWith(filter: value);
-
-    _applyFilter();
   }
 
-  void _addToProperList(DatabaseEntity model) {
-    if (model.isFavorite) {
-      _favorites = [..._favorites, model];
-    } else {
-      _others = [..._others, model];
-    }
-  }
-
-  void _removeFromLists(DatabaseEntity model) {
-    _favorites = _favorites.where((db) => db.id != model.id).toList();
-    _others = _others.where((db) => db.id != model.id).toList();
-  }
-
-  void _applyFilter() {
-    state = state.copyWith(
-      favorites: _filtered(_favorites),
-      others: _filtered(_others),
-    );
-  }
-
-  List<DatabaseEntity> _filtered(List<DatabaseEntity> list) {
-    if (state.filter.isEmpty) return List.unmodifiable(list);
-
-    final lower = state.filter.toLowerCase();
-
-    return list
-        .where((db) => db.name.toLowerCase().contains(lower))
-        .toList(growable: false);
-  }
+  List<DatabaseEntity> _without(DatabaseEntity model) =>
+      state.databases.where((db) => db.id != model.id).toList();
 }

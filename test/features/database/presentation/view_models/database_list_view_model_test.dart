@@ -219,6 +219,33 @@ void main() {
       expect(state.others, isEmpty);
     });
 
+    test('keeps the filtered-out databases in the state', () async {
+      when(() => repository.getAll()).thenAnswer(
+        (_) async => SuccessResult([
+          model(label: 'Todo', name: 'todo_list', isFavorite: true),
+          model(label: 'Contacts', name: 'contacts'),
+        ]),
+      );
+
+      final container = buildContainer();
+      final notifier = container.read(databaseListViewModelProvider.notifier);
+      await notifier.loadDatabases();
+
+      notifier.setFilter('todo');
+
+      expect(
+        container.read(databaseListViewModelProvider).databases,
+        hasLength(2),
+      );
+
+      notifier.setFilter('');
+
+      expect(
+        container.read(databaseListViewModelProvider).others,
+        hasLength(1),
+      );
+    });
+
     test('does nothing when the filter is unchanged', () async {
       when(
         () => repository.getAll(),
