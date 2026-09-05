@@ -10,6 +10,7 @@ import 'package:sql_studio/src/core/error/result.dart';
 
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
 import 'package:sql_studio/src/core/services/sql_execution_service.dart';
+import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
 
 /// Seeds and upgrades the bundled default (sample) databases.
 class DefaultDatabaseService {
@@ -62,16 +63,12 @@ class DefaultDatabaseService {
       final seedSql = await rootBundle.loadString(seedPath);
 
       final allSqlCommands = <String>[
-        ...schemaSql.split(';'),
-        ...seedSql.split(';'),
+        ...splitSqlStatements(schemaSql),
+        ...splitSqlStatements(seedSql),
       ];
 
       for (final sql in allSqlCommands) {
-        final trimmedSql = sql.trim();
-
-        if (trimmedSql.isEmpty) continue;
-
-        await _sqlService.execute(sql: trimmedSql, databaseName: dbName);
+        await _sqlService.execute(sql: sql, databaseName: dbName);
       }
 
       return const SuccessResult(null);

@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/list_extension.dart';
+import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
 import 'package:sql_studio/src/features/database_visualizer/data/models/table_info_model.dart';
 
 /// Executes raw SQL statements against a named SQLite database and
@@ -59,7 +60,7 @@ class SqlExecutionService {
     try {
       final db = await _openDatabase(databaseName);
 
-      final statements = _splitStatements(sql);
+      final statements = splitSqlStatements(sql);
 
       DatabaseSuccess? lastResult;
 
@@ -143,95 +144,6 @@ class SqlExecutionService {
 
     return result;
   }
-
-  /// Splits [sql] into individual statements on top-level `;`, ignoring
-  /// semicolons inside string literals, `--`/`/* */` comments, or
-  /// `BEGIN...END` trigger bodies.
-  List<String> _splitStatements(String sql) {
-    final statements = <String>[];
-    final buffer = StringBuffer();
-    final upperSql = sql.toUpperCase();
-
-    String? quoteChar;
-    var blockDepth = 0;
-    var inLineComment = false;
-    var inBlockComment = false;
-
-    for (var i = 0; i < sql.length; i++) {
-      final char = sql[i];
-
-      if (inLineComment) {
-        buffer.write(char);
-        if (char == '\n') inLineComment = false;
-        continue;
-      }
-
-      if (inBlockComment) {
-        buffer.write(char);
-        if (char == '/' && i > 0 && sql[i - 1] == '*') inBlockComment = false;
-        continue;
-      }
-
-      if (quoteChar != null) {
-        buffer.write(char);
-        if (char == quoteChar) quoteChar = null;
-        continue;
-      }
-
-      if (char == "'" || char == '"') {
-        quoteChar = char;
-        buffer.write(char);
-        continue;
-      }
-
-      if (char == '-' && i + 1 < sql.length && sql[i + 1] == '-') {
-        inLineComment = true;
-        buffer.write(char);
-        continue;
-      }
-
-      if (char == '/' && i + 1 < sql.length && sql[i + 1] == '*') {
-        inBlockComment = true;
-        buffer.write(char);
-        continue;
-      }
-
-      if (_matchesKeyword(upperSql, i, 'BEGIN')) {
-        blockDepth++;
-      } else if (_matchesKeyword(upperSql, i, 'END')) {
-        if (blockDepth > 0) blockDepth--;
-      }
-
-      if (char == ';' && blockDepth == 0) {
-        final stmt = buffer.toString().trim();
-        if (stmt.isNotEmpty) statements.add(stmt);
-        buffer.clear();
-        continue;
-      }
-
-      buffer.write(char);
-    }
-
-    final last = buffer.toString().trim();
-    if (last.isNotEmpty) statements.add(last);
-
-    return statements;
-  }
-
-  bool _matchesKeyword(String upperSql, int index, String keyword) {
-    if (index + keyword.length > upperSql.length) return false;
-    if (upperSql.substring(index, index + keyword.length) != keyword) {
-      return false;
-    }
-
-    final before = index == 0 ? ' ' : upperSql[index - 1];
-    final afterIndex = index + keyword.length;
-    final after = afterIndex >= upperSql.length ? ' ' : upperSql[afterIndex];
-
-    return !_isWordChar(before) && !_isWordChar(after);
-  }
-
-  bool _isWordChar(String char) => RegExp('[A-Za-z0-9_]').hasMatch(char);
 
   /// Quotes [identifier] as an SQLite double-quoted identifier, escaping
   /// embedded double quotes.
