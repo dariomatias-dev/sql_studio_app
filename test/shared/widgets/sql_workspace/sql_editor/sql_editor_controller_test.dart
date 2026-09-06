@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:share_plus_platform_interface/share_plus_platform_interface.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
@@ -15,6 +17,20 @@ import '../../../../test_helpers/shared_preferences_test_helper.dart';
 
 class _MockSqlCommandsRepository extends Mock
     implements SqlCommandsRepository {}
+
+/// Fake platform for [SharePlus], since `share_plus` has no method
+/// channel to mock: it dispatches directly through this interface.
+class _FakeSharePlatform extends SharePlatform {
+  ShareParams? lastParams;
+  ShareResult result = const ShareResult('', ShareResultStatus.success);
+
+  @override
+  Future<ShareResult> share(ShareParams params) async {
+    lastParams = params;
+
+    return result;
+  }
+}
 
 void main() {
   late _MockSqlCommandsRepository repository;
@@ -191,6 +207,103 @@ void main() {
         capturedRef.read(sqlEditorViewModelProvider.notifier).controller.text,
         'SELECT * FROM users',
       );
+
+      await tester.pump(const Duration(seconds: 2));
+    });
+  });
+
+  group('onShareSql', () {
+    late _FakeSharePlatform sharePlatform;
+    late SqlEditorController sharingController;
+
+    setUp(() {
+      sharePlatform = _FakeSharePlatform();
+      sharingController = SqlEditorController(
+        sharePlus: SharePlus.custom(sharePlatform),
+      );
+    });
+
+    testWidgets('shows a toast and shares nothing when the editor is empty', (
+      tester,
+    ) async {
+      await pumpHarness(tester);
+
+      await sharingController.onShareSql(capturedContext, capturedRef);
+
+      expect(sharePlatform.lastParams, isNull);
+
+      await tester.pump(const Duration(seconds: 2));
+    });
+
+    testWidgets('shares the editor content as text', (tester) async {
+      await pumpHarness(tester);
+
+      capturedRef.read(sqlEditorViewModelProvider.notifier).controller.text =
+          'SELECT * FROM users';
+
+      await sharingController.onShareSql(capturedContext, capturedRef);
+
+      expect(sharePlatform.lastParams?.text, 'SELECT * FROM users');
+
+      await tester.pump(const Duration(seconds: 2));
+    });
+
+    testWidgets('does not toast success when the sheet is dismissed', (
+      tester,
+    ) async {
+      await pumpHarness(tester);
+
+      capturedRef.read(sqlEditorViewModelProvider.notifier).controller.text =
+          'SELECT 1';
+      sharePlatform.result = const ShareResult(
+        '',
+        ShareResultStatus.dismissed,
+      );
+
+      await sharingController.onShareSql(capturedContext, capturedRef);
+
+      expect(sharePlatform.lastParams, isNotNull);
+
+      await tester.pump(const Duration(seconds: 2));
+    });
+  });
+
+  group('onDownloadSql', () {
+    late _FakeSharePlatform sharePlatform;
+    late SqlEditorController sharingController;
+
+    setUp(() {
+      sharePlatform = _FakeSharePlatform();
+      sharingController = SqlEditorController(
+        sharePlus: SharePlus.custom(sharePlatform),
+      );
+    });
+
+    testWidgets('shows a toast and shares nothing when the editor is empty', (
+      tester,
+    ) async {
+      await pumpHarness(tester);
+
+      await sharingController.onDownloadSql(capturedContext, capturedRef);
+
+      expect(sharePlatform.lastParams, isNull);
+
+      await tester.pump(const Duration(seconds: 2));
+    });
+
+    testWidgets('shares the editor content as a .sql file', (tester) async {
+      await pumpHarness(tester);
+
+      capturedRef.read(sqlEditorViewModelProvider.notifier).controller.text =
+          'SELECT * FROM users';
+
+      await sharingController.onDownloadSql(capturedContext, capturedRef);
+
+      final files = sharePlatform.lastParams?.files;
+      expect(files, hasLength(1));
+      // XFile.fromData's `name` argument is ignored on the io platform
+      // (cross_file's own doc comment); the content is what matters.
+      expect(await files!.single.readAsString(), 'SELECT * FROM users');
 
       await tester.pump(const Duration(seconds: 2));
     });

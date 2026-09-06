@@ -35,6 +35,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   mocktail: ^1.0.4
+  share_plus_platform_interface: ^7.2.0
   sqflite_common_ffi: ^2.3.4+4
   very_good_analysis: ^10.2.0
 

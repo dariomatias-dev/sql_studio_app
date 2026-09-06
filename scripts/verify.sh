@@ -18,7 +18,7 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-COVERAGE_MINIMUM=86
+COVERAGE_MINIMUM=91
 SKIP_TESTS=false
 
 for arg in "$@"; do

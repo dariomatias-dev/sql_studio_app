@@ -14,6 +14,12 @@ import 'package:sql_studio/src/shared/utils/app_toast.dart';
 /// Handles user actions triggered from the SQL editor toolbar, such as
 /// running, sharing, and copying the current query text.
 class SqlEditorController {
+  /// Creates the controller, sharing through [_sharePlus].
+  SqlEditorController({SharePlus? sharePlus})
+    : _sharePlus = sharePlus ?? SharePlus.instance;
+
+  final SharePlus _sharePlus;
+
   /// Runs the current editor content as a SQL query and invokes
   /// [onQueryRun] afterwards, if provided.
   void onRunQuery(
@@ -68,7 +74,7 @@ class SqlEditorController {
       return;
     }
 
-    final result = await SharePlus.instance.share(ShareParams(text: sql));
+    final result = await _sharePlus.share(ShareParams(text: sql));
 
     if (result.status == ShareResultStatus.success) {
       unawaited(toast.show(appLocalizations.sqlSharedSuccess));
@@ -126,7 +132,7 @@ class SqlEditorController {
       mimeType: 'text/plain',
     );
 
-    final result = await SharePlus.instance.share(
+    final result = await _sharePlus.share(
       ShareParams(files: [file]),
     );
 

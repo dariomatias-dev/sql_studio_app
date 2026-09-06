@@ -58,7 +58,7 @@ jobs:
         run: flutter test --coverage
 
       - name: Check coverage
-        run: ./scripts/check_coverage.sh coverage/lcov.info 86
+        run: ./scripts/check_coverage.sh coverage/lcov.info 91
 
       # android/app/build.gradle.kts falls back to the debug keystore when
       # key.properties is absent (as it is here), so this builds without a

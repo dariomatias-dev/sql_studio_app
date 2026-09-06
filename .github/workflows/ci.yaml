@@ -59,7 +59,7 @@ jobs:
         run: flutter test --coverage
 
       - name: Check coverage threshold
-        run: ./scripts/check_coverage.sh coverage/lcov.info 86
+        run: ./scripts/check_coverage.sh coverage/lcov.info 91
 
       # Reporting only: check_coverage.sh above is what fails the build. A
       # fork's pull request cannot read the token, so an upload failure
