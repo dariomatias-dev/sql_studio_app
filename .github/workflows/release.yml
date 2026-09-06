@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  # Called by release_please.yml, whose tag cannot start this workflow on
+  # its own: GitHub does not trigger a run from a push made with
+  # GITHUB_TOKEN.
+  workflow_call:
+    inputs:
+      tag:
+        description: "The tag to build and publish."
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
+
+      - name: Read Flutter version from .fvmrc
+        id: flutter-version
+        run: echo "version=$(jq -r '.flutter' .fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Regenerate localizations
+        run: flutter gen-l10n
+
+      - name: Check ARB key parity
+        run: ./scripts/check_l10n.sh
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib/ test/
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test --coverage
+
+      - name: Check coverage
+        run: ./scripts/check_coverage.sh coverage/lcov.info 86
+
+      # android/app/build.gradle.kts falls back to the debug keystore when
+      # key.properties is absent (as it is here), so this builds without a
+      # signing secret.
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Rename APK with version
+        run: |
+          mkdir -p release
+          cp build/app/outputs/flutter-apk/app-release.apk \
+            "release/sql_studio-$TAG.apk"
+
+      # release-please publishes the release itself, notes included, so the
+      # APK is attached to what already exists. A tag pushed by hand has no
+      # release yet, and gets one here.
+      - name: Publish the APK
+        run: |
+          asset="release/sql_studio-$TAG.apk"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "$asset" --clobber
+          else
+            gh release create "$TAG" "$asset" --title "$TAG" --generate-notes
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
