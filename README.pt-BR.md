@@ -31,6 +31,7 @@ Um app Android para praticar SQL em bancos SQLite locais, editáveis e totalment
 - [Screenshots](#screenshots)
 - [Construído Com](#construído-com)
 - [Como Começar](#como-começar)
+- [Documentação](#documentação)
 - [Scripts](#scripts)
 - [Contribuindo](#contribuindo)
 - [Licença](#licença)
@@ -96,19 +97,29 @@ Depois, rode o app em um dispositivo ou emulador conectado:
 fvm flutter run
 ```
 
+## Documentação
+
+- [Arquitetura](docs/architecture.pt-BR.md): como o código está organizado e por quê.
+- [Contribuindo](docs/contributing.pt-BR.md): setup local, convenções, o que o CI verifica.
+- [Política de Segurança](docs/security.pt-BR.md): como reportar uma vulnerabilidade.
+- [Código de Conduta](docs/code_of_conduct.pt-BR.md).
+
 ## Scripts
 
 Scripts utilitários ficam em `scripts/`.
 
-| Script       | Comando                             | Descrição                                                                                                                                                 |
-| ------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Script | Comando | Descrição |
+| --- | --- | --- |
 | `screenshot` | `scripts/screenshot.sh [device-id]` | Navega o app sozinho pelas telas principais em um dispositivo ou emulador conectado e salva um screenshot de cada uma em `screenshots/<locale>/`, usado no README, na listagem da Play Store e no site oficial. |
+| `verify` | `scripts/verify.sh [--skip-tests]` | O gate de qualidade local completo, espelhando o CI: regenera localizações, verifica a paridade de chaves ARB, formatação, análise, testes, e o limiar de cobertura. |
+| `check_l10n` | `scripts/check_l10n.sh` | Compara as chaves de mensagem de cada `app_*.arb` contra o template em inglês e falha se faltar ou sobrar uma. |
+| `check_coverage` | `scripts/check_coverage.sh <lcov> <minimo>` | Analisa um relatório lcov, exclui `lib/l10n/`, e falha abaixo do mínimo dado. |
 
 ## Contribuindo
 
 Contribuições tornam a comunidade de código aberto um lugar excelente para aprender e criar. Toda contribuição é bem-vinda.
 
-Antes de abrir um pull request, consulte o [CONTRIBUTING.md](CONTRIBUTING.md) para o setup local, a convenção de mensagens de commit (Conventional Commits) e as regras de branching deste projeto.
+Antes de abrir um pull request, consulte [docs/contributing.pt-BR.md](docs/contributing.pt-BR.md) para o setup local, a convenção de mensagens de commit (Conventional Commits) e o que o CI verifica.
 
 ## Licença
 

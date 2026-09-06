@@ -31,6 +31,7 @@ An Android app to practice SQL on local, editable, fully offline SQLite database
 - [Screenshots](#screenshots)
 - [Built With](#built-with)
 - [Getting Started](#getting-started)
+- [Documentation](#documentation)
 - [Scripts](#scripts)
 - [Contributing](#contributing)
 - [License](#license)
@@ -96,19 +97,29 @@ Then run the app on a connected device or emulator:
 fvm flutter run
 ```
 
+## Documentation
+
+- [Architecture](docs/architecture.md): how the codebase is organized and why.
+- [Contributing](docs/contributing.md): local setup, conventions, what CI checks.
+- [Security Policy](docs/security.md): how to report a vulnerability.
+- [Code of Conduct](docs/code_of_conduct.md).
+
 ## Scripts
 
 Utility scripts live under `scripts/`.
 
-| Script       | Command                             | Description                                                                                                                                                    |
-| ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Script | Command | Description |
+| --- | --- | --- |
 | `screenshot` | `scripts/screenshot.sh [device-id]` | Drives the app through its main screens on a connected device or emulator and saves a screenshot of each one into `screenshots/<locale>/`, used for the README, Play Store listing, and official website. |
+| `verify` | `scripts/verify.sh [--skip-tests]` | The full local quality gate, mirroring CI: regenerates localizations, checks ARB key parity, formatting, analysis, tests, and the coverage threshold. |
+| `check_l10n` | `scripts/check_l10n.sh` | Compares the message keys of every `app_*.arb` against the English template and fails on a missing or extra key. |
+| `check_coverage` | `scripts/check_coverage.sh <lcov> <minimum>` | Parses an lcov report, excludes `lib/l10n/`, and fails below the given minimum. |
 
 ## Contributing
 
 Contributions make the open-source community an amazing place to learn and create. Any contributions you make are greatly appreciated.
 
-Before opening a pull request, see [CONTRIBUTING.md](CONTRIBUTING.md) for the local setup, commit message convention (Conventional Commits), and branching rules this project follows.
+Before opening a pull request, see [docs/contributing.md](docs/contributing.md) for the local setup, commit message convention (Conventional Commits), and what CI checks.
 
 ## License
 

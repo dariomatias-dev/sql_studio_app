@@ -31,6 +31,7 @@ Una app Android para practicar SQL en bases de datos SQLite locales, editables y
 - [Capturas de Pantalla](#capturas-de-pantalla)
 - [Construido Con](#construido-con)
 - [Cómo Empezar](#cómo-empezar)
+- [Documentación](#documentación)
 - [Scripts](#scripts)
 - [Contribuir](#contribuir)
 - [Licencia](#licencia)
@@ -96,19 +97,29 @@ Luego, ejecuta la app en un dispositivo o emulador conectado:
 fvm flutter run
 ```
 
+## Documentación
+
+- [Arquitectura](docs/architecture.es.md): cómo está organizado el código y por qué.
+- [Contribuir](docs/contributing.es.md): configuración local, convenciones, qué verifica CI.
+- [Política de Seguridad](docs/security.es.md): cómo reportar una vulnerabilidad.
+- [Código de Conducta](docs/code_of_conduct.es.md).
+
 ## Scripts
 
 Los scripts de utilidad están en `scripts/`.
 
-| Script       | Comando                             | Descripción                                                                                                                                            |
-| ------------ | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Script | Comando | Descripción |
+| --- | --- | --- |
 | `screenshot` | `scripts/screenshot.sh [device-id]` | Recorre la app por sus pantallas principales en un dispositivo o emulador conectado y guarda una captura de cada una en `screenshots/<locale>/`, usado en el README, la ficha de Play Store y el sitio oficial. |
+| `verify` | `scripts/verify.sh [--skip-tests]` | El gate de calidad local completo, replicando CI: regenera localizaciones, verifica la paridad de claves ARB, formato, análisis, tests, y el umbral de cobertura. |
+| `check_l10n` | `scripts/check_l10n.sh` | Compara las claves de mensaje de cada `app_*.arb` contra la plantilla en inglés y falla si falta o sobra una. |
+| `check_coverage` | `scripts/check_coverage.sh <lcov> <minimo>` | Analiza un reporte lcov, excluye `lib/l10n/`, y falla por debajo del mínimo dado. |
 
 ## Contribuir
 
 Las contribuciones hacen de la comunidad de código abierto un lugar excelente para aprender y crear. Toda contribución es bienvenida.
 
-Antes de abrir un pull request, consulta [CONTRIBUTING.md](CONTRIBUTING.md) para la configuración local, la convención de mensajes de commit (Conventional Commits) y las reglas de branching de este proyecto.
+Antes de abrir un pull request, consulta [docs/contributing.es.md](docs/contributing.es.md) para la configuración local, la convención de mensajes de commit (Conventional Commits) y qué verifica CI.
 
 ## Licencia
 
