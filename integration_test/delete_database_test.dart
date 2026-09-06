@@ -21,6 +21,8 @@ void main() {
   ) async {
     final container = await pumpApp(tester);
 
+    await deleteDatabaseIfExists(container, 'scratch');
+
     var scaffoldState = tester.state<ScaffoldState>(
       find.byType(Scaffold).first,
     )..openDrawer();
@@ -45,8 +47,6 @@ void main() {
     scaffoldState.closeDrawer();
     await tester.pumpAndSettle();
 
-    // Force the SQLite file to actually be created on disk: a database
-    // record alone does not create it, only opening a connection does.
     container.read(sqlCommandsViewModelProvider.notifier).activeDatabase =
         'scratch';
     container.read(sqlEditorViewModelProvider.notifier).controller.fullText =

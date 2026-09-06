@@ -29,9 +29,6 @@ void main() {
       tester.element(find.byType(Scaffold).first),
     );
 
-    // `fullText` replaces the editor's content cleanly across repeated
-    // calls; the plain `text` setter conflicts with a real device's
-    // platform text input state and silently corrupts it.
     container.read(sqlEditorViewModelProvider.notifier).controller.fullText =
         'SELECT COUNT(*) AS c FROM $table';
     await tester.pumpAndSettle();
@@ -74,9 +71,6 @@ void main() {
     final afterDeleteCount = await taskCount(tester, container);
     expect(afterDeleteCount, originalCount - 1);
 
-    // Simulate a restart: a fresh widget tree, a fresh provider
-    // container, a fresh SharedPreferencesService.create() read from
-    // real storage, all against the same on-disk SQLite file.
     container = await pumpApp(tester);
 
     await openToDoList(tester);

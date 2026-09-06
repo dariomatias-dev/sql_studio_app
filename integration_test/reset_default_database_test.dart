@@ -30,9 +30,6 @@ void main() {
 
     final editor = container.read(sqlEditorViewModelProvider.notifier);
 
-    // `fullText` replaces the editor's content cleanly across repeated
-    // calls; the plain `text` setter conflicts with a real device's
-    // platform text input state and silently corrupts it.
     Future<void> run(String sql) async {
       editor.controller.fullText = sql;
       await tester.pumpAndSettle();

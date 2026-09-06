@@ -19,12 +19,8 @@ void main() {
     await tester.tap(find.byKey(const Key('rootNavBar_databases')));
     await tester.pumpAndSettle();
 
-    // The list is a lazy ListView, so only what fits the viewport
-    // renders; this confirms it isn't the empty state, not the count.
     expect(find.byType(DatabaseCardWidget), findsWidgets);
 
-    // The count claim itself is checked directly against the seeded
-    // data, one table per default database.
     final sqlExecutionService = container.read(sqlExecutionServiceProvider);
 
     for (final db in defaultDatabases) {
