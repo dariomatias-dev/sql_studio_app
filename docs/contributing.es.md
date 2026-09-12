@@ -18,7 +18,7 @@ fvm flutter pub get
 git config core.hooksPath .githooks
 ```
 
-Esa última línea apunta git hacia [`.githooks/`](../.githooks), donde un hook `commit-msg` rechaza una línea de asunto que no siga la convención de abajo. Git no comparte hooks a través de un clon, así que es un comando por checkout.
+Esa última línea apunta git hacia [`.githooks/`](../.githooks), donde un hook `commit-msg` rechaza una línea de asunto que no siga la convención de abajo, y un hook `pre-push` ejecuta `./scripts/verify.sh` antes de un push con commits, así un cambio roto aparece localmente en vez de como una ejecución de CI en rojo minutos después. `git push --no-verify` lo omite; la protección de rama en `main` es lo que realmente bloquea un cambio roto. Git no comparte hooks a través de un clon, así que es un comando por checkout.
 
 Las localizaciones no se versionan pregeneradas en cada cambio. Regenéralas después de actualizar o editar cualquier archivo bajo `lib/l10n/*.arb`:
 
