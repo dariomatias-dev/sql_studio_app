@@ -1,0 +1,33 @@
+# Codecov configuration.
+#
+# scripts/check_coverage.sh is what fails the build; this file only makes the
+# pull request comment agree with it. Keep the ignore list identical to the
+# script's EXCLUDED_PREFIXES, or the two will report different percentages
+# for the same run.
+
+codecov:
+  require_ci_to_pass: true
+
+coverage:
+  precision: 1
+  round: down
+  range: "85...100"
+  status:
+    project:
+      default:
+        target: 91%
+        threshold: 0.5%
+    patch:
+      default:
+        target: auto
+        threshold: 0.5%
+
+ignore:
+  - "lib/l10n/**"
+
+comment:
+  layout: "condensed_header, diff, flags, files"
+  require_changes: true
+
+github_checks:
+  annotations: true
