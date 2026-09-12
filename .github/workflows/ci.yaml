@@ -72,6 +72,38 @@ jobs:
           name: sql_studio
           fail_ci_if_error: false
 
+  app_ui:
+    name: packages/app_ui
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: packages/app_ui
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Read Flutter version from .fvmrc
+        id: flutter-version
+        run: echo "version=$(jq -r '.flutter' ../../.fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.flutter-version.outputs.version }}
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed lib/
+
+      - name: Analyze
+        run: flutter analyze
+
+      # No test/ directory yet; tests land alongside the components moved
+      # into this package in later steps.
+
   build_apk:
     name: Build release APK
     needs: quality
@@ -194,11 +226,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Reads pubspec.lock against the OSV database, which carries pub
-      # advisories. The lockfile is what matters: the caret ranges in
+      # Reads the lockfiles against the OSV database, which carries pub
+      # advisories. The lockfile is what matters: the caret ranges in a
       # pubspec.yaml say what could resolve, not what actually ships.
-      - name: Scan the lockfile
+      - name: Scan the lockfiles
         uses: google/osv-scanner-action/osv-scanner-action@v2.5.1
         with:
           scan-args: |-
             --lockfile=pubspec.lock
+            --lockfile=packages/app_ui/pubspec.lock
