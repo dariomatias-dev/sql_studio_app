@@ -1,8 +1,8 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// A dialog displaying an error message with a single dismiss button.

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,8 +9,6 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 /// Confirmation dialog for resetting all advanced SQL suggestions to their

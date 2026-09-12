@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/screens/startup_failure/startup_failure_screen.dart';
-import 'package:sql_studio/src/shared/utils/text_scaling.dart';
 
 /// Minimal app shown when startup fails, before any provider container
 /// exists: theme and localization only, hosting [StartupFailureScreen].

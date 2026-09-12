@@ -1,8 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 /// A button that pops the current route, labeled with the localized
 /// "cancel" text.

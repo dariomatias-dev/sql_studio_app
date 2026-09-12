@@ -1,9 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// A dialog prompting the user for a single text input value.
