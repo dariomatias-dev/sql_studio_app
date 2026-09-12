@@ -1,8 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_spacing.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Shows the full license text of a single package, respecting each

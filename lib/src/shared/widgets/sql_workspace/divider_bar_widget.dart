@@ -1,6 +1,5 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_radii.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A draggable horizontal bar used to resize the panels above and below it
 /// in a workspace split view.

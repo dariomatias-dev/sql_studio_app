@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
 
 /// Small caption that displays the current app build version.

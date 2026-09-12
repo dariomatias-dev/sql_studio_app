@@ -1,8 +1,8 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
 import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 import 'package:sql_studio/src/features/database/presentation/widgets/database_card_widget.dart';

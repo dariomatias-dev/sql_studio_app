@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/routes/app_routes.dart';
 import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';

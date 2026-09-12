@@ -1,6 +1,6 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 void main() {

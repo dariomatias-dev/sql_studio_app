@@ -1,11 +1,9 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_radii.dart';
-import 'package:sql_studio/src/core/app_spacing.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/remove_sql_basic_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 

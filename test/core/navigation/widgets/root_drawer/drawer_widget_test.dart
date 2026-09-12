@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_database_dialog_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';

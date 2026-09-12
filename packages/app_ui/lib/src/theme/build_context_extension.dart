@@ -1,5 +1,5 @@
+import 'package:app_ui/src/tokens/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 
 /// Convenience accessors for values derived from [BuildContext].
 extension BuildContextExtension on BuildContext {
