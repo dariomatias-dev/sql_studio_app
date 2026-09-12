@@ -109,7 +109,7 @@ jobs:
       # classes (AppColors' ThemeExtension lerp/copyWith) waiting on later
       # migration steps. Raise this as coverage catches up, not on faith.
       - name: Check coverage threshold
-        run: ../../scripts/check_coverage.sh coverage/lcov.info 70
+        run: ../../scripts/check_coverage.sh coverage/lcov.info 79
 
       # lcov paths are relative to the package root; Codecov matches them
       # against the repository, so they need the package prefix.
