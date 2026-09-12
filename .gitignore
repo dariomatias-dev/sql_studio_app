@@ -51,3 +51,8 @@ app.*.map.json
 
 # Local verify.sh pass stamp, read by the Stop hook.
 /.claude/verify-stamp
+
+# Per-developer Claude Code state: a personal permissions override, and
+# worktrees created by isolated agent runs.
+/.claude/settings.local.json
+/.claude/worktrees/
