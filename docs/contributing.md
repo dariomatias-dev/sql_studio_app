@@ -33,7 +33,7 @@ Run the app on a connected device or emulator with `fvm flutter run`.
 - **Open an issue first** to discuss the change, unless it's a small, obvious fix.
 - **Follow the existing structure**: feature-first, `domain`/`data`/`presentation` layers, Riverpod for state, no new patterns introduced without discussion. See [`architecture.md`](architecture.md).
 - **A use case earns its place only when it composes more than one repository call.** Otherwise call the repository directly from the view model.
-- **Match the design system**: no inline colors, spacing, radii, durations, or text styles. Use the tokens under `lib/src/core/` (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`).
+- **Match the design system**: no inline colors, spacing, radii, durations, or text styles. Use the tokens from `package:app_ui` (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`). See [`architecture.md`](architecture.md#design-system-packagesapp_ui) for what belongs in `packages/app_ui` versus the app.
 - **No hardcoded user-facing strings**: add the key to all three ARB files (`app_en.arb`, `app_es.arb`, `app_pt.arb`) with a `description`, then run `gen-l10n`. [`scripts/check_l10n.sh`](../scripts/check_l10n.sh) enforces key parity across them, in `verify.sh` and in CI.
 - **Add tests** for anything with logic: a repository method, a use case, a view model, a widget's behavior. A bug fix should carry a test that fails without the fix.
 - **Run the full check locally** before pushing:
@@ -52,6 +52,8 @@ Run the app on a connected device or emulator with `fvm flutter run`.
   fvm flutter test --coverage
   ./scripts/check_coverage.sh coverage/lcov.info 91
   ```
+
+  `verify.sh` only checks the root app. A change touching `packages/app_ui` needs the same checks run again from inside that directory, against its own coverage floor (see [`ci.yaml`](../.github/workflows/ci.yaml)'s `app_ui` job).
 
 - **Commit messages** follow [Conventional Commits](https://www.conventionalcommits.org/), enforced by the `commit-msg` hook enabled during setup:
 
@@ -73,14 +75,15 @@ Run the app on a connected device or emulator with `fvm flutter run`.
 
 ## What CI checks
 
-Every push and pull request runs [`.github/workflows/ci.yaml`](../.github/workflows/ci.yaml), in four jobs:
+Every push and pull request runs [`.github/workflows/ci.yaml`](../.github/workflows/ci.yaml), in five jobs:
 
 | Job | What it does |
 | --- | --- |
-| `quality` | Installs dependencies, regenerates localizations, then **fails if that regeneration produced a diff**, since generated files must be committed and up to date. Then `check_l10n.sh`, formatting, analysis, tests, and the coverage gate, and uploads the report to Codecov. |
+| `quality` | Installs dependencies, regenerates localizations, then **fails if that regeneration produced a diff**, since generated files must be committed and up to date. Then `check_l10n.sh`, formatting, analysis, tests, and the coverage gate, and uploads the report to Codecov under the `app` flag. |
+| `app_ui` | The same formatting, analysis, tests and coverage gate, scoped to `packages/app_ui`, its own coverage floor, and uploaded under the `app_ui` flag. |
 | `build_apk` | Runs after `quality` passes and builds a release APK — buildable without a signing secret, since `android/app/build.gradle.kts` falls back to the debug keystore when `key.properties` is absent — uploaded as a workflow artifact kept for 14 days. |
 | `integration` | Runs after `quality` passes, boots a pinned Android emulator (API 35) and runs every `integration_test/` suite on it, force-stopping the app between suites so each starts cold. These need a real device: they exercise real SQLite and `SharedPreferences` storage, including state surviving a simulated restart. The job enables KVM first and builds a debug APK before booting the emulator, since a cold Android build on its own can outrun a per-suite timeout. |
-| `osv-scanner` | Scans `pubspec.lock` against the OSV database. Runs independently of the other jobs: a newly disclosed advisory with no fix available yet is not a reason to stop the tests from reporting. |
+| `osv-scanner` | Scans `pubspec.lock` and `packages/app_ui/pubspec.lock` against the OSV database. Runs independently of the other jobs: a newly disclosed advisory with no fix available yet is not a reason to stop the tests from reporting. |
 
 Releases are cut by [release-please](https://github.com/googleapis/release-please). It reads the Conventional Commits landed on `main` and keeps a pull request open carrying the next version and the `CHANGELOG.md` entry it derived from them. Merging that pull request writes the version into `pubspec.yaml`, tags the commit, and publishes the GitHub release.
 
@@ -96,7 +99,7 @@ Releases are cut by [release-please](https://github.com/googleapis/release-pleas
 
 ### Coverage reports
 
-[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) is what fails a build, excluding `lib/l10n/` before measuring; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) is what makes the number readable on a pull request. Uploads authenticate with a `CODECOV_TOKEN` repository secret; pull requests from forks cannot read it, so the step is deliberately set to `fail_ci_if_error: false` — a failed upload is a missing report, never a failed build.
+[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) is what fails a build, excluding `lib/l10n/` before measuring; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) is what makes the number readable on a pull request, as two independent flags (`app`, `app_ui`) since the two suites run in separate jobs with different floors — see [`codecov.yml`](../codecov.yml). Uploads authenticate with a `CODECOV_TOKEN` repository secret; pull requests from forks cannot read it, so the step is deliberately set to `fail_ci_if_error: false` — a failed upload is a missing report, never a failed build.
 
 For the same thing locally, without an account, render the `lcov` file to HTML:
 
@@ -105,6 +108,8 @@ fvm flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html   # apt install lcov
 xdg-open coverage/html/index.html
 ```
+
+The same works inside `packages/app_ui`, against its own `coverage/lcov.info`.
 
 ## Working with an AI agent
 

@@ -9,6 +9,8 @@ Este documento profundiza un nivel más que la vista general del README. Está p
 ## Estructura
 
 ```
+packages/
+  app_ui/                  # el design system: paquete local, ver abajo
 lib/
   main.dart                 # raíz de composición: límite de errores, ProviderScope, fallback de arranque
   src/
@@ -22,7 +24,6 @@ lib/
       screens/                 # ajustes, acerca de, splash, no encontrado, fallo de arranque
       services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService
       sql/                     # el divisor de sentencias SQL compartido
-      app_colors/app_spacing/app_radii/app_shadows/app_durations/app_theme.dart  # tokens de diseño
     features/
       <feature>/
         domain/
@@ -38,7 +39,7 @@ lib/
           view_models/         # un Notifier/AsyncNotifier más su estado inmutable
           screens/, widgets/    # UI
           <feature>_providers.dart  # providers de view model, use cases locales a la feature
-    shared/                  # código compartido entre features: widgets, utilidades
+    shared/                  # código compartido entre features, pero acoplado a esta app: widgets, utilidades
 ```
 
 Features: `database` (las bases de datos guardadas por el usuario), `database_visualizer` (el diagrama de esquema), `sql_editor` (el editor de código y la consola), `sql_suggestions` (snippets básicos/avanzados), `workspace_layout_settings`, `app_version`.
@@ -50,6 +51,12 @@ Features: `database` (las bases de datos guardadas por el usuario), `database_vi
 - **`presentation`**: pantallas y widgets, más view models: clases `Notifier`/`AsyncNotifier` de Riverpod expuestas a través de providers. Una pantalla observa un provider; solo lee un repositorio directamente para una llamada puntual disparada por una acción del usuario, nunca un caso de uso que no existe.
 
 Una feature nunca importa el `presentation/` de otra feature. Lo que más de una feature necesita compartir va en `core/` (un servicio, un provider transversal) o en `shared/` (un widget, una utilidad).
+
+## Design system (`packages/app_ui`)
+
+Los tokens de diseño (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) y un conjunto de widgets agnósticos de presentación — botones, tarjetas, inputs, diálogos, estados de carga/vacío/error — viven en `packages/app_ui`, un paquete local del que la app depende mediante una entrada `path:` en `pubspec.yaml`. Tiene su propio `pubspec.yaml`, `analysis_options.yaml`, tests y job de CI, y se importa como `package:app_ui/app_ui.dart` (el barrel), nunca por una ruta profunda.
+
+El límite es el acoplamiento, no la complejidad visual: un widget solo entra en `app_ui` si no depende del `AppLocalizations` de esta app, de los providers de Riverpod, del enrutamiento, ni de ningún otro tipo específico de la app. Un widget que necesita algo de eso — lee un string localizado, llama al `Navigator`, observa un provider — se queda en `lib/src/shared/widgets/`, aunque parezca genérico. `CancelButtonWidget` es el ejemplo más claro: visualmente es un envoltorio delgado alrededor del `ButtonWidget` de `app_ui`, pero lee `AppLocalizations.of(context).cancel` y llama a `Navigator.pop`, así que es código de la app. Donde un componente compartido necesita ambas cosas — un widget base más un valor por defecto específico de la app — el lado de `app_ui` recibe el valor como parámetro (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) en vez de recurrir a `AppLocalizations` directamente, y la app lo provee en el sitio de la llamada.
 
 ## Gestión de estado
 
@@ -80,4 +87,4 @@ El registro de logs pasa por `AppLogger` (`core/logging/`), nunca un `Logger` co
 
 ## Tests
 
-Los tests unitarios y de widgets viven bajo `test/`, siguiendo la misma estructura que `lib/`. `integration_test/` cubre flujos de punta a punta contra el almacenamiento real de SQLite y `SharedPreferences` en el dispositivo: sembrado en el primer arranque, crear una base de datos y consultarla, editar una base de datos de ejemplo que sobrevive a un reinicio simulado, un reinicio deliberado, borrar una base de datos, cambiar de idioma, y ajustes (tema, disposición del espacio de trabajo, marcar una base de datos como favorita) que sobreviven a un reinicio. `test/core/providers/provider_graph_test.dart` construye el contenedor de providers completo de producción y lee cada provider, detectando un error de cableado que de otro modo solo aparecería en un dispositivo. Consulta el README para los conteos de tests actuales y el umbral de cobertura.
+Los tests unitarios y de widgets viven bajo `test/`, siguiendo la misma estructura que `lib/`; `packages/app_ui/test/` sigue a `packages/app_ui/lib/` de la misma forma, ejecutándose y cubriéndose de forma independiente. `integration_test/` cubre flujos de punta a punta contra el almacenamiento real de SQLite y `SharedPreferences` en el dispositivo: sembrado en el primer arranque, crear una base de datos y consultarla, editar una base de datos de ejemplo que sobrevive a un reinicio simulado, un reinicio deliberado, borrar una base de datos, cambiar de idioma, y ajustes (tema, disposición del espacio de trabajo, marcar una base de datos como favorita) que sobreviven a un reinicio. `test/core/providers/provider_graph_test.dart` construye el contenedor de providers completo de producción y lee cada provider, detectando un error de cableado que de otro modo solo aparecería en un dispositivo. Consulta el README para los conteos de tests actuales y el umbral de cobertura.

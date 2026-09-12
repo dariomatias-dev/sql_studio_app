@@ -48,6 +48,15 @@ Code shared across features lives in `lib/src/shared/`. App-wide services,
 routing, theming and cross-feature providers live in `lib/src/core/`
 (`core/providers/core_providers.dart` for anything more than one feature reads).
 
+Design tokens and presentation-agnostic widgets (buttons, cards, dialogs,
+states) live in `packages/app_ui`, a local package imported as
+`package:app_ui/app_ui.dart`. A widget belongs there only if it has no
+dependency on `AppLocalizations`, a Riverpod provider, routing, or any other
+app-specific type; one that needs an app default takes it as a parameter
+(`ErrorDialogWidget.dismissLabel`) instead of reading it internally. Anything
+with that coupling — `CancelButtonWidget`, for one — stays in
+`lib/src/shared/` even if it looks generic.
+
 A feature never imports another feature's `presentation/`. If two features need
 the same view model or service, it belongs in `core/` or `shared/`.
 
@@ -107,7 +116,7 @@ Conventional Commits, enforced by `.githooks/commit-msg`
   `workspace-layout`, `app-version`
 - core areas: `core`, `navigation`, `routes`, `theme`, `l10n`, `sql-execution`,
   `default-database`, `shared-preferences`
-- cross-cutting: `shared`, `deps`, `ci`, `scripts`, `docs`, `release`
+- cross-cutting: `shared`, `app-ui`, `deps`, `ci`, `scripts`, `docs`, `release`
 
 Scope is optional; prefer the narrowest one that fits. Lowercase and hyphenated,
 never underscored (`sql-editor`, not `sql_editor`).

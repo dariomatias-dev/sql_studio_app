@@ -9,6 +9,8 @@ This document goes one level deeper than the README's overview. It's aimed at an
 ## Layout
 
 ```
+packages/
+  app_ui/                  # the design system: local package, see below
 lib/
   main.dart                 # composition root: error boundary, ProviderScope, startup fallback
   src/
@@ -22,7 +24,6 @@ lib/
       screens/                 # settings, about, splash, not-found, startup failure
       services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService
       sql/                     # the shared SQL statement splitter
-      app_colors/app_spacing/app_radii/app_shadows/app_durations/app_theme.dart  # design tokens
     features/
       <feature>/
         domain/
@@ -38,7 +39,7 @@ lib/
           view_models/         # a Notifier/AsyncNotifier plus its immutable state
           screens/, widgets/    # UI
           <feature>_providers.dart  # view model providers, feature-local use case providers
-    shared/                  # code shared across features: widgets, utils
+    shared/                  # code shared across features, but coupled to this app: widgets, utils
 ```
 
 Features: `database` (the user's saved databases), `database_visualizer` (the schema diagram), `sql_editor` (the code editor and console), `sql_suggestions` (basic/advanced snippets), `workspace_layout_settings`, `app_version`.
@@ -50,6 +51,12 @@ Features: `database` (the user's saved databases), `database_visualizer` (the sc
 - **`presentation`**: screens and widgets, plus view models: Riverpod `Notifier`/`AsyncNotifier` classes exposed through providers. A screen watches a provider; it reads a repository directly only for a one-off call triggered by a user action, never a use case that doesn't exist.
 
 A feature never imports another feature's `presentation/`. Something more than one feature needs to share belongs in `core/` (a service, a cross-feature provider) or `shared/` (a widget, a util).
+
+## Design system (`packages/app_ui`)
+
+The design tokens (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) and a set of presentation-agnostic widgets — buttons, cards, inputs, dialogs, loading/empty/error states — live in `packages/app_ui`, a local package the app depends on via a `path:` entry in `pubspec.yaml`. It has its own `pubspec.yaml`, `analysis_options.yaml`, tests, and CI job, and is imported as `package:app_ui/app_ui.dart` (the barrel), never by a deep path.
+
+The boundary is coupling, not visual complexity: a widget belongs in `app_ui` only if it has no dependency on this app's `AppLocalizations`, Riverpod providers, routing, or any other app-specific type. A widget that needs one of those — reads a localized string, calls `Navigator`, watches a provider — stays in `lib/src/shared/widgets/`, even if it looks generic. `CancelButtonWidget` is the clearest example: visually a thin wrapper around `app_ui`'s `ButtonWidget`, but it reads `AppLocalizations.of(context).cancel` and calls `Navigator.pop`, so it's app code. Where a shared component needs both — a base widget plus an app-specific default — the `app_ui` side takes the value as a parameter (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) instead of reaching for `AppLocalizations` itself, and the app supplies it at the call site.
 
 ## State management
 
@@ -80,4 +87,4 @@ Logging goes through `AppLogger` (`core/logging/`), never a constructed `Logger`
 
 ## Testing
 
-Unit and widget tests live under `test/`, mirroring `lib/`'s structure. `integration_test/` covers end-to-end flows against real on-device SQLite and `SharedPreferences` storage: first-run seeding, creating a database and querying it, editing a default database surviving a simulated restart, a deliberate reset, deleting a database, switching locale, and settings (theme, workspace layout, favoriting a database) surviving a restart. `test/core/providers/provider_graph_test.dart` builds the full production provider container and reads every provider, catching a wiring mistake that would otherwise only surface on a device. See the README for current test counts and the coverage threshold.
+Unit and widget tests live under `test/`, mirroring `lib/`'s structure; `packages/app_ui/test/` mirrors `packages/app_ui/lib/` the same way, run and covered independently. `integration_test/` covers end-to-end flows against real on-device SQLite and `SharedPreferences` storage: first-run seeding, creating a database and querying it, editing a default database surviving a simulated restart, a deliberate reset, deleting a database, switching locale, and settings (theme, workspace layout, favoriting a database) surviving a restart. `test/core/providers/provider_graph_test.dart` builds the full production provider container and reads every provider, catching a wiring mistake that would otherwise only surface on a device. See the README for current test counts and the coverage threshold.
