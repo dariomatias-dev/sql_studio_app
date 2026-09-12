@@ -1,7 +1,6 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_spacing.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_card_widget.dart';
 import 'package:sql_studio/src/features/database/domain/entities/database_entity.dart';
 

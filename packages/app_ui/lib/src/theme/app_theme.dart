@@ -1,5 +1,5 @@
+import 'package:app_ui/src/tokens/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 
 /// Centralized [ThemeData] for the app, so Material components (text
 /// selection, tab indicators, progress indicators, ...) follow

@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A common panel frame used by the SQL workspace widgets, providing a
 /// header with title, database name, action buttons, and a body area.

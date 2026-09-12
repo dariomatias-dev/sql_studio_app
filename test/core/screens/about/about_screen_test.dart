@@ -1,9 +1,9 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/screens/about/about_screen.dart';
 import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
 import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';

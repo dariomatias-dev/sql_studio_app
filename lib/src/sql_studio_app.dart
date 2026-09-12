@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/providers/app_localization_provider.dart';
 import 'package:sql_studio/src/core/providers/app_theme_mode_provider.dart';
 import 'package:sql_studio/src/core/routes/app_router.dart';

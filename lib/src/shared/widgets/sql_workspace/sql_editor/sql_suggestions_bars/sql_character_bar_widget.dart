@@ -1,6 +1,6 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/core/app_spacing.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_suggestions_bar_widget.dart';
 
 /// Special characters commonly used in SQL statements, shown as quick

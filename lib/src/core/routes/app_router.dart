@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:sql_studio/src/core/app_durations.dart';
 import 'package:sql_studio/src/core/navigation/root_navigation.dart';
 import 'package:sql_studio/src/core/routes/route_names.dart';
 import 'package:sql_studio/src/core/routes/route_paths.dart';

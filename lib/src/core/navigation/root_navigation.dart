@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sql_studio/src/core/app_durations.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/drawer_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_nav_bar_widget.dart';
 import 'package:sql_studio/src/core/navigation/widgets/root_swipe_wrapper_widget.dart';

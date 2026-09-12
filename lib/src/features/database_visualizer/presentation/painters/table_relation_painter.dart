@@ -1,5 +1,5 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';
 
 /// Paints the foreign-key relation arrows between visualized tables.

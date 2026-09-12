@@ -1,9 +1,9 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/app_theme.dart';
 import 'package:sql_studio/src/core/screens/about/license_detail_screen.dart';
 import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
 

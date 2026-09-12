@@ -1,8 +1,5 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/core/app_radii.dart';
-import 'package:sql_studio/src/core/app_shadows.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A compact pill switch matching the app's own design system instead of
 /// Material's stock [Switch] shape.

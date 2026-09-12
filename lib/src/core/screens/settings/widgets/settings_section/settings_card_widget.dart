@@ -1,6 +1,5 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A tappable row used to present a single settings entry, with a
 /// leading icon, title, and trailing chevron.

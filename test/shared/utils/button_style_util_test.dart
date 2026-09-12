@@ -1,6 +1,6 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/src/core/app_colors.dart';
 import 'package:sql_studio/src/shared/utils/button_style_util.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 

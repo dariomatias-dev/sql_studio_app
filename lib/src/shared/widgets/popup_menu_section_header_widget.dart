@@ -1,5 +1,5 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/src/core/extensions/build_context_extension.dart';
 
 /// A non-interactive label grouping related entries within a popup menu.
 class PopupMenuSectionHeaderWidget extends PopupMenuItem<void> {
