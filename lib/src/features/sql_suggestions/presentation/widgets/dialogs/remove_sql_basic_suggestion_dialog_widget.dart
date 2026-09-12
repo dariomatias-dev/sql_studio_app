@@ -7,7 +7,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Confirmation dialog for removing a single basic SQL suggestion.
 class RemoveSqlBasicSuggestionDialogWidget extends ConsumerStatefulWidget {
@@ -49,6 +49,7 @@ class _RemoveSqlBasicSuggestionDialogWidgetState
     return ConfirmationDialogWidget(
       title: appLocalizations.removeSuggestion,
       description: appLocalizations.removeSuggestionDescription,
+      cancelButton: const CancelButtonWidget(),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final result = await ref

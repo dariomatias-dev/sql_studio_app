@@ -14,7 +14,6 @@ import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_s
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_card_widget.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/settings_section/settings_section_widget.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/theme_selector_sheet/theme_selector_sheet_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,6 +61,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen>
         context,
         title: l10n.errorOpeningUrl,
         description: l10n.errorOpeningUrlDescription(url),
+        dismissLabel: l10n.ok,
       );
     }
   }

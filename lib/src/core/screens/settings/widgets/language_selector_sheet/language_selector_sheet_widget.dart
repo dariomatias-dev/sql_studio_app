@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/screens/settings/widgets/language_selector_sheet/language_selector_sheet_option_widget.dart';
 
 /// Display names for each supported language, in the same order as

@@ -1,15 +1,14 @@
+import 'package:app_ui/src/components/dialog_widget.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// A dialog asking the user to confirm or cancel an action.
 class ConfirmationDialogWidget extends StatelessWidget {
   /// Creates a confirmation dialog with the given [title],
-  /// [description] and [confirmButton].
+  /// [description], [cancelButton] and [confirmButton].
   const ConfirmationDialogWidget({
     required this.title,
     required this.description,
+    required this.cancelButton,
     required this.confirmButton,
     super.key,
   });
@@ -20,8 +19,12 @@ class ConfirmationDialogWidget extends StatelessWidget {
   /// Descriptive body text explaining the action to confirm.
   final String description;
 
-  /// Widget triggering the confirmed action, shown alongside a cancel
-  /// button.
+  /// Widget dismissing the dialog without confirming, shown alongside
+  /// [confirmButton].
+  final Widget cancelButton;
+
+  /// Widget triggering the confirmed action, shown alongside
+  /// [cancelButton].
   final Widget confirmButton;
 
   /// Displays a [ConfirmationDialogWidget] and returns the result
@@ -30,6 +33,7 @@ class ConfirmationDialogWidget extends StatelessWidget {
     BuildContext context, {
     required String title,
     required String description,
+    required Widget cancelButton,
     required Widget confirmButton,
     bool barrierDismissible = true,
   }) async {
@@ -40,6 +44,7 @@ class ConfirmationDialogWidget extends StatelessWidget {
         return ConfirmationDialogWidget(
           title: title,
           description: description,
+          cancelButton: cancelButton,
           confirmButton: confirmButton,
         );
       },
@@ -51,7 +56,7 @@ class ConfirmationDialogWidget extends StatelessWidget {
     return DialogWidget(
       title: title,
       content: Text(description, textAlign: TextAlign.center),
-      actions: <Widget>[const CancelButtonWidget(), confirmButton],
+      actions: <Widget>[cancelButton, confirmButton],
     );
   }
 }

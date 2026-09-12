@@ -1,21 +1,22 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/components/button_widget.dart';
+import 'package:app_ui/src/components/dialog_widget.dart';
+import 'package:app_ui/src/components/input_widget.dart';
+import 'package:app_ui/src/components/loading_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// A dialog prompting the user for a single text input value.
 class InputDialogWidget extends StatefulWidget {
   /// Creates an input dialog with the given [title], [controller],
-  /// [label] and [onSubmit] callback.
+  /// [label], [cancelButton], [submitText] and [onSubmit] callback.
   const InputDialogWidget({
     required this.title,
     required this.controller,
     required this.label,
+    required this.cancelButton,
+    required this.submitText,
     required this.onSubmit,
     super.key,
     this.validator,
-    this.submitText,
   });
 
   /// Title displayed at the top of the dialog.
@@ -27,16 +28,19 @@ class InputDialogWidget extends StatefulWidget {
   /// Label displayed on the input field.
   final String label;
 
+  /// Widget dismissing the dialog without submitting.
+  final Widget cancelButton;
+
   /// Optional validation function returning an error message, or
-  /// `null` when the value is valid.
+  /// `null` when the value is valid or no validation applies.
   final String? Function(String? value)? validator;
 
   /// Called with the submitted value. Return `true` to close the
   /// dialog, or `false` to keep it open.
   final Future<bool> Function(String value) onSubmit;
 
-  /// Overrides the default localized submit button label.
-  final String? submitText;
+  /// Label of the submit button.
+  final String submitText;
 
   /// Displays an [InputDialogWidget] with the given parameters.
   static Future<void> show(
@@ -44,9 +48,10 @@ class InputDialogWidget extends StatefulWidget {
     required String title,
     required TextEditingController controller,
     required String label,
+    required Widget cancelButton,
+    required String submitText,
     required Future<bool> Function(String value) onSubmit,
     String? Function(String? value)? validator,
-    String? submitText,
   }) async {
     await showDialog<void>(
       context: context,
@@ -55,9 +60,10 @@ class InputDialogWidget extends StatefulWidget {
           title: title,
           controller: controller,
           label: label,
+          cancelButton: cancelButton,
+          submitText: submitText,
           onSubmit: onSubmit,
           validator: validator,
-          submitText: submitText,
         );
       },
     );
@@ -82,8 +88,6 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context);
-
     return DialogWidget(
       title: widget.title,
       content: Form(
@@ -92,22 +96,14 @@ class _InputDialogWidgetState extends State<InputDialogWidget> {
           controller: widget.controller,
           labelText: widget.label,
           onChanged: (value) => setState(() {}),
-          validator:
-              widget.validator ??
-              (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return appLocalizations.thisFieldIsRequired;
-                }
-
-                return null;
-              },
+          validator: widget.validator,
         ),
       ),
       actions: <Widget>[
-        const CancelButtonWidget(),
+        widget.cancelButton,
         LoadingButtonWidget(
           onPressed: _handleSubmit,
-          text: widget.submitText ?? appLocalizations.submit,
+          text: widget.submitText,
           style: ButtonStyleType.black,
         ),
       ],

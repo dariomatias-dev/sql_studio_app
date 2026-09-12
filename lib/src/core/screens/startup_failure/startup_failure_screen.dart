@@ -2,7 +2,8 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Shown when the app cannot load its local state on startup, offering a
 /// retry and, for state that will not load however often it is retried,
@@ -48,6 +49,7 @@ class _StartupFailureScreenState extends State<StartupFailureScreen> {
       context,
       title: appLocalizations.clearAppData,
       description: appLocalizations.clearAppDataConfirmation,
+      cancelButton: const CancelButtonWidget(),
       confirmButton: Builder(
         builder: (dialogContext) => ButtonWidget(
           onPressed: () => Navigator.pop(dialogContext, true),
