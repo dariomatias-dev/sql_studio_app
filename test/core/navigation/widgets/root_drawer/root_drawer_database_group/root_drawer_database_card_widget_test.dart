@@ -96,7 +96,7 @@ void main() {
 
       expect(
         container.read(sqlCommandsViewModelProvider).activeDatabase,
-        'Todo List',
+        'todo_list',
       );
       expect(container.read(navigationViewModelProvider), 0);
       expect(scaffoldState.isDrawerOpen, isFalse);

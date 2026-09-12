@@ -39,7 +39,7 @@ class _RootDrawerDatabaseCardWidgetState
 
   void _selectDatabase() {
     ref.read(sqlCommandsViewModelProvider.notifier)
-      ..activeDatabase = widget.database.label
+      ..activeDatabase = widget.database.name
       ..clearResult();
 
     ref.read(navigationViewModelProvider.notifier).index = 0;
@@ -97,7 +97,7 @@ class _RootDrawerDatabaseCardWidgetState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final commandsState = ref.watch(sqlCommandsViewModelProvider);
-    final isActive = commandsState.activeDatabase == widget.database.label;
+    final isActive = commandsState.activeDatabase == widget.database.name;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
