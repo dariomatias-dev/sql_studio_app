@@ -37,6 +37,8 @@ Um app Android para praticar SQL em bancos SQLite locais, editáveis e totalment
 - [Funcionalidades](#funcionalidades)
 - [Screenshots](#screenshots)
 - [Construído Com](#construído-com)
+- [Arquitetura](#arquitetura)
+- [Testes](#testes)
 - [Como Começar](#como-começar)
 - [Documentação](#documentação)
 - [Scripts](#scripts)
@@ -86,6 +88,30 @@ Cada banco de dados vem com um schema e dados de seed predefinidos. Você escrev
 - **[go_router](https://pub.dev/packages/go_router)**: Roteamento declarativo.
 - **[sqflite](https://pub.dev/packages/sqflite)**: Motor de banco de dados SQLite para Flutter.
 - **[flutter_code_editor](https://pub.dev/packages/flutter_code_editor)** e **[flutter_highlight](https://pub.dev/packages/flutter_highlight)**: O editor de código e o destaque de sintaxe usados no editor SQL.
+
+## Arquitetura
+
+O app é organizado por funcionalidade (`lib/src/features/`), cada uma com suas próprias camadas `data`, `domain` e `presentation`, seguindo uma Clean Architecture simplificada e MVVM:
+
+- **database**: o catálogo de bancos de dados, criação, exclusão, favoritos e busca.
+- **database-visualizer**: a visualização visual do esquema de um banco de dados, suas tabelas, colunas e relacionamentos.
+- **sql-editor**: o editor de código, seu console, e a execução de queries.
+- **sql-suggestions**: os snippets básicos e avançados de SQL mostrados ao escrever uma query.
+- **workspace-layout**: como o editor, console e visualizador são organizados na tela.
+- **app-version**: as informações de versão do app mostradas em Configurações.
+
+O estado é gerenciado com Riverpod (classes `Notifier`/`AsyncNotifier` expostas através de providers), a navegação com `go_router`, e a persistência através de `sqflite` e `shared_preferences`. Preocupações transversais (navegação, logging, tratamento de erros) ficam em `lib/src/core`; widgets e utilitários compartilhados por mais de uma funcionalidade ficam em `lib/src/shared`. Veja [`docs/architecture.pt-BR.md`](docs/architecture.pt-BR.md) para o detalhamento completo.
+
+## Testes
+
+O projeto tem 106 arquivos de teste cobrindo repositórios, view models e widgets, além de 9 suítes em `integration_test/` cobrindo a primeira execução e o seeding, criação e exclusão de banco de dados, edição e reset do banco de dados padrão, favoritos, persistência de tema e layout do workspace, e troca de idioma. O CI exige um mínimo de 91% de cobertura de linhas, além do conjunto rigoroso de lints do `very_good_analysis` e do `dart format`.
+
+Toda execução do CI envia seu relatório `lcov` para o [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app), que comenta a variação de cobertura em cada pull request. Para um relatório linha a linha localmente, gere um a partir do mesmo arquivo:
+
+```sh
+fvm flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html   # precisa do lcov instalado
+```
 
 ## Como Começar
 

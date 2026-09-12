@@ -37,6 +37,8 @@ An Android app to practice SQL on local, editable, fully offline SQLite database
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Built With](#built-with)
+- [Architecture](#architecture)
+- [Testing](#testing)
 - [Getting Started](#getting-started)
 - [Documentation](#documentation)
 - [Scripts](#scripts)
@@ -86,6 +88,30 @@ Each database ships with a predefined schema and seed data. You write and run re
 - **[go_router](https://pub.dev/packages/go_router)**: Declarative routing.
 - **[sqflite](https://pub.dev/packages/sqflite)**: SQLite database engine for Flutter.
 - **[flutter_code_editor](https://pub.dev/packages/flutter_code_editor)** & **[flutter_highlight](https://pub.dev/packages/flutter_highlight)**: The code editor and syntax highlighting used for the SQL editor.
+
+## Architecture
+
+The app is organized by feature (`lib/src/features/`), each with its own `data`, `domain`, and `presentation` layers, following a simplified Clean Architecture and MVVM:
+
+- **database**: the database catalog, creation, deletion, favoriting, and search.
+- **database-visualizer**: the visual schema view of a database's tables, columns, and relationships.
+- **sql-editor**: the code editor, its console, and running queries.
+- **sql-suggestions**: the basic and advanced SQL snippets shown while writing a query.
+- **workspace-layout**: how the editor, console, and visualizer are arranged on screen.
+- **app-version**: the app's own version info shown in Settings.
+
+State is managed with Riverpod (`Notifier`/`AsyncNotifier` classes exposed through providers), routing with `go_router`, and persistence through `sqflite` and `shared_preferences`. Cross-cutting concerns (navigation, logging, error handling) live under `lib/src/core`; widgets and utilities shared by more than one feature live under `lib/src/shared`. See [`docs/architecture.md`](docs/architecture.md) for the full breakdown.
+
+## Testing
+
+The project has 106 test files covering repositories, view models, and widgets, plus 9 `integration_test/` suites covering first run and seeding, database creation and deletion, editing and resetting the default database, favoriting, theme and workspace layout persistence, and language switching. CI enforces a minimum line coverage of 91%, alongside the strict `very_good_analysis` lint set and `dart format`.
+
+Every CI run uploads its `lcov` report to [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app), which comments the coverage delta on each pull request. For a line-by-line report locally, generate one from the same file:
+
+```sh
+fvm flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html   # needs lcov installed
+```
 
 ## Getting Started
 
