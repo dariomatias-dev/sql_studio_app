@@ -18,7 +18,7 @@ fvm flutter pub get
 git config core.hooksPath .githooks
 ```
 
-That last line points git at [`.githooks/`](../.githooks), where a `commit-msg` hook rejects a subject line that doesn't follow the convention below. Git does not share hooks through a clone, so it is one command per checkout.
+That last line points git at [`.githooks/`](../.githooks), where a `commit-msg` hook rejects a subject line that doesn't follow the convention below, and a `pre-push` hook runs `./scripts/verify.sh` before a push carrying commits, so a broken change surfaces locally rather than as a red CI run minutes later. `git push --no-verify` skips it; branch protection on `main` is what actually blocks a broken change. Git does not share hooks through a clone, so it is one command per checkout.
 
 Localizations aren't committed pre-built for every change. Regenerate them after pulling or editing anything under `lib/l10n/*.arb`:
 
