@@ -100,13 +100,13 @@ The app is organized by feature (`lib/src/features/`), each with its own `data`,
 - **workspace-layout**: how the editor, console, and visualizer are arranged on screen.
 - **app-version**: the app's own version info shown in Settings.
 
-State is managed with Riverpod (`Notifier`/`AsyncNotifier` classes exposed through providers), routing with `go_router`, and persistence through `sqflite` and `shared_preferences`. Cross-cutting concerns (navigation, logging, error handling) live under `lib/src/core`; widgets and utilities shared by more than one feature live under `lib/src/shared`. See [`docs/architecture.md`](docs/architecture.md) for the full breakdown.
+State is managed with Riverpod (`Notifier`/`AsyncNotifier` classes exposed through providers), routing with `go_router`, and persistence through `sqflite` and `shared_preferences`. Cross-cutting concerns (navigation, logging, error handling) live under `lib/src/core`; widgets and utilities shared by more than one feature, but still coupled to this app, live under `lib/src/shared`. Presentation-agnostic design tokens and components (buttons, cards, dialogs, states) live in their own local package, `packages/app_ui`. See [`docs/architecture.md`](docs/architecture.md) for the full breakdown.
 
 ## Testing
 
-The project has 106 test files covering repositories, view models, and widgets, plus 9 `integration_test/` suites covering first run and seeding, database creation and deletion, editing and resetting the default database, favoriting, theme and workspace layout persistence, and language switching. CI enforces a minimum line coverage of 91%, alongside the strict `very_good_analysis` lint set and `dart format`.
+The project has 91 test files covering repositories, view models, and widgets, plus 15 in `packages/app_ui` for its own components, and 9 `integration_test/` suites covering first run and seeding, database creation and deletion, editing and resetting the default database, favoriting, theme and workspace layout persistence, and language switching. CI enforces a minimum line coverage of 91% for the app and its own floor for `packages/app_ui`, alongside the strict `very_good_analysis` lint set and `dart format`.
 
-Every CI run uploads its `lcov` report to [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app), which comments the coverage delta on each pull request. For a line-by-line report locally, generate one from the same file:
+Every CI run uploads its `lcov` reports to [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) as two flags, `app` and `app_ui`, which comment the coverage delta on each pull request. For a line-by-line report locally, generate one from the same file:
 
 ```sh
 fvm flutter test --coverage

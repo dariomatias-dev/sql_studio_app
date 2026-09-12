@@ -100,13 +100,13 @@ La app está organizada por funcionalidad (`lib/src/features/`), cada una con su
 - **workspace-layout**: cómo se organizan en pantalla el editor, la consola y el visualizador.
 - **app-version**: la información de versión de la app mostrada en Configuración.
 
-El estado se gestiona con Riverpod (clases `Notifier`/`AsyncNotifier` expuestas a través de providers), el enrutamiento con `go_router`, y la persistencia mediante `sqflite` y `shared_preferences`. Las preocupaciones transversales (navegación, logging, manejo de errores) viven en `lib/src/core`; los widgets y utilidades compartidos por más de una funcionalidad viven en `lib/src/shared`. Consulta [`docs/architecture.es.md`](docs/architecture.es.md) para el detalle completo.
+El estado se gestiona con Riverpod (clases `Notifier`/`AsyncNotifier` expuestas a través de providers), el enrutamiento con `go_router`, y la persistencia mediante `sqflite` y `shared_preferences`. Las preocupaciones transversales (navegación, logging, manejo de errores) viven en `lib/src/core`; los widgets y utilidades compartidos por más de una funcionalidad, pero aún acoplados a esta app, viven en `lib/src/shared`. Los tokens de diseño y los componentes agnósticos de presentación (botones, tarjetas, diálogos, estados) viven en su propio paquete local, `packages/app_ui`. Consulta [`docs/architecture.es.md`](docs/architecture.es.md) para el detalle completo.
 
 ## Pruebas
 
-El proyecto tiene 106 archivos de prueba que cubren repositorios, view models y widgets, más 9 suites en `integration_test/` que cubren el primer arranque y el seeding, la creación y eliminación de bases de datos, la edición y el restablecimiento de la base de datos predeterminada, favoritos, la persistencia del tema y del diseño del workspace, y el cambio de idioma. El CI exige un mínimo de 91% de cobertura de líneas, junto con el conjunto estricto de lints de `very_good_analysis` y `dart format`.
+El proyecto tiene 91 archivos de prueba que cubren repositorios, view models y widgets, más 15 en `packages/app_ui` para sus propios componentes, y 9 suites en `integration_test/` que cubren el primer arranque y el seeding, la creación y eliminación de bases de datos, la edición y el restablecimiento de la base de datos predeterminada, favoritos, la persistencia del tema y del diseño del workspace, y el cambio de idioma. El CI exige un mínimo de 91% de cobertura de líneas para la app y su propio umbral para `packages/app_ui`, junto con el conjunto estricto de lints de `very_good_analysis` y `dart format`.
 
-Cada ejecución del CI sube su reporte `lcov` a [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app), que comenta la variación de cobertura en cada pull request. Para un reporte línea por línea localmente, genera uno a partir del mismo archivo:
+Cada ejecución del CI sube sus reportes `lcov` a [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) como dos flags, `app` y `app_ui`, que comentan la variación de cobertura en cada pull request. Para un reporte línea por línea localmente, genera uno a partir del mismo archivo:
 
 ```sh
 fvm flutter test --coverage

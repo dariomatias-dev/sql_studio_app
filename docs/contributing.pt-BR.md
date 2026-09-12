@@ -33,7 +33,7 @@ Rode o app em um dispositivo ou emulador conectado com `fvm flutter run`.
 - **Abra uma issue primeiro** para discutir a mudança, a menos que seja uma correção pequena e óbvia.
 - **Siga a estrutura existente**: feature-first, camadas `domain`/`data`/`presentation`, Riverpod para estado, sem padrões novos sem discussão prévia. Veja [`architecture.md`](architecture.pt-BR.md).
 - **Um caso de uso só se justifica quando compõe mais de uma chamada de repositório.** Caso contrário, chame o repositório diretamente do view model.
-- **Respeite o design system**: sem cores, espaçamentos, raios, durações ou estilos de texto inline. Use os tokens em `lib/src/core/` (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`).
+- **Respeite o design system**: sem cores, espaçamentos, raios, durações ou estilos de texto inline. Use os tokens de `package:app_ui` (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`). Veja [`architecture.pt-BR.md`](architecture.pt-BR.md#design-system-packagesapp_ui) para o que entra em `packages/app_ui` e o que fica no app.
 - **Sem strings fixas voltadas ao usuário**: adicione a chave aos três arquivos ARB (`app_en.arb`, `app_es.arb`, `app_pt.arb`) com uma `description`, depois rode `gen-l10n`. [`scripts/check_l10n.sh`](../scripts/check_l10n.sh) garante a paridade de chaves entre eles, no `verify.sh` e no CI.
 - **Adicione testes** para qualquer coisa com lógica: um método de repositório, um caso de uso, um view model, o comportamento de um widget. Uma correção de bug deve vir com um teste que falha sem a correção.
 - **Rode a verificação completa localmente** antes de dar push:
@@ -52,6 +52,8 @@ Rode o app em um dispositivo ou emulador conectado com `fvm flutter run`.
   fvm flutter test --coverage
   ./scripts/check_coverage.sh coverage/lcov.info 91
   ```
+
+  O `verify.sh` só verifica o app raiz. Uma mudança em `packages/app_ui` precisa dos mesmos checks rodados de novo de dentro daquele diretório, contra o próprio limiar de cobertura (veja o job `app_ui` em [`ci.yaml`](../.github/workflows/ci.yaml)).
 
 - **Mensagens de commit** seguem o [Conventional Commits](https://www.conventionalcommits.org/), reforçado pelo hook `commit-msg` habilitado na configuração:
 
@@ -73,14 +75,15 @@ Rode o app em um dispositivo ou emulador conectado com `fvm flutter run`.
 
 ## O que o CI verifica
 
-Todo push e pull request roda [`.github/workflows/ci.yaml`](../.github/workflows/ci.yaml), em quatro jobs:
+Todo push e pull request roda [`.github/workflows/ci.yaml`](../.github/workflows/ci.yaml), em cinco jobs:
 
 | Job | O que faz |
 | --- | --- |
-| `quality` | Instala dependências, regenera as localizações, e então **falha se essa regeneração produziu um diff**, já que arquivos gerados precisam estar versionados e atualizados. Depois formatação, análise, testes, e o gate de cobertura, e sobe o relatório para o Codecov. |
+| `quality` | Instala dependências, regenera as localizações, e então **falha se essa regeneração produziu um diff**, já que arquivos gerados precisam estar versionados e atualizados. Depois formatação, análise, testes, e o gate de cobertura, e sobe o relatório para o Codecov sob a flag `app`. |
+| `app_ui` | Os mesmos checks de formatação, análise, testes e cobertura, restritos a `packages/app_ui`, com seu próprio limiar de cobertura, e enviados sob a flag `app_ui`. |
 | `build_apk` | Roda depois que `quality` passa e compila um APK de release — compilável sem um segredo de assinatura, já que `android/app/build.gradle.kts` recorre à keystore de debug quando `key.properties` está ausente — enviado como artefato do workflow, mantido por 14 dias. |
 | `integration` | Roda depois que `quality` passa, inicia um emulador Android fixo (API 35) e roda cada suíte de `integration_test/` nele, forçando o encerramento do app entre suítes para que cada uma comece a frio. Essas precisam de um dispositivo real: exercitam o armazenamento real de SQLite e `SharedPreferences`, incluindo estado que sobrevive a um reinício simulado. O job habilita o KVM primeiro e compila um APK de debug antes de iniciar o emulador, já que uma build Android a frio sozinha pode estourar o limite de tempo por suíte. |
-| `osv-scanner` | Escaneia o `pubspec.lock` contra a base OSV. Roda independente dos outros jobs: um aviso recém-publicado sem correção disponível ainda não é motivo para parar o relato dos testes. |
+| `osv-scanner` | Escaneia o `pubspec.lock` e `packages/app_ui/pubspec.lock` contra a base OSV. Roda independente dos outros jobs: um aviso recém-publicado sem correção disponível ainda não é motivo para parar o relato dos testes. |
 
 Releases são feitas pelo [release-please](https://github.com/googleapis/release-please). Ele lê os Conventional Commits chegados na `main` e mantém aberto um pull request com a próxima versão e a entrada do `CHANGELOG.md` derivada deles. Ao mesclar esse pull request, a versão é escrita em `pubspec.yaml`, o commit é marcado com tag, e a release do GitHub é publicada.
 
@@ -96,7 +99,7 @@ O [Renovate](https://docs.renovatebot.com/) abre um pull request para cada depen
 
 ### Relatórios de cobertura
 
-[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) é o que faz uma build falhar, excluindo `lib/l10n/` antes de medir; o [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) é o que deixa o número legível num pull request. Os envios se autenticam com um secret de repositório `CODECOV_TOKEN`; pull requests de forks não conseguem lê-lo, então o passo está deliberadamente configurado com `fail_ci_if_error: false` — um envio falho é um relatório faltando, nunca uma build falha.
+[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) é o que faz uma build falhar, excluindo `lib/l10n/` antes de medir; o [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) é o que deixa o número legível num pull request, como duas flags independentes (`app`, `app_ui`), já que as duas suítes rodam em jobs separados com limiares diferentes — veja [`codecov.yml`](../codecov.yml). Os envios se autenticam com um secret de repositório `CODECOV_TOKEN`; pull requests de forks não conseguem lê-lo, então o passo está deliberadamente configurado com `fail_ci_if_error: false` — um envio falho é um relatório faltando, nunca uma build falha.
 
 Para o mesmo localmente, sem conta, renderize o arquivo `lcov` em HTML:
 
@@ -105,6 +108,8 @@ fvm flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html   # apt install lcov
 xdg-open coverage/html/index.html
 ```
+
+O mesmo funciona dentro de `packages/app_ui`, contra o próprio `coverage/lcov.info`.
 
 ## Trabalhando com um agente de IA
 
