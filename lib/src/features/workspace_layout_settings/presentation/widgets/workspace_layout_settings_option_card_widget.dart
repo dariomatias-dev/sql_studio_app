@@ -1,8 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sql_studio/src/shared/widgets/card_widget.dart';
-
 /// Selectable card representing a single workspace layout option.
 class WorkspaceLayoutSettingsOptionCardWidget extends StatelessWidget {
   /// Creates a workspace layout option card.

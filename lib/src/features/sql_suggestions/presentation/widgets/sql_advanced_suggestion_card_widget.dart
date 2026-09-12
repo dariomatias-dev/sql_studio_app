@@ -7,7 +7,6 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/domain/entities/sql_advanced_suggestion_entity.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/delete_sql_advanced_suggestion_dialog_widget.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/dialogs/update_sql_advanced_suggestion_dialog_widget.dart';
-import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
 /// Card that displays an advanced SQL suggestion with edit and delete
 /// actions.

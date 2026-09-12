@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,8 +12,6 @@ import 'package:sql_studio/src/features/database_visualizer/presentation/widgets
 import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_providers.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 /// Screen that renders an interactive diagram of a database's tables and
 /// their relations.

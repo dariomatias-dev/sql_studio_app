@@ -13,7 +13,6 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggest
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/popup_menu_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/popup_menu_section_header_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/panel_widget.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_editor_controller.dart';
 import 'package:sql_studio/src/shared/widgets/sql_workspace/sql_editor/sql_suggestions_bars/sql_advanced_suggestions_bar_widget.dart';
