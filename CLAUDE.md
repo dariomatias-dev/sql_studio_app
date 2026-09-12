@@ -13,7 +13,7 @@ fvm flutter test --coverage      # tests with coverage/lcov.info
 fvm flutter gen-l10n             # regenerate lib/l10n/app_localizations*.dart
 
 scripts/check_l10n.sh                          # ARB key parity across locales
-scripts/check_coverage.sh coverage/lcov.info 86  # coverage floor, lib/l10n excluded
+scripts/check_coverage.sh coverage/lcov.info 91  # coverage floor, lib/l10n excluded
 scripts/verify.sh                              # the full local gate, mirrors CI
 scripts/verify.sh --skip-tests                 # fast pass; never the final gate
 ```
@@ -64,6 +64,39 @@ the same view model or service, it belongs in `core/` or `shared/`.
   three ARB files (`en`, `es`, `pt`) with a `description`, then run `gen-l10n`.
 - Log through `AppLogger` (`core/logging/`), never construct a `Logger`
   directly. Never log SQL text, database names or other user data.
+
+## Tests
+
+Anything with logic gets a test, in the mirrored path under `test/`.
+
+| What | Test |
+| --- | --- |
+| Repository, mapper, use case, service | Unit test against a fake or an in-memory implementation. |
+| View model | Unit test driving the notifier through its states, with provider overrides. |
+| Screen or widget | Widget test, using the fixtures in `test/test_helpers/`. |
+| End-to-end flow across features | `integration_test/`, using the harness in `integration_test/test_helpers/app_harness.dart`. Runs on a real Android device or the CI emulator; assert on rendered content, never on a toast or on `go_router`'s navigation state. |
+
+Coverage is enforced, not advisory: 91% minimum, checked by `scripts/check_coverage.sh` (`lib/l10n/` excluded).
+
+## Ripple effects
+
+Ask these on every change, and act on the ones that apply:
+
+- **A user-visible capability changed?** Update `README.md`, `README.es.md` and
+  `README.pt-BR.md`.
+- **The structure, a layer boundary or a convention changed?** Update
+  `docs/architecture.md`, in all three languages.
+- **The workflow, the checks or the tooling changed?** Update
+  `docs/contributing.md`, in all three languages.
+- **The test count or the coverage floor changed?** The README's Testing
+  section quotes both.
+- **A script gained, lost or changed behavior?** The README's Scripts table.
+- **A dependency was added or removed?** `pubspec.yaml`.
+- **A CI job changed?** `docs/contributing.md` documents the jobs; `act
+  pull_request` (pinned by `.actrc`) runs them locally first.
+
+Documentation ships in English, Spanish and Portuguese (BR). A doc change in
+one language and not the other two is a broken change.
 
 ## Commit messages
 
