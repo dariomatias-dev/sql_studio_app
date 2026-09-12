@@ -9,6 +9,9 @@ import 'package:sql_studio/src/core/screens/about/licenses_screen.dart';
 import 'package:sql_studio/src/features/app_version/presentation/app_version_providers.dart';
 import 'package:sql_studio/src/features/app_version/presentation/view_models/app_version_state.dart';
 import 'package:sql_studio/src/features/app_version/presentation/view_models/app_version_view_model.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
+
+import '../../../test_helpers/fake_url_launcher_platform.dart';
 
 class _FixedAppVersionViewModel extends AppVersionViewModel {
   @override
@@ -62,5 +65,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(LicensesScreen), findsOneWidget);
+  });
+
+  testWidgets('shows an error dialog when opening the developer link fails', (
+    tester,
+  ) async {
+    final originalPlatform = UrlLauncherPlatform.instance;
+    addTearDown(() => UrlLauncherPlatform.instance = originalPlatform);
+    UrlLauncherPlatform.instance = FakeUrlLauncherPlatform(
+      shouldLaunch: false,
+    );
+
+    await tester.pumpWidget(wrap(const AboutScreen()));
+
+    await tester.tap(find.textContaining('Dario Matias'));
+    await tester.pumpAndSettle();
+
+    final l10n = await AppLocalizations.delegate.load(const Locale('en'));
+    expect(find.text(l10n.errorOpeningUrl), findsOneWidget);
   });
 }
