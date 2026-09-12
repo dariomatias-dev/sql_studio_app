@@ -1,9 +1,9 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sql_studio/src/core/enums/app_localizations_key.dart';
 import 'package:sql_studio/src/core/error/result.dart';
-import 'package:sql_studio/src/core/extensions/list_extension.dart';
 import 'package:sql_studio/src/core/logging/app_logger.dart';
 import 'package:sql_studio/src/core/sql/sql_statement_splitter.dart';
 import 'package:sql_studio/src/features/database_visualizer/domain/entities/table_info_entity.dart';

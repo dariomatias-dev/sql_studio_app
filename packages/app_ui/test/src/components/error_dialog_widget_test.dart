@@ -1,45 +1,34 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.light,
-    supportedLocales: AppLocalizations.supportedLocales,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
     home: Scaffold(body: child),
   );
 
   group('ErrorDialogWidget', () {
-    testWidgets('renders the given description and a default title', (
+    testWidgets('renders the given title, description and dismiss label', (
       tester,
     ) async {
       await tester.pumpWidget(
-        wrap(const ErrorDialogWidget(description: 'Something went wrong')),
-      );
-      await tester.pumpAndSettle();
-
-      expect(find.text('Something went wrong'), findsOneWidget);
-      expect(find.text('OK'), findsOneWidget);
-    });
-
-    testWidgets('renders a custom title when provided', (tester) async {
-      await tester.pumpWidget(
         wrap(
           const ErrorDialogWidget(
-            title: 'Connection failed',
-            description: 'Could not reach the database',
+            title: 'Error',
+            description: 'Something went wrong',
+            dismissLabel: 'OK',
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Connection failed'), findsOneWidget);
+      expect(find.text('Error'), findsOneWidget);
+      expect(find.text('Something went wrong'), findsOneWidget);
+      expect(find.text('OK'), findsOneWidget);
     });
 
-    testWidgets('show displays the dialog and Ok dismisses it', (
+    testWidgets('show displays the dialog and dismiss closes it', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -49,7 +38,9 @@ void main() {
               return ElevatedButton(
                 onPressed: () => ErrorDialogWidget.show(
                   context,
+                  title: 'Error',
                   description: 'Failed to save',
+                  dismissLabel: 'OK',
                 ),
                 child: const Text('Trigger'),
               );

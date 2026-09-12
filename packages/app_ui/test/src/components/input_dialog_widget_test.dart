@@ -1,19 +1,18 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.light,
-    supportedLocales: AppLocalizations.supportedLocales,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
     home: Scaffold(body: child),
   );
 
+  Widget cancelButton() =>
+      ElevatedButton(onPressed: () {}, child: const Text('Cancel'));
+
   group('InputDialogWidget', () {
-    testWidgets('renders title and label', (tester) async {
+    testWidgets('renders title, label and submit text', (tester) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
@@ -22,6 +21,8 @@ void main() {
             title: 'New database',
             controller: controller,
             label: 'Name',
+            cancelButton: cancelButton(),
+            submitText: 'Submit',
             onSubmit: (value) async => true,
           ),
         ),
@@ -29,11 +30,10 @@ void main() {
 
       expect(find.text('New database'), findsOneWidget);
       expect(find.text('Name'), findsOneWidget);
+      expect(find.text('Submit'), findsOneWidget);
     });
 
-    testWidgets('shows validation error for empty input by default', (
-      tester,
-    ) async {
+    testWidgets('runs a caller-supplied validator on submit', (tester) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
@@ -42,6 +42,11 @@ void main() {
             title: 'New database',
             controller: controller,
             label: 'Name',
+            cancelButton: cancelButton(),
+            submitText: 'Submit',
+            validator: (value) => (value == null || value.trim().isEmpty)
+                ? 'This field is required'
+                : null,
             onSubmit: (value) async => true,
           ),
         ),
@@ -69,6 +74,8 @@ void main() {
                   title: 'New database',
                   controller: controller,
                   label: 'Name',
+                  cancelButton: cancelButton(),
+                  submitText: 'Submit',
                   onSubmit: (value) async {
                     submittedValue = value;
                     return true;
@@ -103,6 +110,8 @@ void main() {
             title: 'New database',
             controller: controller,
             label: 'Name',
+            cancelButton: cancelButton(),
+            submitText: 'Submit',
             onSubmit: (value) async => false,
           ),
         ),
@@ -115,7 +124,9 @@ void main() {
       expect(find.text('New database'), findsOneWidget);
     });
 
-    testWidgets('uses the custom submitText when provided', (tester) async {
+    testWidgets('renders the cancel button passed by the caller', (
+      tester,
+    ) async {
       final controller = TextEditingController();
 
       await tester.pumpWidget(
@@ -124,14 +135,15 @@ void main() {
             title: 'Rename',
             controller: controller,
             label: 'Name',
+            cancelButton: cancelButton(),
             submitText: 'Save',
             onSubmit: (value) async => true,
           ),
         ),
       );
 
+      expect(find.text('Cancel'), findsOneWidget);
       expect(find.text('Save'), findsOneWidget);
-      expect(find.text('Submit'), findsNothing);
     });
   });
 }

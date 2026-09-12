@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/error/result.dart';
 import 'package:sql_studio/src/core/extensions/localization_extension.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// Shows an error dialog when [result] is a failure, or invokes
 /// [onSuccess] with the unwrapped value otherwise.

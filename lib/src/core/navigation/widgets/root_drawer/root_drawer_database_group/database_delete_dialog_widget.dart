@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sql_studio/l10n/app_localizations.dart';
 
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Confirmation dialog shown before permanently deleting a database.
 class DatabaseDeleteDialogWidget extends StatelessWidget {
@@ -33,6 +33,7 @@ class DatabaseDeleteDialogWidget extends StatelessWidget {
     return ConfirmationDialogWidget(
       title: appLocalizations.attention,
       description: appLocalizations.deleteDatabaseConfirmation,
+      cancelButton: const CancelButtonWidget(),
       confirmButton: ButtonWidget(
         onPressed: onDeleteDatabase,
         text: appLocalizations.delete,

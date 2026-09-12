@@ -1,7 +1,8 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/components/button_widget.dart';
+import 'package:app_ui/src/components/dialog_widget.dart';
+import 'package:app_ui/src/theme/build_context_extension.dart';
+import 'package:app_ui/src/tokens/app_spacing.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
 
 /// Standardized inline error state, with an optional retry action.
 ///

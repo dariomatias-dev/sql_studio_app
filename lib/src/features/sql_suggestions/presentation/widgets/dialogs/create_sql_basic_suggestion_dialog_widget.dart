@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,7 +7,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/input_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Dialog for creating a new basic SQL suggestion.
 class CreateSqlBasicSuggestionDialogWidget extends ConsumerStatefulWidget {
@@ -49,6 +50,7 @@ class _CreateSqlBasicSuggestionDialogWidgetState
       title: appLocalizations.createSuggestion,
       controller: _controller,
       label: appLocalizations.suggestionName,
+      cancelButton: const CancelButtonWidget(),
       submitText: appLocalizations.create,
       validator: (value) {
         if (value == null || value.trim().isEmpty) {

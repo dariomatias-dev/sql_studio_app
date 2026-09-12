@@ -10,7 +10,7 @@ import 'package:sql_studio/src/core/constants/default_sql_suggestions/default_sq
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Confirmation dialog for resetting basic SQL suggestions back to the
 /// default list.
@@ -44,6 +44,7 @@ class _ResetSqlBasicSuggestionsDialogWidgetState
     return ConfirmationDialogWidget(
       title: appLocalizations.resetSuggestions,
       description: appLocalizations.resetSuggestionsDescription,
+      cancelButton: const CancelButtonWidget(),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final result = await ref

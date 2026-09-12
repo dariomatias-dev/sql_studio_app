@@ -1,7 +1,9 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/extensions/list_extension.dart';
+import 'package:app_ui/src/theme/build_context_extension.dart';
+import 'package:app_ui/src/tokens/app_radii.dart';
+import 'package:app_ui/src/tokens/app_shadows.dart';
+import 'package:app_ui/src/tokens/app_spacing.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/core/extensions/list_extension.dart';
 
 /// The app's base dialog chrome: title, scrollable content and
 /// action buttons.

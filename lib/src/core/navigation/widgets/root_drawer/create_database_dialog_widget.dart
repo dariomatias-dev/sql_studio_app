@@ -10,8 +10,6 @@ import 'package:sql_studio/src/features/sql_editor/presentation/sql_editor_provi
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
 import 'package:sql_studio/src/shared/utils/handle_error.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/dialog_widget.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/error_dialog_widget.dart';
 
 /// Dialog that lets the user create a new database by entering its label
 /// and name.
@@ -74,7 +72,9 @@ class _CreateDatabaseDialogWidgetState
 
           await ErrorDialogWidget.show(
             context,
+            title: appLocalizations.error,
             description: appLocalizations.databaseAlreadyExists(name),
+            dismissLabel: appLocalizations.ok,
           );
         }
       },

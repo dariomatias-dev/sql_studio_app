@@ -9,7 +9,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Confirmation dialog for resetting all advanced SQL suggestions to their
 /// default set.
@@ -35,6 +35,7 @@ class ResetSqlAdvancedSuggestionsDialogWidget extends ConsumerWidget {
     return ConfirmationDialogWidget(
       title: appLocalizations.resetSuggestions,
       description: appLocalizations.resetSuggestionsConfirm,
+      cancelButton: const CancelButtonWidget(),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           Navigator.pop(context);

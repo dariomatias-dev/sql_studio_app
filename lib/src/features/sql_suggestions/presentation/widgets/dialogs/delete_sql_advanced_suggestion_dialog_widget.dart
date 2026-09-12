@@ -8,7 +8,7 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/features/sql_suggestions/presentation/sql_suggestions_providers.dart';
 
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
+import 'package:sql_studio/src/shared/widgets/buttons/cancel_button_widget.dart';
 
 /// Confirmation dialog for deleting an existing advanced SQL suggestion.
 class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
@@ -49,6 +49,7 @@ class DeleteSqlAdvancedSuggestionDialogWidget extends ConsumerWidget {
     return ConfirmationDialogWidget(
       title: appLocalizations.removeSuggestion,
       description: appLocalizations.deleteSuggestionConfirmation(label),
+      cancelButton: const CancelButtonWidget(),
       confirmButton: LoadingButtonWidget(
         onPressed: () async {
           final viewModel = ref.read(

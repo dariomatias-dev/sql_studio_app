@@ -1,19 +1,15 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/l10n/app_localizations.dart';
-import 'package:sql_studio/src/shared/widgets/dialogs/confirmation_dialog_widget.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
     theme: AppTheme.light,
-    supportedLocales: AppLocalizations.supportedLocales,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
     home: Scaffold(body: child),
   );
 
   group('ConfirmationDialogWidget', () {
-    testWidgets('renders title, description and confirm button', (
+    testWidgets('renders title, description, cancel and confirm buttons', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -21,6 +17,10 @@ void main() {
           ConfirmationDialogWidget(
             title: 'Delete database',
             description: 'This action cannot be undone.',
+            cancelButton: ElevatedButton(
+              onPressed: () {},
+              child: const Text('Cancel'),
+            ),
             confirmButton: ElevatedButton(
               onPressed: () {},
               child: const Text('Delete'),
@@ -31,6 +31,7 @@ void main() {
 
       expect(find.text('Delete database'), findsOneWidget);
       expect(find.text('This action cannot be undone.'), findsOneWidget);
+      expect(find.text('Cancel'), findsOneWidget);
       expect(find.text('Delete'), findsOneWidget);
     });
 
@@ -49,6 +50,10 @@ void main() {
                     context,
                     title: 'Confirm',
                     description: 'Proceed?',
+                    cancelButton: ElevatedButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('No'),
+                    ),
                     confirmButton: ElevatedButton(
                       onPressed: () => Navigator.pop(context, true),
                       child: const Text('Yes'),
