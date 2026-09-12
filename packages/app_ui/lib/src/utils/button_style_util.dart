@@ -1,7 +1,6 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/components/button_widget.dart';
+import 'package:app_ui/src/tokens/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 /// Resolved color set used to render a button.
 class ButtonStyleData {

@@ -1,8 +1,7 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/components/button_widget.dart';
+import 'package:app_ui/src/theme/build_context_extension.dart';
+import 'package:app_ui/src/utils/button_style_util.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sql_studio/src/shared/utils/button_style_util.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 
 /// A button that shows a spinner and disables itself while its
 /// asynchronous [onPressed] callback is running.

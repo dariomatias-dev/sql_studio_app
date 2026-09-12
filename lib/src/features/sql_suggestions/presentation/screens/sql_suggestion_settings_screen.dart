@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,8 +14,6 @@ import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql
 import 'package:sql_studio/src/features/sql_suggestions/presentation/widgets/sql_suggestion_settings_title_option_widget.dart';
 
 import 'package:sql_studio/src/shared/utils/app_toast.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
 
 /// Screen where the user enables or disables the available SQL suggestion
