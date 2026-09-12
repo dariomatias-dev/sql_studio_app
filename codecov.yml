@@ -1,9 +1,9 @@
 # Codecov configuration.
 #
-# scripts/check_coverage.sh is what fails the build; this file only makes the
-# pull request comment agree with it. Keep the ignore list identical to the
-# script's EXCLUDED_PREFIXES, or the two will report different percentages
-# for the same run.
+# Coverage uploads as two independent flags, one per package, since the two
+# suites run as separate CI jobs with different thresholds. The targets mirror
+# their scripts/check_coverage.sh calls, which stay the authority: Codecov
+# reports and annotates, the scripts are what actually fail the build.
 
 codecov:
   require_ci_to_pass: true
@@ -11,11 +11,17 @@ codecov:
 coverage:
   precision: 1
   round: down
-  range: "85...100"
+  range: "70...100"
   status:
     project:
-      default:
+      default: false
+      app:
+        flags: [app]
         target: 91%
+        threshold: 0.5%
+      app_ui:
+        flags: [app_ui]
+        target: 70%
         threshold: 0.5%
     patch:
       default:
@@ -24,6 +30,16 @@ coverage:
 
 ignore:
   - "lib/l10n/**"
+
+flags:
+  app:
+    paths:
+      - lib/
+    carryforward: true
+  app_ui:
+    paths:
+      - packages/app_ui/lib/
+    carryforward: true
 
 comment:
   layout: "condensed_header, diff, flags, files"

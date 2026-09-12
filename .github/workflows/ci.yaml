@@ -69,6 +69,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/lcov.info
+          flags: app
           name: sql_studio
           fail_ci_if_error: false
 
@@ -96,13 +97,33 @@ jobs:
         run: flutter pub get
 
       - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed lib/
+        run: dart format --output=none --set-exit-if-changed lib/ test/
 
       - name: Analyze
         run: flutter analyze
 
-      # No test/ directory yet; tests land alongside the components moved
-      # into this package in later steps.
+      - name: Test with coverage
+        run: flutter test --coverage
+
+      # A low interim floor: most components are still untested token
+      # classes (AppColors' ThemeExtension lerp/copyWith) waiting on later
+      # migration steps. Raise this as coverage catches up, not on faith.
+      - name: Check coverage threshold
+        run: ../../scripts/check_coverage.sh coverage/lcov.info 70
+
+      # lcov paths are relative to the package root; Codecov matches them
+      # against the repository, so they need the package prefix.
+      - name: Rewrite coverage paths to be repository-relative
+        run: sed -i 's|^SF:|SF:packages/app_ui/|' coverage/lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: packages/app_ui/coverage/lcov.info
+          flags: app_ui
+          name: app_ui
+          fail_ci_if_error: false
 
   build_apk:
     name: Build release APK
