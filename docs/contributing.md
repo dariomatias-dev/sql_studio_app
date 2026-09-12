@@ -86,6 +86,14 @@ Releases are cut by [release-please](https://github.com/googleapis/release-pleas
 
 [`.github/workflows/release.yml`](../.github/workflows/release.yml) then runs the same quality gate and attaches the release APK. It is called directly by [`release_please.yml`](../.github/workflows/release_please.yml), since GitHub does not start a workflow from a tag pushed with the default token, and it still answers a `v*.*.*` tag pushed by hand, creating the release itself in that case.
 
+### Testing workflows locally
+
+[`.actrc`](../.actrc) pins the runner image [act](https://github.com/nektos/act) uses, so `act pull_request` (or `act push`) runs the same jobs as CI without waiting on a pushed commit. Useful when touching `.github/workflows/`.
+
+### Dependency updates
+
+[Renovate](https://docs.renovatebot.com/) opens a pull request for each outdated dependency, on the schedule and with the commit prefix set in [`renovate.json`](../renovate.json). It is not a substitute for reading what changed: check the linked release notes before merging, especially for a major version.
+
 ### Coverage reports
 
 [`scripts/check_coverage.sh`](../scripts/check_coverage.sh) is what fails a build, excluding `lib/l10n/` before measuring; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) is what makes the number readable on a pull request. Uploads authenticate with a `CODECOV_TOKEN` repository secret; pull requests from forks cannot read it, so the step is deliberately set to `fail_ci_if_error: false` — a failed upload is a missing report, never a failed build.
