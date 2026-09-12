@@ -86,6 +86,14 @@ Los releases los genera [release-please](https://github.com/googleapis/release-p
 
 [`.github/workflows/release.yml`](../.github/workflows/release.yml) luego ejecuta el mismo gate de calidad y adjunta el APK de release. Lo llama directamente [`release_please.yml`](../.github/workflows/release_please.yml), ya que GitHub no inicia un workflow desde un tag empujado con el token predeterminado, y también responde a un tag `v*.*.*` empujado a mano, creando el release por su cuenta en ese caso.
 
+### Probar workflows localmente
+
+[`.actrc`](../.actrc) fija la imagen de runner que usa [act](https://github.com/nektos/act), así `act pull_request` (o `act push`) ejecuta los mismos jobs que CI sin esperar a que se suba un commit. Útil al tocar `.github/workflows/`.
+
+### Actualizaciones de dependencias
+
+[Renovate](https://docs.renovatebot.com/) abre un pull request por cada dependencia desactualizada, según el cronograma y el prefijo de commit definidos en [`renovate.json`](../renovate.json). No sustituye leer qué cambió: revisa las notas de la versión enlazadas antes de fusionar, sobre todo para una versión mayor.
+
 ### Reportes de cobertura
 
 [`scripts/check_coverage.sh`](../scripts/check_coverage.sh) es lo que hace fallar una build, excluyendo `lib/l10n/` antes de medir; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) es lo que hace el número legible en un pull request. Las subidas se autentican con un secreto de repositorio `CODECOV_TOKEN`; los pull requests de forks no pueden leerlo, así que el paso está deliberadamente configurado con `fail_ci_if_error: false` — una subida fallida es un reporte faltante, nunca una build fallida.

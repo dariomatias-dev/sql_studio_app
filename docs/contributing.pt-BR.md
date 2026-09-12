@@ -86,6 +86,14 @@ Releases são feitas pelo [release-please](https://github.com/googleapis/release
 
 [`.github/workflows/release.yml`](../.github/workflows/release.yml) então roda o mesmo gate de qualidade e anexa o APK de release. Ele é chamado diretamente pelo [`release_please.yml`](../.github/workflows/release_please.yml), já que o GitHub não inicia um workflow a partir de uma tag empurrada com o token padrão, e também responde a uma tag `v*.*.*` empurrada manualmente, criando a release por conta própria nesse caso.
 
+### Testando workflows localmente
+
+[`.actrc`](../.actrc) fixa a imagem de runner que o [act](https://github.com/nektos/act) usa, então `act pull_request` (ou `act push`) roda os mesmos jobs do CI sem esperar um commit ser enviado. Útil ao mexer em `.github/workflows/`.
+
+### Atualizações de dependências
+
+O [Renovate](https://docs.renovatebot.com/) abre um pull request para cada dependência desatualizada, no cronograma e com o prefixo de commit definidos em [`renovate.json`](../renovate.json). Não substitui a leitura do que mudou: confira as release notes vinculadas antes de mesclar, especialmente para uma versão major.
+
 ### Relatórios de cobertura
 
 [`scripts/check_coverage.sh`](../scripts/check_coverage.sh) é o que faz uma build falhar, excluindo `lib/l10n/` antes de medir; o [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) é o que deixa o número legível num pull request. Os envios se autenticam com um secret de repositório `CODECOV_TOKEN`; pull requests de forks não conseguem lê-lo, então o passo está deliberadamente configurado com `fail_ci_if_error: false` — um envio falho é um relatório faltando, nunca uma build falha.
