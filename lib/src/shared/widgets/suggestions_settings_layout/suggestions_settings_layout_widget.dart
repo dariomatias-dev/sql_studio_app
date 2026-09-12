@@ -5,8 +5,6 @@ import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/loading_button_widget.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 import 'package:sql_studio/src/shared/widgets/suggestions_settings_layout/suggestions_settings_layout_controller.dart';
 
 /// Generic screen for reordering, saving, resetting, and adding suggestion

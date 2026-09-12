@@ -1,7 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sql_studio/src/shared/widgets/card_widget.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(

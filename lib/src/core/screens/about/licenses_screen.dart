@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:sql_studio/l10n/app_localizations.dart';
 import 'package:sql_studio/src/core/screens/about/license_detail_screen.dart';
 import 'package:sql_studio/src/shared/widgets/scaffold_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 class _PackageLicense {
   _PackageLicense(this.name);

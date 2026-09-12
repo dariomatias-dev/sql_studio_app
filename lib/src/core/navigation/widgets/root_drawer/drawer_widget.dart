@@ -7,9 +7,6 @@ import 'package:sql_studio/src/core/navigation/widgets/root_drawer/create_databa
 import 'package:sql_studio/src/core/navigation/widgets/root_drawer/root_drawer_database_group/root_drawer_database_group_widget.dart';
 import 'package:sql_studio/src/features/database/presentation/database_providers.dart';
 import 'package:sql_studio/src/shared/widgets/buttons/button_widget.dart';
-import 'package:sql_studio/src/shared/widgets/input_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/empty_state_widget.dart';
-import 'package:sql_studio/src/shared/widgets/states/loading_state_widget.dart';
 
 /// App-wide navigation drawer listing favorite and other databases, with
 /// search and database creation entry points.
