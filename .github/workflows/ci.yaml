@@ -177,6 +177,12 @@ jobs:
             timeout 480 flutter test integration_test/delete_database_test.dart -d emulator-5554
             adb -s emulator-5554 shell am force-stop br.com.dariomatias.sql_studio
             timeout 480 flutter test integration_test/locale_switch_test.dart -d emulator-5554
+            adb -s emulator-5554 shell am force-stop br.com.dariomatias.sql_studio
+            timeout 480 flutter test integration_test/theme_persists_test.dart -d emulator-5554
+            adb -s emulator-5554 shell am force-stop br.com.dariomatias.sql_studio
+            timeout 480 flutter test integration_test/workspace_layout_persists_test.dart -d emulator-5554
+            adb -s emulator-5554 shell am force-stop br.com.dariomatias.sql_studio
+            timeout 480 flutter test integration_test/favorite_database_persists_test.dart -d emulator-5554
 
   osv-scanner:
     name: Scan dependencies for known vulnerabilities
