@@ -6,6 +6,13 @@
 <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
 </div>
 <br>
+<div align="center">
+<a href="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml"><img src="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
+<a href="https://codecov.io/gh/dariomatias-dev/sql_studio_app"><img src="https://codecov.io/gh/dariomatias-dev/sql_studio_app/branch/main/graph/badge.svg" alt="Coverage"></a>
+<img src="https://img.shields.io/badge/lints-very__good__analysis-blueviolet?style=flat" alt="very_good_analysis">
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
+</div>
+<br>
 
 <p align="center">
 <a href="README.md">English</a> · <strong>Português (BR)</strong> · <a href="README.es.md">Español</a>
