@@ -39,6 +39,7 @@ dev_dependencies:
   mocktail: ^1.0.4
   share_plus_platform_interface: ^7.2.0
   sqflite_common_ffi: ^2.3.4+4
+  url_launcher_platform_interface: ^2.3.2
   very_good_analysis: ^10.2.0
 
 flutter:

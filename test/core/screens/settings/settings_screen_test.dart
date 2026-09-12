@@ -7,7 +7,9 @@ import 'package:sql_studio/src/core/constants/shared_preferences_keys.dart';
 import 'package:sql_studio/src/core/providers/core_providers.dart';
 import 'package:sql_studio/src/core/screens/settings/settings_screen.dart';
 import 'package:sql_studio/src/core/services/shared_preferences_service.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
+import '../../../test_helpers/fake_url_launcher_platform.dart';
 import '../../../test_helpers/shared_preferences_test_helper.dart';
 
 void main() {
@@ -66,5 +68,25 @@ void main() {
     expect(find.text('English'), findsNothing);
     expect(find.text('Español'), findsNothing);
     expect(find.text('Português'), findsNothing);
+  });
+
+  testWidgets('shows an error dialog when opening a link fails', (
+    tester,
+  ) async {
+    final originalPlatform = UrlLauncherPlatform.instance;
+    addTearDown(() => UrlLauncherPlatform.instance = originalPlatform);
+    UrlLauncherPlatform.instance = FakeUrlLauncherPlatform(
+      shouldLaunch: false,
+    );
+
+    await initPrefs();
+
+    await tester.pumpWidget(wrap(const SettingsScreen()));
+
+    await tester.tap(find.text('Official Website'));
+    await tester.pumpAndSettle();
+
+    final l10n = await AppLocalizations.delegate.load(const Locale('en'));
+    expect(find.text(l10n.errorOpeningUrl), findsOneWidget);
   });
 }
