@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,6 +60,116 @@ void main() {
       expect(
         painter().shouldRepaint(painter(colors: AppColors.dark)),
         isTrue,
+      );
+    });
+  });
+
+  group('TableRelationPainter.paint', () {
+    Canvas recordingCanvas() => Canvas(ui.PictureRecorder());
+
+    test('skips relations whose source or target rect is missing', () {
+      final withRelation = [
+        TableInfoEntity(
+          name: 'orders',
+          columns: [
+            ColumnInfoEntity(
+              name: 'user_id',
+              type: 'INTEGER',
+              foreignTable: 'users',
+            ),
+          ],
+        ),
+      ];
+
+      expect(
+        () => painter(tables_: withRelation, tableRects_: {}).paint(
+          recordingCanvas(),
+          const Size(200, 200),
+        ),
+        returnsNormally,
+      );
+    });
+
+    test('draws a relation with no selection', () {
+      final tables_ = [
+        TableInfoEntity(
+          name: 'orders',
+          columns: [
+            ColumnInfoEntity(
+              name: 'user_id',
+              type: 'INTEGER',
+              foreignTable: 'users',
+            ),
+          ],
+        ),
+      ];
+      final tableRects_ = {
+        'orders': const Rect.fromLTWH(0, 0, 100, 100),
+        'users': const Rect.fromLTWH(200, 0, 100, 100),
+      };
+
+      expect(
+        () => painter(
+          tables_: tables_,
+          tableRects_: tableRects_,
+        ).paint(recordingCanvas(), const Size(400, 200)),
+        returnsNormally,
+      );
+    });
+
+    test('highlights a relation touching the selected table', () {
+      final tables_ = [
+        TableInfoEntity(
+          name: 'orders',
+          columns: [
+            ColumnInfoEntity(
+              name: 'user_id',
+              type: 'INTEGER',
+              foreignTable: 'users',
+            ),
+          ],
+        ),
+      ];
+      final tableRects_ = {
+        'orders': const Rect.fromLTWH(200, 0, 100, 100),
+        'users': const Rect.fromLTWH(0, 0, 100, 100),
+      };
+
+      expect(
+        () => painter(
+          tables_: tables_,
+          tableRects_: tableRects_,
+          selectedTable: 'users',
+        ).paint(recordingCanvas(), const Size(400, 200)),
+        returnsNormally,
+      );
+    });
+
+    test('dims a relation that does not touch the selected table', () {
+      final tables_ = [
+        TableInfoEntity(
+          name: 'orders',
+          columns: [
+            ColumnInfoEntity(
+              name: 'user_id',
+              type: 'INTEGER',
+              foreignTable: 'users',
+            ),
+          ],
+        ),
+      ];
+      final tableRects_ = {
+        'orders': const Rect.fromLTWH(0, 0, 100, 100),
+        'users': const Rect.fromLTWH(200, 0, 100, 100),
+      };
+
+      expect(
+        () => painter(
+          tables_: tables_,
+          tableRects_: tableRects_,
+          selectedTable: 'products',
+        ).paint(recordingCanvas(), const Size(400, 200)),
+        returnsNormally,
       );
     });
   });
