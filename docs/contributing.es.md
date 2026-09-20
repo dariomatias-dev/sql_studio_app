@@ -42,7 +42,7 @@ Ejecuta la app en un dispositivo o emulador conectado con `fvm flutter run`.
   ./scripts/verify.sh
   ```
 
-  Corre lo mismo que CI: regenera las localizaciones y falla si eso cambió algo, `check_l10n.sh`, formato, análisis, tests, y el umbral de cobertura. Usa `fvm` cuando está configurado para el proyecto, y las herramientas sin `fvm` en caso contrario. Agrega `--skip-tests` para una pasada parcial más rápida mientras iteras; nunca es el gate final, ya que borra el sello de la última pasada local en vez de escribirlo.
+  Corre lo mismo que CI: regenera las localizaciones y falla si eso cambió algo, `check_l10n.sh`, formato, análisis, tests, y el umbral de cobertura, para la app y para `packages/app_ui`, cada uno contra su propio umbral. Usa `fvm` cuando está configurado para el proyecto, y las herramientas sin `fvm` en caso contrario. Agrega `--skip-tests` para una pasada parcial más rápida mientras iteras; nunca es el gate final, ya que borra el sello de la última pasada local en vez de escribirlo.
 
   Los mismos chequeos a mano:
 
@@ -53,7 +53,7 @@ Ejecuta la app en un dispositivo o emulador conectado con `fvm flutter run`.
   ./scripts/check_coverage.sh coverage/lcov.info 91
   ```
 
-  `verify.sh` solo verifica la app raíz. Un cambio en `packages/app_ui` necesita los mismos chequeos ejecutados de nuevo desde dentro de ese directorio, contra su propio umbral de cobertura (ver el job `app_ui` en [`ci.yaml`](../.github/workflows/ci.yaml)).
+  A mano, ejecuta los mismos chequeos de nuevo desde dentro de `packages/app_ui` para un cambio que lo toque, contra su propio umbral de cobertura (ver el job `app_ui` en [`ci.yaml`](../.github/workflows/ci.yaml)).
 
 - **Los mensajes de commit** siguen [Conventional Commits](https://www.conventionalcommits.org/), reforzado por el hook `commit-msg` habilitado durante la configuración:
 
@@ -81,7 +81,7 @@ Cada push y pull request ejecuta [`.github/workflows/ci.yaml`](../.github/workfl
 | --- | --- |
 | `quality` | Instala dependencias, regenera las localizaciones, y luego **falla si esa regeneración produjo un diff**, ya que los archivos generados deben estar versionados y actualizados. Después formato, análisis, tests, y el gate de cobertura, y sube el reporte a Codecov bajo la flag `app`. |
 | `app_ui` | Los mismos chequeos de formato, análisis, tests y cobertura, restringidos a `packages/app_ui`, con su propio umbral de cobertura, y subidos bajo la flag `app_ui`. |
-| `build_apk` | Corre después de que `quality` pase y compila un APK de release — compilable sin un secreto de firma, ya que `android/app/build.gradle.kts` recurre a la keystore de debug cuando falta `key.properties` — subido como artefacto del workflow, conservado 14 días. |
+| `build_apk` | Corre después de que `quality` pase y compila un APK de release, compilable sin un secreto de firma (ya que `android/app/build.gradle.kts` recurre a la keystore de debug cuando falta `key.properties`), subido como artefacto del workflow, conservado 14 días. |
 | `integration` | Corre después de que `quality` pase, inicia un emulador Android fijo (API 35) y ejecuta cada suite de `integration_test/` en él, forzando el cierre de la app entre suites para que cada una empiece en frío. Estas necesitan un dispositivo real: ejercitan el almacenamiento real de SQLite y `SharedPreferences`, incluyendo estado que sobrevive a un reinicio simulado. El job habilita KVM primero y compila un APK de debug antes de iniciar el emulador, ya que una compilación Android en frío por sí sola puede superar el límite de tiempo por suite. |
 | `osv-scanner` | Escanea `pubspec.lock` y `packages/app_ui/pubspec.lock` contra la base de datos OSV. Corre de forma independiente a los otros jobs: un aviso recién publicado sin corrección disponible todavía no es motivo para detener el reporte de los tests. |
 
@@ -99,7 +99,7 @@ Los releases los genera [release-please](https://github.com/googleapis/release-p
 
 ### Reportes de cobertura
 
-[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) es lo que hace fallar una build, excluyendo `lib/l10n/` antes de medir; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) es lo que hace el número legible en un pull request, como dos flags independientes (`app`, `app_ui`), ya que las dos suites corren en jobs separados con umbrales distintos — ver [`codecov.yml`](../codecov.yml). Las subidas se autentican con un secreto de repositorio `CODECOV_TOKEN`; los pull requests de forks no pueden leerlo, así que el paso está deliberadamente configurado con `fail_ci_if_error: false` — una subida fallida es un reporte faltante, nunca una build fallida.
+[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) es lo que hace fallar una build, excluyendo `lib/l10n/` antes de medir; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) es lo que hace el número legible en un pull request, como dos flags independientes (`app`, `app_ui`), ya que las dos suites corren en jobs separados con umbrales distintos; ver [`codecov.yml`](../codecov.yml). Las subidas se autentican con un secreto de repositorio `CODECOV_TOKEN`; los pull requests de forks no pueden leerlo, así que el paso está deliberadamente configurado con `fail_ci_if_error: false`: una subida fallida es un reporte faltante, nunca una build fallida.
 
 Para lo mismo localmente, sin cuenta, renderiza el archivo `lcov` a HTML:
 

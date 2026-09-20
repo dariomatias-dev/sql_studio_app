@@ -22,7 +22,7 @@ lib/
       providers/              # core_providers.dart: services more than one feature reads
       routes/                 # go_router config, typed navigation helpers
       screens/                 # settings, about, splash, not-found, startup failure
-      services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService
+      services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService, LocalStateService
       sql/                     # the shared SQL statement splitter
     features/
       <feature>/
@@ -54,9 +54,9 @@ A feature never imports another feature's `presentation/`. Something more than o
 
 ## Design system (`packages/app_ui`)
 
-The design tokens (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) and a set of presentation-agnostic widgets — buttons, cards, inputs, dialogs, loading/empty/error states — live in `packages/app_ui`, a local package the app depends on via a `path:` entry in `pubspec.yaml`. It has its own `pubspec.yaml`, `analysis_options.yaml`, tests, and CI job, and is imported as `package:app_ui/app_ui.dart` (the barrel), never by a deep path.
+The design tokens (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) and a set of presentation-agnostic widgets (buttons, cards, inputs, dialogs, loading/empty/error states) live in `packages/app_ui`, a local package the app depends on via a `path:` entry in `pubspec.yaml`. It has its own `pubspec.yaml`, `analysis_options.yaml`, tests, and CI job, and is imported as `package:app_ui/app_ui.dart` (the barrel), never by a deep path.
 
-The boundary is coupling, not visual complexity: a widget belongs in `app_ui` only if it has no dependency on this app's `AppLocalizations`, Riverpod providers, routing, or any other app-specific type. A widget that needs one of those — reads a localized string, calls `Navigator`, watches a provider — stays in `lib/src/shared/widgets/`, even if it looks generic. `CancelButtonWidget` is the clearest example: visually a thin wrapper around `app_ui`'s `ButtonWidget`, but it reads `AppLocalizations.of(context).cancel` and calls `Navigator.pop`, so it's app code. Where a shared component needs both — a base widget plus an app-specific default — the `app_ui` side takes the value as a parameter (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) instead of reaching for `AppLocalizations` itself, and the app supplies it at the call site.
+The boundary is coupling, not visual complexity: a widget belongs in `app_ui` only if it has no dependency on this app's `AppLocalizations`, Riverpod providers, routing, or any other app-specific type. A widget that needs one of those (reads a localized string, calls `Navigator`, watches a provider) stays in `lib/src/shared/widgets/`, even if it looks generic. `CancelButtonWidget` is the clearest example: visually a thin wrapper around `app_ui`'s `ButtonWidget`, but it reads `AppLocalizations.of(context).cancel` and calls `Navigator.pop`, so it's app code. Where a shared component needs both (a base widget plus an app-specific default), the `app_ui` side takes the value as a parameter (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) instead of reaching for `AppLocalizations` itself, and the app supplies it at the call site.
 
 ## State management
 
@@ -70,7 +70,7 @@ The boundary is coupling, not visual complexity: a widget belongs in `app_ui` on
 
 Two independent things live on disk, both through [sqflite](https://pub.dev/packages/sqflite):
 
-- **The app's own database** (`DatabaseManager`, `lib/src/core/database/`): one small SQLite file holding the app's own bookkeeping tables — the list of user-created databases and the advanced SQL suggestions. `DatabaseRepository<T>` is a generic CRUD layer bound to a table name, shared by every feature that persists here.
+- **The app's own database** (`DatabaseManager`, `lib/src/core/database/`): one small SQLite file holding the app's own bookkeeping tables: the list of user-created databases and the advanced SQL suggestions. `DatabaseRepository<T>` is a generic CRUD layer bound to a table name, shared by every feature that persists here.
 - **The sample and user databases themselves**: each is its own SQLite file, opened on demand by `SqlExecutionService` (`lib/src/core/services/`), which caches one connection per open database and closes them all on dispose. `DefaultDatabaseService` seeds the 14 bundled sample databases from `assets/sql/schemas/` and `assets/sql/seeds/`, versioned **per database**, not globally: bumping one sample's version re-seeds only that database, leaving the user's edits to the other thirteen untouched. An install upgrading from the old single global version key migrates it into the per-database keys without re-seeding anything.
 
 User preferences that don't need querying (theme, locale, workspace layout, suggestion toggles) go through `shared_preferences` behind `SharedPreferencesService`.
