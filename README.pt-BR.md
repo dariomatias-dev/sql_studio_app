@@ -1,34 +1,34 @@
 <br>
 <div align="center">
-<img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter">
-<img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart">
-<img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
-<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter">
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
 </div>
 <br>
 <div align="center">
-<a href="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml"><img src="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
-<a href="https://codecov.io/gh/dariomatias-dev/sql_studio_app"><img src="https://codecov.io/gh/dariomatias-dev/sql_studio_app/branch/main/graph/badge.svg" alt="Coverage"></a>
-<img src="https://img.shields.io/badge/lints-very__good__analysis-blueviolet?style=flat" alt="very_good_analysis">
-<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
+  <a href="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml"><img src="https://github.com/dariomatias-dev/sql_studio_app/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
+  <a href="https://codecov.io/gh/dariomatias-dev/sql_studio_app"><img src="https://codecov.io/gh/dariomatias-dev/sql_studio_app/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <img src="https://img.shields.io/badge/lints-very__good__analysis-blueviolet?style=flat" alt="very_good_analysis">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
 </div>
 <br>
 
 <p align="center">
-<a href="README.md">English</a> · <a href="README.es.md">Español</a> · <strong>Português (BR)</strong>
+  <a href="README.md">English</a> · <a href="README.es.md">Español</a> · <strong>Português (BR)</strong>
 </p>
 
 <h1 align="center">SQL Studio</h1>
 
 <p align="center">
-Um app Android para praticar SQL em bancos SQLite locais, editáveis e totalmente offline.
-<br>
-<a href="#sobre-o-projeto"><strong>Explore a documentação »</strong></a>
-<br>
-<br>
-<a href="https://github.com/dariomatias-dev/sql_studio_app/issues">Reportar Bug</a>
-·
-<a href="https://github.com/dariomatias-dev/sql_studio_app/issues">Solicitar Funcionalidade</a>
+  Um app Android para praticar SQL em bancos SQLite locais, editáveis e totalmente offline.
+  <br>
+  <a href="#sobre-o-projeto"><strong>Explore a documentação »</strong></a>
+  <br>
+  <br>
+  <a href="https://github.com/dariomatias-dev/sql_studio_app/issues">Reportar Bug</a>
+  ·
+  <a href="https://github.com/dariomatias-dev/sql_studio_app/issues">Solicitar Funcionalidade</a>
 </p>
 
 ## Índice
@@ -56,16 +56,16 @@ Cada banco de dados vem com um schema e dados de seed predefinidos. Você escrev
 ## Preview
 
 <div align="center">
-<img src="screenshots/pt-BR/01_home.png" width="200" alt="Home / editor SQL">
-<img src="screenshots/pt-BR/02_databases.png" width="200" alt="Bancos de dados">
-<img src="screenshots/pt-BR/03_editor.png" width="200" alt="Editor SQL com banco de dados ativo">
-<img src="screenshots/pt-BR/04_drawer.png" width="200" alt="Menu de navegação">
-<img src="screenshots/pt-BR/05_visualizer.png" width="200" alt="Visualizador de banco de dados">
-<img src="screenshots/pt-BR/06_settings.png" width="200" alt="Configurações">
-<img src="screenshots/pt-BR/07_language_selector.png" width="200" alt="Seletor de idioma">
-<img src="screenshots/pt-BR/08_theme_selector.png" width="200" alt="Seletor de tema">
-<img src="screenshots/pt-BR/09_sql_suggestions_settings.png" width="200" alt="Configurações de sugestões de SQL">
-<img src="screenshots/pt-BR/10_workspace_layout_settings.png" width="200" alt="Configurações de layout do workspace">
+  <img src="screenshots/pt-BR/01_home.png" width="200" alt="Home / editor SQL">
+  <img src="screenshots/pt-BR/02_databases.png" width="200" alt="Bancos de dados">
+  <img src="screenshots/pt-BR/03_editor.png" width="200" alt="Editor SQL com banco de dados ativo">
+  <img src="screenshots/pt-BR/04_drawer.png" width="200" alt="Menu de navegação">
+  <img src="screenshots/pt-BR/05_visualizer.png" width="200" alt="Visualizador de banco de dados">
+  <img src="screenshots/pt-BR/06_settings.png" width="200" alt="Configurações">
+  <img src="screenshots/pt-BR/07_language_selector.png" width="200" alt="Seletor de idioma">
+  <img src="screenshots/pt-BR/08_theme_selector.png" width="200" alt="Seletor de tema">
+  <img src="screenshots/pt-BR/09_sql_suggestions_settings.png" width="200" alt="Configurações de sugestões de SQL">
+  <img src="screenshots/pt-BR/10_workspace_layout_settings.png" width="200" alt="Configurações de layout do workspace">
 </div>
 
 ## Funcionalidades
@@ -127,7 +127,7 @@ Scripts utilitários ficam em `scripts/`.
 | Script | Comando | Descrição |
 | --- | --- | --- |
 | `screenshot` | `scripts/screenshot.sh [device-id]` | Navega o app sozinho pelas telas principais em um dispositivo ou emulador conectado e salva um screenshot de cada uma em `screenshots/<locale>/`, usado no README, na listagem da Play Store e no site oficial. |
-| `verify` | `scripts/verify.sh [--skip-tests]` | O gate de qualidade local completo, espelhando o CI: regenera localizações, verifica a paridade de chaves ARB, formatação, análise, testes, e o limiar de cobertura. |
+| `verify` | `scripts/verify.sh [--skip-tests]` | O gate de qualidade local completo, espelhando o CI: regenera localizações, verifica a paridade de chaves ARB, formatação, análise, testes, e o limiar de cobertura, para o app e `packages/app_ui`. |
 | `check_l10n` | `scripts/check_l10n.sh` | Compara as chaves de mensagem de cada `app_*.arb` contra o template em inglês e falha se faltar ou sobrar uma. |
 | `check_coverage` | `scripts/check_coverage.sh <lcov> <minimo>` | Analisa um relatório lcov, exclui `lib/l10n/`, e falha abaixo do mínimo dado. |
 
