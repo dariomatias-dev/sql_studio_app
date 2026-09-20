@@ -59,7 +59,7 @@ class AppColors extends ThemeExtension<AppColors> {
   /// Muted secondary text and icons.
   final Color textMuted;
 
-  /// Drag handles and inactive control fills — one step stronger than
+  /// Drag handles and inactive control fills, one step stronger than
   /// [border] for elements that need to read as interactive/structural.
   final Color controlInactive;
 

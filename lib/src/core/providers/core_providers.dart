@@ -20,7 +20,7 @@ final databaseManagerProvider = Provider<DatabaseManager>(
 /// Shared [SharedPreferencesService] instance, resolved during app
 /// bootstrap in `main()`.
 ///
-/// Must be overridden with a resolved instance before use — see
+/// Must be overridden with a resolved instance before use; see
 /// `main.dart` for the production override and
 /// `test/test_helpers/shared_preferences_test_helper.dart` for tests.
 final sharedPreferencesServiceProvider = Provider<SharedPreferencesService>((

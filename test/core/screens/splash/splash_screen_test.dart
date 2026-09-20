@@ -30,7 +30,7 @@ import '../../../test_helpers/shared_preferences_test_helper.dart';
 
 /// These fakes let the splash screen's real loading sequence run to
 /// completion without touching platform channels, sqflite, or the
-/// filesystem — every dependency it drives during `_loadResources`
+/// filesystem, so every dependency it drives during `_loadResources`
 /// resolves instantly.
 class _FakeAppVersionViewModel extends AppVersionViewModel {
   @override
