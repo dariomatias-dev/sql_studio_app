@@ -33,39 +33,27 @@ An Android app to practice SQL on local, editable, fully offline SQLite database
 
 ## Table of Contents
 
-- [About The Project](#about-the-project)
+- [About the Project](#about-the-project)
+- [Preview](#preview)
 - [Features](#features)
-- [Screenshots](#screenshots)
-- [Built With](#built-with)
+- [Tech Stack](#tech-stack)
 - [Architecture](#architecture)
-- [Testing](#testing)
 - [Getting Started](#getting-started)
-- [Documentation](#documentation)
 - [Scripts](#scripts)
+- [Testing](#testing)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
+- [Security](#security)
 - [License](#license)
 - [Author](#author)
 
-## About The Project
+## About the Project
 
 **SQL Studio** is a mobile SQL playground: a set of ready-made SQLite databases you can query, edit, and reset, right on your phone, with no server or account required.
 
 Each database ships with a predefined schema and seed data. You write and run real SQL against it in a code editor with syntax highlighting, inspect results in a console, and can always reset the database back to its original state. A visual schema view lets you inspect tables, columns, and relationships without writing a query.
 
-## Features
-
-- **Offline SQLite Databases**: A catalog of local databases, each with its own schema and seed data, ready to query immediately.
-- **SQL Editor**: Write and run SQL with syntax highlighting, a fullscreen mode, and a console showing query results and errors.
-- **Database Visualizer**: Inspect a database's tables, columns, and structure visually, without writing SQL.
-- **Reset Database**: Restore any database to its original schema and seed data at any time.
-- **Copy Schema & Seed**: Copy a database's schema, seed data, or both to the clipboard.
-- **SQL Suggestions**: Basic and advanced SQL snippets to speed up writing common queries, toggled from Settings.
-- **Configurable Workspace Layout**: Choose how the editor, console, and visualizer are arranged on screen.
-- **Multiple Languages**: Full app UI in English, Portuguese (Brazil), and Spanish.
-- **Theme Selection**: Light, dark, or system theme.
-- **Database Search**: Filter the databases list by name.
-
-## Screenshots
+## Preview
 
 <div align="center">
 <img src="screenshots/en/01_home.png" width="200" alt="Home / SQL editor">
@@ -80,7 +68,20 @@ Each database ships with a predefined schema and seed data. You write and run re
 <img src="screenshots/en/10_workspace_layout_settings.png" width="200" alt="Workspace layout settings">
 </div>
 
-## Built With
+## Features
+
+- **Offline SQLite Databases**: A catalog of local databases, each with its own schema and seed data, ready to query immediately.
+- **SQL Editor**: Write and run SQL with syntax highlighting, a fullscreen mode, and a console showing query results and errors.
+- **Database Visualizer**: Inspect a database's tables, columns, and structure visually, without writing SQL.
+- **Reset Database**: Restore any database to its original schema and seed data at any time.
+- **Copy Schema & Seed**: Copy a database's schema, seed data, or both to the clipboard.
+- **SQL Suggestions**: Basic and advanced SQL snippets to speed up writing common queries, toggled from Settings.
+- **Configurable Workspace Layout**: Choose how the editor, console, and visualizer are arranged on screen.
+- **Multiple Languages**: Full app UI in English, Portuguese (Brazil), and Spanish.
+- **Theme Selection**: Light, dark, or system theme.
+- **Database Search**: Filter the databases list by name.
+
+## Tech Stack
 
 - **[Flutter](https://flutter.dev/)**: Google's UI toolkit for building natively compiled applications from a single codebase.
 - **[Dart](https://dart.dev/)**: The programming language behind Flutter.
@@ -102,17 +103,6 @@ The app is organized by feature (`lib/src/features/`), each with its own `data`,
 
 State is managed with Riverpod (`Notifier`/`AsyncNotifier` classes exposed through providers), routing with `go_router`, and persistence through `sqflite` and `shared_preferences`. Cross-cutting concerns (navigation, logging, error handling) live under `lib/src/core`; widgets and utilities shared by more than one feature, but still coupled to this app, live under `lib/src/shared`. Presentation-agnostic design tokens and components (buttons, cards, dialogs, states) live in their own local package, `packages/app_ui`. See [`docs/architecture.md`](docs/architecture.md) for the full breakdown.
 
-## Testing
-
-The project has 91 test files covering repositories, view models, and widgets, plus 15 in `packages/app_ui` for its own components, and 9 `integration_test/` suites covering first run and seeding, database creation and deletion, editing and resetting the default database, favoriting, theme and workspace layout persistence, and language switching. CI enforces a minimum line coverage of 91% for the app and its own floor for `packages/app_ui`, alongside the strict `very_good_analysis` lint set and `dart format`.
-
-Every CI run uploads its `lcov` reports to [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) as two flags, `app` and `app_ui`, which comment the coverage delta on each pull request. For a line-by-line report locally, generate one from the same file:
-
-```sh
-fvm flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html   # needs lcov installed
-```
-
 ## Getting Started
 
 The project pins its Flutter SDK version via [FVM](https://fvm.app/), so all commands below use `fvm flutter` rather than a bare `flutter` install.
@@ -130,13 +120,6 @@ Then run the app on a connected device or emulator:
 fvm flutter run
 ```
 
-## Documentation
-
-- [Architecture](docs/architecture.md): how the codebase is organized and why.
-- [Contributing](docs/contributing.md): local setup, conventions, what CI checks.
-- [Security Policy](docs/security.md): how to report a vulnerability.
-- [Code of Conduct](docs/code_of_conduct.md).
-
 ## Scripts
 
 Utility scripts live under `scripts/`.
@@ -148,11 +131,33 @@ Utility scripts live under `scripts/`.
 | `check_l10n` | `scripts/check_l10n.sh` | Compares the message keys of every `app_*.arb` against the English template and fails on a missing or extra key. |
 | `check_coverage` | `scripts/check_coverage.sh <lcov> <minimum>` | Parses an lcov report, excludes `lib/l10n/`, and fails below the given minimum. |
 
+## Testing
+
+The project has 91 test files covering repositories, view models, and widgets, plus 15 in `packages/app_ui` for its own components, and 9 `integration_test/` suites covering first run and seeding, database creation and deletion, editing and resetting the default database, favoriting, theme and workspace layout persistence, and language switching. CI enforces a minimum line coverage of 91% for the app and its own floor for `packages/app_ui`, alongside the strict `very_good_analysis` lint set and `dart format`.
+
+Every CI run uploads its `lcov` reports to [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) as two flags, `app` and `app_ui`, which comment the coverage delta on each pull request. For a line-by-line report locally, generate one from the same file:
+
+```sh
+fvm flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html   # needs lcov installed
+```
+
+## Documentation
+
+- [Architecture](docs/architecture.md): how the codebase is organized and why.
+- [Contributing](docs/contributing.md): local setup, conventions, what CI checks.
+- [Security Policy](docs/security.md): how to report a vulnerability.
+- [Code of Conduct](docs/code_of_conduct.md).
+
 ## Contributing
 
 Contributions make the open-source community an amazing place to learn and create. Any contributions you make are greatly appreciated.
 
 Before opening a pull request, see [docs/contributing.md](docs/contributing.md) for the local setup, commit message convention (Conventional Commits), and what CI checks.
+
+## Security
+
+Please do not open a public issue to report a security vulnerability; see [docs/security.md](docs/security.md) for how to report one.
 
 ## License
 

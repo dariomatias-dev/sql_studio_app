@@ -34,15 +34,16 @@ Una app Android para practicar SQL en bases de datos SQLite locales, editables y
 ## Índice
 
 - [Acerca del Proyecto](#acerca-del-proyecto)
+- [Vista Previa](#vista-previa)
 - [Funcionalidades](#funcionalidades)
-- [Capturas de Pantalla](#capturas-de-pantalla)
-- [Construido Con](#construido-con)
+- [Stack Tecnológico](#stack-tecnológico)
 - [Arquitectura](#arquitectura)
-- [Pruebas](#pruebas)
 - [Cómo Empezar](#cómo-empezar)
-- [Documentación](#documentación)
 - [Scripts](#scripts)
+- [Pruebas](#pruebas)
+- [Documentación](#documentación)
 - [Contribuir](#contribuir)
+- [Seguridad](#seguridad)
 - [Licencia](#licencia)
 - [Autor](#autor)
 
@@ -52,20 +53,7 @@ Una app Android para practicar SQL en bases de datos SQLite locales, editables y
 
 Cada base de datos incluye un esquema y datos de seed predefinidos. Escribes y ejecutas SQL real contra ella en un editor de código con resaltado de sintaxis, inspeccionas los resultados en una consola y puedes restablecer la base de datos a su estado original en cualquier momento. Una vista de esquema visual te permite inspeccionar tablas, columnas y relaciones sin escribir una consulta.
 
-## Funcionalidades
-
-- **Bases de Datos SQLite Offline**: Un catálogo de bases de datos locales, cada una con su propio esquema y datos de seed, listas para consultar de inmediato.
-- **Editor SQL**: Escribe y ejecuta SQL con resaltado de sintaxis, modo pantalla completa y una consola que muestra los resultados y errores de las consultas.
-- **Visualizador de Base de Datos**: Inspecciona las tablas, columnas y estructura de una base de datos de forma visual, sin escribir SQL.
-- **Restablecer Base de Datos**: Restaura cualquier base de datos a su esquema y datos de seed originales en cualquier momento.
-- **Copiar Esquema y Seed**: Copia el esquema, los datos de seed o ambos de una base de datos al portapapeles.
-- **Sugerencias de SQL**: Fragmentos de SQL básicos y avanzados para acelerar la escritura de consultas comunes, activables desde Configuración.
-- **Diseño de Workspace Configurable**: Elige cómo se organizan en pantalla el editor, la consola y el visualizador.
-- **Múltiples Idiomas**: Interfaz completa en inglés, portugués (Brasil) y español.
-- **Selección de Tema**: Tema claro, oscuro o según el sistema.
-- **Búsqueda de Bases de Datos**: Filtra la lista de bases de datos por nombre.
-
-## Capturas de Pantalla
+## Vista Previa
 
 <div align="center">
 <img src="screenshots/es/01_home.png" width="200" alt="Inicio / editor SQL">
@@ -80,7 +68,20 @@ Cada base de datos incluye un esquema y datos de seed predefinidos. Escribes y e
 <img src="screenshots/es/10_workspace_layout_settings.png" width="200" alt="Configuración de diseño del workspace">
 </div>
 
-## Construido Con
+## Funcionalidades
+
+- **Bases de Datos SQLite Offline**: Un catálogo de bases de datos locales, cada una con su propio esquema y datos de seed, listas para consultar de inmediato.
+- **Editor SQL**: Escribe y ejecuta SQL con resaltado de sintaxis, modo pantalla completa y una consola que muestra los resultados y errores de las consultas.
+- **Visualizador de Base de Datos**: Inspecciona las tablas, columnas y estructura de una base de datos de forma visual, sin escribir SQL.
+- **Restablecer Base de Datos**: Restaura cualquier base de datos a su esquema y datos de seed originales en cualquier momento.
+- **Copiar Esquema y Seed**: Copia el esquema, los datos de seed o ambos de una base de datos al portapapeles.
+- **Sugerencias de SQL**: Fragmentos de SQL básicos y avanzados para acelerar la escritura de consultas comunes, activables desde Configuración.
+- **Diseño de Workspace Configurable**: Elige cómo se organizan en pantalla el editor, la consola y el visualizador.
+- **Múltiples Idiomas**: Interfaz completa en inglés, portugués (Brasil) y español.
+- **Selección de Tema**: Tema claro, oscuro o según el sistema.
+- **Búsqueda de Bases de Datos**: Filtra la lista de bases de datos por nombre.
+
+## Stack Tecnológico
 
 - **[Flutter](https://flutter.dev/)**: El toolkit de UI de Google para crear aplicaciones compiladas de forma nativa desde una única base de código.
 - **[Dart](https://dart.dev/)**: El lenguaje de programación detrás de Flutter.
@@ -102,17 +103,6 @@ La app está organizada por funcionalidad (`lib/src/features/`), cada una con su
 
 El estado se gestiona con Riverpod (clases `Notifier`/`AsyncNotifier` expuestas a través de providers), el enrutamiento con `go_router`, y la persistencia mediante `sqflite` y `shared_preferences`. Las preocupaciones transversales (navegación, logging, manejo de errores) viven en `lib/src/core`; los widgets y utilidades compartidos por más de una funcionalidad, pero aún acoplados a esta app, viven en `lib/src/shared`. Los tokens de diseño y los componentes agnósticos de presentación (botones, tarjetas, diálogos, estados) viven en su propio paquete local, `packages/app_ui`. Consulta [`docs/architecture.es.md`](docs/architecture.es.md) para el detalle completo.
 
-## Pruebas
-
-El proyecto tiene 91 archivos de prueba que cubren repositorios, view models y widgets, más 15 en `packages/app_ui` para sus propios componentes, y 9 suites en `integration_test/` que cubren el primer arranque y el seeding, la creación y eliminación de bases de datos, la edición y el restablecimiento de la base de datos predeterminada, favoritos, la persistencia del tema y del diseño del workspace, y el cambio de idioma. El CI exige un mínimo de 91% de cobertura de líneas para la app y su propio umbral para `packages/app_ui`, junto con el conjunto estricto de lints de `very_good_analysis` y `dart format`.
-
-Cada ejecución del CI sube sus reportes `lcov` a [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) como dos flags, `app` y `app_ui`, que comentan la variación de cobertura en cada pull request. Para un reporte línea por línea localmente, genera uno a partir del mismo archivo:
-
-```sh
-fvm flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html   # necesita lcov instalado
-```
-
 ## Cómo Empezar
 
 El proyecto fija la versión del Flutter SDK mediante [FVM](https://fvm.app/), por lo que todos los comandos siguientes usan `fvm flutter` en lugar de una instalación simple de `flutter`.
@@ -130,13 +120,6 @@ Luego, ejecuta la app en un dispositivo o emulador conectado:
 fvm flutter run
 ```
 
-## Documentación
-
-- [Arquitectura](docs/architecture.es.md): cómo está organizado el código y por qué.
-- [Contribuir](docs/contributing.es.md): configuración local, convenciones, qué verifica CI.
-- [Política de Seguridad](docs/security.es.md): cómo reportar una vulnerabilidad.
-- [Código de Conducta](docs/code_of_conduct.es.md).
-
 ## Scripts
 
 Los scripts de utilidad están en `scripts/`.
@@ -148,11 +131,33 @@ Los scripts de utilidad están en `scripts/`.
 | `check_l10n` | `scripts/check_l10n.sh` | Compara las claves de mensaje de cada `app_*.arb` contra la plantilla en inglés y falla si falta o sobra una. |
 | `check_coverage` | `scripts/check_coverage.sh <lcov> <minimo>` | Analiza un reporte lcov, excluye `lib/l10n/`, y falla por debajo del mínimo dado. |
 
+## Pruebas
+
+El proyecto tiene 91 archivos de prueba que cubren repositorios, view models y widgets, más 15 en `packages/app_ui` para sus propios componentes, y 9 suites en `integration_test/` que cubren el primer arranque y el seeding, la creación y eliminación de bases de datos, la edición y el restablecimiento de la base de datos predeterminada, favoritos, la persistencia del tema y del diseño del workspace, y el cambio de idioma. El CI exige un mínimo de 91% de cobertura de líneas para la app y su propio umbral para `packages/app_ui`, junto con el conjunto estricto de lints de `very_good_analysis` y `dart format`.
+
+Cada ejecución del CI sube sus reportes `lcov` a [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) como dos flags, `app` y `app_ui`, que comentan la variación de cobertura en cada pull request. Para un reporte línea por línea localmente, genera uno a partir del mismo archivo:
+
+```sh
+fvm flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html   # necesita lcov instalado
+```
+
+## Documentación
+
+- [Arquitectura](docs/architecture.es.md): cómo está organizado el código y por qué.
+- [Contribuir](docs/contributing.es.md): configuración local, convenciones, qué verifica CI.
+- [Política de Seguridad](docs/security.es.md): cómo reportar una vulnerabilidad.
+- [Código de Conducta](docs/code_of_conduct.es.md).
+
 ## Contribuir
 
 Las contribuciones hacen de la comunidad de código abierto un lugar excelente para aprender y crear. Toda contribución es bienvenida.
 
 Antes de abrir un pull request, consulta [docs/contributing.es.md](docs/contributing.es.md) para la configuración local, la convención de mensajes de commit (Conventional Commits) y qué verifica CI.
+
+## Seguridad
+
+Por favor, no abras un issue público para reportar una vulnerabilidad de seguridad; consulta [docs/security.es.md](docs/security.es.md) para saber cómo reportarla.
 
 ## Licencia
 
