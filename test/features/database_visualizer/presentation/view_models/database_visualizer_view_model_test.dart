@@ -77,7 +77,7 @@ void main() {
   });
 
   test(
-    'load() works again after the autoDispose provider is recreated — '
+    'load() works again after the autoDispose provider is recreated: '
     'regression test for the LateInitializationError previously thrown '
     'by a cached late field',
     () async {
