@@ -22,7 +22,7 @@ lib/
       providers/              # core_providers.dart: serviços lidos por mais de uma feature
       routes/                 # configuração do go_router, helpers de navegação tipados
       screens/                 # ajustes, sobre, splash, não encontrado, falha de inicialização
-      services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService
+      services/                # SqlExecutionService, DefaultDatabaseService, SharedPreferencesService, LocalStateService
       sql/                     # o divisor de instruções SQL compartilhado
     features/
       <feature>/
@@ -54,9 +54,9 @@ Uma feature nunca importa o `presentation/` de outra feature. O que mais de uma 
 
 ## Design system (`packages/app_ui`)
 
-Os tokens de design (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) e um conjunto de widgets agnósticos de apresentação — botões, cards, inputs, diálogos, estados de carregamento/vazio/erro — vivem em `packages/app_ui`, um pacote local do qual o app depende via uma entrada `path:` no `pubspec.yaml`. Ele tem seu próprio `pubspec.yaml`, `analysis_options.yaml`, testes e job de CI, e é importado como `package:app_ui/app_ui.dart` (o barrel), nunca por um caminho profundo.
+Os tokens de design (`AppColors`, `AppSpacing`, `AppRadii`, `AppShadows`, `AppDurations`, `AppTheme`) e um conjunto de widgets agnósticos de apresentação (botões, cards, inputs, diálogos, estados de carregamento/vazio/erro) vivem em `packages/app_ui`, um pacote local do qual o app depende via uma entrada `path:` no `pubspec.yaml`. Ele tem seu próprio `pubspec.yaml`, `analysis_options.yaml`, testes e job de CI, e é importado como `package:app_ui/app_ui.dart` (o barrel), nunca por um caminho profundo.
 
-O limite é o acoplamento, não a complexidade visual: um widget só entra em `app_ui` se não tiver dependência do `AppLocalizations` deste app, dos providers do Riverpod, do roteamento, ou de qualquer outro tipo específico do app. Um widget que precisa de algo disso — lê uma string localizada, chama o `Navigator`, observa um provider — fica em `lib/src/shared/widgets/`, mesmo que pareça genérico. `CancelButtonWidget` é o exemplo mais claro: visualmente é um wrapper fino em volta do `ButtonWidget` do `app_ui`, mas lê `AppLocalizations.of(context).cancel` e chama `Navigator.pop`, então é código do app. Onde um componente compartilhado precisa das duas coisas — um widget base mais um padrão específico do app — o lado do `app_ui` recebe o valor como parâmetro (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) em vez de recorrer ao `AppLocalizations` diretamente, e o app fornece isso no local da chamada.
+O limite é o acoplamento, não a complexidade visual: um widget só entra em `app_ui` se não tiver dependência do `AppLocalizations` deste app, dos providers do Riverpod, do roteamento, ou de qualquer outro tipo específico do app. Um widget que precisa de algo disso (lê uma string localizada, chama o `Navigator`, observa um provider) fica em `lib/src/shared/widgets/`, mesmo que pareça genérico. `CancelButtonWidget` é o exemplo mais claro: visualmente é um wrapper fino em volta do `ButtonWidget` do `app_ui`, mas lê `AppLocalizations.of(context).cancel` e chama `Navigator.pop`, então é código do app. Onde um componente compartilhado precisa das duas coisas (um widget base mais um padrão específico do app), o lado do `app_ui` recebe o valor como parâmetro (`ConfirmationDialogWidget.cancelButton`, `ErrorDialogWidget.dismissLabel`) em vez de recorrer ao `AppLocalizations` diretamente, e o app fornece isso no local da chamada.
 
 ## Gerenciamento de estado
 
@@ -70,7 +70,7 @@ O limite é o acoplamento, não a complexidade visual: um widget só entra em `a
 
 Duas coisas independentes vivem em disco, ambas via [sqflite](https://pub.dev/packages/sqflite):
 
-- **O banco de dados próprio do app** (`DatabaseManager`, `lib/src/core/database/`): um arquivo SQLite pequeno com as tabelas administrativas do app — a lista de bancos criados pelo usuário e as sugestões SQL avançadas. `DatabaseRepository<T>` é uma camada CRUD genérica ligada a um nome de tabela, compartilhada por toda feature que persiste aqui.
+- **O banco de dados próprio do app** (`DatabaseManager`, `lib/src/core/database/`): um arquivo SQLite pequeno com as tabelas administrativas do app: a lista de bancos criados pelo usuário e as sugestões SQL avançadas. `DatabaseRepository<T>` é uma camada CRUD genérica ligada a um nome de tabela, compartilhada por toda feature que persiste aqui.
 - **Os bancos de exemplo e os do usuário**: cada um é seu próprio arquivo SQLite, aberto sob demanda pelo `SqlExecutionService` (`lib/src/core/services/`), que mantém em cache uma conexão por banco aberto e fecha todas ao ser descartado. `DefaultDatabaseService` semeia os 14 bancos de exemplo empacotados a partir de `assets/sql/schemas/` e `assets/sql/seeds/`, versionados **por banco**, não globalmente: subir a versão de um exemplo re-semeia só aquele banco, deixando intactas as edições do usuário nos outros treze. Uma instalação atualizando da antiga chave de versão global única migra para as chaves por banco sem re-semear nada.
 
 Preferências do usuário que não precisam de consulta (tema, idioma, disposição do workspace, ativação de sugestões) passam por `shared_preferences` atrás de `SharedPreferencesService`.

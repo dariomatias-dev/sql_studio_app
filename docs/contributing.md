@@ -42,7 +42,7 @@ Run the app on a connected device or emulator with `fvm flutter run`.
   ./scripts/verify.sh
   ```
 
-  It runs what CI runs: regenerates localizations and fails if that changed anything, `check_l10n.sh`, formatting, analysis, tests, and the coverage threshold. Uses `fvm` when set up for the project, the bare `flutter`/`dart` otherwise. Add `--skip-tests` for a faster partial pass while iterating; it is never the final gate, since it clears the local pass stamp instead of writing it.
+  It runs what CI runs: regenerates localizations and fails if that changed anything, `check_l10n.sh`, formatting, analysis, tests, and the coverage threshold, for the app and for `packages/app_ui`, each against its own floor. Uses `fvm` when set up for the project, the bare `flutter`/`dart` otherwise. Add `--skip-tests` for a faster partial pass while iterating; it is never the final gate, since it clears the local pass stamp instead of writing it.
 
   The same checks by hand:
 
@@ -53,7 +53,7 @@ Run the app on a connected device or emulator with `fvm flutter run`.
   ./scripts/check_coverage.sh coverage/lcov.info 91
   ```
 
-  `verify.sh` only checks the root app. A change touching `packages/app_ui` needs the same checks run again from inside that directory, against its own coverage floor (see [`ci.yaml`](../.github/workflows/ci.yaml)'s `app_ui` job).
+  By hand, run the same checks again from inside `packages/app_ui` for a change touching it, against its own coverage floor (see [`ci.yaml`](../.github/workflows/ci.yaml)'s `app_ui` job).
 
 - **Commit messages** follow [Conventional Commits](https://www.conventionalcommits.org/), enforced by the `commit-msg` hook enabled during setup:
 
@@ -81,7 +81,7 @@ Every push and pull request runs [`.github/workflows/ci.yaml`](../.github/workfl
 | --- | --- |
 | `quality` | Installs dependencies, regenerates localizations, then **fails if that regeneration produced a diff**, since generated files must be committed and up to date. Then `check_l10n.sh`, formatting, analysis, tests, and the coverage gate, and uploads the report to Codecov under the `app` flag. |
 | `app_ui` | The same formatting, analysis, tests and coverage gate, scoped to `packages/app_ui`, its own coverage floor, and uploaded under the `app_ui` flag. |
-| `build_apk` | Runs after `quality` passes and builds a release APK — buildable without a signing secret, since `android/app/build.gradle.kts` falls back to the debug keystore when `key.properties` is absent — uploaded as a workflow artifact kept for 14 days. |
+| `build_apk` | Runs after `quality` passes and builds a release APK, buildable without a signing secret (since `android/app/build.gradle.kts` falls back to the debug keystore when `key.properties` is absent), uploaded as a workflow artifact kept for 14 days. |
 | `integration` | Runs after `quality` passes, boots a pinned Android emulator (API 35) and runs every `integration_test/` suite on it, force-stopping the app between suites so each starts cold. These need a real device: they exercise real SQLite and `SharedPreferences` storage, including state surviving a simulated restart. The job enables KVM first and builds a debug APK before booting the emulator, since a cold Android build on its own can outrun a per-suite timeout. |
 | `osv-scanner` | Scans `pubspec.lock` and `packages/app_ui/pubspec.lock` against the OSV database. Runs independently of the other jobs: a newly disclosed advisory with no fix available yet is not a reason to stop the tests from reporting. |
 
@@ -99,7 +99,7 @@ Releases are cut by [release-please](https://github.com/googleapis/release-pleas
 
 ### Coverage reports
 
-[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) is what fails a build, excluding `lib/l10n/` before measuring; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) is what makes the number readable on a pull request, as two independent flags (`app`, `app_ui`) since the two suites run in separate jobs with different floors — see [`codecov.yml`](../codecov.yml). Uploads authenticate with a `CODECOV_TOKEN` repository secret; pull requests from forks cannot read it, so the step is deliberately set to `fail_ci_if_error: false` — a failed upload is a missing report, never a failed build.
+[`scripts/check_coverage.sh`](../scripts/check_coverage.sh) is what fails a build, excluding `lib/l10n/` before measuring; [Codecov](https://codecov.io/gh/dariomatias-dev/sql_studio_app) is what makes the number readable on a pull request, as two independent flags (`app`, `app_ui`) since the two suites run in separate jobs with different floors; see [`codecov.yml`](../codecov.yml). Uploads authenticate with a `CODECOV_TOKEN` repository secret; pull requests from forks cannot read it, so the step is deliberately set to `fail_ci_if_error: false`: a failed upload is a missing report, never a failed build.
 
 For the same thing locally, without an account, render the `lcov` file to HTML:
 
